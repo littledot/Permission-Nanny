@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.sdchang.permissionpolice"
+        minSdkVersion 9
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    apt 'com.github.frankiesardo:auto-parcel-processor:0.+'
+    apt 'com.google.dagger:dagger-compiler:2.+'
+
+    compile 'com.android.support:support-v4:22.+'
+    compile 'com.android.support:appcompat-v7:22.+'
+    compile 'com.android.support:cardview-v7:22.+'
+    compile 'com.android.support:gridlayout-v7:22.+'
+//    compile 'com.android.support:mediarouter-v7:22.+'
+    compile 'com.android.support:palette-v7:22.+'
+    compile 'com.android.support:recyclerview-v7:22.+'
+//    compile 'com.android.support:support-v13:22.+'
+//    compile 'com.android.support:leanback-v17:22.+'
+    compile 'com.google.android.gms:play-services-gcm:7.0.+'
+
+    compile 'com.github.frankiesardo:auto-parcel:0.+'
+    compile 'com.google.dagger:dagger:2.+'
+    compile 'com.jakewharton:butterknife:6.+'
+    compile 'com.jakewharton.timber:timber:3.+'
+    compile 'com.mcxiaoke.volley:library:1.+'
+    compile 'com.squareup.okhttp:okhttp:2.+'
+    compile 'io.reactivex:rxandroid:0.+'
+
+
+}
