@@ -17,6 +17,7 @@ public abstract class BaseRequest implements Parcelable {
     public static final String REQUEST_TYPE = "requestType";
     public static final String REQUEST_BODY = "requestBody";
     public static final String REQUEST_REASON = "requestReason";
+    public static final String SENDER_PACKAGE = "senderPackage";
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({CURSOR_REQUEST})
@@ -32,6 +33,7 @@ public abstract class BaseRequest implements Parcelable {
     public Intent newIntent(Context context, String reason) {
         if (intent == null) {
             intent = new Intent(ACTION)
+                    .putExtra(SENDER_PACKAGE, context.getPackageName())
                     .putExtra(REQUEST_TYPE, getRequestType())
                     .putExtra(REQUEST_BODY, this)
                     .putExtra(REQUEST_REASON, reason);

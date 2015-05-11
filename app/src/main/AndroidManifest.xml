@@ -31,7 +31,7 @@
         </receiver>
 
         <provider
-            android:name=".ContactsListContentProvider"
+            android:name=".CursorContentProvider"
             android:authorities="com.permissionpolice.provider"
             android:exported="true"/>
 

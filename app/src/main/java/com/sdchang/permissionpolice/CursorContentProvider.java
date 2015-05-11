@@ -14,7 +14,7 @@ import java.util.List;
 /**
  *
  */
-public class ContactsListContentProvider extends ContentProvider {
+public class CursorContentProvider extends ContentProvider {
     static LongSparseArray<CursorRequest> approvedRequests = new LongSparseArray<>();
 
     @Override

@@ -13,6 +13,7 @@ import android.net.Uri.Builder;
 public class CursorRequestPermissionReceiver extends BroadcastReceiver {
 
     public static final Uri PROVIDER = new Builder().scheme("content").authority(Police.PROVIDER_AUTHORITY).build();
+    public static final String ACTION_FILTER = "ppResult";
     public static final String NONCE = "nonce";
 
     CursorRequest mRequest;

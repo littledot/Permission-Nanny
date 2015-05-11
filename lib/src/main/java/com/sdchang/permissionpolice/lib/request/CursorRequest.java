@@ -26,7 +26,8 @@ public abstract class CursorRequest extends BaseRequest {
 
     public void startRequest(Context context, String reason, CursorListener listener) {
         // begin handshake
-        context.registerReceiver(new CursorRequestPermissionReceiver(this, listener), new IntentFilter("ppResult"));
+        context.registerReceiver(new CursorRequestPermissionReceiver(this, listener),
+                new IntentFilter(CursorRequestPermissionReceiver.ACTION_FILTER));
         context.sendBroadcast(newIntent(context, reason));
     }
 
