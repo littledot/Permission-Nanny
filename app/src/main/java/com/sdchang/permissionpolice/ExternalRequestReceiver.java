@@ -13,8 +13,7 @@ public class ExternalRequestReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Timber.wtf("got intent: " + intent);
-        // do some validation
-        // ...
+        // TODO #2: Validate intents received by ExternalRequestReceiver
         context.startActivity(new Intent(context, ConfirmRequestActivity.class)
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtras(intent));

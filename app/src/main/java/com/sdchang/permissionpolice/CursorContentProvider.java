@@ -15,6 +15,7 @@ import java.util.List;
  *
  */
 public class CursorContentProvider extends ContentProvider {
+    // TODO #1: Set a TTL for approved CursorRequests.
     static LongSparseArray<CursorRequest> approvedRequests = new LongSparseArray<>();
 
     @Override

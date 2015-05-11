@@ -8,16 +8,16 @@ import com.sdchang.permissionpolice.lib.request.BaseRequest;
  */
 public class ConfirmRequestActivity extends BaseActivity {
 
-    private Bundle args;
+    private Bundle mArgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        args = getIntent().getExtras();
+        mArgs = getIntent().getExtras();
 
-        int type = args.getInt(BaseRequest.REQUEST_TYPE, 0);
+        int type = mArgs.getInt(BaseRequest.REQUEST_TYPE, 0);
         if (type == BaseRequest.CURSOR_REQUEST) {
-            new CursorRequestDialogBuilder(this, args).build().show();
+            new CursorRequestDialogBuilder(this, mArgs).build().show();
         }
     }
 }

@@ -48,7 +48,7 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
 
         if (Contacts.CONTENT_URI.equals(mRequest.uri())) {
             mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_accessContacts));
-        }
+        } // TODO #4: Parse other types of content provider URIs to show client intent to the user
     }
 
     public AlertDialog build() {
@@ -58,6 +58,7 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
                 .setPositiveButton(R.string.dialog_allow, this)
                 .setNegativeButton(R.string.dialog_deny, this)
                 .setOnDismissListener(this)
+                .setCancelable(false)
                 .create();
     }
 
@@ -65,6 +66,8 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
     public void onClick(DialogInterface dialog, int which) {
         if (DialogInterface.BUTTON_POSITIVE == which) {
             acceptRequest();
+        } else if (DialogInterface.BUTTON_NEGATIVE == which) {
+            // TODO #3: Implement error handling when request is denied
         }
     }
 
