@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        mavenCentral()
         jcenter()
     }
     dependencies {
@@ -12,7 +11,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 repositories {
-    mavenCentral()
     jcenter()
 }
 
@@ -21,8 +19,8 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.sdchang.permissionpolice"
-        minSdkVersion 15
+        applicationId "com.sdchang.permissionpolice.demo"
+        minSdkVersion 9
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"

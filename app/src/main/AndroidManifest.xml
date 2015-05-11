@@ -24,13 +24,16 @@
             android:name=".ConfirmRequestActivity"
             android:theme="@style/Theme.AppCompat.Transparent"/>
 
-        <service android:name=".VerificationService">
+        <receiver android:name=".ExternalRequestReceiver">
             <intent-filter>
-                <action android:name="com.sdchang.permissionpolice.permissionRequest"/>
+                <action android:name="ppAction"/>
             </intent-filter>
-        </service>
+        </receiver>
 
-        <service android:name=".ContactsListService"/>
+        <provider
+            android:name=".ContactsListContentProvider"
+            android:authorities="com.permissionpolice.provider"
+            android:exported="true"/>
 
     </application>
 </manifest>

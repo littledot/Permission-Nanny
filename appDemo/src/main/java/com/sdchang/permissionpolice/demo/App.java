@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice;
+package com.sdchang.permissionpolice.demo;
 
 import android.app.Application;
 import com.sdchang.permissionpolice.common.StackTraceDebugTree;
@@ -14,3 +14,4 @@ public class App extends Application {
         Timber.plant(new StackTraceDebugTree());
     }
 }
+

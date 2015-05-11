@@ -1,18 +1,14 @@
 buildscript {
     repositories {
-        mavenCentral()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:+'
     }
 }
-apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.android.library'
 
 repositories {
-    mavenCentral()
     jcenter()
 }
 
@@ -21,8 +17,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.sdchang.permissionpolice"
-        minSdkVersion 15
+        minSdkVersion 9
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -36,11 +31,6 @@ android {
 }
 
 dependencies {
-    apt 'com.github.frankiesardo:auto-parcel-processor:0.+'
-    apt 'com.google.dagger:dagger-compiler:2.+'
-
-    compile project(':common')
-    compile project(':lib')
     compile 'com.android.support:support-v4:22.+'
     compile 'com.android.support:appcompat-v7:22.+'
     compile 'com.android.support:cardview-v7:22.+'

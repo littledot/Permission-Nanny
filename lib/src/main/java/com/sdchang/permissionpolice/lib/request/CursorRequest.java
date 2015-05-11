@@ -1,6 +1,9 @@
-package com.sdchang.permissionpolice.request;
+package com.sdchang.permissionpolice.lib.request;
 
+import android.content.Context;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import auto.parcel.AutoParcel;
 
@@ -10,6 +13,8 @@ import java.util.List;
 @AutoParcel
 public abstract class CursorRequest extends BaseRequest {
 
+    public static final ClassLoader classLoader = AutoParcel_CursorRequest.class.getClassLoader();
+
     public static Builder newBuilder() {
         return new AutoParcel_CursorRequest.Builder();
     }
@@ -17,6 +22,12 @@ public abstract class CursorRequest extends BaseRequest {
     @Override
     public int getRequestType() {
         return CURSOR_REQUEST;
+    }
+
+    public void startRequest(Context context, String reason, CursorListener listener) {
+        // begin handshake
+        context.registerReceiver(new CursorRequestPermissionReceiver(this, listener), new IntentFilter("ppResult"));
+        context.sendBroadcast(newIntent(context, reason));
     }
 
     public abstract Uri uri();
@@ -34,7 +45,7 @@ public abstract class CursorRequest extends BaseRequest {
     public abstract String sortOrder();
 
     @AutoParcel.Builder
-    public static abstract class Builder {
+    public abstract static class Builder {
 
         public abstract Builder uri(Uri uri);
 
@@ -57,5 +68,28 @@ public abstract class CursorRequest extends BaseRequest {
         public abstract Builder sortOrder(@Nullable String sortOrder);
 
         public abstract CursorRequest build();
+
+//        auto-parcel 0.3 does not support query methods in builders
+//        abstract List<String> projection();
+//
+//        abstract Builder hasProjection(boolean has);
+//
+//        abstract List<String> selectionArgs();
+//
+//        abstract Builder hasSelectionArgs(boolean has);
+//
+//        public CursorRequest validateAndBuild() {
+//            hasProjection(projection() != null);
+//            hasSelectionArgs(selectionArgs() != null);
+//            return build();
+//        }
+
+        /**
+         * @param context
+         * @param reason
+         */
+        public void startRequest(@NonNull Context context, @NonNull String reason, CursorListener listener) {
+            build().startRequest(context, reason, listener);
+        }
     }
 }
