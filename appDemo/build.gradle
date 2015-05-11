@@ -1,18 +1,5 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:+'
-    }
-}
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-
-repositories {
-    jcenter()
-}
 
 android {
     compileSdkVersion 22
