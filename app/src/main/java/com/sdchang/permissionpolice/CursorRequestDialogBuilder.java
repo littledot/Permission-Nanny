@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.provider.ContactsContract.Contacts;
 import android.support.v7.app.AlertDialog;
@@ -46,9 +49,33 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        if (Contacts.CONTENT_URI.equals(mRequest.uri())) {
-            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_accessContacts));
-        } // TODO #4: Parse other types of content provider URIs to show client intent to the user
+        // TODO #4: Parse other types of content provider URIs to show client intent to the user
+        if (authorityMatches(Contacts.CONTENT_FILTER_URI)) {
+            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentFilterUri));
+        } else if (authorityMatches(Contacts.CONTENT_GROUP_URI)) {
+            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentGroupUri));
+        } else if (authorityMatches(Contacts.CONTENT_LOOKUP_URI)) {
+            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentLookupUri));
+        } else if (authorityMatches(Contacts.CONTENT_STREQUENT_FILTER_URI)) {
+            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentStrequentFilterUri));
+        } else if (authorityMatches(Contacts.CONTENT_STREQUENT_URI)) {
+            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentStrequentUri));
+        } else if (authorityMatches(Contacts.CONTENT_URI)) {
+            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentUri));
+        } else if (authorityMatches(Contacts.CONTENT_VCARD_URI)) {
+            mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentVcardUri));
+        }
+        if (VERSION.SDK_INT > VERSION_CODES.LOLLIPOP) {
+            if (authorityMatches(Contacts.CONTENT_FREQUENT_URI)) {
+                mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentFilterUri));
+            } else if (authorityMatches(Contacts.CONTENT_MULTI_VCARD_URI)) {
+                mTitle = boldAppLabel.append(mActivity.getText(R.string.dialogTitle_contactsContentMultiVcardUri));
+            }
+        }
+    }
+
+    boolean authorityMatches(Uri target) {
+        return mRequest.uri().toString().startsWith(target.toString());
     }
 
     public AlertDialog build() {

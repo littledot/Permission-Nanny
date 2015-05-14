@@ -7,6 +7,17 @@
     <string name="dialog_allow">Allow</string>
     <string name="dialog_deny">Deny</string>
 
-    <string name="dialogTitle_accessContacts"> would like to access your contacts.</string>
+    <string name="dialogTitle_contactsContentFilterUri"> would like to perform type-to-filter feature based on your
+        contacts.</string>
+    <string name="dialogTitle_contactsContentFrequentUri"> would like to access your frequent contacts list.</string>
+    <string name="dialogTitle_contactsContentGroupUri"> would like to access your contact groups.</string>
+    <string name="dialogTitle_contactsContentLookupUri"> would like to access your contacts.</string>
+    <string name="dialogTitle_contactsContentMultiVcardUri"> would like to access your contacts' vCard.</string>
+    <string name="dialogTitle_contactsContentStrequentFilterUri"> would like to perform type-to-filter feature
+        based on your starred and most frequently contacted contacts.</string>
+    <string name="dialogTitle_contactsContentStrequentUri"> would like to access your starred and most frequently
+        contacted contacts.</string>
+    <string name="dialogTitle_contactsContentUri"> would like to access your contacts.</string>
+    <string name="dialogTitle_contactsContentVcardUri"> would like to access your contacts' vCard.</string>
 
 </resources>
