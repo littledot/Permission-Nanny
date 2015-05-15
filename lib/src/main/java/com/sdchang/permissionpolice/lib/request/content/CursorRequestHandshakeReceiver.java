@@ -28,10 +28,14 @@ public class CursorRequestHandshakeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         context.unregisterReceiver(this);
+        boolean approved = intent.getBooleanExtra(Police.APPROVED, false);
 
-        long nonce = intent.getLongExtra(NONCE, 0);
-        Cursor data = context.getContentResolver().query(PROVIDER.buildUpon().appendPath(Long.toString(nonce)).build()
-                , null, null, null, null);
+        Cursor data = null;
+        if (approved) {
+            long nonce = intent.getLongExtra(NONCE, 0);
+            data = context.getContentResolver().query(PROVIDER.buildUpon().appendPath(Long.toString(nonce)).build(),
+                    null, null, null, null);
+        }
         mListener.callback(data);
     }
 }

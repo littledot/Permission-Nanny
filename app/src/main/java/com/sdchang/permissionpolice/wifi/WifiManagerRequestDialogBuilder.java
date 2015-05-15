@@ -15,6 +15,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerHandshakeReceiver;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
@@ -134,7 +135,6 @@ public class WifiManagerRequestDialogBuilder implements DialogInterface.OnClickL
                 case WifiManagerRequest.PING_SUPPLICANT:
                     response.putBoolean(WifiManagerResponse.SUCCESS, wifi.pingSupplicant());
                     break;
-
                 case WifiManagerRequest.ADD_NETWORK:
                     response.putInt(WifiManagerResponse.NETWORK_ID, wifi.addNetwork(mRequest.wifiConfiguration()));
                     break;
@@ -171,12 +171,16 @@ public class WifiManagerRequestDialogBuilder implements DialogInterface.OnClickL
                     break;
             }
             mActivity.sendBroadcast(new Intent(WifiManagerHandshakeReceiver.ACTION_FILTER)
-                    .putExtra(WifiManagerHandshakeReceiver.RESPONSE, response));
+                    .putExtra(Police.APPROVED, true)
+                    .putExtra(Police.RESPONSE, response));
+        } else if (which == DialogInterface.BUTTON_NEGATIVE) {
+            mActivity.sendBroadcast(new Intent(WifiManagerHandshakeReceiver.ACTION_FILTER)
+                    .putExtra(Police.APPROVED, false));
         }
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-
+        mActivity.finish();
     }
 }

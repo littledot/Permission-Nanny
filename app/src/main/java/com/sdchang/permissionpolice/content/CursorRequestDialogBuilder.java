@@ -16,6 +16,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequestHandshakeReceiver;
@@ -95,7 +96,7 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
         if (DialogInterface.BUTTON_POSITIVE == which) {
             acceptRequest();
         } else if (DialogInterface.BUTTON_NEGATIVE == which) {
-            // TODO #3: Implement error handling when request is denied
+            denyRequest();
         }
     }
 
@@ -108,7 +109,13 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
 
         // return nonce to client
         mActivity.sendBroadcast(new Intent(CursorRequestHandshakeReceiver.ACTION_FILTER)
+                .putExtra(Police.APPROVED, true)
                 .putExtra(CursorRequestHandshakeReceiver.NONCE, nonce));
+    }
+
+    public void denyRequest() {
+        mActivity.sendBroadcast(new Intent(CursorRequestHandshakeReceiver.ACTION_FILTER)
+                .putExtra(Police.APPROVED, false));
     }
 
     @Override

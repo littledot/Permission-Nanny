@@ -5,15 +5,15 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.sdchang.permissionpolice.lib.request.BaseResponse;
 
 import java.util.List;
 
 /**
  *
  */
-public class WifiManagerResponse {
+public class WifiManagerResponse extends BaseResponse {
 
     public static final String NETWORK_ID = "netId";
     public static final String SUCCESS = "success";
@@ -24,10 +24,8 @@ public class WifiManagerResponse {
     public static final String WIFI_STATE = "wifiState";
     public static final String WIFI_ENABLED = "wifiEnabled";
 
-    private Bundle mResponse;
-
-    public WifiManagerResponse(@NonNull Bundle response) {
-        mResponse = response;
+    public WifiManagerResponse(Bundle response) {
+        super(response);
     }
 
     public int networkId() {
