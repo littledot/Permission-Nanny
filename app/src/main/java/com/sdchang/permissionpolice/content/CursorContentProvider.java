@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice;
+package com.sdchang.permissionpolice.content;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
-import com.sdchang.permissionpolice.lib.request.CursorRequest;
+import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
 
 import java.util.List;
 

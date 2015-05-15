@@ -2,15 +2,16 @@ package com.sdchang.permissionpolice.demo;
 
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.sdchang.permissionpolice.demo.R;
-import com.sdchang.permissionpolice.lib.request.CursorListener;
-import com.sdchang.permissionpolice.lib.request.CursorRequest;
+import butterknife.ButterKnife;
+import com.sdchang.permissionpolice.lib.request.content.CursorListener;
+import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {

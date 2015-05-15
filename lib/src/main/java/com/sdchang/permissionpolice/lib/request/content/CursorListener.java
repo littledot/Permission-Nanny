@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice.lib.request;
+package com.sdchang.permissionpolice.lib.request.content;
 
 import android.database.Cursor;
 

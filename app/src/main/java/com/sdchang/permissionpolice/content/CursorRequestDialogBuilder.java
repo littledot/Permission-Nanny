@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice;
+package com.sdchang.permissionpolice.content;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -15,9 +15,10 @@ import android.support.v7.app.AlertDialog;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
-import com.sdchang.permissionpolice.lib.request.CursorRequest;
-import com.sdchang.permissionpolice.lib.request.CursorRequestPermissionReceiver;
+import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
+import com.sdchang.permissionpolice.lib.request.content.CursorRequestHandshakeReceiver;
 import timber.log.Timber;
 
 import java.security.SecureRandom;
@@ -32,16 +33,16 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
     CharSequence mTitle;
     String mReason;
 
-    public CursorRequestDialogBuilder(Activity context, Bundle args) {
-        mActivity = context;
+    public CursorRequestDialogBuilder(Activity activity, Bundle args) {
+        mActivity = activity;
         String appPackage = args.getString(BaseRequest.SENDER_PACKAGE);
         mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
         mReason = args.getString(BaseRequest.REQUEST_REASON);
 
         CharSequence appLabel;
         try {
-            ApplicationInfo senderInfo = context.getPackageManager().getApplicationInfo(appPackage, 0);
-            appLabel = context.getPackageManager().getApplicationLabel(senderInfo);
+            ApplicationInfo senderInfo = activity.getPackageManager().getApplicationInfo(appPackage, 0);
+            appLabel = activity.getPackageManager().getApplicationLabel(senderInfo);
         } catch (NameNotFoundException e) {
             Timber.e(e, "senderPackage=%s", appPackage);
             appLabel = appPackage;
@@ -106,8 +107,8 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
         CursorContentProvider.approvedRequests.put(nonce, mRequest);
 
         // return nonce to client
-        mActivity.sendBroadcast(new Intent(CursorRequestPermissionReceiver.ACTION_FILTER)
-                .putExtra(CursorRequestPermissionReceiver.NONCE, nonce));
+        mActivity.sendBroadcast(new Intent(CursorRequestHandshakeReceiver.ACTION_FILTER)
+                .putExtra(CursorRequestHandshakeReceiver.NONCE, nonce));
     }
 
     @Override

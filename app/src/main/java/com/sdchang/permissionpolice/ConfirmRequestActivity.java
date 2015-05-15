@@ -1,6 +1,7 @@
 package com.sdchang.permissionpolice;
 
 import android.os.Bundle;
+import com.sdchang.permissionpolice.content.CursorRequestDialogBuilder;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 
 /**

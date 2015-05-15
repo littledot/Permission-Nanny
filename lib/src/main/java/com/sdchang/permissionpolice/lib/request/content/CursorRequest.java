@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice.lib.request;
+package com.sdchang.permissionpolice.lib.request.content;
 
 import android.content.Context;
 import android.content.IntentFilter;
@@ -6,14 +6,13 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import auto.parcel.AutoParcel;
+import com.sdchang.permissionpolice.lib.request.BaseRequest;
 
 import java.util.Arrays;
 import java.util.List;
 
 @AutoParcel
 public abstract class CursorRequest extends BaseRequest {
-
-    public static final ClassLoader classLoader = AutoParcel_CursorRequest.class.getClassLoader();
 
     public static Builder newBuilder() {
         return new AutoParcel_CursorRequest.Builder();
@@ -26,9 +25,9 @@ public abstract class CursorRequest extends BaseRequest {
 
     public void startRequest(Context context, String reason, CursorListener listener) {
         // begin handshake
-        context.registerReceiver(new CursorRequestPermissionReceiver(this, listener),
-                new IntentFilter(CursorRequestPermissionReceiver.ACTION_FILTER));
-        context.sendBroadcast(newIntent(context, reason));
+        context.registerReceiver(new CursorRequestHandshakeReceiver(this, listener),
+                new IntentFilter(CursorRequestHandshakeReceiver.ACTION_FILTER));
+        super.startRequest(context, reason);
     }
 
     public abstract Uri uri();
