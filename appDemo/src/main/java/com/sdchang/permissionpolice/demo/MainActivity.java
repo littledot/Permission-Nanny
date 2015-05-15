@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import com.sdchang.permissionpolice.lib.request.content.CursorListener;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
+import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
+import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerResponse;
+import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerResponseListener;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 4, 0, "exchange");
+        menu.add(0, 5, 0, "wifi");
         return true;
     }
 
@@ -42,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
                             Timber.wtf(DatabaseUtils.dumpCursorToString(data));
                         }
                     });
+        } else if (id == 5) {
+            WifiConfiguration config = new WifiConfiguration();
+            config.SSID = "permission police says hi";
+            WifiManagerRequest.newAddNetworkRequest(config).startRequest(this, "We want to add new wifi", new WifiManagerResponseListener() {
+                @Override
+                public void onResult(WifiManagerResponse response) {
+                    Timber.wtf(response.toString());
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }

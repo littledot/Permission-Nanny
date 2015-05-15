@@ -20,4 +20,20 @@
     <string name="dialogTitle_contactsContentUri"> would like to access your contacts.</string>
     <string name="dialogTitle_contactsContentVcardUri"> would like to access your contacts\' vCard.</string>
 
+    <string name="dialogTitle_wifiAddNetwork"> would like to add a new Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiDisableNetwork"> would like to disable a Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiDisconnect"> would like to disconnect from the current Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiEnableNetwork"> would like to enable a Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiReassociate"> would like to reconnect to the currently active Wi-Fi access
+        point.</string>
+    <string name="dialogTitle_wifiReconnect"> would like to reconnect to the currently active Wi-Fi access
+        point.</string>
+    <string name="dialogTitle_wifiRemoveNetwork"> would like to remove an existing Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiSaveConfiguration"> would like the system to save the current Wi-Fi access point
+        configuration.</string>
+    <string name="dialogTitle_wifiSetWifiEnabled_enable"> would like to enable your Wi-Fi connection.</string>
+    <string name="dialogTitle_wifiSetWifiEnabled_disable"> would like to disable Wi-Fi connection.</string>
+    <string name="dialogTitle_wifiStartScan"> would like to request a scan for Wi-Fi access points.</string>
+    <string name="dialogTitle_wifiUpdateNetwork"> would like to update an existing Wi-Fi access point configuration.
+    </string>
 </resources>

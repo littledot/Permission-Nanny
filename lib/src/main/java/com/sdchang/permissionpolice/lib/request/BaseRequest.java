@@ -20,10 +20,11 @@ public abstract class BaseRequest implements Parcelable {
     public static final String SENDER_PACKAGE = "senderPackage";
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({CURSOR_REQUEST})
+    @IntDef({CURSOR_REQUEST, WIFI_MGR_REQUEST})
     public @interface RequestType {}
 
     public static final int CURSOR_REQUEST = 1;
+    public static final int WIFI_MGR_REQUEST = 2;
 
     @RequestType
     public abstract int getRequestType();
