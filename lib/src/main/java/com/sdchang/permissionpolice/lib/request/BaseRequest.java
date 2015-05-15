@@ -2,8 +2,11 @@ package com.sdchang.permissionpolice.lib.request;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
+import com.sdchang.permissionpolice.lib.BaseHandshakeReceiver;
+import com.sdchang.permissionpolice.lib.BundleListener;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -20,14 +23,17 @@ public abstract class BaseRequest implements Parcelable {
     public static final String SENDER_PACKAGE = "senderPackage";
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({CURSOR_REQUEST, WIFI_MGR_REQUEST})
+    @IntDef({CURSOR_REQUEST, WIFI_REQUEST, TELEPHONY_REQUEST})
     public @interface RequestType {}
 
     public static final int CURSOR_REQUEST = 1;
-    public static final int WIFI_MGR_REQUEST = 2;
+    public static final int WIFI_REQUEST = 2;
+    public static final int TELEPHONY_REQUEST = 3;
 
     @RequestType
     public abstract int getRequestType();
+
+    public abstract String getIntentFilter();
 
     private Intent intent;
 
@@ -44,5 +50,10 @@ public abstract class BaseRequest implements Parcelable {
 
     public void startRequest(Context context, String reason) {
         context.sendBroadcast(newIntent(context, reason));
+    }
+
+    public void startRequest(Context context, String reason, BundleListener listener) {
+        context.registerReceiver(new BaseHandshakeReceiver(listener), new IntentFilter(getIntentFilter()));
+        startRequest(context, reason);
     }
 }

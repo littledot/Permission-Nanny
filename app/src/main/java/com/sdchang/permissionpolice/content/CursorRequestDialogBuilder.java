@@ -100,7 +100,7 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
         }
     }
 
-    public void acceptRequest() {
+    private void acceptRequest() {
         long nonce = new SecureRandom().nextLong();
         Timber.wtf("nonce=" + nonce);
 
@@ -108,13 +108,13 @@ public class CursorRequestDialogBuilder implements DialogInterface.OnClickListen
         CursorContentProvider.approvedRequests.put(nonce, mRequest);
 
         // return nonce to client
-        mActivity.sendBroadcast(new Intent(CursorRequestHandshakeReceiver.ACTION_FILTER)
+        mActivity.sendBroadcast(new Intent(CursorRequest.CURSOR_INTENT_FILTER)
                 .putExtra(Police.APPROVED, true)
                 .putExtra(CursorRequestHandshakeReceiver.NONCE, nonce));
     }
 
-    public void denyRequest() {
-        mActivity.sendBroadcast(new Intent(CursorRequestHandshakeReceiver.ACTION_FILTER)
+    private void denyRequest() {
+        mActivity.sendBroadcast(new Intent(CursorRequest.CURSOR_INTENT_FILTER)
                 .putExtra(Police.APPROVED, false));
     }
 

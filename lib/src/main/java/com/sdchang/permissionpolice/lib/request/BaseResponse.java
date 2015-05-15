@@ -14,7 +14,7 @@ public class BaseResponse {
         mResponse = response;
     }
 
-    public boolean approved() {
+    public boolean isApproved() {
         return mResponse.getBoolean(Police.APPROVED);
     }
 }

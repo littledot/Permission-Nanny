@@ -1,7 +1,5 @@
 package com.sdchang.permissionpolice.lib.request.wifi;
 
-import android.content.Context;
-import android.content.IntentFilter;
 import android.net.wifi.WifiConfiguration;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -39,18 +37,18 @@ public abstract class WifiManagerRequest extends BaseRequest {
         public abstract WifiManagerRequest build();
     }
 
+    public static final String WIFI_INTENT_FILTER = "WIFI_INTENT_FILTER";
+
     @Override
     public int getRequestType() {
-        return WIFI_MGR_REQUEST;
+        return WIFI_REQUEST;
     }
 
-    public void startRequest(Context context, String reason, WifiManagerResponseListener listener) {
-        context.registerReceiver(new WifiManagerHandshakeReceiver(listener),
-                new IntentFilter(WifiManagerHandshakeReceiver.ACTION_FILTER));
-        super.startRequest(context, reason);
+    @Override
+    public String getIntentFilter() {
+        return WIFI_INTENT_FILTER;
     }
 
-    @Op
     public abstract int opCode();
 
     @Nullable

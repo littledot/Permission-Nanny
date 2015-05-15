@@ -14,19 +14,22 @@ import java.util.List;
 @AutoParcel
 public abstract class CursorRequest extends BaseRequest {
 
-    public static Builder newBuilder() {
-        return new AutoParcel_CursorRequest.Builder();
-    }
+    public static final String CURSOR_INTENT_FILTER = "CURSOR_INTENT_FILTER";
 
     @Override
     public int getRequestType() {
         return CURSOR_REQUEST;
     }
 
+    @Override
+    public String getIntentFilter() {
+        return CURSOR_INTENT_FILTER;
+    }
+
     public void startRequest(Context context, String reason, CursorListener listener) {
         // begin handshake
         context.registerReceiver(new CursorRequestHandshakeReceiver(this, listener),
-                new IntentFilter(CursorRequestHandshakeReceiver.ACTION_FILTER));
+                new IntentFilter(getIntentFilter()));
         super.startRequest(context, reason);
     }
 
@@ -43,6 +46,10 @@ public abstract class CursorRequest extends BaseRequest {
 
     @Nullable
     public abstract String sortOrder();
+
+    public static Builder newBuilder() {
+        return new AutoParcel_CursorRequest.Builder();
+    }
 
     @AutoParcel.Builder
     public abstract static class Builder {

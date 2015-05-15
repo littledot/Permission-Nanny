@@ -10,11 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.ButterKnife;
+import com.sdchang.permissionpolice.lib.BundleListener;
 import com.sdchang.permissionpolice.lib.request.content.CursorListener;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
-import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerResponse;
-import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerResponseListener;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -67,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
             wc.wepTxKeyIndex = 0;
 
             WifiManagerRequest.newAddNetworkRequest(wc).startRequest(this, "We want to add new wifi",
-                    new WifiManagerResponseListener() {
+                    new BundleListener() {
                         @Override
-                        public void onResult(WifiManagerResponse response) {
-                            Timber.wtf(response.toString());
+                        public void onResult(Bundle results) {
+                            Timber.wtf(results.toString());
                         }
                     });
         }

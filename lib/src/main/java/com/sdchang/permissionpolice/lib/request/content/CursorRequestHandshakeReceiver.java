@@ -14,7 +14,6 @@ import com.sdchang.permissionpolice.lib.Police;
 public class CursorRequestHandshakeReceiver extends BroadcastReceiver {
 
     public static final Uri PROVIDER = new Builder().scheme("content").authority(Police.PROVIDER_AUTHORITY).build();
-    public static final String ACTION_FILTER = "ppResult";
     public static final String NONCE = "nonce";
 
     CursorRequest mRequest;
