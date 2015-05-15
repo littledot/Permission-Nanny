@@ -1,22 +1,68 @@
 package com.sdchang.permissionpolice.lib.request.wifi;
 
-import android.os.Parcelable;
-import auto.parcel.AutoParcel;
+import android.net.DhcpInfo;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import java.util.List;
 
 /**
  *
  */
-@AutoParcel
-public abstract class WifiManagerResponse implements Parcelable {
-    public abstract int networkId();
+public class WifiManagerResponse {
 
-    public abstract boolean success();
+    public static final String NETWORK_ID = "netId";
+    public static final String SUCCESS = "success";
+    public static final String WIFI_CONFIGURATIONS = "wifiConfigurations";
+    public static final String WIFI_INFO = "wifiInfo";
+    public static final String DHCP_INFO = "dhcpInfo";
+    public static final String SCAN_RESULTS = "scanResults";
+    public static final String WIFI_STATE = "wifiState";
+    public static final String WIFI_ENABLED = "wifiEnabled";
 
-    public static WifiManagerResponse create(int networkId) {
-        return new AutoParcel_WifiManagerResponse(networkId, false);
+    private Bundle mResponse;
+
+    public WifiManagerResponse(@NonNull Bundle response) {
+        mResponse = response;
     }
 
-    public static WifiManagerResponse create(boolean success) {
-        return new AutoParcel_WifiManagerResponse(0, success);
+    public int networkId() {
+        return mResponse.getInt(NETWORK_ID);
+    }
+
+    public boolean success() {
+        return mResponse.getBoolean(SUCCESS);
+    }
+
+    @Nullable
+    public List<WifiConfiguration> wifiConfigurations() {
+        return mResponse.getParcelableArrayList(WIFI_CONFIGURATIONS);
+    }
+
+    @Nullable
+    public WifiInfo wifiInfo() {
+        return mResponse.getParcelable(WIFI_INFO);
+    }
+
+    @Nullable
+    public DhcpInfo dhcpInfo() {
+        return mResponse.getParcelable(DHCP_INFO);
+    }
+
+    @Nullable
+    public List<ScanResult> scanResults() {
+        return mResponse.getParcelableArrayList(SCAN_RESULTS);
+    }
+
+    public int wifiState() {
+        return mResponse.getInt(WIFI_STATE);
+    }
+
+    public boolean wifiEnabled() {
+        return mResponse.getBoolean(WIFI_ENABLED);
     }
 }

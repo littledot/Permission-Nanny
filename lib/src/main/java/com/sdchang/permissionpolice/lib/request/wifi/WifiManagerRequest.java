@@ -69,10 +69,51 @@ public abstract class WifiManagerRequest extends BaseRequest {
     public abstract String string();
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({REASSOCIATE, START_SCAN, DISABLE_NETWORK, UPDATE_NETWORK, REMOVE_NETWORK, RECONNECT, ADD_NETWORK,
-            ENABLE_NETWORK, DISCONNECT, SET_WIFI_ENABLED, SAVE_CONFIGURATION})
+    @IntDef({GET_SCAN_RESULTS, GET_DHCP_INFO, PING_SUPPLICANT, IS_WIFI_ENABLED, GET_CONNECTION_INFO, GET_WIFI_STATE,
+            GET_CONFIGURED_NETWORKS,
+            REASSOCIATE, START_SCAN, DISABLE_NETWORK, UPDATE_NETWORK, REMOVE_NETWORK, RECONNECT, ADD_NETWORK,
+            ENABLE_NETWORK, DISCONNECT, SET_WIFI_ENABLED, SAVE_CONFIGURATION,
+    })
     public @interface Op {}
 
+    // ACCESS_WIFI_STATE
+    public static final int GET_SCAN_RESULTS = 1 << 16;
+    public static final int GET_DHCP_INFO = 1 << 16 + 1;
+    public static final int PING_SUPPLICANT = 1 << 16 + 2;
+    public static final int IS_WIFI_ENABLED = 1 << 16 + 3;
+    public static final int GET_CONNECTION_INFO = 1 << 16 + 4;
+    public static final int GET_WIFI_STATE = 1 << 16 + 5;
+    public static final int GET_CONFIGURED_NETWORKS = 1 << 17 + 6;
+
+    public static WifiManagerRequest newGetScanResultsRequest() {
+        return newBuilder().opCode(GET_SCAN_RESULTS).build();
+    }
+
+    public static WifiManagerRequest newGetDhcpInfoRequest() {
+        return newBuilder().opCode(GET_DHCP_INFO).build();
+    }
+
+    public static WifiManagerRequest newPingSupplicantRequest() {
+        return newBuilder().opCode(PING_SUPPLICANT).build();
+    }
+
+    public static WifiManagerRequest newIsWifiEnabledRequest() {
+        return newBuilder().opCode(IS_WIFI_ENABLED).build();
+    }
+
+    public static WifiManagerRequest newGetConnectionInfoRequest() {
+        return newBuilder().opCode(GET_CONNECTION_INFO).build();
+    }
+
+    public static WifiManagerRequest newGetWifiStateRequest() {
+        return newBuilder().opCode(GET_WIFI_STATE).build();
+    }
+
+    public static WifiManagerRequest newGetConfiguredNetworksRequest() {
+        return newBuilder().opCode(GET_CONFIGURED_NETWORKS).build();
+    }
+
+    // CHANGE_WIFI_STATE
     public static final int REASSOCIATE = 1;
     public static final int START_SCAN = 2;
     public static final int DISABLE_NETWORK = 3;

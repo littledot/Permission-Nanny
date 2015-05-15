@@ -21,6 +21,8 @@ import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerResponse;
 import timber.log.Timber;
 
+import java.util.ArrayList;
+
 /**
  *
  */
@@ -107,40 +109,65 @@ public class WifiManagerRequestDialogBuilder implements DialogInterface.OnClickL
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
             WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
-            WifiManagerResponse response = null;
+            Bundle response = new Bundle();
             switch (mRequest.opCode()) {
+                case WifiManagerRequest.GET_CONFIGURED_NETWORKS:
+                    response.putParcelableArrayList(WifiManagerResponse.WIFI_CONFIGURATIONS,
+                            new ArrayList<>(wifi.getConfiguredNetworks()));
+                    break;
+                case WifiManagerRequest.GET_CONNECTION_INFO:
+                    response.putParcelable(WifiManagerResponse.WIFI_INFO, wifi.getConnectionInfo());
+                    break;
+                case WifiManagerRequest.GET_DHCP_INFO:
+                    response.putParcelable(WifiManagerResponse.DHCP_INFO, wifi.getDhcpInfo());
+                    break;
+                case WifiManagerRequest.GET_SCAN_RESULTS:
+                    response.putParcelableArrayList(WifiManagerResponse.SCAN_RESULTS,
+                            new ArrayList<>(wifi.getScanResults()));
+                    break;
+                case WifiManagerRequest.GET_WIFI_STATE:
+                    response.putInt(WifiManagerResponse.WIFI_STATE, wifi.getWifiState());
+                    break;
+                case WifiManagerRequest.IS_WIFI_ENABLED:
+                    response.putBoolean(WifiManagerResponse.WIFI_ENABLED, wifi.isWifiEnabled());
+                    break;
+                case WifiManagerRequest.PING_SUPPLICANT:
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.pingSupplicant());
+                    break;
+
                 case WifiManagerRequest.ADD_NETWORK:
-                    response = WifiManagerResponse.create(wifi.addNetwork(mRequest.wifiConfiguration()));
+                    response.putInt(WifiManagerResponse.NETWORK_ID, wifi.addNetwork(mRequest.wifiConfiguration()));
                     break;
                 case WifiManagerRequest.DISABLE_NETWORK:
-                    response = WifiManagerResponse.create(wifi.disableNetwork(mRequest.integer()));
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.disableNetwork(mRequest.integer()));
                     break;
                 case WifiManagerRequest.DISCONNECT:
-                    response = WifiManagerResponse.create(wifi.disconnect());
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.disconnect());
                     break;
                 case WifiManagerRequest.ENABLE_NETWORK:
-                    response = WifiManagerResponse.create(wifi.enableNetwork(mRequest.integer(), mRequest.bool()));
+                    response.putBoolean(WifiManagerResponse.SUCCESS,
+                            wifi.enableNetwork(mRequest.integer(), mRequest.bool()));
                     break;
                 case WifiManagerRequest.REASSOCIATE:
-                    response = WifiManagerResponse.create(wifi.reassociate());
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.reassociate());
                     break;
                 case WifiManagerRequest.RECONNECT:
-                    response = WifiManagerResponse.create(wifi.reconnect());
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.reconnect());
                     break;
                 case WifiManagerRequest.REMOVE_NETWORK:
-                    response = WifiManagerResponse.create(wifi.removeNetwork(mRequest.integer()));
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.removeNetwork(mRequest.integer()));
                     break;
                 case WifiManagerRequest.SAVE_CONFIGURATION:
-                    response = WifiManagerResponse.create(wifi.saveConfiguration());
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.saveConfiguration());
                     break;
                 case WifiManagerRequest.SET_WIFI_ENABLED:
-                    response = WifiManagerResponse.create(wifi.setWifiEnabled(mRequest.bool()));
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.setWifiEnabled(mRequest.bool()));
                     break;
                 case WifiManagerRequest.START_SCAN:
-                    response = WifiManagerResponse.create(wifi.startScan());
+                    response.putBoolean(WifiManagerResponse.SUCCESS, wifi.startScan());
                     break;
                 case WifiManagerRequest.UPDATE_NETWORK:
-                    response = WifiManagerResponse.create(wifi.updateNetwork(mRequest.wifiConfiguration()));
+                    response.putInt(WifiManagerResponse.NETWORK_ID, wifi.updateNetwork(mRequest.wifiConfiguration()));
                     break;
             }
             mActivity.sendBroadcast(new Intent(WifiManagerHandshakeReceiver.ACTION_FILTER)

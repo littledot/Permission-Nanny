@@ -48,14 +48,31 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         } else if (id == 5) {
-            WifiConfiguration config = new WifiConfiguration();
-            config.SSID = "permission police says hi";
-            WifiManagerRequest.newAddNetworkRequest(config).startRequest(this, "We want to add new wifi", new WifiManagerResponseListener() {
-                @Override
-                public void onResult(WifiManagerResponse response) {
-                    Timber.wtf(response.toString());
-                }
-            });
+            WifiConfiguration wc = new WifiConfiguration();
+            wc.SSID = "\"SSID_NAME\""; //IMP! This should be in Quotes!!
+            wc.hiddenSSID = true;
+            wc.status = WifiConfiguration.Status.DISABLED;
+            wc.priority = 40;
+            wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+            wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+            wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+            wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+
+            wc.wepKeys[0] = "\"aaabbb1234\""; //This is the WEP Password
+            wc.wepTxKeyIndex = 0;
+
+            WifiManagerRequest.newAddNetworkRequest(wc).startRequest(this, "We want to add new wifi",
+                    new WifiManagerResponseListener() {
+                        @Override
+                        public void onResult(WifiManagerResponse response) {
+                            Timber.wtf(response.toString());
+                        }
+                    });
         }
         return super.onOptionsItemSelected(item);
     }
