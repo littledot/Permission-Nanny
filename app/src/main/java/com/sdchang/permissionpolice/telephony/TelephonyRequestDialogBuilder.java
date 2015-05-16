@@ -11,6 +11,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
+import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
@@ -37,6 +38,34 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder {
         int string = 0;
         switch (mRequest.opCode()) {
             case TelephonyManagerRequest.GET_ALL_CELL_INFO:
+                string = R.string.dialogTitle_telephonyGetAllCellInfo;
+                break;
+            case TelephonyManagerRequest.GET_DEVICE_ID:
+                string = R.string.dialogTitle_telephonyGetDeviceId;
+                break;
+            case TelephonyManagerRequest.GET_DEVICE_SOFTWARE_VERSION:
+                string = R.string.dialogTitle_telephonyGetDeviceSoftwareVersion;
+                break;
+            case TelephonyManagerRequest.GET_GROUP_ID_LEVEL_1:
+                string = R.string.dialogTitle_telephonyGetGroupIdLevel1;
+                break;
+            case TelephonyManagerRequest.GET_LINE_1_NUMBER:
+                string = R.string.dialogTitle_telephonyGetLine1Number;
+                break;
+            case TelephonyManagerRequest.GET_NEIGHBORING_CELL_INFO:
+                string = R.string.dialogTitle_telephonyGetNeighboringCellInfo;
+                break;
+            case TelephonyManagerRequest.GET_SIM_SERIAL_NUMBER:
+                string = R.string.dialogTitle_telephonyGetSimSerialNumber;
+                break;
+            case TelephonyManagerRequest.GET_SUBSCRIBER_ID:
+                string = R.string.dialogTitle_telephonyGetSubscriberId;
+                break;
+            case TelephonyManagerRequest.GET_VOICE_MAIL_ALPHA_TAG:
+                string = R.string.dialogTitle_telephonyGetVoiceMailAlphaTag;
+                break;
+            case TelephonyManagerRequest.GET_VOICE_MAIL_NUMBER:
+                string = R.string.dialogTitle_telephonyGetVoiceMailNumber;
                 break;
         }
         return boldAppLabel.append(mActivity.getText(string));

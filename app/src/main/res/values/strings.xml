@@ -36,4 +36,19 @@
     <string name="dialogTitle_wifiStartScan"> would like to request a scan for Wi-Fi access points.</string>
     <string name="dialogTitle_wifiUpdateNetwork"> would like to update an existing Wi-Fi access point configuration.
     </string>
+
+    <string name="dialogTitle_telephonyGetAllCellInfo"> would like to query all cellular information.</string>
+    <string name="dialogTitle_telephonyGetDeviceId"> would like to query the device ID.</string>
+    <string name="dialogTitle_telephonyGetDeviceSoftwareVersion"> would like to query the device software
+        version.</string>
+    <string name="dialogTitle_telephonyGetGroupIdLevel1"> would like to query the device Group Identifier Level1
+        .</string>
+    <string name="dialogTitle_telephonyGetLine1Number"> would like to query the device line 1 number.</string>
+    <string name="dialogTitle_telephonyGetNeighboringCellInfo"> would like to query neighboring cellular
+        information.</string>
+    <string name="dialogTitle_telephonyGetSimSerialNumber"> would like to query the device SIM serial number.</string>
+    <string name="dialogTitle_telephonyGetSubscriberId"> would like to query the device subscriber ID.</string>
+    <string name="dialogTitle_telephonyGetVoiceMailAlphaTag"> would like to query the device voice mail alpha
+        tag.</string>
+    <string name="dialogTitle_telephonyGetVoiceMailNumber"> would like to query the device voice mail number.</string>
 </resources>
