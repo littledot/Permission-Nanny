@@ -1,8 +1,8 @@
 package com.sdchang.permissionpolice.lib.request.wifi;
 
 import android.net.wifi.WifiConfiguration;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import auto.parcel.AutoParcel;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 
@@ -22,7 +22,7 @@ public abstract class WifiManagerRequest extends BaseRequest {
 
     @AutoParcel.Builder
     static abstract class Builder {
-        public abstract Builder opCode(@Op int value);
+        public abstract Builder opCode(@Op String value);
 
         public abstract Builder wifiConfiguration(WifiConfiguration value);
 
@@ -49,7 +49,7 @@ public abstract class WifiManagerRequest extends BaseRequest {
         return WIFI_INTENT_FILTER;
     }
 
-    public abstract int opCode();
+    public abstract String opCode();
 
     @Nullable
     public abstract WifiConfiguration wifiConfiguration();
@@ -67,7 +67,7 @@ public abstract class WifiManagerRequest extends BaseRequest {
     public abstract String string();
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({GET_SCAN_RESULTS, GET_DHCP_INFO, PING_SUPPLICANT, IS_WIFI_ENABLED, GET_CONNECTION_INFO, GET_WIFI_STATE,
+    @StringDef({GET_SCAN_RESULTS, GET_DHCP_INFO, PING_SUPPLICANT, IS_WIFI_ENABLED, GET_CONNECTION_INFO, GET_WIFI_STATE,
             GET_CONFIGURED_NETWORKS,
             REASSOCIATE, START_SCAN, DISABLE_NETWORK, UPDATE_NETWORK, REMOVE_NETWORK, RECONNECT, ADD_NETWORK,
             ENABLE_NETWORK, DISCONNECT, SET_WIFI_ENABLED, SAVE_CONFIGURATION,
@@ -75,13 +75,13 @@ public abstract class WifiManagerRequest extends BaseRequest {
     public @interface Op {}
 
     // ACCESS_WIFI_STATE
-    public static final int GET_SCAN_RESULTS = 1 << 16;
-    public static final int GET_DHCP_INFO = 1 << 16 + 1;
-    public static final int PING_SUPPLICANT = 1 << 16 + 2;
-    public static final int IS_WIFI_ENABLED = 1 << 16 + 3;
-    public static final int GET_CONNECTION_INFO = 1 << 16 + 4;
-    public static final int GET_WIFI_STATE = 1 << 16 + 5;
-    public static final int GET_CONFIGURED_NETWORKS = 1 << 17 + 6;
+    public static final String GET_SCAN_RESULTS = "getScanResults";
+    public static final String GET_DHCP_INFO = "getDhcpInfo";
+    public static final String PING_SUPPLICANT = "pingSupplicant";
+    public static final String IS_WIFI_ENABLED = "isWifiEnabled";
+    public static final String GET_CONNECTION_INFO = "getConnectionInfo";
+    public static final String GET_WIFI_STATE = "getWifiState";
+    public static final String GET_CONFIGURED_NETWORKS = "getConfiguredNetworks";
 
     public static WifiManagerRequest newGetScanResultsRequest() {
         return newBuilder().opCode(GET_SCAN_RESULTS).build();
@@ -112,17 +112,17 @@ public abstract class WifiManagerRequest extends BaseRequest {
     }
 
     // CHANGE_WIFI_STATE
-    public static final int REASSOCIATE = 1;
-    public static final int START_SCAN = 2;
-    public static final int DISABLE_NETWORK = 3;
-    public static final int UPDATE_NETWORK = 4;
-    public static final int REMOVE_NETWORK = 5;
-    public static final int RECONNECT = 6;
-    public static final int ADD_NETWORK = 7;
-    public static final int ENABLE_NETWORK = 8;
-    public static final int DISCONNECT = 9;
-    public static final int SET_WIFI_ENABLED = 10;
-    public static final int SAVE_CONFIGURATION = 11;
+    public static final String REASSOCIATE = "reassociate";
+    public static final String START_SCAN = "startScan";
+    public static final String DISABLE_NETWORK = "disableNetwork";
+    public static final String UPDATE_NETWORK = "updateNetwork";
+    public static final String REMOVE_NETWORK = "removeNetwork";
+    public static final String RECONNECT = "reconnect";
+    public static final String ADD_NETWORK = "addNetwork";
+    public static final String ENABLE_NETWORK = "enableNetwork";
+    public static final String DISCONNECT = "disconnect";
+    public static final String SET_WIFI_ENABLED = "setWifiEnabled";
+    public static final String SAVE_CONFIGURATION = "saveConfiguration";
 
     public static WifiManagerRequest newReassociateRequest() {
         return newBuilder().opCode(REASSOCIATE).build();

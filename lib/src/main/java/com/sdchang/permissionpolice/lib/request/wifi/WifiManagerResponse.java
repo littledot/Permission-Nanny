@@ -15,52 +15,79 @@ import java.util.List;
  */
 public class WifiManagerResponse extends BaseResponse {
 
-    public static final String NETWORK_ID = "netId";
-    public static final String SUCCESS = "success";
-    public static final String WIFI_CONFIGURATIONS = "wifiConfigurations";
-    public static final String WIFI_INFO = "wifiInfo";
-    public static final String DHCP_INFO = "dhcpInfo";
-    public static final String SCAN_RESULTS = "scanResults";
-    public static final String WIFI_STATE = "wifiState";
-    public static final String WIFI_ENABLED = "wifiEnabled";
-
     public WifiManagerResponse(Bundle response) {
         super(response);
     }
 
-    public int networkId() {
-        return mResponse.getInt(NETWORK_ID);
-    }
-
-    public boolean success() {
-        return mResponse.getBoolean(SUCCESS);
-    }
-
     @Nullable
     public List<WifiConfiguration> wifiConfigurations() {
-        return mResponse.getParcelableArrayList(WIFI_CONFIGURATIONS);
+        return mResponse.getParcelableArrayList(WifiManagerRequest.GET_CONFIGURED_NETWORKS);
     }
 
     @Nullable
     public WifiInfo wifiInfo() {
-        return mResponse.getParcelable(WIFI_INFO);
+        return mResponse.getParcelable(WifiManagerRequest.GET_CONNECTION_INFO);
     }
 
     @Nullable
     public DhcpInfo dhcpInfo() {
-        return mResponse.getParcelable(DHCP_INFO);
+        return mResponse.getParcelable(WifiManagerRequest.GET_DHCP_INFO);
     }
 
     @Nullable
     public List<ScanResult> scanResults() {
-        return mResponse.getParcelableArrayList(SCAN_RESULTS);
+        return mResponse.getParcelableArrayList(WifiManagerRequest.GET_SCAN_RESULTS);
     }
 
     public int wifiState() {
-        return mResponse.getInt(WIFI_STATE);
+        return mResponse.getInt(WifiManagerRequest.GET_WIFI_STATE);
     }
 
-    public boolean wifiEnabled() {
-        return mResponse.getBoolean(WIFI_ENABLED);
+    public boolean isWifiEnabled() {
+        return mResponse.getBoolean(WifiManagerRequest.IS_WIFI_ENABLED);
+    }
+
+    public boolean pingSupplicant() {
+        return mResponse.getBoolean(WifiManagerRequest.PING_SUPPLICANT);
+    }
+
+    public int networkId() {
+        return mResponse.getInt(WifiManagerRequest.ADD_NETWORK);
+    }
+
+    public boolean networkDisabled() {
+        return mResponse.getBoolean(WifiManagerRequest.DISABLE_NETWORK);
+    }
+
+    public boolean disconnected() {
+        return mResponse.getBoolean(WifiManagerRequest.DISCONNECT);
+    }
+
+    public boolean networkEnabled() {
+        return mResponse.getBoolean(WifiManagerRequest.ENABLE_NETWORK);
+    }
+
+    public boolean reassociated() {
+        return mResponse.getBoolean(WifiManagerRequest.REASSOCIATE);
+    }
+
+    public boolean reconnected() {
+        return mResponse.getBoolean(WifiManagerRequest.RECONNECT);
+    }
+
+    public boolean removeNetwork() {
+        return mResponse.getBoolean(WifiManagerRequest.REMOVE_NETWORK);
+    }
+
+    public boolean saveConfiguration() {
+        return mResponse.getBoolean(WifiManagerRequest.SAVE_CONFIGURATION);
+    }
+
+    public boolean setWifiEnabled() {
+        return mResponse.getBoolean(WifiManagerRequest.SET_WIFI_ENABLED);
+    }
+
+    public boolean startScan() {
+        return mResponse.getBoolean(WifiManagerRequest.START_SCAN);
     }
 }
