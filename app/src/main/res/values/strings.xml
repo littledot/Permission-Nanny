@@ -24,6 +24,13 @@
     <string name="dialogTitle_wifiDisableNetwork"> would like to disable a Wi-Fi access point.</string>
     <string name="dialogTitle_wifiDisconnect"> would like to disconnect from the current Wi-Fi access point.</string>
     <string name="dialogTitle_wifiEnableNetwork"> would like to enable a Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiGetConfiguredNetworks"> would like to access saved Wi-Fi access points.</string>
+    <string name="dialogTitle_wifiGetConnectionInfo"> would like to access Wi-Fi access point information.</string>
+    <string name="dialogTitle_wifiGetDhcpInfo"> would like to access DHCP information.</string>
+    <string name="dialogTitle_wifiGetScanResults"> would like to access latest Wi-Fi access point scan results.</string>
+    <string name="dialogTitle_wifiGetWifiState"> would like to query Wi-Fi state.</string>
+    <string name="dialogTitle_wifiIsWifiEnabled"> would like to know if the Wi-Fi is enabled or disabled.</string>
+    <string name="dialogTitle_wifiPingSupplicant"> would like to check if the Wi-Fi daemon is working.</string>
     <string name="dialogTitle_wifiReassociate"> would like to reconnect to the currently active Wi-Fi access
         point.</string>
     <string name="dialogTitle_wifiReconnect"> would like to reconnect to the currently active Wi-Fi access

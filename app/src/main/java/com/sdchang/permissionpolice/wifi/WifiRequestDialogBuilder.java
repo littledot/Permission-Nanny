@@ -30,8 +30,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        // TODO #7: add missing strings
-        int string = R.string.app_name;
+        int string = 0;
         switch (mRequest.opCode()) {
             case WifiManagerRequest.ADD_NETWORK:
                 string = R.string.dialogTitle_wifiAddNetwork;
@@ -44,6 +43,27 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
                 break;
             case WifiManagerRequest.ENABLE_NETWORK:
                 string = R.string.dialogTitle_wifiEnableNetwork;
+                break;
+            case WifiManagerRequest.GET_CONFIGURED_NETWORKS:
+                string = R.string.dialogTitle_wifiGetConfiguredNetworks;
+                break;
+            case WifiManagerRequest.GET_CONNECTION_INFO:
+                string = R.string.dialogTitle_wifiGetConnectionInfo;
+                break;
+            case WifiManagerRequest.GET_DHCP_INFO:
+                string = R.string.dialogTitle_wifiGetDhcpInfo;
+                break;
+            case WifiManagerRequest.GET_SCAN_RESULTS:
+                string = R.string.dialogTitle_wifiGetScanResults;
+                break;
+            case WifiManagerRequest.GET_WIFI_STATE:
+                string = R.string.dialogTitle_wifiGetWifiState;
+                break;
+            case WifiManagerRequest.IS_WIFI_ENABLED:
+                string = R.string.dialogTitle_wifiIsWifiEnabled;
+                break;
+            case WifiManagerRequest.PING_SUPPLICANT:
+                string = R.string.dialogTitle_wifiPingSupplicant;
                 break;
             case WifiManagerRequest.REASSOCIATE:
                 string = R.string.dialogTitle_wifiReassociate;
