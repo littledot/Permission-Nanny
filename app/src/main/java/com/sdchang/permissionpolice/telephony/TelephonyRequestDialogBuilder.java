@@ -27,7 +27,7 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyMa
     }
 
     @Override
-    protected CharSequence buildDialogTitle(CharSequence appLabel) {
+    protected CharSequence initDialogTitle(CharSequence appLabel) {
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -68,7 +68,7 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyMa
     }
 
     @Override
-    protected void onAllowRequest() {
+    protected Intent onAllowRequest() {
         super.onAllowRequest();
         TelephonyManager tele = (TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE);
         Bundle response = new Bundle();
@@ -108,15 +108,13 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyMa
                 response.putString(mRequest.opCode(), tele.getVoiceMailNumber());
                 break;
         }
-        mActivity.sendBroadcast(new Intent(TelephonyManagerRequest.TELEPHONY_INTENT_FILTER)
-                .putExtra(Police.APPROVED, true)
-                .putExtra(Police.RESPONSE, response));
+        return new Intent().putExtra(Police.APPROVED, true)
+                .putExtra(Police.RESPONSE, response);
     }
 
     @Override
-    protected void onDenyRequest() {
+    protected Intent onDenyRequest() {
         super.onDenyRequest();
-        mActivity.sendBroadcast(new Intent(TelephonyManagerRequest.TELEPHONY_INTENT_FILTER)
-                .putExtra(Police.APPROVED, false));
+        return new Intent().putExtra(Police.APPROVED, false);
     }
 }

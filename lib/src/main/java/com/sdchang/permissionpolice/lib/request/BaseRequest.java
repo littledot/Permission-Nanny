@@ -10,6 +10,7 @@ import com.sdchang.permissionpolice.lib.BundleListener;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.security.SecureRandom;
 
 /**
  *
@@ -21,6 +22,7 @@ public abstract class BaseRequest implements Parcelable {
     public static final String REQUEST_BODY = "requestBody";
     public static final String REQUEST_REASON = "requestReason";
     public static final String SENDER_PACKAGE = "senderPackage";
+    public static final String CLIENT_RECEIVER_INTENT_FILTER = "clientReceiverIntentFilter";
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({CURSOR_REQUEST, WIFI_REQUEST, TELEPHONY_REQUEST})
@@ -37,23 +39,36 @@ public abstract class BaseRequest implements Parcelable {
 
     private Intent intent;
 
-    public Intent newIntent(Context context, String reason) {
+    public Intent newIntent(Context context, String reason, String clientFilter) {
         if (intent == null) {
-            intent = new Intent(ACTION)
+            intent = newBroadcastIntent()
                     .putExtra(SENDER_PACKAGE, context.getPackageName())
                     .putExtra(REQUEST_TYPE, getRequestType())
                     .putExtra(REQUEST_BODY, this)
                     .putExtra(REQUEST_REASON, reason);
+            if (clientFilter != null) {
+                intent.putExtra(CLIENT_RECEIVER_INTENT_FILTER, clientFilter);
+            }
         }
         return intent;
     }
 
+    public Intent newBroadcastIntent() {
+        return new Intent(ACTION).setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+    }
+
+    public Intent newBindServiceIntent() {
+        return new Intent().setClassName("com.sdchang.permissionpolice",
+                "com.sdchang.permissionpolice.ExternalRequestService");
+    }
+
     public void startRequest(Context context, String reason) {
-        context.sendBroadcast(newIntent(context, reason));
+        context.sendBroadcast(newIntent(context, reason, null));
     }
 
     public void startRequest(Context context, String reason, BundleListener listener) {
-        context.registerReceiver(new BaseHandshakeReceiver(listener), new IntentFilter(getIntentFilter()));
-        startRequest(context, reason);
+        String nonce = Long.toString(new SecureRandom().nextLong());
+        context.registerReceiver(new BaseHandshakeReceiver(listener), new IntentFilter(nonce));
+        context.sendBroadcast(newIntent(context, reason, nonce));
     }
 }

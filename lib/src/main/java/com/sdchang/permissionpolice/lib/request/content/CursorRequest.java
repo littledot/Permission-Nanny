@@ -26,6 +26,7 @@ public abstract class CursorRequest extends BaseRequest {
         return CURSOR_INTENT_FILTER;
     }
 
+    // TODO #10: Integrate with BaseRequest's secure intent filters
     public void startRequest(Context context, String reason, CursorListener listener) {
         // begin handshake
         context.registerReceiver(new CursorRequestHandshakeReceiver(this, listener),

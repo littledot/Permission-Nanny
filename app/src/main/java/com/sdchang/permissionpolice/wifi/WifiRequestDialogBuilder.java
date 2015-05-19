@@ -26,11 +26,12 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
     }
 
     @Override
-    protected CharSequence buildDialogTitle(CharSequence appLabel) {
+    protected CharSequence initDialogTitle(CharSequence appLabel) {
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        int string = 0;
+        // TODO #7: add missing strings
+        int string = R.string.app_name;
         switch (mRequest.opCode()) {
             case WifiManagerRequest.ADD_NETWORK:
                 string = R.string.dialogTitle_wifiAddNetwork;
@@ -71,7 +72,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
     }
 
     @Override
-    protected void onAllowRequest() {
+    protected Intent onAllowRequest() {
         super.onAllowRequest();
         WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         Bundle response = new Bundle();
@@ -131,15 +132,13 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
                 response.putInt(mRequest.opCode(), wifi.updateNetwork(mRequest.wifiConfiguration()));
                 break;
         }
-        mActivity.sendBroadcast(new Intent(WifiManagerRequest.WIFI_INTENT_FILTER)
-                .putExtra(Police.APPROVED, true)
-                .putExtra(Police.RESPONSE, response));
+        return new Intent().putExtra(Police.APPROVED, true)
+                .putExtra(Police.RESPONSE, response);
     }
 
     @Override
-    protected void onDenyRequest() {
+    protected Intent onDenyRequest() {
         super.onDenyRequest();
-        mActivity.sendBroadcast(new Intent(WifiManagerRequest.WIFI_INTENT_FILTER)
-                .putExtra(Police.APPROVED, false));
+        return new Intent().putExtra(Police.APPROVED, false);
     }
 }

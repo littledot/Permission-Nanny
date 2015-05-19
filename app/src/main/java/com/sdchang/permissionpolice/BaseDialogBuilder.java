@@ -2,6 +2,7 @@ package com.sdchang.permissionpolice;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
@@ -19,13 +20,17 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
     protected final Activity mActivity;
     private final String mReason;
     private final CharSequence mTitle;
+    /** Action string client is filtering to receive broadcast Intents. */
+    protected final String mClientIntentFilter;
     protected final T mRequest;
 
     public BaseDialogBuilder(Activity activity, Bundle args) {
         mActivity = activity;
         String appPackage = args.getString(BaseRequest.SENDER_PACKAGE);
         mReason = args.getString(BaseRequest.REQUEST_REASON);
+        mClientIntentFilter = args.getString(BaseRequest.CLIENT_RECEIVER_INTENT_FILTER);
         mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
+        Timber.d("clientIntentFilter=" + mClientIntentFilter);
 
         CharSequence appLabel;
         try {
@@ -35,10 +40,10 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
             Timber.e(e, "senderPackage=%s", appPackage);
             appLabel = appPackage;
         }
-        mTitle = buildDialogTitle(appLabel);
+        mTitle = initDialogTitle(appLabel);
     }
 
-    protected CharSequence buildDialogTitle(CharSequence appLabel) {
+    protected CharSequence initDialogTitle(CharSequence appLabel) {
         return appLabel;
     }
 
@@ -55,17 +60,26 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        Intent response;
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            onAllowRequest();
-            return;
+            response = onAllowRequest();
+        } else {
+            response = onDenyRequest();
         }
-        onDenyRequest();
+
+        if (response != null && mClientIntentFilter != null) {
+            response.setAction(mClientIntentFilter);
+            Timber.d("server broadcasting=" + response);
+            mActivity.sendBroadcast(response);
+        }
     }
 
-    protected void onAllowRequest() {
+    protected Intent onAllowRequest() {
+        return null;
     }
 
-    protected void onDenyRequest() {
+    protected Intent onDenyRequest() {
+        return null;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.sdchang.permissionpolice.demo;
 
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
@@ -47,25 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         } else if (id == 5) {
-            WifiConfiguration wc = new WifiConfiguration();
-            wc.SSID = "\"SSID_NAME\""; //IMP! This should be in Quotes!!
-            wc.hiddenSSID = true;
-            wc.status = WifiConfiguration.Status.DISABLED;
-            wc.priority = 40;
-            wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-            wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-            wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-            wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-
-            wc.wepKeys[0] = "\"aaabbb1234\""; //This is the WEP Password
-            wc.wepTxKeyIndex = 0;
-
-            WifiManagerRequest.newAddNetworkRequest(wc).startRequest(this, "We want to add new wifi",
+            WifiManagerRequest.newGetConnectionInfoRequest().startRequest(this, "We want to add sniff ur wifi",
                     new BundleListener() {
                         @Override
                         public void onResult(Bundle results) {
