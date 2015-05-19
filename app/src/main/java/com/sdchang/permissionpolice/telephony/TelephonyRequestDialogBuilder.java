@@ -13,7 +13,6 @@ import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.lib.Police;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
 
 import java.util.ArrayList;
@@ -21,13 +20,10 @@ import java.util.ArrayList;
 /**
  *
  */
-public class TelephonyRequestDialogBuilder extends BaseDialogBuilder {
-
-    private final TelephonyManagerRequest mRequest;
+public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyManagerRequest> {
 
     public TelephonyRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
     }
 
     @Override

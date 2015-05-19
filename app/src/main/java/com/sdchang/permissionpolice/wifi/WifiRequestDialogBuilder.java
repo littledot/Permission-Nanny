@@ -12,7 +12,6 @@ import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.lib.Police;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
 
 import java.util.ArrayList;
@@ -20,13 +19,10 @@ import java.util.ArrayList;
 /**
  *
  */
-public class WifiRequestDialogBuilder extends BaseDialogBuilder {
-
-    private final WifiManagerRequest mRequest;
+public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerRequest> {
 
     public WifiRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
     }
 
     @Override

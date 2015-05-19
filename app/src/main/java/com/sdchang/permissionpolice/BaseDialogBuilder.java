@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import timber.log.Timber;
@@ -12,16 +13,19 @@ import timber.log.Timber;
 /**
  *
  */
-public class BaseDialogBuilder implements DialogInterface.OnClickListener, DialogInterface.OnDismissListener {
+public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.OnClickListener, DialogInterface
+        .OnDismissListener {
 
     protected final Activity mActivity;
     private final String mReason;
     private final CharSequence mTitle;
+    protected final T mRequest;
 
     public BaseDialogBuilder(Activity activity, Bundle args) {
         mActivity = activity;
         String appPackage = args.getString(BaseRequest.SENDER_PACKAGE);
         mReason = args.getString(BaseRequest.REQUEST_REASON);
+        mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
 
         CharSequence appLabel;
         try {
