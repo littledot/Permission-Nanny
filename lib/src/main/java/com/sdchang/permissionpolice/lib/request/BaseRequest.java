@@ -62,10 +62,6 @@ public abstract class BaseRequest implements Parcelable {
                 "com.sdchang.permissionpolice.ExternalRequestService");
     }
 
-    public void startRequest(Context context, String reason) {
-        context.sendBroadcast(newIntent(context, reason, null));
-    }
-
     public void startRequest(Context context, String reason, BundleListener listener) {
         String nonce = Long.toString(new SecureRandom().nextLong());
         context.registerReceiver(new BaseHandshakeReceiver(listener), new IntentFilter(nonce));

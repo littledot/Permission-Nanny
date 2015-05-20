@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import auto.parcel.AutoParcel;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,12 +27,12 @@ public abstract class CursorRequest extends BaseRequest {
         return CURSOR_INTENT_FILTER;
     }
 
-    // TODO #10: Integrate with BaseRequest's secure intent filters
     public void startRequest(Context context, String reason, CursorListener listener) {
         // begin handshake
+        String nonce = Long.toString(new SecureRandom().nextLong());
         context.registerReceiver(new CursorRequestHandshakeReceiver(this, listener),
-                new IntentFilter(getIntentFilter()));
-        super.startRequest(context, reason);
+                new IntentFilter(nonce));
+        context.sendBroadcast(newIntent(context, reason, nonce));
     }
 
     public abstract Uri uri();
