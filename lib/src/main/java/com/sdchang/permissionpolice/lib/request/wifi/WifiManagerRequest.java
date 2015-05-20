@@ -37,16 +37,9 @@ public abstract class WifiManagerRequest extends BaseRequest {
         public abstract WifiManagerRequest build();
     }
 
-    public static final String WIFI_INTENT_FILTER = "WIFI_INTENT_FILTER";
-
     @Override
     public int getRequestType() {
         return WIFI_REQUEST;
-    }
-
-    @Override
-    public String getIntentFilter() {
-        return WIFI_INTENT_FILTER;
     }
 
     public abstract String opCode();

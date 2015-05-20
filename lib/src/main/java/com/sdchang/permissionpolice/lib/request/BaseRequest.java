@@ -35,8 +35,6 @@ public abstract class BaseRequest implements Parcelable {
     @RequestType
     public abstract int getRequestType();
 
-    public abstract String getIntentFilter();
-
     private Intent intent;
 
     public Intent newIntent(Context context, String reason, String clientFilter) {

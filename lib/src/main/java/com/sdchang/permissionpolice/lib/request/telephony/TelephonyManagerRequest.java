@@ -24,16 +24,9 @@ public abstract class TelephonyManagerRequest extends BaseRequest {
         public abstract TelephonyManagerRequest build();
     }
 
-    public static final String TELEPHONY_INTENT_FILTER = "TELEPHONY_INTENT_FILTER";
-
     @Override
     public int getRequestType() {
         return TELEPHONY_REQUEST;
-    }
-
-    @Override
-    public String getIntentFilter() {
-        return TELEPHONY_INTENT_FILTER;
     }
 
     public abstract String opCode();

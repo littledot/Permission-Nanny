@@ -15,16 +15,9 @@ import java.util.List;
 @AutoParcel
 public abstract class CursorRequest extends BaseRequest {
 
-    public static final String CURSOR_INTENT_FILTER = "CURSOR_INTENT_FILTER";
-
     @Override
     public int getRequestType() {
         return CURSOR_REQUEST;
-    }
-
-    @Override
-    public String getIntentFilter() {
-        return CURSOR_INTENT_FILTER;
     }
 
     public void startRequest(Context context, String reason, CursorListener listener) {
