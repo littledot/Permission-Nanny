@@ -97,6 +97,18 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
         WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         Bundle response = new Bundle();
         switch (mRequest.opCode()) {
+            case WifiManagerRequest.ADD_NETWORK:
+                response.putInt(mRequest.opCode(), wifi.addNetwork(mRequest.wifiConfiguration()));
+                break;
+            case WifiManagerRequest.DISABLE_NETWORK:
+                response.putBoolean(mRequest.opCode(), wifi.disableNetwork(mRequest.integer()));
+                break;
+            case WifiManagerRequest.DISCONNECT:
+                response.putBoolean(mRequest.opCode(), wifi.disconnect());
+                break;
+            case WifiManagerRequest.ENABLE_NETWORK:
+                response.putBoolean(mRequest.opCode(), wifi.enableNetwork(mRequest.integer(), mRequest.bool()));
+                break;
             case WifiManagerRequest.GET_CONFIGURED_NETWORKS:
                 response.putParcelableArrayList(mRequest.opCode(), new ArrayList<>(wifi.getConfiguredNetworks()));
                 break;
@@ -117,18 +129,6 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
                 break;
             case WifiManagerRequest.PING_SUPPLICANT:
                 response.putBoolean(mRequest.opCode(), wifi.pingSupplicant());
-                break;
-            case WifiManagerRequest.ADD_NETWORK:
-                response.putInt(mRequest.opCode(), wifi.addNetwork(mRequest.wifiConfiguration()));
-                break;
-            case WifiManagerRequest.DISABLE_NETWORK:
-                response.putBoolean(mRequest.opCode(), wifi.disableNetwork(mRequest.integer()));
-                break;
-            case WifiManagerRequest.DISCONNECT:
-                response.putBoolean(mRequest.opCode(), wifi.disconnect());
-                break;
-            case WifiManagerRequest.ENABLE_NETWORK:
-                response.putBoolean(mRequest.opCode(), wifi.enableNetwork(mRequest.integer(), mRequest.bool()));
                 break;
             case WifiManagerRequest.REASSOCIATE:
                 response.putBoolean(mRequest.opCode(), wifi.reassociate());
