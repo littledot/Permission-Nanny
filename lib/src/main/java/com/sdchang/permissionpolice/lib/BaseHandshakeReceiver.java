@@ -19,7 +19,7 @@ public class BaseHandshakeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         context.unregisterReceiver(this);
-        Bundle response = intent.getBundleExtra(Police.RESPONSE);
+        Bundle response = intent.getExtras();
         mListener.onResult(response);
     }
 }
