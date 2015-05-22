@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
@@ -19,16 +20,22 @@ import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
  */
 public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerRequest> {
 
-    private int mValueIndex;
+    @StringRes private int mDialogTitle;
+    private WifiFunction mFunction;
 
     public WifiRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
 
         for (int i = 0, len = WifiValues.operations.length; i < len; i++) {
             if (WifiValues.operations[i].equals(mRequest.opCode())) {
-                mValueIndex = i;
+                mDialogTitle = WifiValues.dialogTitles[i];
+                mFunction = WifiValues.functions[i];
                 break;
             }
+        }
+        if (WifiManagerRequest.SET_WIFI_ENABLED.equals(mRequest.opCode())) {
+            mDialogTitle = mRequest.bool() ? R.string.dialogTitle_wifiSetWifiEnabled_enable :
+                    R.string.dialogTitle_wifiSetWifiEnabled_disable;
         }
     }
 
@@ -36,16 +43,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
     protected CharSequence buildDialogTitle(CharSequence appLabel) {
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        int string;
-        if (WifiManagerRequest.SET_WIFI_ENABLED.equals(mRequest.opCode())) {
-            string = mRequest.bool() ? R.string.dialogTitle_wifiSetWifiEnabled_enable :
-                    R.string.dialogTitle_wifiSetWifiEnabled_disable;
-        } else {
-            string = WifiValues.dialogTitles[mValueIndex];
-        }
-
-        return boldAppLabel.append(mActivity.getText(string));
+        return boldAppLabel.append(mActivity.getText(mDialogTitle));
     }
 
     @Override
@@ -53,7 +51,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
         super.onAllowRequest();
         WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         Bundle response = new Bundle();
-        WifiValues.functions[mValueIndex].execute(wifi, mRequest, response);
+        mFunction.execute(wifi, mRequest, response);
         return new Intent().putExtra(Police.APPROVED, true)
                 .putExtra(Police.RESPONSE, response);
     }
