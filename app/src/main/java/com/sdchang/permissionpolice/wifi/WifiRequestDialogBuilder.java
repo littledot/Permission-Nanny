@@ -19,8 +19,17 @@ import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
  */
 public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerRequest> {
 
+    private int mValueIndex;
+
     public WifiRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
+
+        for (int i = 0, len = WifiValues.operations.length; i < len; i++) {
+            if (WifiValues.operations[i].equals(mRequest.opCode())) {
+                mValueIndex = i;
+                break;
+            }
+        }
     }
 
     @Override
@@ -28,18 +37,12 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        int string = 0;
-
+        int string;
         if (WifiManagerRequest.SET_WIFI_ENABLED.equals(mRequest.opCode())) {
             string = mRequest.bool() ? R.string.dialogTitle_wifiSetWifiEnabled_enable :
                     R.string.dialogTitle_wifiSetWifiEnabled_disable;
         } else {
-            for (int i = 0, len = WifiValues.operations.length; i < len; i++) {
-                if (WifiValues.operations[i].equals(mRequest.opCode())) {
-                    string = WifiValues.dialogTitles[i];
-                    break;
-                }
-            }
+            string = WifiValues.dialogTitles[mValueIndex];
         }
 
         return boldAppLabel.append(mActivity.getText(string));
@@ -50,14 +53,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
         super.onAllowRequest();
         WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         Bundle response = new Bundle();
-
-        for (int i = 0, len = WifiValues.operations.length; i < len; i++) {
-            if (WifiValues.operations[i].equals(mRequest.opCode())) {
-                WifiValues.functions[i].execute(wifi, mRequest, response);
-                break;
-            }
-        }
-
+        WifiValues.functions[mValueIndex].execute(wifi, mRequest, response);
         return new Intent().putExtra(Police.APPROVED, true)
                 .putExtra(Police.RESPONSE, response);
     }
