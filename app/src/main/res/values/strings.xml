@@ -58,4 +58,9 @@
     <string name="dialogTitle_telephonyGetVoiceMailAlphaTag"> would like to query the device voice mail alpha
         tag.</string>
     <string name="dialogTitle_telephonyGetVoiceMailNumber"> would like to query the device voice mail number.</string>
+
+    <string name="dialogTitle_smsSendDataMessage"> would like to send a SMS.</string>
+    <string name="dialogTitle_smsSendMultimediaMessage"> would like to send a multimedia message (MMS).</string>
+    <string name="dialogTitle_smsSendMultipartTextMessage"> would like to send a multi-part SMS.</string>
+    <string name="dialogTitle_smsSendTextMessage"> would like to send a SMS.</string>
 </resources>

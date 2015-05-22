@@ -3,6 +3,7 @@ package com.sdchang.permissionpolice;
 import android.os.Bundle;
 import com.sdchang.permissionpolice.content.CursorRequestDialogBuilder;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.sms.SmsRequestDialogBuilder;
 import com.sdchang.permissionpolice.telephony.TelephonyRequestDialogBuilder;
 import com.sdchang.permissionpolice.wifi.WifiRequestDialogBuilder;
 
@@ -25,6 +26,8 @@ public class ConfirmRequestActivity extends BaseActivity {
             new WifiRequestDialogBuilder(this, mArgs).build().show();
         } else if (type == BaseRequest.TELEPHONY_REQUEST) {
             new TelephonyRequestDialogBuilder(this, mArgs).build().show();
+        } else if (type == BaseRequest.SMS_REQUEST) {
+            new SmsRequestDialogBuilder(this, mArgs).build().show();
         }
     }
 }

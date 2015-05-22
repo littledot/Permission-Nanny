@@ -25,12 +25,13 @@ public abstract class BaseRequest implements Parcelable {
     public static final String CLIENT_RECEIVER_INTENT_FILTER = "clientReceiverIntentFilter";
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({CURSOR_REQUEST, WIFI_REQUEST, TELEPHONY_REQUEST})
+    @IntDef({CURSOR_REQUEST, SMS_REQUEST, TELEPHONY_REQUEST, WIFI_REQUEST})
     public @interface RequestType {}
 
     public static final int CURSOR_REQUEST = 1;
-    public static final int WIFI_REQUEST = 2;
-    public static final int TELEPHONY_REQUEST = 3;
+    public static final int SMS_REQUEST = 200;
+    public static final int TELEPHONY_REQUEST = 300;
+    public static final int WIFI_REQUEST = 400;
 
     @RequestType
     public abstract int getRequestType();
