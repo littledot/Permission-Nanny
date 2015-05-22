@@ -8,6 +8,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
+import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import timber.log.Timber;
 
@@ -74,11 +75,11 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
     }
 
     protected Intent onAllowRequest() {
-        return null;
+        return new Intent().putExtra(Police.APPROVED, true);
     }
 
     protected Intent onDenyRequest() {
-        return null;
+        return new Intent().putExtra(Police.APPROVED, false);
     }
 
     @Override
