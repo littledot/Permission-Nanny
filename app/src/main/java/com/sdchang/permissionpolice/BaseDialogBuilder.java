@@ -18,44 +18,43 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
         .OnDismissListener {
 
     protected final Activity mActivity;
+    private final String mAppPackage;
     private final String mReason;
-    private final CharSequence mTitle;
     /** Action string client is filtering to receive broadcast Intents. */
     protected final String mClientIntentFilter;
     protected final T mRequest;
 
     public BaseDialogBuilder(Activity activity, Bundle args) {
         mActivity = activity;
-        String appPackage = args.getString(BaseRequest.SENDER_PACKAGE);
+        mAppPackage = args.getString(BaseRequest.SENDER_PACKAGE);
         mReason = args.getString(BaseRequest.REQUEST_REASON);
         mClientIntentFilter = args.getString(BaseRequest.CLIENT_RECEIVER_INTENT_FILTER);
         mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
         Timber.d("clientIntentFilter=" + mClientIntentFilter);
-
-        CharSequence appLabel;
-        try {
-            ApplicationInfo senderInfo = activity.getPackageManager().getApplicationInfo(appPackage, 0);
-            appLabel = activity.getPackageManager().getApplicationLabel(senderInfo);
-        } catch (NameNotFoundException e) {
-            Timber.e(e, "senderPackage=%s", appPackage);
-            appLabel = appPackage;
-        }
-        mTitle = initDialogTitle(appLabel);
-    }
-
-    protected CharSequence initDialogTitle(CharSequence appLabel) {
-        return appLabel;
     }
 
     public AlertDialog build() {
+        CharSequence appLabel;
+        try {
+            ApplicationInfo senderInfo = mActivity.getPackageManager().getApplicationInfo(mAppPackage, 0);
+            appLabel = mActivity.getPackageManager().getApplicationLabel(senderInfo);
+        } catch (NameNotFoundException e) {
+            Timber.e(e, "senderPackage not found=%s", mAppPackage);
+            appLabel = mAppPackage;
+        }
+
         return new AlertDialog.Builder(mActivity)
-                .setTitle(mTitle)
+                .setTitle(buildDialogTitle(appLabel))
                 .setMessage(mReason)
                 .setPositiveButton(R.string.dialog_allow, this)
                 .setNegativeButton(R.string.dialog_deny, this)
                 .setOnDismissListener(this)
                 .setCancelable(false)
                 .create();
+    }
+
+    protected CharSequence buildDialogTitle(CharSequence appLabel) {
+        return appLabel;
     }
 
     @Override

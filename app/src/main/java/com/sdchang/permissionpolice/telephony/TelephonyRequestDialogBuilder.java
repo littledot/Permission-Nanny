@@ -23,7 +23,7 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyMa
     }
 
     @Override
-    protected CharSequence initDialogTitle(CharSequence appLabel) {
+    protected CharSequence buildDialogTitle(CharSequence appLabel) {
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
