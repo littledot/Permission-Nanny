@@ -7,6 +7,6 @@ import com.sdchang.permissionpolice.lib.request.sms.SmsRequest;
 /**
  *
  */
-public interface SmsFunction {
-    void execute(SmsManager tele, SmsRequest request, Bundle response);
+interface SmsFunction {
+    void execute(SmsManager sms, SmsRequest request, Bundle response);
 }
