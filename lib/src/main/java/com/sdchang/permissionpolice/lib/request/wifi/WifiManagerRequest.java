@@ -67,97 +67,94 @@ public abstract class WifiManagerRequest extends BaseRequest {
     })
     public @interface Op {}
 
-    // ACCESS_WIFI_STATE
-    public static final String GET_SCAN_RESULTS = "getScanResults";
-    public static final String GET_DHCP_INFO = "getDhcpInfo";
-    public static final String PING_SUPPLICANT = "pingSupplicant";
-    public static final String IS_WIFI_ENABLED = "isWifiEnabled";
-    public static final String GET_CONNECTION_INFO = "getConnectionInfo";
-    public static final String GET_WIFI_STATE = "getWifiState";
-    public static final String GET_CONFIGURED_NETWORKS = "getConfiguredNetworks";
-
-    public static WifiManagerRequest getScanResults() {
-        return newBuilder().opCode(GET_SCAN_RESULTS).build();
-    }
-
-    public static WifiManagerRequest getDhcpInfo() {
-        return newBuilder().opCode(GET_DHCP_INFO).build();
-    }
-
-    public static WifiManagerRequest pingSupplicant() {
-        return newBuilder().opCode(PING_SUPPLICANT).build();
-    }
-
-    public static WifiManagerRequest isWifiEnabled() {
-        return newBuilder().opCode(IS_WIFI_ENABLED).build();
-    }
-
-    public static WifiManagerRequest getConnectionInfo() {
-        return newBuilder().opCode(GET_CONNECTION_INFO).build();
-    }
-
-    public static WifiManagerRequest getWifiState() {
-        return newBuilder().opCode(GET_WIFI_STATE).build();
-    }
-
-    public static WifiManagerRequest getConfiguredNetworks() {
-        return newBuilder().opCode(GET_CONFIGURED_NETWORKS).build();
-    }
-
-    // CHANGE_WIFI_STATE
-    public static final String REASSOCIATE = "reassociate";
-    public static final String START_SCAN = "startScan";
-    public static final String DISABLE_NETWORK = "disableNetwork";
-    public static final String UPDATE_NETWORK = "updateNetwork";
-    public static final String REMOVE_NETWORK = "removeNetwork";
-    public static final String RECONNECT = "reconnect";
     public static final String ADD_NETWORK = "addNetwork";
-    public static final String ENABLE_NETWORK = "enableNetwork";
+    public static final String DISABLE_NETWORK = "disableNetwork";
     public static final String DISCONNECT = "disconnect";
-    public static final String SET_WIFI_ENABLED = "setWifiEnabled";
+    public static final String ENABLE_NETWORK = "enableNetwork";
+    public static final String GET_CONFIGURED_NETWORKS = "getConfiguredNetworks";
+    public static final String GET_CONNECTION_INFO = "getConnectionInfo";
+    public static final String GET_DHCP_INFO = "getDhcpInfo";
+    public static final String GET_SCAN_RESULTS = "getScanResults";
+    public static final String GET_WIFI_STATE = "getWifiState";
+    public static final String IS_WIFI_ENABLED = "isWifiEnabled";
+    public static final String PING_SUPPLICANT = "pingSupplicant";
+    public static final String REASSOCIATE = "reassociate";
+    public static final String RECONNECT = "reconnect";
+    public static final String REMOVE_NETWORK = "removeNetwork";
     public static final String SAVE_CONFIGURATION = "saveConfiguration";
+    public static final String SET_WIFI_ENABLED = "setWifiEnabled";
+    public static final String START_SCAN = "startScan";
+    public static final String UPDATE_NETWORK = "updateNetwork";
 
-    public static WifiManagerRequest reassociate() {
-        return newBuilder().opCode(REASSOCIATE).build();
-    }
-
-    public static WifiManagerRequest startScan() {
-        return newBuilder().opCode(START_SCAN).build();
+    public static WifiManagerRequest addNetwork(WifiConfiguration wifiConfiguration) {
+        return newBuilder().opCode(ADD_NETWORK).wifiConfiguration(wifiConfiguration).build();
     }
 
     public static WifiManagerRequest disableNetwork(int netId) {
         return newBuilder().opCode(DISABLE_NETWORK).integer(netId).build();
     }
 
-    public static WifiManagerRequest newUpdateNetwork(WifiConfiguration wifiConfiguration) {
-        return newBuilder().opCode(UPDATE_NETWORK).wifiConfiguration(wifiConfiguration).build();
-    }
-
-    public static WifiManagerRequest removeNetwork(int netId) {
-        return newBuilder().opCode(REMOVE_NETWORK).integer(netId).build();
-    }
-
-    public static WifiManagerRequest reconnect() {
-        return newBuilder().opCode(RECONNECT).build();
-    }
-
-    public static WifiManagerRequest addNetwork(WifiConfiguration wifiConfiguration) {
-        return newBuilder().opCode(ADD_NETWORK).wifiConfiguration(wifiConfiguration).build();
+    public static WifiManagerRequest disconnect() {
+        return newBuilder().opCode(DISCONNECT).build();
     }
 
     public static WifiManagerRequest enableNetwork(int netId, boolean disableOthers) {
         return newBuilder().opCode(ENABLE_NETWORK).integer(netId).bool(disableOthers).build();
     }
 
-    public static WifiManagerRequest disconnect() {
-        return newBuilder().opCode(DISCONNECT).build();
+    public static WifiManagerRequest getConfiguredNetworks() {
+        return newBuilder().opCode(GET_CONFIGURED_NETWORKS).build();
+    }
+
+    public static WifiManagerRequest getConnectionInfo() {
+        return newBuilder().opCode(GET_CONNECTION_INFO).build();
+    }
+
+    public static WifiManagerRequest getDhcpInfo() {
+        return newBuilder().opCode(GET_DHCP_INFO).build();
+    }
+
+    public static WifiManagerRequest getScanResults() {
+        return newBuilder().opCode(GET_SCAN_RESULTS).build();
+    }
+
+    public static WifiManagerRequest getWifiState() {
+        return newBuilder().opCode(GET_WIFI_STATE).build();
+    }
+
+    public static WifiManagerRequest isWifiEnabled() {
+        return newBuilder().opCode(IS_WIFI_ENABLED).build();
+    }
+
+    public static WifiManagerRequest pingSupplicant() {
+        return newBuilder().opCode(PING_SUPPLICANT).build();
+    }
+
+    public static WifiManagerRequest reassociate() {
+        return newBuilder().opCode(REASSOCIATE).build();
+    }
+
+    public static WifiManagerRequest reconnect() {
+        return newBuilder().opCode(RECONNECT).build();
+    }
+
+    public static WifiManagerRequest removeNetwork(int netId) {
+        return newBuilder().opCode(REMOVE_NETWORK).integer(netId).build();
+    }
+
+    public static WifiManagerRequest saveConfiguration() {
+        return newBuilder().opCode(SAVE_CONFIGURATION).build();
     }
 
     public static WifiManagerRequest setWifiEnabled(boolean enabled) {
         return newBuilder().opCode(SET_WIFI_ENABLED).bool(enabled).build();
     }
 
-    public static WifiManagerRequest saveConfiguration() {
-        return newBuilder().opCode(SAVE_CONFIGURATION).build();
+    public static WifiManagerRequest startScan() {
+        return newBuilder().opCode(START_SCAN).build();
+    }
+
+    public static WifiManagerRequest updateNetwork(WifiConfiguration wifiConfiguration) {
+        return newBuilder().opCode(UPDATE_NETWORK).wifiConfiguration(wifiConfiguration).build();
     }
 }
