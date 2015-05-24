@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         } else if (id == 100) {
-            WifiManagerRequest.newGetConnectionInfoRequest().startRequest(this, "We want to add sniff ur wifi",
+            WifiManagerRequest.getConnectionInfo().startRequest(this, "We want to add sniff ur wifi",
                     new BundleListener() {
                         @Override
                         public void onResult(Bundle results) {
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         } else if (id == 200) {
-            TelephonyManagerRequest.newGetDeviceIdRequest().startRequest(this, "we want ur device software ver",
+            TelephonyManagerRequest.getDeviceId().startRequest(this, "we want ur device software ver",
                     new BundleListener() {
                         @Override
                         public void onResult(Bundle results) {
