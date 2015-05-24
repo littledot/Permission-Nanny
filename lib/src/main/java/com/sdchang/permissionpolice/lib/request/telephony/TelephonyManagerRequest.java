@@ -54,47 +54,47 @@ public abstract class TelephonyManagerRequest extends BaseRequest {
     public static final int ICC_TRANSMIT_APDU_LOGICAL_CHANNEL = 16;
     public static final int SEND_ENVELOPE_WITH_STATUS = 17;
 
-    public static TelephonyManagerRequest newGetAllCellInfoRequest() {
+    public static TelephonyManagerRequest getAllCellInfo() {
         return newBuilder().opCode(GET_ALL_CELL_INFO).build();
     }
 
-//    public static TelephonyManagerRequest newGetCellLocationRequest() {
+//    public static TelephonyManagerRequest getCellLocation() {
 //        return newBuilder().opCode(GET_CELL_LOCATION).build();
 //    }
 
-    public static TelephonyManagerRequest newGetDeviceIdRequest() {
+    public static TelephonyManagerRequest getDeviceId() {
         return newBuilder().opCode(GET_DEVICE_ID).build();
     }
 
-    public static TelephonyManagerRequest newGetDeviceSoftwareVersion() {
+    public static TelephonyManagerRequest getDeviceSoftwareVersion() {
         return newBuilder().opCode(GET_DEVICE_SOFTWARE_VERSION).build();
     }
 
-    public static TelephonyManagerRequest newGetGroupIdLevel1Request() {
+    public static TelephonyManagerRequest getGroupIdLevel1() {
         return newBuilder().opCode(GET_GROUP_ID_LEVEL_1).build();
     }
 
-    public static TelephonyManagerRequest newGetLine1NumberRequest() {
+    public static TelephonyManagerRequest getLine1Number() {
         return newBuilder().opCode(GET_LINE_1_NUMBER).build();
     }
 
-    public static TelephonyManagerRequest newGetNeighboringCellInfoRequest() {
+    public static TelephonyManagerRequest getNeighboringCellInfo() {
         return newBuilder().opCode(GET_NEIGHBORING_CELL_INFO).build();
     }
 
-    public static TelephonyManagerRequest newGetSimSerialNumberRequest() {
+    public static TelephonyManagerRequest getSimSerialNumber() {
         return newBuilder().opCode(GET_SIM_SERIAL_NUMBER).build();
     }
 
-    public static TelephonyManagerRequest newGetSubscriberIdRequest() {
+    public static TelephonyManagerRequest getSubscriberId() {
         return newBuilder().opCode(GET_SUBSCRIBER_ID).build();
     }
 
-    public static TelephonyManagerRequest newGetVoiceMailAlphaTagRequest() {
+    public static TelephonyManagerRequest getVoiceMailAlphaTag() {
         return newBuilder().opCode(GET_VOICE_MAIL_ALPHA_TAG).build();
     }
 
-    public static TelephonyManagerRequest newGetVoiceMailNumberRequest() {
+    public static TelephonyManagerRequest getVoiceMailNumber() {
         return newBuilder().opCode(GET_VOICE_MAIL_NUMBER).build();
     }
 }

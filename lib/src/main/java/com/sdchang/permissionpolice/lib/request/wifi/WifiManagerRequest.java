@@ -76,31 +76,31 @@ public abstract class WifiManagerRequest extends BaseRequest {
     public static final String GET_WIFI_STATE = "getWifiState";
     public static final String GET_CONFIGURED_NETWORKS = "getConfiguredNetworks";
 
-    public static WifiManagerRequest newGetScanResultsRequest() {
+    public static WifiManagerRequest getScanResults() {
         return newBuilder().opCode(GET_SCAN_RESULTS).build();
     }
 
-    public static WifiManagerRequest newGetDhcpInfoRequest() {
+    public static WifiManagerRequest getDhcpInfo() {
         return newBuilder().opCode(GET_DHCP_INFO).build();
     }
 
-    public static WifiManagerRequest newPingSupplicantRequest() {
+    public static WifiManagerRequest pingSupplicant() {
         return newBuilder().opCode(PING_SUPPLICANT).build();
     }
 
-    public static WifiManagerRequest newIsWifiEnabledRequest() {
+    public static WifiManagerRequest isWifiEnabled() {
         return newBuilder().opCode(IS_WIFI_ENABLED).build();
     }
 
-    public static WifiManagerRequest newGetConnectionInfoRequest() {
+    public static WifiManagerRequest getConnectionInfo() {
         return newBuilder().opCode(GET_CONNECTION_INFO).build();
     }
 
-    public static WifiManagerRequest newGetWifiStateRequest() {
+    public static WifiManagerRequest getWifiState() {
         return newBuilder().opCode(GET_WIFI_STATE).build();
     }
 
-    public static WifiManagerRequest newGetConfiguredNetworksRequest() {
+    public static WifiManagerRequest getConfiguredNetworks() {
         return newBuilder().opCode(GET_CONFIGURED_NETWORKS).build();
     }
 
@@ -117,47 +117,47 @@ public abstract class WifiManagerRequest extends BaseRequest {
     public static final String SET_WIFI_ENABLED = "setWifiEnabled";
     public static final String SAVE_CONFIGURATION = "saveConfiguration";
 
-    public static WifiManagerRequest newReassociateRequest() {
+    public static WifiManagerRequest reassociate() {
         return newBuilder().opCode(REASSOCIATE).build();
     }
 
-    public static WifiManagerRequest newStartScanRequest() {
+    public static WifiManagerRequest startScan() {
         return newBuilder().opCode(START_SCAN).build();
     }
 
-    public static WifiManagerRequest newDisableNetworkRequest(int netId) {
+    public static WifiManagerRequest disableNetwork(int netId) {
         return newBuilder().opCode(DISABLE_NETWORK).integer(netId).build();
     }
 
-    public static WifiManagerRequest newUpdateNetworkRequest(WifiConfiguration wifiConfiguration) {
+    public static WifiManagerRequest newUpdateNetwork(WifiConfiguration wifiConfiguration) {
         return newBuilder().opCode(UPDATE_NETWORK).wifiConfiguration(wifiConfiguration).build();
     }
 
-    public static WifiManagerRequest newRemoveNetworkRequest(int netId) {
+    public static WifiManagerRequest removeNetwork(int netId) {
         return newBuilder().opCode(REMOVE_NETWORK).integer(netId).build();
     }
 
-    public static WifiManagerRequest newReconnectRequest() {
+    public static WifiManagerRequest reconnect() {
         return newBuilder().opCode(RECONNECT).build();
     }
 
-    public static WifiManagerRequest newAddNetworkRequest(WifiConfiguration wifiConfiguration) {
+    public static WifiManagerRequest addNetwork(WifiConfiguration wifiConfiguration) {
         return newBuilder().opCode(ADD_NETWORK).wifiConfiguration(wifiConfiguration).build();
     }
 
-    public static WifiManagerRequest newEnableNetworkRequest(int netId, boolean disableOthers) {
+    public static WifiManagerRequest enableNetwork(int netId, boolean disableOthers) {
         return newBuilder().opCode(ENABLE_NETWORK).integer(netId).bool(disableOthers).build();
     }
 
-    public static WifiManagerRequest newDisconnectRequest() {
+    public static WifiManagerRequest disconnect() {
         return newBuilder().opCode(DISCONNECT).build();
     }
 
-    public static WifiManagerRequest newSetWifiEnabledRequest(boolean enabled) {
+    public static WifiManagerRequest setWifiEnabled(boolean enabled) {
         return newBuilder().opCode(SET_WIFI_ENABLED).bool(enabled).build();
     }
 
-    public static WifiManagerRequest newSaveConfigurationRequest() {
+    public static WifiManagerRequest saveConfiguration() {
         return newBuilder().opCode(SAVE_CONFIGURATION).build();
     }
 }
