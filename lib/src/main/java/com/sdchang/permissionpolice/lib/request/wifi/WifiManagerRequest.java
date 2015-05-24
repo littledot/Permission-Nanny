@@ -24,15 +24,15 @@ public abstract class WifiManagerRequest extends BaseRequest {
     static abstract class Builder {
         public abstract Builder opCode(@Op String value);
 
-        public abstract Builder wifiConfiguration(WifiConfiguration value);
+        public abstract Builder wifiConfiguration0(WifiConfiguration value);
 
-        public abstract Builder integer(int value);
+        public abstract Builder int0(int value);
 
-        public abstract Builder iNetAddress(InetAddress value);
+        public abstract Builder inetAddress0(InetAddress value);
 
-        public abstract Builder bool(boolean value);
+        public abstract Builder boolean0(boolean value);
 
-        public abstract Builder string(String value);
+        public abstract Builder string0(String value);
 
         public abstract WifiManagerRequest build();
     }
@@ -45,19 +45,19 @@ public abstract class WifiManagerRequest extends BaseRequest {
     public abstract String opCode();
 
     @Nullable
-    public abstract WifiConfiguration wifiConfiguration();
+    public abstract WifiConfiguration wifiConfiguration0();
 
     @Nullable
-    public abstract int integer();
+    public abstract int int0();
 
     @Nullable
-    public abstract InetAddress iNetAddress();
+    public abstract InetAddress inetAddress0();
 
     @Nullable
-    public abstract boolean bool();
+    public abstract boolean boolean0();
 
     @Nullable
-    public abstract String string();
+    public abstract String string0();
 
     @Retention(RetentionPolicy.SOURCE)
     @StringDef({GET_SCAN_RESULTS, GET_DHCP_INFO, PING_SUPPLICANT, IS_WIFI_ENABLED, GET_CONNECTION_INFO, GET_WIFI_STATE,
@@ -87,11 +87,11 @@ public abstract class WifiManagerRequest extends BaseRequest {
     public static final String UPDATE_NETWORK = "updateNetwork";
 
     public static WifiManagerRequest addNetwork(WifiConfiguration wifiConfiguration) {
-        return newBuilder().opCode(ADD_NETWORK).wifiConfiguration(wifiConfiguration).build();
+        return newBuilder().opCode(ADD_NETWORK).wifiConfiguration0(wifiConfiguration).build();
     }
 
     public static WifiManagerRequest disableNetwork(int netId) {
-        return newBuilder().opCode(DISABLE_NETWORK).integer(netId).build();
+        return newBuilder().opCode(DISABLE_NETWORK).int0(netId).build();
     }
 
     public static WifiManagerRequest disconnect() {
@@ -99,7 +99,7 @@ public abstract class WifiManagerRequest extends BaseRequest {
     }
 
     public static WifiManagerRequest enableNetwork(int netId, boolean disableOthers) {
-        return newBuilder().opCode(ENABLE_NETWORK).integer(netId).bool(disableOthers).build();
+        return newBuilder().opCode(ENABLE_NETWORK).int0(netId).boolean0(disableOthers).build();
     }
 
     public static WifiManagerRequest getConfiguredNetworks() {
@@ -139,7 +139,7 @@ public abstract class WifiManagerRequest extends BaseRequest {
     }
 
     public static WifiManagerRequest removeNetwork(int netId) {
-        return newBuilder().opCode(REMOVE_NETWORK).integer(netId).build();
+        return newBuilder().opCode(REMOVE_NETWORK).int0(netId).build();
     }
 
     public static WifiManagerRequest saveConfiguration() {
@@ -147,7 +147,7 @@ public abstract class WifiManagerRequest extends BaseRequest {
     }
 
     public static WifiManagerRequest setWifiEnabled(boolean enabled) {
-        return newBuilder().opCode(SET_WIFI_ENABLED).bool(enabled).build();
+        return newBuilder().opCode(SET_WIFI_ENABLED).boolean0(enabled).build();
     }
 
     public static WifiManagerRequest startScan() {
@@ -155,6 +155,6 @@ public abstract class WifiManagerRequest extends BaseRequest {
     }
 
     public static WifiManagerRequest updateNetwork(WifiConfiguration wifiConfiguration) {
-        return newBuilder().opCode(UPDATE_NETWORK).wifiConfiguration(wifiConfiguration).build();
+        return newBuilder().opCode(UPDATE_NETWORK).wifiConfiguration0(wifiConfiguration).build();
     }
 }

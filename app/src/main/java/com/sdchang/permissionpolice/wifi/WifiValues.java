@@ -58,13 +58,13 @@ class WifiValues {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
 
-                    response.putInt(request.opCode(), wifi.addNetwork(request.wifiConfiguration()));
+                    response.putInt(request.opCode(), wifi.addNetwork(request.wifiConfiguration0()));
                 }
             },
             new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
-                    response.putBoolean(request.opCode(), wifi.disableNetwork(request.integer()));
+                    response.putBoolean(request.opCode(), wifi.disableNetwork(request.int0()));
                 }
             },
             new WifiFunction() {
@@ -76,7 +76,7 @@ class WifiValues {
             new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
-                    response.putBoolean(request.opCode(), wifi.enableNetwork(request.integer(), request.bool()));
+                    response.putBoolean(request.opCode(), wifi.enableNetwork(request.int0(), request.boolean0()));
                 }
             },
             new WifiFunction() {
@@ -136,7 +136,7 @@ class WifiValues {
             new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
-                    response.putBoolean(request.opCode(), wifi.removeNetwork(request.integer()));
+                    response.putBoolean(request.opCode(), wifi.removeNetwork(request.int0()));
                 }
             },
             new WifiFunction() {
@@ -149,7 +149,7 @@ class WifiValues {
             new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
-                    response.putBoolean(request.opCode(), wifi.setWifiEnabled(request.bool()));
+                    response.putBoolean(request.opCode(), wifi.setWifiEnabled(request.boolean0()));
                 }
             },
             new WifiFunction() {
@@ -161,7 +161,7 @@ class WifiValues {
             new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
-                    response.putInt(request.opCode(), wifi.updateNetwork(request.wifiConfiguration()));
+                    response.putInt(request.opCode(), wifi.updateNetwork(request.wifiConfiguration0()));
                 }
             }
     };

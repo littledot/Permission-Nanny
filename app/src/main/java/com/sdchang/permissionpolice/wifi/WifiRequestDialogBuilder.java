@@ -34,7 +34,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
             }
         }
         if (WifiManagerRequest.SET_WIFI_ENABLED.equals(mRequest.opCode())) {
-            mDialogTitle = mRequest.bool() ? R.string.dialogTitle_wifiSetWifiEnabled_enable :
+            mDialogTitle = mRequest.boolean0() ? R.string.dialogTitle_wifiSetWifiEnabled_enable :
                     R.string.dialogTitle_wifiSetWifiEnabled_disable;
         }
     }
