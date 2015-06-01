@@ -57,7 +57,6 @@ class WifiValues {
             new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
-
                     response.putInt(request.opCode(), wifi.addNetwork(request.wifiConfiguration0()));
                 }
             },
@@ -142,7 +141,6 @@ class WifiValues {
             new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
-
                     response.putBoolean(request.opCode(), wifi.saveConfiguration());
                 }
             },

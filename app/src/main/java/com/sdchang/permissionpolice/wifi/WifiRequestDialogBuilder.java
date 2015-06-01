@@ -55,10 +55,4 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
         return new Intent().putExtra(Police.APPROVED, true)
                 .putExtra(Police.RESPONSE, response);
     }
-
-    @Override
-    protected Intent onDenyRequest() {
-        super.onDenyRequest();
-        return new Intent().putExtra(Police.APPROVED, false);
-    }
 }

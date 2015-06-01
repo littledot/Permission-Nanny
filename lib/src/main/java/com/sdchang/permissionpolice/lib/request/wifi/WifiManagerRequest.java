@@ -42,6 +42,7 @@ public abstract class WifiManagerRequest extends BaseRequest {
         return WIFI_REQUEST;
     }
 
+    @Op
     public abstract String opCode();
 
     @Nullable
