@@ -36,18 +36,14 @@ public abstract class BaseRequest implements Parcelable {
     @RequestType
     public abstract int getRequestType();
 
-    private Intent intent;
-
     public Intent newIntent(Context context, String reason, String clientFilter) {
-        if (intent == null) {
-            intent = newBroadcastIntent()
-                    .putExtra(SENDER_PACKAGE, context.getPackageName())
-                    .putExtra(REQUEST_TYPE, getRequestType())
-                    .putExtra(REQUEST_BODY, this)
-                    .putExtra(REQUEST_REASON, reason);
-            if (clientFilter != null) {
-                intent.putExtra(CLIENT_RECEIVER_INTENT_FILTER, clientFilter);
-            }
+        Intent intent = newBroadcastIntent()
+                .putExtra(SENDER_PACKAGE, context.getPackageName())
+                .putExtra(REQUEST_TYPE, getRequestType())
+                .putExtra(REQUEST_BODY, this)
+                .putExtra(REQUEST_REASON, reason);
+        if (clientFilter != null) {
+            intent.putExtra(CLIENT_RECEIVER_INTENT_FILTER, clientFilter);
         }
         return intent;
     }
