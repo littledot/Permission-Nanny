@@ -133,9 +133,8 @@ public class WifiRequestFactory {
         return mExtras[position] != null;
     }
 
-    public Dialog getDialog(Context context, ViewGroup parent, int position) {
-        ViewGroup view = (ViewGroup) LayoutInflater.from(context)
-                .inflate(R.layout.extras_dialog, parent, false);
+    public Dialog getDialog(Context context, int position) {
+        ViewGroup view = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.extras_dialog, null);
 
         Extra[] extras = mExtras[position];
         String[] labels = mExtrasLabel[position];

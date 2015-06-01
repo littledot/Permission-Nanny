@@ -22,7 +22,6 @@ import com.sdchang.permissionpolice.lib.Police;
  *
  */
 public class WifiRequestDemoActivity extends AppCompatActivity {
-    @InjectView(R.id.root) ViewGroup vgRoot;
     @InjectView(R.id.rv) RecyclerView rv;
     WifiAdapter mAdapter;
 
@@ -60,7 +59,7 @@ public class WifiRequestDemoActivity extends AppCompatActivity {
             holder.btnExtras.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mFactory.getDialog(v.getContext(), vgRoot, position).show();
+                    mFactory.getDialog(v.getContext(), position).show();
                 }
             });
             holder.itemView.setOnClickListener(new OnClickListener() {
