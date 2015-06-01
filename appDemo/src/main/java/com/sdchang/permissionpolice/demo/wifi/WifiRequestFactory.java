@@ -3,6 +3,7 @@ package com.sdchang.permissionpolice.demo.wifi;
 import android.app.Dialog;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,49 +38,23 @@ public class WifiRequestFactory {
             WifiManagerRequest.START_SCAN,
             WifiManagerRequest.UPDATE_NETWORK,
     };
-    Extra[][] mExtras = new Extra[][]{
-            null,
-            new Extra[]{new IntegerExtra()},
-            null,
-            new Extra[]{new IntegerExtra(), new BooleanExtra()},
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            new Extra[]{new IntegerExtra()},
-            null,
-            new Extra[]{new BooleanExtra()},
-            null,
-            null,
-    };
-    String[][] mExtrasLabel = new String[][]{
-            new String[]{"wifiConfiguration"},
-            new String[]{"netId"},
-            null,
-            new String[]{"netId", "disableOthers"},
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            new String[]{"netId"},
-            null,
-            new String[]{"enabled"},
-            null,
-            new String[]{"wifiConfiguration"},
-    };
+    SparseArray<Extra[]> mExtras = new SparseArray<Extra[]>() {{
+        put(1, new Extra[]{new IntegerExtra()});
+        put(3, new Extra[]{new IntegerExtra(), new BooleanExtra()});
+        put(13, new Extra[]{new IntegerExtra()});
+        put(15, new Extra[]{new BooleanExtra()});
+    }};
+    SparseArray<String[]> mExtrasLabels = new SparseArray<String[]>() {{
+        put(0, new String[]{"wifiConfiguration"});
+        put(1, new String[]{"netId"});
+        put(3, new String[]{"netId", "disableOthers"});
+        put(13, new String[]{"netId"});
+        put(15, new String[]{"enabled"});
+        put(17, new String[]{"wifiConfiguration"});
+    }};
 
     public WifiManagerRequest getRequest(int position) {
-        Extra[] extras = mExtras[position];
+        Extra[] extras = mExtras.get(position);
         switch (position) {
         case 0:
             return WifiManagerRequest.addNetwork(null);
@@ -130,14 +105,14 @@ public class WifiRequestFactory {
     }
 
     public boolean hasExtras(int position) {
-        return mExtras[position] != null;
+        return mExtras.get(position) != null;
     }
 
     public Dialog getDialog(Context context, int position) {
         ViewGroup view = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.extras_dialog, null);
 
-        Extra[] extras = mExtras[position];
-        String[] labels = mExtrasLabel[position];
+        Extra[] extras = mExtras.get(position);
+        String[] labels = mExtrasLabels.get(position);
 
         for (int i = 0, len = extras.length; i < len; i++) {
             View extraView = extras[i].getView(context, view);
