@@ -13,9 +13,9 @@ import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.R;
-import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequestHandshakeReceiver;
+import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
 import java.security.SecureRandom;
@@ -74,12 +74,8 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<CursorRequest>
         CursorContentProvider.approvedRequests.put(nonce, mRequest);
 
         // return nonce to client
-        return new Intent().putExtra(Police.APPROVED, true)
+        return super.onAllowRequest()
+                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
                 .putExtra(CursorRequestHandshakeReceiver.NONCE, nonce);
-    }
-
-    @Override
-    protected Intent onDenyRequest() {
-        return new Intent().putExtra(Police.APPROVED, false);
     }
 }

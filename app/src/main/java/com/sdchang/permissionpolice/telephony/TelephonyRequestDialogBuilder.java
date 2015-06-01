@@ -13,6 +13,7 @@ import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
+import org.apache.http.protocol.HTTP;
 
 /**
  *
@@ -42,17 +43,11 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyMa
 
     @Override
     protected Intent onAllowRequest() {
-        super.onAllowRequest();
         TelephonyManager tele = (TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE);
         Bundle response = new Bundle();
         mFunction.execute(tele, mRequest, response);
-        return new Intent().putExtra(Police.APPROVED, true)
-                .putExtra(Police.RESPONSE, response);
-    }
-
-    @Override
-    protected Intent onDenyRequest() {
-        super.onDenyRequest();
-        return new Intent().putExtra(Police.APPROVED, false);
+        return super.onAllowRequest()
+                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
+                .putExtra(Police.ENTITY_BODY, response);
     }
 }

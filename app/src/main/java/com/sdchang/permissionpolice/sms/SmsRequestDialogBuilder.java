@@ -12,6 +12,7 @@ import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.sms.SmsRequest;
+import org.apache.http.protocol.HTTP;
 
 /**
  *
@@ -41,11 +42,11 @@ public class SmsRequestDialogBuilder extends BaseDialogBuilder<SmsRequest> {
 
     @Override
     protected Intent onAllowRequest() {
-        super.onAllowRequest();
         SmsManager sms = SmsManager.getDefault();
         Bundle response = new Bundle();
         mFunction.execute(sms, mRequest, response);
-        return new Intent().putExtra(Police.APPROVED, true)
-                .putExtra(Police.RESPONSE, response);
+        return super.onAllowRequest()
+                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
+                .putExtra(Police.ENTITY_BODY, response);
     }
 }

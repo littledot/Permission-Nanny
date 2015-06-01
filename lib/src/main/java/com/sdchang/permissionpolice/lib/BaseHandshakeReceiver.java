@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import org.apache.http.protocol.HTTP;
 
 /**
  *
@@ -18,7 +19,9 @@ public class BaseHandshakeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        context.unregisterReceiver(this);
+        if (HTTP.CONN_CLOSE.equals(intent.getStringExtra(HTTP.CONN_DIRECTIVE))) {
+            context.unregisterReceiver(this);
+        }
         Bundle response = intent.getExtras();
         mListener.onResult(response);
     }

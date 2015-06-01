@@ -2,6 +2,7 @@ package com.sdchang.permissionpolice.lib.request;
 
 import android.os.Bundle;
 import com.sdchang.permissionpolice.lib.Police;
+import org.apache.http.HttpStatus;
 
 /**
  *
@@ -15,7 +16,7 @@ public class BaseResponse {
     }
 
     public boolean isApproved() {
-        return mResponse.getBoolean(Police.APPROVED);
+        return HttpStatus.SC_OK == mResponse.getInt(Police.STATUS_CODE);
     }
 }
 

@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.sdchang.permissionpolice.lib.BundleListener;
 import com.sdchang.permissionpolice.lib.Police;
+import org.apache.http.HttpStatus;
 
 /**
  *
@@ -60,8 +61,8 @@ public class DemoAdapter extends Adapter<DemoViewHolder> {
         if (results == null) {
             holder.tvResponse.setText(null);
             holder.itemView.setBackgroundColor(0);
-        } else if (results.getBoolean(Police.APPROVED)) {
-            Bundle response = results.getBundle(Police.RESPONSE);
+        } else if (HttpStatus.SC_OK == results.getInt(Police.STATUS_CODE)) {
+            Bundle response = results.getBundle(Police.ENTITY_BODY);
             String ans = "Allowed\n";
             for (String key : response.keySet()) {
                 ans += key + " : " + response.get(key) + "\n";

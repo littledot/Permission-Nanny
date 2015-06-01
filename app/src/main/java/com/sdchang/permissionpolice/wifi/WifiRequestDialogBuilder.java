@@ -14,6 +14,7 @@ import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
+import org.apache.http.protocol.HTTP;
 
 /**
  *
@@ -48,11 +49,11 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
 
     @Override
     protected Intent onAllowRequest() {
-        super.onAllowRequest();
         WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         Bundle response = new Bundle();
         mFunction.execute(wifi, mRequest, response);
-        return new Intent().putExtra(Police.APPROVED, true)
-                .putExtra(Police.RESPONSE, response);
+        return super.onAllowRequest()
+                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
+                .putExtra(Police.ENTITY_BODY, response);
     }
 }

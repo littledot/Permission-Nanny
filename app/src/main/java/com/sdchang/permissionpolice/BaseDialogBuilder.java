@@ -10,6 +10,8 @@ import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import org.apache.http.HttpStatus;
+import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
 /**
@@ -75,11 +77,14 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
     }
 
     protected Intent onAllowRequest() {
-        return new Intent().putExtra(Police.APPROVED, true);
+        return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
+                .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK);
     }
 
     protected Intent onDenyRequest() {
-        return new Intent().putExtra(Police.APPROVED, false);
+        return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
+                .putExtra(Police.STATUS_CODE, HttpStatus.SC_UNAUTHORIZED)
+                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
     }
 
     @Override

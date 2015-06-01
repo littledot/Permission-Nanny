@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.Uri.Builder;
 import com.sdchang.permissionpolice.lib.Police;
+import org.apache.http.HttpStatus;
+import org.apache.http.protocol.HTTP;
 
 /**
  *
@@ -26,11 +28,12 @@ public class CursorRequestHandshakeReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        context.unregisterReceiver(this);
-        boolean approved = intent.getBooleanExtra(Police.APPROVED, false);
+        if (HTTP.CONN_CLOSE.equals(intent.getStringExtra(HTTP.CONN_DIRECTIVE))) {
+            context.unregisterReceiver(this);
+        }
 
         Cursor data = null;
-        if (approved) {
+        if (HttpStatus.SC_OK == intent.getIntExtra(Police.STATUS_CODE, 0)) {
             long nonce = intent.getLongExtra(NONCE, 0);
             data = context.getContentResolver().query(PROVIDER.buildUpon().appendPath(Long.toString(nonce)).build(),
                     null, null, null, null);
