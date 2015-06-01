@@ -19,21 +19,26 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.sdchang.permissionpolice.demo.wifi.WifiRequestDemoActivity;
-import com.sdchang.permissionpolice.lib.BundleListener;
-import com.sdchang.permissionpolice.lib.Police;
+import com.sdchang.permissionpolice.demo.telephony.TelephonyRequestFactory;
+import com.sdchang.permissionpolice.demo.wifi.WifiRequestFactory;
 import com.sdchang.permissionpolice.lib.request.content.CursorListener;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
-import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
-import com.sdchang.permissionpolice.lib.request.telephony.TelephonyResponse;
-import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
-import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerResponse;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String FACTORY_ID = "factoryId";
+
+    public static String[] mLabels = new String[]{
+            "TelephonyRequestDemo",
+            "WifiRequestDemo",
+    };
+    public static DemoRequestFactory[] mFactories = new DemoRequestFactory[]{
+            new TelephonyRequestFactory(),
+            new WifiRequestFactory(),
+    };
+
     @InjectView(R.id.rv) RecyclerView rv;
-    private MyAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +46,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         ButterKnife.inject(this);
 
-        mAdapter = new MyAdapter();
         rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setAdapter(mAdapter);
+        rv.setAdapter(new MyAdapter());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 0, 0, "exchange");
-        menu.add(0, 100, 0, "wifi");
-        menu.add(0, 200, 0, "tele");
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == 0) {
             CursorRequest.newBuilder()
                     .uri(ContactsContract.Contacts.CONTENT_URI)
@@ -68,35 +69,15 @@ public class MainActivity extends AppCompatActivity {
                             Timber.wtf(DatabaseUtils.dumpCursorToString(data));
                         }
                     });
-        } else if (id == 100) {
-            WifiManagerRequest.getConnectionInfo().startRequest(this, "We want to add sniff ur wifi",
-                    new BundleListener() {
-                        @Override
-                        public void onResult(Bundle results) {
-                            WifiManagerResponse response = new WifiManagerResponse(results.getBundle(Police.RESPONSE));
-                            Timber.wtf("ans=" + response.wifiInfo());
-                        }
-                    });
-        } else if (id == 200) {
-            TelephonyManagerRequest.getDeviceId().startRequest(this, "we want ur device software ver",
-                    new BundleListener() {
-                        @Override
-                        public void onResult(Bundle results) {
-                            TelephonyResponse response = new TelephonyResponse(results.getBundle(Police.RESPONSE));
-                            Timber.wtf("ans=" + response.deviceId());
-                        }
-                    });
         }
         return super.onOptionsItemSelected(item);
     }
 
     class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
-        Class[] mActivities = new Class[]{WifiRequestDemoActivity.class};
-
         @Override
         public int getItemCount() {
-            return mActivities.length;
+            return mLabels.length;
         }
 
         @Override
@@ -107,12 +88,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
-            final Class activity = mActivities[position];
-            holder.tv1.setText(activity.getSimpleName());
+            holder.tv1.setText(mLabels[position]);
             holder.itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, activity));
+                    startActivity(new Intent(MainActivity.this, DemoActivity.class)
+                            .putExtra(FACTORY_ID, position));
                 }
             });
         }

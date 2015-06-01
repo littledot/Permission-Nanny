@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".wifi.WifiRequestDemoActivity"/>
+        <activity android:name=".DemoActivity"/>
 
     </application>
 

@@ -29,6 +29,7 @@ public abstract class TelephonyManagerRequest extends BaseRequest {
         return TELEPHONY_REQUEST;
     }
 
+    @Op
     public abstract String opCode();
 
     @Retention(RetentionPolicy.SOURCE)
