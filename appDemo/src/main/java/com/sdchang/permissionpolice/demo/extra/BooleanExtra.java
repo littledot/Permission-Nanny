@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice.demo;
+package com.sdchang.permissionpolice.demo.extra;
 
 import android.content.Context;
 import android.support.v7.widget.SwitchCompat;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
+import com.sdchang.permissionpolice.demo.R;
 
 /**
  *

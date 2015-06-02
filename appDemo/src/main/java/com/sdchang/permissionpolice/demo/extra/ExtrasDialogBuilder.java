@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice.demo;
+package com.sdchang.permissionpolice.demo.extra;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.sdchang.permissionpolice.demo.R;
 
 /**
  *

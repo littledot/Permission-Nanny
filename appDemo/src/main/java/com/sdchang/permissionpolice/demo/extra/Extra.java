@@ -1,4 +1,4 @@
-package com.sdchang.permissionpolice.demo;
+package com.sdchang.permissionpolice.demo.extra;
 
 import android.content.Context;
 import android.view.View;

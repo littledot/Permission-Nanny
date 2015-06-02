@@ -3,11 +3,11 @@ package com.sdchang.permissionpolice.demo.wifi;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.SparseArray;
-import com.sdchang.permissionpolice.demo.BooleanExtra;
+import com.sdchang.permissionpolice.demo.extra.BooleanExtra;
 import com.sdchang.permissionpolice.demo.DemoRequestFactory;
-import com.sdchang.permissionpolice.demo.Extra;
-import com.sdchang.permissionpolice.demo.ExtrasDialogBuilder;
-import com.sdchang.permissionpolice.demo.IntegerExtra;
+import com.sdchang.permissionpolice.demo.extra.Extra;
+import com.sdchang.permissionpolice.demo.extra.ExtrasDialogBuilder;
+import com.sdchang.permissionpolice.demo.extra.IntegerExtra;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
 
 /**
