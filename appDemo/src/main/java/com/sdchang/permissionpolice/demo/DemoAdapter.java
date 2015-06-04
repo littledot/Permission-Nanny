@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.lib.BundleListener;
 import com.sdchang.permissionpolice.lib.Police;
 import org.apache.http.HttpStatus;
@@ -47,13 +48,13 @@ public class DemoAdapter extends Adapter<DemoViewHolder> {
         holder.itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFactory.getRequest(position).startRequest(v.getContext(), "Demo Reason", new BundleListener() {
+                mFactory.getRequest(position).listener(new BundleListener() {
                     @Override
                     public void onResult(Bundle results) {
                         mResults[position] = results;
                         DemoAdapter.this.notifyItemChanged(position);
                     }
-                });
+                }).startRequest(v.getContext(), "Demo Reason");
             }
         });
 
@@ -63,11 +64,7 @@ public class DemoAdapter extends Adapter<DemoViewHolder> {
             holder.itemView.setBackgroundColor(0);
         } else if (HttpStatus.SC_OK == results.getInt(Police.STATUS_CODE)) {
             Bundle response = results.getBundle(Police.ENTITY_BODY);
-            String ans = "Allowed\n";
-            for (String key : response.keySet()) {
-                ans += key + " : " + response.get(key) + "\n";
-            }
-            holder.tvResponse.setText(ans);
+            holder.tvResponse.setText("Allowed\n" + BundleUtil.toString(response));
             holder.itemView.setBackgroundColor(0xFF00FF00);
         } else {
             holder.tvResponse.setText("Denied");

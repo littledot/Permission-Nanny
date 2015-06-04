@@ -6,5 +6,4 @@
         <ignore regexp="mbassador"/>
         <ignore regexp="icepick-processor"/>
     </issue>
-
 </lint>

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.sdchang.permissionpolice.demo.location.LocationRequestFactory;
 import com.sdchang.permissionpolice.demo.telephony.TelephonyRequestFactory;
 import com.sdchang.permissionpolice.demo.wifi.WifiRequestFactory;
 import com.sdchang.permissionpolice.lib.request.content.CursorListener;
@@ -30,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
     public static String FACTORY_ID = "factoryId";
 
     public static String[] mLabels = new String[]{
+            "LocationRequestDemo",
             "TelephonyRequestDemo",
             "WifiRequestDemo",
     };
     public static DemoRequestFactory[] mFactories = new DemoRequestFactory[]{
+            new LocationRequestFactory(),
             new TelephonyRequestFactory(),
             new WifiRequestFactory(),
     };

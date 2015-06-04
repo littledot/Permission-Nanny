@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import com.sdchang.permissionpolice.demo.R;
 
 /**
@@ -14,11 +13,10 @@ import com.sdchang.permissionpolice.demo.R;
  */
 public class ExtrasDialogBuilder {
     public Dialog build(Context context, Extra[] extras, String[] labels) {
-        ViewGroup view = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.extras_dialog, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.extras_dialog, null);
+        ViewGroup vg = (ViewGroup) view.findViewById(R.id.vg);
         for (int i = 0, len = extras.length; i < len; i++) {
-            View extraView = extras[i].getView(context, view);
-            ((TextView) extraView.findViewById(R.id.tvLabel)).setText(labels[i]);
-            view.addView(extraView);
+            vg.addView(extras[i].getView(context, vg, labels[i]));
         }
         return new AlertDialog.Builder(context)
                 .setView(view)

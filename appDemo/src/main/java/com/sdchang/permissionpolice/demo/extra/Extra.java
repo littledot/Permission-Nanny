@@ -8,7 +8,7 @@ import android.view.ViewGroup;
  *
  */
 public interface Extra<T> {
-    View getView(Context context, ViewGroup parent);
+    View getView(Context context, ViewGroup parent, String label);
 
     T getValue();
 }

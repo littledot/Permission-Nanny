@@ -13,9 +13,9 @@ import com.sdchang.permissionpolice.demo.R;
 /**
  *
  */
-public class IntegerExtra implements Extra<Integer> {
+public class LongExtra implements Extra<Long> {
 
-    int mValue;
+    long mValue;
 
     @Override
     public View getView(Context context, ViewGroup parent, String label) {
@@ -29,14 +29,14 @@ public class IntegerExtra implements Extra<Integer> {
     }
 
     @Override
-    public Integer getValue() {
+    public Long getValue() {
         return mValue;
     }
 
     @OnTextChanged(R.id.etValue)
     void onTextChanged(CharSequence s, int start, int before, int count) {
         try {
-            mValue = Integer.parseInt(s.toString());
+            mValue = Long.parseLong(s.toString());
         } catch (NumberFormatException e) {
             mValue = 0;
         }

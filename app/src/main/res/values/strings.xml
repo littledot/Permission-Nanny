@@ -63,4 +63,18 @@
     <string name="dialogTitle_smsSendMultimediaMessage"> would like to send a multimedia message (MMS).</string>
     <string name="dialogTitle_smsSendMultipartTextMessage"> would like to send a multi-part SMS.</string>
     <string name="dialogTitle_smsSendTextMessage"> would like to send a SMS.</string>
+
+    <string name="dialogTitle_locationAddGpsStatusListener"> </string>
+    <string name="dialogTitle_locationAddNmeaListener"> </string>
+    <string name="dialogTitle_locationAddProximityAlert"> </string>
+    <string name="dialogTitle_locationGetLastKnownLocation"> </string>
+    <string name="dialogTitle_locationRemoveGpsStatusListener"> </string>
+    <string name="dialogTitle_locationRemoveNmeaListener"> </string>
+    <string name="dialogTitle_locationRemoveProximityAlert"> </string>
+    <string name="dialogTitle_locationRemoveUpdates"> </string>
+    <string name="dialogTitle_locationRemoveUpdates1"> </string>
+    <string name="dialogTitle_locationRequestLocationUpdates"> would like to receives updates about your
+        location.</string>
+    <string name="dialogTitle_locationRequestLocationUpdates1"> would like to receives updates about your
+        location.</string>
 </resources>

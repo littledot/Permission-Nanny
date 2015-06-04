@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import com.sdchang.permissionpolice.lib.BaseHandshakeReceiver;
 import com.sdchang.permissionpolice.lib.BundleListener;
 
@@ -23,20 +24,24 @@ public abstract class BaseRequest implements Parcelable {
     public static final String REQUEST_REASON = "requestReason";
     public static final String SENDER_PACKAGE = "senderPackage";
     public static final String CLIENT_RECEIVER_INTENT_FILTER = "clientReceiverIntentFilter";
+    public static final String ERROR = "error";
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({CURSOR_REQUEST, SMS_REQUEST, TELEPHONY_REQUEST, WIFI_REQUEST})
+    @IntDef({CURSOR_REQUEST, LOCATION_REQUEST, SMS_REQUEST, TELEPHONY_REQUEST, WIFI_REQUEST})
     public @interface RequestType {}
 
     public static final int CURSOR_REQUEST = 1;
+    public static final int LOCATION_REQUEST = 100;
     public static final int SMS_REQUEST = 200;
     public static final int TELEPHONY_REQUEST = 300;
     public static final int WIFI_REQUEST = 400;
 
+    private BundleListener mListener;
+
     @RequestType
     public abstract int getRequestType();
 
-    public Intent newIntent(Context context, String reason, String clientFilter) {
+    public Intent newIntent(Context context, String reason, @Nullable String clientFilter) {
         Intent intent = newBroadcastIntent()
                 .putExtra(SENDER_PACKAGE, context.getPackageName())
                 .putExtra(REQUEST_TYPE, getRequestType())
@@ -57,9 +62,17 @@ public abstract class BaseRequest implements Parcelable {
                 "com.sdchang.permissionpolice.ExternalRequestService");
     }
 
-    public void startRequest(Context context, String reason, BundleListener listener) {
-        String nonce = Long.toString(new SecureRandom().nextLong());
-        context.registerReceiver(new BaseHandshakeReceiver(listener), new IntentFilter(nonce));
-        context.sendBroadcast(newIntent(context, reason, nonce));
+    public BaseRequest listener(BundleListener listener) {
+        mListener = listener;
+        return this;
+    }
+
+    public void startRequest(Context context, String reason) {
+        String clientId = null;
+        if (mListener != null) {
+            clientId = Long.toString(new SecureRandom().nextLong());
+            context.registerReceiver(new BaseHandshakeReceiver(mListener), new IntentFilter(clientId));
+        }
+        context.sendBroadcast(newIntent(context, reason, clientId));
     }
 }
