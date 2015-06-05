@@ -23,7 +23,7 @@ public abstract class BaseRequest implements Parcelable {
     public static final String REQUEST_BODY = "requestBody";
     public static final String REQUEST_REASON = "requestReason";
     public static final String SENDER_PACKAGE = "senderPackage";
-    public static final String CLIENT_RECEIVER_INTENT_FILTER = "clientReceiverIntentFilter";
+    public static final String CLIENT_ID = "clientId";
     public static final String ERROR = "error";
 
     @Retention(RetentionPolicy.SOURCE)
@@ -48,7 +48,7 @@ public abstract class BaseRequest implements Parcelable {
                 .putExtra(REQUEST_BODY, this)
                 .putExtra(REQUEST_REASON, reason);
         if (clientFilter != null) {
-            intent.putExtra(CLIENT_RECEIVER_INTENT_FILTER, clientFilter);
+            intent.putExtra(CLIENT_ID, clientFilter);
         }
         return intent;
     }
@@ -65,6 +65,10 @@ public abstract class BaseRequest implements Parcelable {
     public BaseRequest listener(BundleListener listener) {
         mListener = listener;
         return this;
+    }
+
+    public BundleListener listener() {
+        return mListener;
     }
 
     public void startRequest(Context context, String reason) {

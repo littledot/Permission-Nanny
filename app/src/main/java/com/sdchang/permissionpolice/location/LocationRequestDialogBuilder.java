@@ -10,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
+import com.sdchang.permissionpolice.ProxyService;
 import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
@@ -43,30 +44,33 @@ public class LocationRequestDialogBuilder extends BaseDialogBuilder<LocationRequ
 
     @Override
     protected Intent onAllowRequest() {
-        if (mOperation.mFunction != null) {
+        if (mOperation.mFunction != null) { // one-shot request
             LocationManager lm = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
             Bundle response = new Bundle();
             try {
                 mOperation.mFunction.execute(lm, mRequest, response);
                 return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
+                        .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
                         .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK)
                         .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
                         .putExtra(Police.ENTITY_BODY, response);
             } catch (Throwable error) {
                 return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
+                        .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
                         .putExtra(Police.STATUS_CODE, HttpStatus.SC_BAD_REQUEST)
                         .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
                         .putExtra(Police.ENTITY_ERROR, error);
             }
         }
 
-        Intent server = new Intent(mActivity, LocationServerService.class);
-        server.putExtra(LocationServerService.CLIENT_ID, mClientIntentFilter);
-        server.putExtra(LocationServerService.REQUEST, mRequest);
+        // ongoing request
+        Intent server = new Intent(mActivity, ProxyService.class);
+        server.putExtra(ProxyService.CLIENT_ID, mClientId);
+        server.putExtra(ProxyService.REQUEST, mRequest);
         Timber.wtf("Operation.function is null, starting service with args: " + BundleUtil.toString(server));
         mActivity.startService(server);
         return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK)
-                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
+                .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
+                .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK);
     }
 }

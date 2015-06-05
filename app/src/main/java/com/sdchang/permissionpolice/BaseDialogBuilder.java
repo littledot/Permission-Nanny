@@ -24,16 +24,16 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
     private final String mAppPackage;
     private final String mReason;
     /** Action string client is filtering to receive broadcast Intents. */
-    protected final String mClientIntentFilter;
+    protected final String mClientId;
     protected final T mRequest;
 
     public BaseDialogBuilder(Activity activity, Bundle args) {
         mActivity = activity;
         mAppPackage = args.getString(BaseRequest.SENDER_PACKAGE);
         mReason = args.getString(BaseRequest.REQUEST_REASON);
-        mClientIntentFilter = args.getString(BaseRequest.CLIENT_RECEIVER_INTENT_FILTER);
+        mClientId = args.getString(BaseRequest.CLIENT_ID);
         mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
-        Timber.d("clientIntentFilter=" + mClientIntentFilter);
+        Timber.d("clientIntentFilter=" + mClientId);
     }
 
     public AlertDialog build() {
@@ -69,8 +69,8 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
             response = onDenyRequest();
         }
 
-        if (response != null && mClientIntentFilter != null) {
-            response.setAction(mClientIntentFilter);
+        if (response != null && mClientId != null) {
+            response.setAction(mClientId);
             Timber.d("server broadcasting=" + response);
             mActivity.sendBroadcast(response);
         }
@@ -78,11 +78,13 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
 
     protected Intent onAllowRequest() {
         return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
+                .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
                 .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK);
     }
 
     protected Intent onDenyRequest() {
         return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
+                .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
                 .putExtra(Police.STATUS_CODE, HttpStatus.SC_UNAUTHORIZED)
                 .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
     }

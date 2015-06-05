@@ -13,7 +13,7 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import auto.parcel.AutoParcel;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.lib.request.OpRequest;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,7 +23,7 @@ import java.security.SecureRandom;
  *
  */
 @AutoParcel
-public abstract class LocationRequest extends BaseRequest {
+public abstract class LocationRequest extends OpRequest {
 
     static Builder newBuilder() {
         return new AutoParcel_LocationRequest.Builder();
@@ -31,7 +31,7 @@ public abstract class LocationRequest extends BaseRequest {
 
     @AutoParcel.Builder
     static abstract class Builder {
-        public abstract Builder opCode(String value);
+        public abstract Builder opCode(@Op String value);
 
         public abstract Builder long0(long value);
 
@@ -83,7 +83,9 @@ public abstract class LocationRequest extends BaseRequest {
     }
 
     @Retention(RetentionPolicy.SOURCE)
-    @StringDef({REQUEST_LOCATION_UPDATES})
+    @StringDef({ADD_GPS_STATUS_LISTENER, ADD_NMEA_LISTENER, ADD_PROXIMITY_ALERT, GET_LAST_KNOWN_LOCATION,
+            REMOVE_GPS_STATUS_LISTENER, REMOVE_NMEA_LISTENER, REMOVE_PROXIMITY_ALERT, REMOVE_UPDATES,
+            REMOVE_UPDATES1, REQUEST_LOCATION_UPDATES, REQUEST_LOCATION_UPDATES1})
     public @interface Op {}
 
     public static final String ADD_GPS_STATUS_LISTENER = "addGpsStatusListener";
@@ -167,7 +169,7 @@ public abstract class LocationRequest extends BaseRequest {
     @Override
     public void startRequest(Context context, String reason) {
         String clientId = Long.toString(new SecureRandom().nextLong());
-        context.registerReceiver(new LocationReceiver(mLocationListener, mLooper), new IntentFilter
+        context.registerReceiver(new LocationReceiver(listener(), mLocationListener, mLooper), new IntentFilter
                 (clientId));
         context.sendBroadcast(newIntent(context, reason, clientId));
     }

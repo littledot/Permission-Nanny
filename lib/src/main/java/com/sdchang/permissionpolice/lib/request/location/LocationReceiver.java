@@ -7,7 +7,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
-import timber.log.Timber;
+import com.sdchang.permissionpolice.lib.BundleListener;
+import com.sdchang.permissionpolice.lib.Police;
+import org.apache.http.protocol.HTTP;
 
 /**
  *
@@ -27,43 +29,54 @@ public class LocationReceiver extends BroadcastReceiver {
     public static final String ON_PROVIDER_ENABLED = "onProviderEnabled";
     public static final String ON_STATUS_CHANGED = "onStatusChanged";
 
-    private LocationListener mListener;
+    private BundleListener mBundleListener;
+    private LocationListener mLocationListener;
     private Handler mHandler;
 
-    public LocationReceiver(LocationListener listener, Handler handler) {
-        mListener = listener;
+    public LocationReceiver(BundleListener bundle, LocationListener location, Handler handler) {
+        mBundleListener = bundle;
+        mLocationListener = location;
         mHandler = handler;
     }
 
     @Override
     public void onReceive(Context context, final Intent intent) {
-        // send ack
-        String ackServerId = intent.getStringExtra(ACK_SERVER);
-        String clientId = intent.getAction();
-        context.sendBroadcast(new Intent(ackServerId).putExtra(CLIENT_ID, clientId));
+        if (HTTP.CONN_CLOSE.equals(intent.getStringExtra(HTTP.CONN_DIRECTIVE))) {
+            context.unregisterReceiver(this);
+        }
 
-        // handle response
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Timber.wtf("");
-                String type = intent.getStringExtra(TYPE);
-                if (ON_LOCATION_CHANGED.equals(type)) {
-                    Location location = intent.getParcelableExtra(LOCATION);
-                    mListener.onLocationChanged(location);
-                } else if (ON_PROVIDER_DISABLED.equals(type)) {
-                    String provider = intent.getStringExtra(PROVIDER);
-                    mListener.onProviderDisabled(provider);
-                } else if (ON_PROVIDER_ENABLED.equals(type)) {
-                    String provider = intent.getStringExtra(PROVIDER);
-                    mListener.onProviderEnabled(provider);
-                } else if (ON_STATUS_CHANGED.equals(type)) {
-                    String provider = intent.getStringExtra(PROVIDER);
-                    int status = intent.getIntExtra(STATUS, -1);
-                    Bundle extras = intent.getBundleExtra(EXTRAS);
-                    mListener.onStatusChanged(provider, status, extras);
+        String server = intent.getStringExtra(Police.SERVER);
+        if (Police.AUTHENTICATION_SERVICE.equals(server)) {
+            Bundle response = intent.getExtras();
+            mBundleListener.onResult(response);
+        } else if (Police.LOCATION_SERVICE.equals(server)) {
+            // send ack
+            String ackServerId = intent.getStringExtra(ACK_SERVER);
+            String clientId = intent.getAction();
+            context.sendBroadcast(new Intent(ackServerId).putExtra(CLIENT_ID, clientId));
+
+            // handle response
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    String type = intent.getStringExtra(TYPE);
+                    if (ON_LOCATION_CHANGED.equals(type)) {
+                        Location location = intent.getParcelableExtra(LOCATION);
+                        mLocationListener.onLocationChanged(location);
+                    } else if (ON_PROVIDER_DISABLED.equals(type)) {
+                        String provider = intent.getStringExtra(PROVIDER);
+                        mLocationListener.onProviderDisabled(provider);
+                    } else if (ON_PROVIDER_ENABLED.equals(type)) {
+                        String provider = intent.getStringExtra(PROVIDER);
+                        mLocationListener.onProviderEnabled(provider);
+                    } else if (ON_STATUS_CHANGED.equals(type)) {
+                        String provider = intent.getStringExtra(PROVIDER);
+                        int status = intent.getIntExtra(STATUS, -1);
+                        Bundle extras = intent.getBundleExtra(EXTRAS);
+                        mLocationListener.onStatusChanged(provider, status, extras);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

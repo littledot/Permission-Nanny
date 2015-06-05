@@ -30,7 +30,7 @@
             android:name=".ConfirmRequestActivity"
             android:theme="@style/Theme.AppCompat.Transparent"/>
 
-        <service android:name=".location.LocationServerService"/>
+        <service android:name=".ProxyService"/>
 
         <receiver android:name=".ExternalRequestReceiver">
             <intent-filter>
