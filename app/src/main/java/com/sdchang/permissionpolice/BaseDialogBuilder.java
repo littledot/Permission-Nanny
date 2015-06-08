@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
@@ -38,16 +40,19 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
 
     public AlertDialog build() {
         CharSequence appLabel;
+        Drawable appIcon = null;
         try {
-            ApplicationInfo senderInfo = mActivity.getPackageManager().getApplicationInfo(mAppPackage, 0);
-            appLabel = mActivity.getPackageManager().getApplicationLabel(senderInfo);
+            PackageManager pm = mActivity.getPackageManager();
+            ApplicationInfo senderInfo = pm.getApplicationInfo(mAppPackage, 0);
+            appLabel = pm.getApplicationLabel(senderInfo);
+            appIcon = pm.getApplicationIcon(senderInfo);
         } catch (NameNotFoundException e) {
             Timber.e(e, "senderPackage not found=%s", mAppPackage);
             appLabel = mAppPackage;
         }
-
         return new AlertDialog.Builder(mActivity)
                 .setTitle(buildDialogTitle(appLabel))
+                .setIcon(appIcon)
                 .setMessage(mReason)
                 .setPositiveButton(R.string.dialog_allow, this)
                 .setNegativeButton(R.string.dialog_deny, this)
