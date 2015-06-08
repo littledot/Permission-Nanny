@@ -8,9 +8,11 @@ import android.location.LocationManager;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.lib.request.OpRequest;
-import com.sdchang.permissionpolice.lib.request.location.LocationReceiver;
+import com.sdchang.permissionpolice.lib.request.location.LocationEvent;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
+import com.sdchang.permissionpolice.location.ProxyGpsStatusListener;
 import com.sdchang.permissionpolice.location.ProxyLocationListener;
+import com.sdchang.permissionpolice.location.ProxyNmeaListener;
 import timber.log.Timber;
 
 import java.security.SecureRandom;
@@ -42,15 +44,24 @@ public class ProxyService extends BaseService {
         String clientId = intent.getStringExtra(CLIENT_ID);
         OpRequest opRequest = intent.getParcelableExtra(REQUEST);
 
+        LocationRequest request;
         switch (opRequest.opCode()) {
+        case LocationRequest.ADD_GPS_STATUS_LISTENER:
+            ProxyGpsStatusListener gpsStatusListener = new ProxyGpsStatusListener(this, clientId, mServerId);
+            mClients.put(clientId, new ProxyClient(clientId, opRequest, gpsStatusListener));
+            mLocationManager.addGpsStatusListener(gpsStatusListener);
+            break;
+        case LocationRequest.ADD_NMEA_LISTENER:
+            ProxyNmeaListener nmeaListener = new ProxyNmeaListener(this, clientId, mServerId);
+            mClients.put(clientId, new ProxyClient(clientId, opRequest, nmeaListener));
+            mLocationManager.addNmeaListener(nmeaListener);
+            break;
         case LocationRequest.REQUEST_LOCATION_UPDATES1:
-            Timber.wtf("Requesting location updates.");
-            LocationRequest request = (LocationRequest) opRequest;
-            ProxyLocationListener listener = new ProxyLocationListener(this, clientId, mServerId);
-            ProxyClient client = new ProxyClient(clientId, opRequest, listener);
-            mClients.put(clientId, client);
-            mLocationManager.requestLocationUpdates(request.long0(), request.float0(), request.criteria0(), listener,
-                    null);
+            request = (LocationRequest) opRequest;
+            ProxyLocationListener locationListener = new ProxyLocationListener(this, clientId, mServerId);
+            mClients.put(clientId, new ProxyClient(clientId, opRequest, locationListener));
+            mLocationManager.requestLocationUpdates(request.long0(), request.float0(), request.criteria0(),
+                    locationListener, null);
             break;
         }
         return super.onStartCommand(intent, flags, startId);
@@ -72,7 +83,7 @@ public class ProxyService extends BaseService {
     class AckReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String clientId = intent.getStringExtra(LocationReceiver.CLIENT_ID);
+            String clientId = intent.getStringExtra(LocationEvent.CLIENT_ID);
             ProxyClient client = mClients.get(clientId);
             if (client != null) {
                 client.mListener.updateAck(System.currentTimeMillis());

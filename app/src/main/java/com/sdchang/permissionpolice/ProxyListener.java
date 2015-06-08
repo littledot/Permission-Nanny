@@ -1,7 +1,8 @@
 package com.sdchang.permissionpolice;
 
+import android.content.Context;
 import android.content.Intent;
-import com.sdchang.permissionpolice.lib.request.location.LocationReceiver;
+import com.sdchang.permissionpolice.lib.Police;
 import timber.log.Timber;
 
 /**
@@ -30,6 +31,7 @@ public class ProxyListener {
     protected void sendBroadcast(Intent intent) {
         if (mLastAck - mLastBroadcast > 5000) { // no recent ack? assume client died
             Timber.wtf("Dead client. Removing " + mClientId);
+            unregister(mService);
             mService.removeProxyClient(mClientId);
             return;
         }
@@ -37,8 +39,10 @@ public class ProxyListener {
         mService.sendBroadcast(intent);
     }
 
+    protected void unregister(Context context) {}
+
     protected Intent newResponseIntent() {
         return new Intent(mClientId)
-                .putExtra(LocationReceiver.ACK_SERVER, mServerId);
+                .putExtra(Police.ACK_SERVER, mServerId);
     }
 }

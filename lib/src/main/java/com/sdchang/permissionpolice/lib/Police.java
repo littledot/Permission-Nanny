@@ -14,6 +14,11 @@ public class Police {
     public static final String ENTITY_ERROR = "Entity-Error";
 
     public static final String SERVER = "Server";
-    public static final String AUTHENTICATION_SERVICE = "AuthenticationModule";
+    public static final String AUTHORIZATION_SERVICE = "AuthorizationService";
     public static final String LOCATION_SERVICE = "LocationService";
+    public static final String GPS_STATUS_SERVICE = "GpsStatusService";
+    public static final String NMEA_SERVICE = "NmeaService";
+
+    // experimental
+    public static final String ACK_SERVER = "ackServer";
 }

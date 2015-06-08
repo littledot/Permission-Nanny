@@ -50,13 +50,13 @@ public class LocationRequestDialogBuilder extends BaseDialogBuilder<LocationRequ
             try {
                 mOperation.mFunction.execute(lm, mRequest, response);
                 return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                        .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
+                        .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
                         .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK)
                         .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
                         .putExtra(Police.ENTITY_BODY, response);
             } catch (Throwable error) {
                 return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                        .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
+                        .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
                         .putExtra(Police.STATUS_CODE, HttpStatus.SC_BAD_REQUEST)
                         .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
                         .putExtra(Police.ENTITY_ERROR, error);
@@ -70,7 +70,7 @@ public class LocationRequestDialogBuilder extends BaseDialogBuilder<LocationRequ
         Timber.wtf("Operation.function is null, starting service with args: " + BundleUtil.toString(server));
         mActivity.startService(server);
         return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
+                .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
                 .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK);
     }
 }

@@ -13,8 +13,8 @@ import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.lib.request.content.CursorEvent;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
-import com.sdchang.permissionpolice.lib.request.content.CursorRequestHandshakeReceiver;
 import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
@@ -76,6 +76,6 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<CursorRequest>
         // return nonce to client
         return super.onAllowRequest()
                 .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
-                .putExtra(CursorRequestHandshakeReceiver.NONCE, nonce);
+                .putExtra(CursorEvent.NONCE, nonce);
     }
 }

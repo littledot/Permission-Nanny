@@ -78,13 +78,13 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
 
     protected Intent onAllowRequest() {
         return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
+                .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
                 .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK);
     }
 
     protected Intent onDenyRequest() {
         return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                .putExtra(Police.SERVER, Police.AUTHENTICATION_SERVICE)
+                .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
                 .putExtra(Police.STATUS_CODE, HttpStatus.SC_UNAUTHORIZED)
                 .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
     }

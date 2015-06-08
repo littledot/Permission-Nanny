@@ -6,8 +6,10 @@ import android.content.IntentFilter;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import com.sdchang.permissionpolice.lib.BaseHandshakeReceiver;
+import com.sdchang.permissionpolice.lib.BundleEvent;
 import com.sdchang.permissionpolice.lib.BundleListener;
+import com.sdchang.permissionpolice.lib.Event;
+import com.sdchang.permissionpolice.lib.PermissionReceiver;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -36,7 +38,7 @@ public abstract class BaseRequest implements Parcelable {
     public static final int TELEPHONY_REQUEST = 300;
     public static final int WIFI_REQUEST = 400;
 
-    private BundleListener mListener;
+    protected PermissionReceiver mReceiver;
 
     @RequestType
     public abstract int getRequestType();
@@ -63,20 +65,24 @@ public abstract class BaseRequest implements Parcelable {
     }
 
     public BaseRequest listener(BundleListener listener) {
-        mListener = listener;
+        return addFilter(new BundleEvent(listener));
+    }
+
+    protected BaseRequest addFilter(Event event) {
+        if (mReceiver == null) {
+            mReceiver = new PermissionReceiver();
+        }
+        mReceiver.addFilter(event);
         return this;
     }
 
-    public BundleListener listener() {
-        return mListener;
-    }
-
-    public void startRequest(Context context, String reason) {
+    public BaseRequest startRequest(Context context, String reason) {
         String clientId = null;
-        if (mListener != null) {
+        if (mReceiver != null) {
             clientId = Long.toString(new SecureRandom().nextLong());
-            context.registerReceiver(new BaseHandshakeReceiver(mListener), new IntentFilter(clientId));
+            context.registerReceiver(mReceiver, new IntentFilter(clientId));
         }
         context.sendBroadcast(newIntent(context, reason, clientId));
+        return this;
     }
 }

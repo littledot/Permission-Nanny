@@ -2,12 +2,10 @@ package com.sdchang.permissionpolice.lib.request.location;
 
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.IntentFilter;
 import android.location.Criteria;
 import android.location.GpsStatus.Listener;
 import android.location.GpsStatus.NmeaListener;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
@@ -17,7 +15,6 @@ import com.sdchang.permissionpolice.lib.request.OpRequest;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.security.SecureRandom;
 
 /**
  *
@@ -50,8 +47,7 @@ public abstract class LocationRequest extends OpRequest {
         public abstract LocationRequest build();
     }
 
-    private LocationListener mLocationListener;
-    private Handler mLooper;
+    private Context mContext;
 
     @Op
     public abstract String opCode();
@@ -108,11 +104,15 @@ public abstract class LocationRequest extends OpRequest {
     public static final String requestSingleUpdate3 = "requestSingleUpdate3";
 
     public static LocationRequest addGpsStatusListener(Listener listener) {
-        return newBuilder().opCode(ADD_GPS_STATUS_LISTENER).build();
+        LocationRequest request = newBuilder().opCode(ADD_GPS_STATUS_LISTENER).build();
+        request.addFilter(new GpsStatusEvent(listener));
+        return request;
     }
 
     public static LocationRequest addNmeaListener(NmeaListener listener) {
-        return newBuilder().opCode(ADD_NMEA_LISTENER).build();
+        LocationRequest request = newBuilder().opCode(ADD_NMEA_LISTENER).build();
+        request.addFilter(new NmeaEvent(listener));
+        return request;
     }
 
     public static LocationRequest addProximityAlert(double latitude, double longtitude, float radius, long
@@ -121,18 +121,17 @@ public abstract class LocationRequest extends OpRequest {
                 .long0(expiration).pendingIntent0(intent).build();
     }
 
-    public static LocationManager getLastKnownLocation(String provider) {
-//        return newBuilder().opCode(GET_LAST_KNOWN_LOCATION).string0(provider).build();
-        return null;
+    public static LocationRequest getLastKnownLocation(String provider) {
+        return newBuilder().opCode(GET_LAST_KNOWN_LOCATION).string0(provider).build();
     }
 
-    public static LocationRequest removeGpsStatusListener(Listener listener) {
-        return newBuilder().opCode(REMOVE_GPS_STATUS_LISTENER).build();
-    }
+//    public static LocationRequest removeGpsStatusListener(Listener listener) {
+//        return newBuilder().opCode(REMOVE_GPS_STATUS_LISTENER).build();
+//    }
 
-    public static LocationRequest removeNmeaListener(NmeaListener listener) {
-        return newBuilder().opCode(REMOVE_NMEA_LISTENER).build();
-    }
+//    public static LocationRequest removeNmeaListener(NmeaListener listener) {
+//        return newBuilder().opCode(REMOVE_NMEA_LISTENER).build();
+//    }
 
     public static LocationRequest removeProximityAlert(PendingIntent intent) {
         return newBuilder().opCode(REMOVE_PROXIMITY_ALERT).pendingIntent0(intent).build();
@@ -142,9 +141,9 @@ public abstract class LocationRequest extends OpRequest {
         return newBuilder().opCode(REMOVE_UPDATES).pendingIntent0(intent).build();
     }
 
-    public static LocationRequest removeUpdates(LocationListener listener) {
-        return newBuilder().opCode(REMOVE_UPDATES1).build();
-    }
+//    public static LocationRequest removeUpdates(LocationListener listener) {
+//        return newBuilder().opCode(REMOVE_UPDATES1).build();
+//    }
 
     public static LocationRequest requestLocationUpdates(long minTime,
                                                          float minDistance,
@@ -159,19 +158,22 @@ public abstract class LocationRequest extends OpRequest {
                                                          Criteria criteria,
                                                          LocationListener listener,
                                                          Looper looper) {
+        Handler handler = looper != null ? new Handler(looper) : new Handler();
         LocationRequest request = newBuilder().opCode(REQUEST_LOCATION_UPDATES1).long0(minTime).float0(minDistance)
                 .criteria0(criteria).build();
-        request.mLocationListener = listener;
-        request.mLooper = looper != null ? new Handler(looper) : new Handler();
+        request.addFilter(new LocationEvent(listener, handler));
         return request;
     }
 
     @Override
-    public void startRequest(Context context, String reason) {
-        String clientId = Long.toString(new SecureRandom().nextLong());
-        context.registerReceiver(new LocationReceiver(listener(), mLocationListener, mLooper), new IntentFilter
-                (clientId));
-        context.sendBroadcast(newIntent(context, reason, clientId));
+    public LocationRequest startRequest(Context context, String reason) {
+        mContext = context;
+        super.startRequest(context, reason);
+        return this;
+    }
+
+    public void stop() {
+        mContext.unregisterReceiver(mReceiver);
     }
 }
 
