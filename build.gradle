@@ -4,9 +4,10 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:+'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:+'
-        classpath 'com.jakewharton.sdkmanager:gradle-plugin:+'
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.10.1'
     }
 }
 
@@ -18,3 +19,4 @@ allprojects {
 }
 
 apply plugin: 'android-sdk-manager'
+apply plugin: 'com.github.ben-manes.versions'
