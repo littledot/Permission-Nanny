@@ -64,15 +64,15 @@
     <string name="dialogTitle_smsSendMultipartTextMessage">would like to send a multi-part SMS.</string>
     <string name="dialogTitle_smsSendTextMessage">would like to send a SMS.</string>
 
-    <string name="dialogTitle_locationAddGpsStatusListener"> </string>
-    <string name="dialogTitle_locationAddNmeaListener"> </string>
-    <string name="dialogTitle_locationAddProximityAlert"> </string>
-    <string name="dialogTitle_locationGetLastKnownLocation"> </string>
-    <string name="dialogTitle_locationRemoveGpsStatusListener"> </string>
-    <string name="dialogTitle_locationRemoveNmeaListener"> </string>
-    <string name="dialogTitle_locationRemoveProximityAlert"> </string>
-    <string name="dialogTitle_locationRemoveUpdates"> </string>
-    <string name="dialogTitle_locationRemoveUpdates1"> </string>
+    <string name="dialogTitle_locationAddGpsStatusListener">would like to receive GPS status updates.</string>
+    <string name="dialogTitle_locationAddNmeaListener">would like to receive NMEA updates.</string>
+    <string name="dialogTitle_locationAddProximityAlert">would like to create a proximity alert. </string>
+    <string name="dialogTitle_locationGetLastKnownLocation">would like to request your last known location.</string>
+    <string name="dialogTitle_locationRemoveGpsStatusListener">would like to stop receiving GPS status updates.</string>
+    <string name="dialogTitle_locationRemoveNmeaListener">would like to stop receiving NMEA updates.</string>
+    <string name="dialogTitle_locationRemoveProximityAlert">would like to remove an existing proximity alert.</string>
+    <string name="dialogTitle_locationRemoveUpdates">would like to stop receiving updates about your location.</string>
+    <string name="dialogTitle_locationRemoveUpdates1">would like to stop receiving updates about your location.</string>
     <string name="dialogTitle_locationRequestLocationUpdates">would like to receives updates about your
         location.</string>
     <string name="dialogTitle_locationRequestLocationUpdates1">would like to receives updates about your
