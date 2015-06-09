@@ -7,62 +7,62 @@
     <string name="dialog_allow">Allow</string>
     <string name="dialog_deny">Deny</string>
 
-    <string name="dialogTitle_contactsContentFilterUri"> would like to perform type-to-filter feature based on your
+    <string name="dialogTitle_contactsContentFilterUri">would like to perform type-to-filter feature based on your
         contacts.</string>
-    <string name="dialogTitle_contactsContentFrequentUri"> would like to access your frequent contacts list.</string>
-    <string name="dialogTitle_contactsContentGroupUri"> would like to access your contact groups.</string>
-    <string name="dialogTitle_contactsContentLookupUri"> would like to access your contacts.</string>
-    <string name="dialogTitle_contactsContentMultiVcardUri"> would like to access your contacts\' vCard.</string>
-    <string name="dialogTitle_contactsContentStrequentFilterUri"> would like to perform type-to-filter feature
+    <string name="dialogTitle_contactsContentFrequentUri">would like to access your frequent contacts list.</string>
+    <string name="dialogTitle_contactsContentGroupUri">would like to access your contact groups.</string>
+    <string name="dialogTitle_contactsContentLookupUri">would like to access your contacts.</string>
+    <string name="dialogTitle_contactsContentMultiVcardUri">would like to access your contacts\' vCard.</string>
+    <string name="dialogTitle_contactsContentStrequentFilterUri">would like to perform type-to-filter feature
         based on your starred and most frequently contacted contacts.</string>
-    <string name="dialogTitle_contactsContentStrequentUri"> would like to access your starred and most frequently
+    <string name="dialogTitle_contactsContentStrequentUri">would like to access your starred and most frequently
         contacted contacts.</string>
-    <string name="dialogTitle_contactsContentUri"> would like to access your contacts.</string>
-    <string name="dialogTitle_contactsContentVcardUri"> would like to access your contacts\' vCard.</string>
+    <string name="dialogTitle_contactsContentUri">would like to access your contacts.</string>
+    <string name="dialogTitle_contactsContentVcardUri">would like to access your contacts\' vCard.</string>
 
-    <string name="dialogTitle_wifiAddNetwork"> would like to add a new Wi-Fi access point.</string>
-    <string name="dialogTitle_wifiDisableNetwork"> would like to disable a Wi-Fi access point.</string>
-    <string name="dialogTitle_wifiDisconnect"> would like to disconnect from the current Wi-Fi access point.</string>
-    <string name="dialogTitle_wifiEnableNetwork"> would like to enable a Wi-Fi access point.</string>
-    <string name="dialogTitle_wifiGetConfiguredNetworks"> would like to access saved Wi-Fi access points.</string>
-    <string name="dialogTitle_wifiGetConnectionInfo"> would like to access Wi-Fi access point information.</string>
-    <string name="dialogTitle_wifiGetDhcpInfo"> would like to access DHCP information.</string>
-    <string name="dialogTitle_wifiGetScanResults"> would like to access latest Wi-Fi access point scan results.</string>
-    <string name="dialogTitle_wifiGetWifiState"> would like to query Wi-Fi state.</string>
-    <string name="dialogTitle_wifiIsWifiEnabled"> would like to know if the Wi-Fi is enabled or disabled.</string>
-    <string name="dialogTitle_wifiPingSupplicant"> would like to check if the Wi-Fi daemon is working.</string>
-    <string name="dialogTitle_wifiReassociate"> would like to reconnect to the currently active Wi-Fi access
+    <string name="dialogTitle_wifiAddNetwork">would like to add a new Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiDisableNetwork">would like to disable a Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiDisconnect">would like to disconnect from the current Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiEnableNetwork">would like to enable a Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiGetConfiguredNetworks">would like to access saved Wi-Fi access points.</string>
+    <string name="dialogTitle_wifiGetConnectionInfo">would like to access Wi-Fi access point information.</string>
+    <string name="dialogTitle_wifiGetDhcpInfo">would like to access DHCP information.</string>
+    <string name="dialogTitle_wifiGetScanResults">would like to access latest Wi-Fi access point scan results.</string>
+    <string name="dialogTitle_wifiGetWifiState">would like to query Wi-Fi state.</string>
+    <string name="dialogTitle_wifiIsWifiEnabled">would like to know if the Wi-Fi is enabled or disabled.</string>
+    <string name="dialogTitle_wifiPingSupplicant">would like to check if the Wi-Fi daemon is working.</string>
+    <string name="dialogTitle_wifiReassociate">would like to reconnect to the currently active Wi-Fi access
         point.</string>
-    <string name="dialogTitle_wifiReconnect"> would like to reconnect to the currently active Wi-Fi access
+    <string name="dialogTitle_wifiReconnect">would like to reconnect to the currently active Wi-Fi access
         point.</string>
-    <string name="dialogTitle_wifiRemoveNetwork"> would like to remove an existing Wi-Fi access point.</string>
-    <string name="dialogTitle_wifiSaveConfiguration"> would like the system to save the current Wi-Fi access point
+    <string name="dialogTitle_wifiRemoveNetwork">would like to remove an existing Wi-Fi access point.</string>
+    <string name="dialogTitle_wifiSaveConfiguration">would like the system to save the current Wi-Fi access point
         configuration.</string>
-    <string name="dialogTitle_wifiSetWifiEnabled_enable"> would like to enable your Wi-Fi connection.</string>
-    <string name="dialogTitle_wifiSetWifiEnabled_disable"> would like to disable Wi-Fi connection.</string>
-    <string name="dialogTitle_wifiStartScan"> would like to request a scan for Wi-Fi access points.</string>
-    <string name="dialogTitle_wifiUpdateNetwork"> would like to update an existing Wi-Fi access point configuration.
+    <string name="dialogTitle_wifiSetWifiEnabled_enable">would like to enable your Wi-Fi connection.</string>
+    <string name="dialogTitle_wifiSetWifiEnabled_disable">would like to disable Wi-Fi connection.</string>
+    <string name="dialogTitle_wifiStartScan">would like to request a scan for Wi-Fi access points.</string>
+    <string name="dialogTitle_wifiUpdateNetwork">would like to update an existing Wi-Fi access point configuration.
     </string>
 
-    <string name="dialogTitle_telephonyGetAllCellInfo"> would like to query all cellular information.</string>
-    <string name="dialogTitle_telephonyGetDeviceId"> would like to query the device ID.</string>
-    <string name="dialogTitle_telephonyGetDeviceSoftwareVersion"> would like to query the device software
+    <string name="dialogTitle_telephonyGetAllCellInfo">would like to query all cellular information.</string>
+    <string name="dialogTitle_telephonyGetDeviceId">would like to query the device ID.</string>
+    <string name="dialogTitle_telephonyGetDeviceSoftwareVersion">would like to query the device software
         version.</string>
-    <string name="dialogTitle_telephonyGetGroupIdLevel1"> would like to query the device Group Identifier Level1
-        .</string>
-    <string name="dialogTitle_telephonyGetLine1Number"> would like to query the device line 1 number.</string>
-    <string name="dialogTitle_telephonyGetNeighboringCellInfo"> would like to query neighboring cellular
-        information.</string>
-    <string name="dialogTitle_telephonyGetSimSerialNumber"> would like to query the device SIM serial number.</string>
-    <string name="dialogTitle_telephonyGetSubscriberId"> would like to query the device subscriber ID.</string>
-    <string name="dialogTitle_telephonyGetVoiceMailAlphaTag"> would like to query the device voice mail alpha
+    <string name="dialogTitle_telephonyGetGroupIdLevel1">would like to query the device Group Identifier
+        Level1.</string>
+    <string name="dialogTitle_telephonyGetLine1Number">would like to query the device line 1 number.</string>
+    <string name="dialogTitle_telephonyGetNeighboringCellInfo">would like to query neighboring cellular information.
+    </string>
+    <string name="dialogTitle_telephonyGetSimSerialNumber">would like to query the device SIM serial number.</string>
+    <string name="dialogTitle_telephonyGetSubscriberId">would like to query the device subscriber ID.</string>
+    <string name="dialogTitle_telephonyGetVoiceMailAlphaTag">would like to query the device voice mail alpha
         tag.</string>
-    <string name="dialogTitle_telephonyGetVoiceMailNumber"> would like to query the device voice mail number.</string>
+    <string name="dialogTitle_telephonyGetVoiceMailNumber">would like to query the device voice mail number.</string>
 
-    <string name="dialogTitle_smsSendDataMessage"> would like to send a SMS.</string>
-    <string name="dialogTitle_smsSendMultimediaMessage"> would like to send a multimedia message (MMS).</string>
-    <string name="dialogTitle_smsSendMultipartTextMessage"> would like to send a multi-part SMS.</string>
-    <string name="dialogTitle_smsSendTextMessage"> would like to send a SMS.</string>
+    <string name="dialogTitle_smsSendDataMessage">would like to send a SMS.</string>
+    <string name="dialogTitle_smsSendMultimediaMessage">would like to send a multimedia message (MMS).</string>
+    <string name="dialogTitle_smsSendMultipartTextMessage">would like to send a multi-part SMS.</string>
+    <string name="dialogTitle_smsSendTextMessage">would like to send a SMS.</string>
 
     <string name="dialogTitle_locationAddGpsStatusListener"> </string>
     <string name="dialogTitle_locationAddNmeaListener"> </string>
@@ -73,8 +73,8 @@
     <string name="dialogTitle_locationRemoveProximityAlert"> </string>
     <string name="dialogTitle_locationRemoveUpdates"> </string>
     <string name="dialogTitle_locationRemoveUpdates1"> </string>
-    <string name="dialogTitle_locationRequestLocationUpdates"> would like to receives updates about your
+    <string name="dialogTitle_locationRequestLocationUpdates">would like to receives updates about your
         location.</string>
-    <string name="dialogTitle_locationRequestLocationUpdates1"> would like to receives updates about your
+    <string name="dialogTitle_locationRequestLocationUpdates1">would like to receives updates about your
         location.</string>
 </resources>

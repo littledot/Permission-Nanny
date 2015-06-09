@@ -12,6 +12,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
+import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.lib.request.content.CursorEvent;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
@@ -58,7 +59,7 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<CursorRequest>
                 string = R.string.dialogTitle_contactsContentMultiVcardUri;
             }
         }
-        return boldAppLabel.append(mActivity.getText(string));
+        return boldAppLabel.append(C.SPACE).append(mActivity.getText(string));
     }
 
     boolean authorityMatches(Uri target) {

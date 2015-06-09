@@ -11,6 +11,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
+import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
 import org.apache.http.protocol.HTTP;
@@ -38,7 +39,7 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyMa
     protected CharSequence buildDialogTitle(CharSequence appLabel) {
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return boldAppLabel.append(mActivity.getText(mDialogTitle));
+        return boldAppLabel.append(C.SPACE).append(mActivity.getText(mDialogTitle));
     }
 
     @Override
