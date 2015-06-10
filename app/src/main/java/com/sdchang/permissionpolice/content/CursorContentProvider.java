@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.CrossProcessCursorWrapper;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build.VERSION;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
@@ -25,17 +26,22 @@ public class CursorContentProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        long nonce;
-        try {
-            nonce = Long.parseLong(uri.getLastPathSegment());
-        } catch (NumberFormatException e) {
-            return null;
+        if (VERSION.SDK_INT >= 15) {
+            long nonce;
+            try {
+                nonce = Long.parseLong(uri.getLastPathSegment());
+            } catch (NumberFormatException e) {
+                return null;
+            }
+
+            CursorRequest request = approvedRequests.get(nonce);
+            approvedRequests.remove(nonce);
+
+            return request == null ? null : new CrossProcessCursorWrapper(getContext().getContentResolver()
+                    .query(request.uri(), toArray(request.projection()), request.selection(),
+                            toArray(request.selectionArgs()), request.sortOrder()));
         }
-        CursorRequest request = approvedRequests.get(nonce);
-        approvedRequests.remove(nonce);
-        Cursor cursor = request == null ? null : new CrossProcessCursorWrapper(getContext().getContentResolver().query(
-                request.uri(), toArray(request.projection()), request.selection(), toArray(request.selectionArgs()), request.sortOrder()));
-        return cursor;
+        return null;
     }
 
     @Override
