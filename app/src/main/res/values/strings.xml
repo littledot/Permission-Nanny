@@ -7,6 +7,10 @@
     <string name="dialog_allow">Allow</string>
     <string name="dialog_deny">Deny</string>
 
+    <string name="dialogTitle_calendarContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarEventsContentUri">would like to access your calendar events.</string>
+    <string name="dialogTitle_calendarEventsContentExceptionUri">would like to access your calendar events.</string>
+
     <string name="dialogTitle_contactsContentFilterUri">would like to perform type-to-filter feature based on your
         contacts.</string>
     <string name="dialogTitle_contactsContentFrequentUri">would like to access your frequent contacts list.</string>

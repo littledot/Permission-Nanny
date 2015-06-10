@@ -2,6 +2,7 @@ package com.sdchang.permissionpolice.wifi;
 
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
 
@@ -10,157 +11,145 @@ import java.util.ArrayList;
 /**
  *
  */
-class WifiValues {
-    static final String[] operations = new String[]{
-            WifiManagerRequest.ADD_NETWORK,
-            WifiManagerRequest.DISABLE_NETWORK,
-            WifiManagerRequest.DISCONNECT,
-            WifiManagerRequest.ENABLE_NETWORK,
-            WifiManagerRequest.GET_CONFIGURED_NETWORKS,
-            WifiManagerRequest.GET_CONNECTION_INFO,
-            WifiManagerRequest.GET_DHCP_INFO,
-            WifiManagerRequest.GET_SCAN_RESULTS,
-            WifiManagerRequest.GET_WIFI_STATE,
-            WifiManagerRequest.IS_WIFI_ENABLED,
-            WifiManagerRequest.PING_SUPPLICANT,
-            WifiManagerRequest.REASSOCIATE,
-            WifiManagerRequest.RECONNECT,
-            WifiManagerRequest.REMOVE_NETWORK,
-            WifiManagerRequest.SAVE_CONFIGURATION,
-            WifiManagerRequest.SET_WIFI_ENABLED,
-            WifiManagerRequest.START_SCAN,
-            WifiManagerRequest.UPDATE_NETWORK
-    };
-
-    static final int[] dialogTitles = new int[]{
-            R.string.dialogTitle_wifiAddNetwork,
-            R.string.dialogTitle_wifiDisableNetwork,
-            R.string.dialogTitle_wifiDisconnect,
-            R.string.dialogTitle_wifiEnableNetwork,
-            R.string.dialogTitle_wifiGetConfiguredNetworks,
-            R.string.dialogTitle_wifiGetConnectionInfo,
-            R.string.dialogTitle_wifiGetDhcpInfo,
-            R.string.dialogTitle_wifiGetScanResults,
-            R.string.dialogTitle_wifiGetWifiState,
-            R.string.dialogTitle_wifiIsWifiEnabled,
-            R.string.dialogTitle_wifiPingSupplicant,
-            R.string.dialogTitle_wifiReassociate,
-            R.string.dialogTitle_wifiReconnect,
-            R.string.dialogTitle_wifiRemoveNetwork,
-            R.string.dialogTitle_wifiSaveConfiguration,
-            0,
-            R.string.dialogTitle_wifiStartScan,
-            R.string.dialogTitle_wifiUpdateNetwork
-    };
-
-    static final WifiFunction[] functions = new WifiFunction[]{
-            new WifiFunction() {
+class WifiOperation {
+    static final WifiOperation[] operations = new WifiOperation[]{
+            new WifiOperation(WifiManagerRequest.ADD_NETWORK,
+                    R.string.dialogTitle_wifiAddNetwork, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putInt(request.opCode(), wifi.addNetwork(request.wifiConfiguration0()));
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.DISABLE_NETWORK,
+                    R.string.dialogTitle_wifiDisableNetwork, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.disableNetwork(request.int0()));
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.DISCONNECT,
+                    R.string.dialogTitle_wifiDisconnect, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.disconnect());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.ENABLE_NETWORK,
+                    R.string.dialogTitle_wifiEnableNetwork, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.enableNetwork(request.int0(), request.boolean0()));
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.GET_CONFIGURED_NETWORKS,
+                    R.string.dialogTitle_wifiGetConfiguredNetworks, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putParcelableArrayList(request.opCode(), new ArrayList<>(wifi.getConfiguredNetworks()));
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.GET_CONNECTION_INFO,
+                    R.string.dialogTitle_wifiGetConnectionInfo, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putParcelable(request.opCode(), wifi.getConnectionInfo());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.GET_DHCP_INFO,
+                    R.string.dialogTitle_wifiGetDhcpInfo, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putParcelable(request.opCode(), wifi.getDhcpInfo());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.GET_SCAN_RESULTS,
+                    R.string.dialogTitle_wifiGetScanResults, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putParcelableArrayList(request.opCode(), new ArrayList<>(wifi.getScanResults()));
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.GET_WIFI_STATE,
+                    R.string.dialogTitle_wifiGetWifiState, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putInt(request.opCode(), wifi.getWifiState());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.IS_WIFI_ENABLED,
+                    R.string.dialogTitle_wifiIsWifiEnabled, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.isWifiEnabled());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.PING_SUPPLICANT,
+                    R.string.dialogTitle_wifiPingSupplicant, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.pingSupplicant());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.REASSOCIATE,
+                    R.string.dialogTitle_wifiReassociate, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.reassociate());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.RECONNECT,
+                    R.string.dialogTitle_wifiReconnect, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.reconnect());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.REMOVE_NETWORK,
+                    R.string.dialogTitle_wifiRemoveNetwork, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.removeNetwork(request.int0()));
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.SAVE_CONFIGURATION,
+                    R.string.dialogTitle_wifiSaveConfiguration, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.saveConfiguration());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.SET_WIFI_ENABLED,
+                    0, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.setWifiEnabled(request.boolean0()));
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.START_SCAN,
+                    R.string.dialogTitle_wifiStartScan, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putBoolean(request.opCode(), wifi.startScan());
                 }
-            },
-            new WifiFunction() {
+            }),
+            new WifiOperation(WifiManagerRequest.UPDATE_NETWORK,
+                    R.string.dialogTitle_wifiUpdateNetwork, new WifiFunction() {
                 @Override
                 public void execute(WifiManager wifi, WifiManagerRequest request, Bundle response) {
                     response.putInt(request.opCode(), wifi.updateNetwork(request.wifiConfiguration0()));
                 }
-            }
+            })
     };
+
+    public final String mOpCode;
+    @StringRes public final int mDialogTitle;
+    public final WifiFunction mFunction;
+
+    public WifiOperation(String opCode,
+                         int dialogTitle,
+                         WifiFunction function) {
+        mOpCode = opCode;
+        mDialogTitle = dialogTitle;
+        mFunction = function;
+    }
 }

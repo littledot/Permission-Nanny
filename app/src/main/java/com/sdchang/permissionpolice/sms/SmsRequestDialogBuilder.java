@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.telephony.SmsManager;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -20,15 +19,13 @@ import org.apache.http.protocol.HTTP;
  */
 public class SmsRequestDialogBuilder extends BaseDialogBuilder<SmsRequest> {
 
-    @StringRes private int mDialogTitle;
-    private SmsFunction mFunction;
+    private SmsOperation mOperation;
 
     public SmsRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        for (int i = 0, len = SmsValues.operations.length; i < len; i++) {
-            if (SmsValues.operations[i].equals(mRequest.opCode())) {
-                mDialogTitle = SmsValues.dialogTitles[i];
-                mFunction = SmsValues.functions[i];
+        for (SmsOperation operation : SmsOperation.operations) {
+            if (operation.mOpCode.equals(mRequest.opCode())) {
+                mOperation = operation;
                 break;
             }
         }
@@ -38,14 +35,14 @@ public class SmsRequestDialogBuilder extends BaseDialogBuilder<SmsRequest> {
     protected CharSequence buildDialogTitle(CharSequence appLabel) {
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(appLabel);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return boldAppLabel.append(C.SPACE).append(mActivity.getText(mDialogTitle));
+        return boldAppLabel.append(C.SPACE).append(mActivity.getText(mOperation.mDialogTitle));
     }
 
     @Override
     protected Intent onAllowRequest() {
         SmsManager sms = SmsManager.getDefault();
         Bundle response = new Bundle();
-        mFunction.execute(sms, mRequest, response);
+        mOperation.mFunction.execute(sms, mRequest, response);
         return super.onAllowRequest()
                 .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
                 .putExtra(Police.ENTITY_BODY, response);

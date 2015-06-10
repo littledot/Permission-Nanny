@@ -57,9 +57,9 @@ class LocationOperation {
                     R.string.dialogTitle_locationRequestLocationUpdates1, null),
     };
 
-    final String mOpCode;
-    @StringRes final int mDialogTitle;
-    final LocationFunction mFunction;
+    public final String mOpCode;
+    @StringRes public final int mDialogTitle;
+    public final LocationFunction mFunction;
 
     public LocationOperation(String opCode,
                              int dialogTitle,
