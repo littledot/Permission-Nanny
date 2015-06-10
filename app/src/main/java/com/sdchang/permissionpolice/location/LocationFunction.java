@@ -7,6 +7,6 @@ import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
 /**
  *
  */
-public interface LocationFunction {
+interface LocationFunction {
     void execute(LocationManager lm, LocationRequest request, Bundle response) throws Throwable;
 }

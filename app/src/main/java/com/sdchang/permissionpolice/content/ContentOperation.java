@@ -16,7 +16,7 @@ import com.sdchang.permissionpolice.R;
 class ContentOperation {
 
     // TODO #4: Parse other types of content provider URIs to show client intent to the user
-    static ContentOperation[] operations = new ContentOperation[]{
+    public static ContentOperation[] operations = new ContentOperation[]{
             new ContentOperation(Contacts.CONTENT_FILTER_URI, R.string.dialogTitle_contactsContentFilterUri, 5),
             new ContentOperation(Contacts.CONTENT_GROUP_URI, R.string.dialogTitle_contactsContentGroupUri, 5),
             new ContentOperation(Contacts.CONTENT_LOOKUP_URI, R.string.dialogTitle_contactsContentLookupUri, 5),

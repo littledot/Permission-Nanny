@@ -11,9 +11,9 @@ import com.sdchang.permissionpolice.lib.request.sms.SmsRequest;
  *
  */
 class SmsOperation {
-    static final SmsOperation[] operations = new SmsOperation[]{
+    public static final SmsOperation[] operations = new SmsOperation[]{
             new SmsOperation(SmsRequest.SEND_DATA_MESSAGE,
-                    R.string.dialogTitle_smsSendDataMessage, new SmsFunction() {
+                    R.string.dialogTitle_smsSendDataMessage, 4, new SmsFunction() {
                 @Override
                 public void execute(SmsManager sms, SmsRequest request, Bundle response) {
                     sms.sendDataMessage(request.string0(), request.string1(), request.short0(), request.byteArray0(),
@@ -21,7 +21,7 @@ class SmsOperation {
                 }
             }),
             new SmsOperation(SmsRequest.SEND_MULTIMEDIA_MESSAGE,
-                    R.string.dialogTitle_smsSendMultimediaMessage, new SmsFunction() {
+                    R.string.dialogTitle_smsSendMultimediaMessage, 21, new SmsFunction() {
                 @Override
                 public void execute(SmsManager sms, SmsRequest request, Bundle response) {
                     if (VERSION.SDK_INT >= 21) {
@@ -31,7 +31,7 @@ class SmsOperation {
                 }
             }),
             new SmsOperation(SmsRequest.SEND_MULTIPART_TEXT_MESSAGE,
-                    R.string.dialogTitle_smsSendMultipartTextMessage, new SmsFunction() {
+                    R.string.dialogTitle_smsSendMultipartTextMessage, 4, new SmsFunction() {
                 @Override
                 public void execute(SmsManager sms, SmsRequest request, Bundle response) {
                     sms.sendMultipartTextMessage(request.string0(), request.string1(), request.arrayListOfStrings0(),
@@ -39,7 +39,7 @@ class SmsOperation {
                 }
             }),
             new SmsOperation(SmsRequest.SEND_TEXT_MESSAGE,
-                    R.string.dialogTitle_smsSendTextMessage, new SmsFunction() {
+                    R.string.dialogTitle_smsSendTextMessage, 4, new SmsFunction() {
                 @Override
                 public void execute(SmsManager sms, SmsRequest request, Bundle response) {
                     sms.sendTextMessage(request.string0(), request.string1(), request.string2(),
@@ -50,13 +50,16 @@ class SmsOperation {
 
     public final String mOpCode;
     @StringRes public final int mDialogTitle;
+    public final int mMinSdk;
     public final SmsFunction mFunction;
 
     public SmsOperation(String opCode,
                         int dialogTitle,
+                        int minSdk,
                         SmsFunction function) {
         mOpCode = opCode;
         mDialogTitle = dialogTitle;
+        mMinSdk = minSdk;
         mFunction = function;
     }
 }
