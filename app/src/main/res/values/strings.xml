@@ -40,6 +40,11 @@
     <string name="dialogTitle_contactsContentUri">would like to access your contacts.</string>
     <string name="dialogTitle_contactsContentVcardUri">would like to access your contacts\' vCard.</string>
 
+    <string name="dialogTitle_mediaStoreAudio">would like to access your music.</string>
+    <string name="dialogTitle_mediaStoreFiles">would like to access your files.</string>
+    <string name="dialogTitle_mediaStoreImages">would like to access your photos.</string>
+    <string name="dialogTitle_mediaStoreVideos">would like to access your videos.</string>
+
     <string name="dialogTitle_wifiAddNetwork">would like to add a new Wi-Fi access point.</string>
     <string name="dialogTitle_wifiDisableNetwork">would like to disable a Wi-Fi access point.</string>
     <string name="dialogTitle_wifiDisconnect">would like to disconnect from the current Wi-Fi access point.</string>

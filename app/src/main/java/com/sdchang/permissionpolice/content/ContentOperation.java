@@ -18,6 +18,10 @@ import android.provider.CalendarContract.Instances;
 import android.provider.CalendarContract.Reminders;
 import android.provider.CalendarContract.SyncState;
 import android.provider.ContactsContract.Contacts;
+import android.provider.MediaStore.Audio;
+import android.provider.MediaStore.Files;
+import android.provider.MediaStore.Images;
+import android.provider.MediaStore.Video;
 import android.provider.Telephony.Carriers;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.MmsSms;
@@ -71,6 +75,28 @@ class ContentOperation {
             new ContentOperation(Contacts.CONTENT_FREQUENT_URI, R.string.dialogTitle_contactsContentFilterUri, 21),
             new ContentOperation(Contacts.CONTENT_MULTI_VCARD_URI, R.string.dialogTitle_contactsContentMultiVcardUri,
                     21),
+
+            // MediaStore
+            new ContentOperation(Audio.Albums.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Albums.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Artists.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Artists.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Genres.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Genres.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Media.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Media.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Playlists.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Audio.Playlists.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreAudio, 1),
+            new ContentOperation(Files.getContentUri("external"), R.string.dialogTitle_mediaStoreFiles, 11),
+            new ContentOperation(Files.getContentUri("internal"), R.string.dialogTitle_mediaStoreFiles, 11),
+            new ContentOperation(Images.Media.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreImages, 1),
+            new ContentOperation(Images.Media.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreImages, 1),
+            new ContentOperation(Images.Thumbnails.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreImages, 1),
+            new ContentOperation(Images.Thumbnails.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreImages, 1),
+            new ContentOperation(Video.Media.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreVideos, 1),
+            new ContentOperation(Video.Media.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreVideos, 1),
+            new ContentOperation(Video.Thumbnails.EXTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreVideos, 1),
+            new ContentOperation(Video.Thumbnails.INTERNAL_CONTENT_URI, R.string.dialogTitle_mediaStoreVideos, 1),
 
             // Telephony
             new ContentOperation(Carriers.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
