@@ -8,8 +8,24 @@
     <string name="dialog_deny">Deny</string>
 
     <string name="dialogTitle_calendarContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarAttendeesContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarCalendarAlertsContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarCalendarAlertsContentUriByInstance">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarCalendarCacheUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarCalendarEntityContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarCalendarsContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarColorsContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarEventDaysContentUri">would like to access your calendar.</string>
     <string name="dialogTitle_calendarEventsContentUri">would like to access your calendar events.</string>
     <string name="dialogTitle_calendarEventsContentExceptionUri">would like to access your calendar events.</string>
+    <string name="dialogTitle_calendarEventsEntityContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarExtendedProperties">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarInstancesContentByDayUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarInstancesContentSearchByDayUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarInstancesContentSearchUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarInstanceContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarRemindersContentUri">would like to access your calendar.</string>
+    <string name="dialogTitle_calendarSyncStateContentUri">would like to access your calendar.</string>
 
     <string name="dialogTitle_contactsContentFilterUri">would like to perform type-to-filter feature based on your
         contacts.</string>
