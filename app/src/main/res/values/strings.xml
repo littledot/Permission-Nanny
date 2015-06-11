@@ -7,43 +7,16 @@
     <string name="dialog_allow">Allow</string>
     <string name="dialog_deny">Deny</string>
 
-    <string name="dialogTitle_calendarContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarAttendeesContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarCalendarAlertsContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarCalendarAlertsContentUriByInstance">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarCalendarCacheUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarCalendarEntityContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarCalendarsContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarColorsContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarEventDaysContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarEventsContentUri">would like to access your calendar events.</string>
-    <string name="dialogTitle_calendarEventsContentExceptionUri">would like to access your calendar events.</string>
-    <string name="dialogTitle_calendarEventsEntityContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarExtendedProperties">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarInstancesContentByDayUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarInstancesContentSearchByDayUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarInstancesContentSearchUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarInstanceContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarRemindersContentUri">would like to access your calendar.</string>
-    <string name="dialogTitle_calendarSyncStateContentUri">would like to access your calendar.</string>
-
-    <string name="dialogTitle_contactsContentFilterUri">would like to perform type-to-filter feature based on your
-        contacts.</string>
-    <string name="dialogTitle_contactsContentFrequentUri">would like to access your frequent contacts list.</string>
-    <string name="dialogTitle_contactsContentGroupUri">would like to access your contact groups.</string>
-    <string name="dialogTitle_contactsContentLookupUri">would like to access your contacts.</string>
-    <string name="dialogTitle_contactsContentMultiVcardUri">would like to access your contacts\' vCard.</string>
-    <string name="dialogTitle_contactsContentStrequentFilterUri">would like to perform type-to-filter feature
-        based on your starred and most frequently contacted contacts.</string>
-    <string name="dialogTitle_contactsContentStrequentUri">would like to access your starred and most frequently
-        contacted contacts.</string>
-    <string name="dialogTitle_contactsContentUri">would like to access your contacts.</string>
-    <string name="dialogTitle_contactsContentVcardUri">would like to access your contacts\' vCard.</string>
-
-    <string name="dialogTitle_mediaStoreAudio">would like to access your music.</string>
-    <string name="dialogTitle_mediaStoreFiles">would like to access your files.</string>
-    <string name="dialogTitle_mediaStoreImages">would like to access your photos.</string>
-    <string name="dialogTitle_mediaStoreVideos">would like to access your videos.</string>
+    <string name="dialogTitle_contentCalendar">would like to access your calendar.</string>
+    <string name="dialogTitle_contentContacts">would like to access your contacts.</string>
+    <string name="dialogTitle_contentAudio">would like to access your music.</string>
+    <string name="dialogTitle_contentFiles">would like to access your files.</string>
+    <string name="dialogTitle_contentImages">would like to access your photos.</string>
+    <string name="dialogTitle_contentVideos">would like to access your videos.</string>
+    <string name="dialogTitle_contentCarriers">would like to access information about your carriers.</string>
+    <string name="dialogTitle_contentMms">would like to read your messages.</string>
+    <string name="dialogTitle_contentMmsSms">would like to read your messages.</string>
+    <string name="dialogTitle_contentSms">would like to read your messages.</string>
 
     <string name="dialogTitle_wifiAddNetwork">would like to add a new Wi-Fi access point.</string>
     <string name="dialogTitle_wifiDisableNetwork">would like to disable a Wi-Fi access point.</string>
@@ -69,7 +42,6 @@
     <string name="dialogTitle_wifiUpdateNetwork">would like to update an existing Wi-Fi access point configuration.
     </string>
 
-    <string name="dialogTitle_telephonyContentUri">would like to access your messages.</string>
     <string name="dialogTitle_telephonyGetAllCellInfo">would like to query all cellular information.</string>
     <string name="dialogTitle_telephonyGetDeviceId">would like to query the device ID.</string>
     <string name="dialogTitle_telephonyGetDeviceSoftwareVersion">would like to query the device software
