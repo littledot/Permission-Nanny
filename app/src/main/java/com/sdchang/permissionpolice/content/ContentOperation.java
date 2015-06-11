@@ -18,6 +18,11 @@ import android.provider.CalendarContract.Instances;
 import android.provider.CalendarContract.Reminders;
 import android.provider.CalendarContract.SyncState;
 import android.provider.ContactsContract.Contacts;
+import android.provider.Telephony.Carriers;
+import android.provider.Telephony.Mms;
+import android.provider.Telephony.MmsSms;
+import android.provider.Telephony.Sms;
+import android.provider.Telephony.Threads;
 import android.support.annotation.StringRes;
 import com.sdchang.permissionpolice.R;
 
@@ -66,6 +71,33 @@ class ContentOperation {
             new ContentOperation(Contacts.CONTENT_FREQUENT_URI, R.string.dialogTitle_contactsContentFilterUri, 21),
             new ContentOperation(Contacts.CONTENT_MULTI_VCARD_URI, R.string.dialogTitle_contactsContentMultiVcardUri,
                     21),
+
+            // Telephony
+            new ContentOperation(Carriers.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.REPORT_REQUEST_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.REPORT_STATUS_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.Draft.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.Inbox.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.Outbox.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.Rate.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Mms.Sent.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.CONTENT_CONVERSATIONS_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.CONTENT_DRAFT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.CONTENT_FILTER_BYPHONE_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.CONTENT_LOCKED_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.CONTENT_UNDELIVERED_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.SEARCH_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(MmsSms.PendingMessages.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Sms.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Sms.Conversations.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Sms.Draft.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Sms.Inbox.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Sms.Outbox.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Sms.Sent.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Threads.CONTENT_URI, R.string.dialogTitle_telephonyContentUri, 19),
+            new ContentOperation(Threads.OBSOLETE_THREADS_URI, R.string.dialogTitle_telephonyContentUri, 19),
     };
 
     public final Uri mUri;

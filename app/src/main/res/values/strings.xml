@@ -64,6 +64,7 @@
     <string name="dialogTitle_wifiUpdateNetwork">would like to update an existing Wi-Fi access point configuration.
     </string>
 
+    <string name="dialogTitle_telephonyContentUri">would like to access your messages.</string>
     <string name="dialogTitle_telephonyGetAllCellInfo">would like to query all cellular information.</string>
     <string name="dialogTitle_telephonyGetDeviceId">would like to query the device ID.</string>
     <string name="dialogTitle_telephonyGetDeviceSoftwareVersion">would like to query the device software
