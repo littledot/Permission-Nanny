@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import android.view.View;
+import android.view.ViewStub;
+import android.widget.TextView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
@@ -22,6 +27,8 @@ import org.apache.http.protocol.HTTP;
 public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerRequest> {
 
     private WifiOperation mOperation;
+
+    @InjectView(R.id.tvReason) TextView tvReason;
 
     public WifiRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
@@ -44,6 +51,14 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
                     R.string.dialogTitle_wifiSetWifiEnabled_disable;
         }
         return boldAppLabel.append(C.SPACE).append(mActivity.getText(dialogTitle));
+    }
+
+    @Override
+    public void inflateViewStub(ViewStub stub) {
+        stub.setLayoutResource(R.layout.dialog_text);
+        View view = stub.inflate();
+        ButterKnife.inject(this, view);
+        tvReason.setText(mReason);
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.sdchang.permissionpolice.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import butterknife.ButterKnife;
@@ -11,7 +10,7 @@ import butterknife.InjectView;
 /**
  *
  */
-public class DemoActivity extends AppCompatActivity {
+public class DemoActivity extends BaseActivity {
     @InjectView(R.id.rv) RecyclerView rv;
     DemoAdapter mAdapter;
 

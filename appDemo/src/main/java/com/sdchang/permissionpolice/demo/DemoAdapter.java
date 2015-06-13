@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.lib.BundleListener;
 import com.sdchang.permissionpolice.lib.Police;
+import com.thedeanda.lorem.Lorem;
 import org.apache.http.HttpStatus;
 
 /**
@@ -54,7 +55,7 @@ public class DemoAdapter extends Adapter<DemoViewHolder> {
                         mResults[position] = results;
                         DemoAdapter.this.notifyItemChanged(position);
                     }
-                }).startRequest(v.getContext(), "Demo Reason");
+                }).startRequest(v.getContext(), Config.longReason ? Lorem.getParagraphs(10, 10) : "demo reason");
             }
         });
 

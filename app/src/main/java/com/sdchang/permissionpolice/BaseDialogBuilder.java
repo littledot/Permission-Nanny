@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
+import android.view.ViewStub;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import org.apache.http.HttpStatus;
@@ -23,36 +24,46 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
         .OnDismissListener {
 
     protected final Activity mActivity;
+    private final PackageManager mPM;
     private final String mAppPackage;
-    private final String mReason;
+    ApplicationInfo mAppInfo;
+    protected final String mReason;
     /** Action string client is filtering to receive broadcast Intents. */
     protected final String mClientId;
     protected final T mRequest;
 
     public BaseDialogBuilder(Activity activity, Bundle args) {
         mActivity = activity;
+        mPM = mActivity.getPackageManager();
+
         mAppPackage = args.getString(BaseRequest.SENDER_PACKAGE);
         mReason = args.getString(BaseRequest.REQUEST_REASON);
         mClientId = args.getString(BaseRequest.CLIENT_ID);
         mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
         Timber.d("clientIntentFilter=" + mClientId);
-    }
 
-    public AlertDialog build() {
-        CharSequence appLabel;
-        Drawable appIcon = null;
         try {
-            PackageManager pm = mActivity.getPackageManager();
-            ApplicationInfo senderInfo = pm.getApplicationInfo(mAppPackage, 0);
-            appLabel = pm.getApplicationLabel(senderInfo);
-            appIcon = pm.getApplicationIcon(senderInfo);
+            mAppInfo = mPM.getApplicationInfo(mAppPackage, 0);
         } catch (NameNotFoundException e) {
             Timber.e(e, "senderPackage not found=%s", mAppPackage);
-            appLabel = mAppPackage;
         }
+    }
+
+    public CharSequence getTitle() {
+        CharSequence label = mAppInfo != null ? mPM.getApplicationLabel(mAppInfo) : mAppPackage;
+        return buildDialogTitle(label);
+    }
+
+    public Drawable getIcon() {
+        return mAppInfo != null ? mPM.getApplicationIcon(mAppInfo) : null;
+    }
+
+    public void inflateViewStub(ViewStub stub) {/* Nothing to see here. */}
+
+    public AlertDialog build() {
         return new AlertDialog.Builder(mActivity)
-                .setTitle(buildDialogTitle(appLabel))
-                .setIcon(appIcon)
+                .setTitle(getTitle())
+                .setIcon(getIcon())
                 .setMessage(mReason)
                 .setPositiveButton(R.string.dialog_allow, this)
                 .setNegativeButton(R.string.dialog_deny, this)

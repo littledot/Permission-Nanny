@@ -6,7 +6,6 @@ import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -26,7 +25,7 @@ import com.sdchang.permissionpolice.lib.request.content.CursorListener;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static String FACTORY_ID = "factoryId";
 
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 0, 0, "exchange");
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
