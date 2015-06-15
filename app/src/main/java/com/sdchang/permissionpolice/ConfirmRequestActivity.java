@@ -35,7 +35,7 @@ public class ConfirmRequestActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Nanny_Dialog_NoActionBar);
+        setTheme(R.style.Nanny_Light_Dialog_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog);
         ButterKnife.inject(this);

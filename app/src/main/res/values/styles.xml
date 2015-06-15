@@ -19,13 +19,16 @@
         <!--Disable action bar-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--Disable max lines-->
+        <!--Lift dialog title's max lines limit-->
         <item name="android:windowTitleStyle">@style/Nanny.DialogWindowTitle.NoMaxLines</item>
     </style>
 
     <style name="Nanny.Light.Dialog.NoActionBar" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--Disable action bar-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <!--Lift dialog title's max lines limit-->
+        <item name="android:windowTitleStyle">@style/Nanny.DialogWindowTitle.NoMaxLines</item>
     </style>
 
     <!--Base.V7.Theme.AppCompat.Dialog sets windowTitleStyle to this style's parent with maxLines=1-->

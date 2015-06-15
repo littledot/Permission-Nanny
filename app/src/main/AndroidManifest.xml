@@ -30,7 +30,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ConfirmRequestActivity"/>
+        <!--Theme attribute must be set here to achieve transparent background.
+            Otherwise there will always be a white flash and then black background.-->
+        <activity
+            android:name=".ConfirmRequestActivity"
+            android:theme="@style/Nanny.Dialog.NoActionBar"/>
 
         <service android:name=".ProxyService"/>
 
