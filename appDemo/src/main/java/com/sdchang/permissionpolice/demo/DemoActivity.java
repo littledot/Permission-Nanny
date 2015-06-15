@@ -4,15 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.Adapter;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.sdchang.permissionpolice.demo.content.CursorRequestFactory;
 
 /**
  *
  */
 public class DemoActivity extends BaseActivity {
     @InjectView(R.id.rv) RecyclerView rv;
-    DemoAdapter mAdapter;
+    Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,12 @@ public class DemoActivity extends BaseActivity {
         ButterKnife.inject(this);
 
         Intent src = getIntent();
-        mAdapter = new DemoAdapter(MainActivity.mFactories[src.getIntExtra(MainActivity.FACTORY_ID, -1)]);
+        int factoryId = src.getIntExtra(MainActivity.FACTORY_ID, -1);
+        if (factoryId == 0) {
+            mAdapter = new CursorDemoAdapter(new CursorRequestFactory());
+        } else {
+            mAdapter = new DemoAdapter(MainActivity.mFactories[factoryId]);
+        }
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(mAdapter);
     }

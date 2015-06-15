@@ -53,7 +53,7 @@ public class DemoAdapter extends Adapter<DemoViewHolder> {
                     @Override
                     public void onResult(Bundle results) {
                         mResults[position] = results;
-                        DemoAdapter.this.notifyItemChanged(position);
+                        notifyItemChanged(position);
                     }
                 }).startRequest(v.getContext(), Config.longReason ? Lorem.getParagraphs(10, 10) : "demo reason");
             }

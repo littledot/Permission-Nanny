@@ -14,9 +14,9 @@
     <string name="dialogTitle_contentImages">would like to access your photos.</string>
     <string name="dialogTitle_contentVideos">would like to access your videos.</string>
     <string name="dialogTitle_contentCarriers">would like to access information about your carriers.</string>
-    <string name="dialogTitle_contentMms">would like to read your messages.</string>
-    <string name="dialogTitle_contentMmsSms">would like to read your messages.</string>
-    <string name="dialogTitle_contentSms">would like to read your messages.</string>
+    <string name="dialogTitle_contentMms">would like to access your messages.</string>
+    <string name="dialogTitle_contentMmsSms">would like to access your messages.</string>
+    <string name="dialogTitle_contentSms">would like to access your messages.</string>
 
     <string name="dialogTitle_wifiAddNetwork">would like to add a new Wi-Fi access point.</string>
     <string name="dialogTitle_wifiDisableNetwork">would like to disable a Wi-Fi access point.</string>

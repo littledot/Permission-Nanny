@@ -1,7 +1,15 @@
 package com.sdchang.permissionpolice.lib.request.content;
 
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
 
 public interface CursorListener {
-    void callback(Cursor obj);
+    /**
+     * @param data
+     * @param inserted
+     * @param rowsUpdated
+     * @param rowsDeleted
+     */
+    void onResult(Bundle result, Cursor data, Uri inserted, int rowsUpdated, int rowsDeleted);
 }

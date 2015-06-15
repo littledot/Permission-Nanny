@@ -25,18 +25,14 @@ public class CursorContentProvider extends ContentProvider {
     }
 
     @Override
+    public String getType(Uri uri) {
+        return getContext().getContentResolver().getType(uri);
+    }
+
+    @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         if (VERSION.SDK_INT >= 15) {
-            long nonce;
-            try {
-                nonce = Long.parseLong(uri.getLastPathSegment());
-            } catch (NumberFormatException e) {
-                return null;
-            }
-
-            CursorRequest request = approvedRequests.get(nonce);
-            approvedRequests.remove(nonce);
-
+            CursorRequest request = validateRequest(uri);
             return request == null ? null : new CrossProcessCursorWrapper(getContext().getContentResolver()
                     .query(request.uri(), toArray(request.projection()), request.selection(),
                             toArray(request.selectionArgs()), request.sortOrder()));
@@ -45,23 +41,41 @@ public class CursorContentProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
-        return null;
-    }
-
-    @Override
     public Uri insert(Uri uri, ContentValues values) {
-        return null;
+        CursorRequest request = validateRequest(uri);
+        return request == null ? null : getContext().getContentResolver()
+                .insert(request.uri(), request.contentValues());
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        CursorRequest request = validateRequest(uri);
+        return request == null ? 0 : getContext().getContentResolver()
+                .delete(request.uri(), request.selection(), toArray(request.selectionArgs()));
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        CursorRequest request = validateRequest(uri);
+        return request == null ? 0 : getContext().getContentResolver()
+                .update(request.uri(), request.contentValues(), request.selection(), toArray(request.selectionArgs()));
+    }
+
+    /**
+     * @param uri
+     * @return
+     */
+    private CursorRequest validateRequest(Uri uri) {
+        long nonce;
+        try {
+            nonce = Long.parseLong(uri.getLastPathSegment());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        CursorRequest request = approvedRequests.get(nonce);
+        approvedRequests.remove(nonce);
+        return request;
     }
 
     private String[] toArray(@Nullable List<String> list) {
