@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.sdchang.permissionpolice.demo.content.CursorDemoAdapter;
 import com.sdchang.permissionpolice.demo.content.CursorRequestFactory;
+import com.sdchang.permissionpolice.demo.location.LocationDemoAdapter;
 
 /**
  *
@@ -24,11 +26,17 @@ public class DemoActivity extends BaseActivity {
 
         Intent src = getIntent();
         int factoryId = src.getIntExtra(MainActivity.FACTORY_ID, -1);
-        if (factoryId == 0) {
+        switch (factoryId) {
+        case 0:
             mAdapter = new CursorDemoAdapter(new CursorRequestFactory());
-        } else {
+            break;
+        case 1:
+            mAdapter = new LocationDemoAdapter();
+            break;
+        default:
             mAdapter = new DemoAdapter(MainActivity.mFactories[factoryId]);
         }
+
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(mAdapter);
     }

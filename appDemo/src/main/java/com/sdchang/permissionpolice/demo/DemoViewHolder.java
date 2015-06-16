@@ -11,9 +11,9 @@ import butterknife.InjectView;
  *
  */
 public class DemoViewHolder extends ViewHolder {
-    @InjectView(R.id.tvRequest) TextView tvRequest;
-    @InjectView(R.id.tvResponse) TextView tvResponse;
-    @InjectView(R.id.btnExtras) Button btnExtras;
+    @InjectView(R.id.tvRequest) public TextView tvRequest;
+    @InjectView(R.id.tvResponse) public TextView tvResponse;
+    @InjectView(R.id.btnExtras) public Button btnExtras;
 
     public DemoViewHolder(View itemView) {
         super(itemView);

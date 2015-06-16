@@ -29,4 +29,7 @@ dependencies {
 
     compile project(':common')
     compile 'com.thedeanda:lorem:1.2'
+    compile 'de.greenrobot:eventbus:3.0.0-beta1'
+
+    provided 'de.greenrobot:eventbus-annotation-processor:3.0.0-beta1'
 }

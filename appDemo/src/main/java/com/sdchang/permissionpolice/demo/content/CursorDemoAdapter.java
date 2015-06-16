@@ -1,11 +1,12 @@
-package com.sdchang.permissionpolice.demo;
+package com.sdchang.permissionpolice.demo.content;
 
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import com.sdchang.permissionpolice.demo.content.CursorRequestFactory;
+import com.sdchang.permissionpolice.demo.DemoAdapter;
+import com.sdchang.permissionpolice.demo.DemoViewHolder;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.content.CursorListener;
 import org.apache.http.HttpStatus;
