@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
 
-        <!--Theme attribute must be set here to achieve transparent background.
+        <!--Theme attribute must be set in xml instead of in java to achieve transparent background.
             Otherwise there will always be a white flash and then black background.-->
         <activity
             android:name=".ConfirmRequestActivity"

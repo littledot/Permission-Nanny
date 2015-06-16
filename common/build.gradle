@@ -6,7 +6,8 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        minSdkVersion 1
+        // TODO #31: Report to Google - Setting minSdk to 1 causes ManifestMerger to fail
+        minSdkVersion 9
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"

@@ -41,6 +41,8 @@ public class ProxyService extends BaseService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Timber.wtf("Server started with args: " + BundleUtil.toString(intent));
+        // TODO #40: java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String android.content
+        // .Intent.getStringExtra(java.lang.String)' on a null object reference
         String clientId = intent.getStringExtra(CLIENT_ID);
         OpRequest opRequest = intent.getParcelableExtra(REQUEST);
 
