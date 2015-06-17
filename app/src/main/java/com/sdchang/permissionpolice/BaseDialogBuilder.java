@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.view.ViewStub;
+import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import org.apache.http.HttpStatus;
@@ -78,7 +79,7 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        Intent response;
+        ResponseBundle response;
         if (which == DialogInterface.BUTTON_POSITIVE) {
             response = onAllowRequest();
         } else {
@@ -86,23 +87,40 @@ public class BaseDialogBuilder<T extends Parcelable> implements DialogInterface.
         }
 
         if (response != null && mClientId != null) {
-            response.setAction(mClientId);
-            Timber.d("server broadcasting=" + response);
-            mActivity.sendBroadcast(response);
+            Timber.d("server broadcasting=" + BundleUtil.toString(response.build()));
+            Intent intent = new Intent(mClientId).putExtras(response.build());
+            mActivity.sendBroadcast(intent);
         }
     }
 
-    protected Intent onAllowRequest() {
-        return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
-                .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK);
+    protected ResponseBundle onAllowRequest() {
+        return null;
     }
 
-    protected Intent onDenyRequest() {
-        return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
-                .putExtra(Police.STATUS_CODE, HttpStatus.SC_UNAUTHORIZED)
-                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
+    protected ResponseBundle onDenyRequest() {
+        return newDenyResponse();
+    }
+
+    public final ResponseBundle newAllowResponse() {
+        return new ResponseBundle()
+                .server(Police.AUTHORIZATION_SERVICE)
+                .status(HttpStatus.SC_OK);
+    }
+
+    public final ResponseBundle newDenyResponse() {
+        return new ResponseBundle()
+                .server(Police.AUTHORIZATION_SERVICE)
+                .status(HttpStatus.SC_UNAUTHORIZED)
+                .connection(HTTP.CONN_CLOSE);
+    }
+
+    public final ResponseBundle newBadRequestResponse(Throwable error) {
+        return new ResponseBundle()
+                .server(Police.AUTHORIZATION_SERVICE)
+                .status(HttpStatus.SC_BAD_REQUEST)
+                .connection(HTTP.CONN_CLOSE)
+                .contentType(Police.APPLICATION_SERIALIZABLE)
+                .error(error);
     }
 
     @Override

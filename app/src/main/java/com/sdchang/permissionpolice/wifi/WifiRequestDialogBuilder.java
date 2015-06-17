@@ -2,7 +2,6 @@ package com.sdchang.permissionpolice.wifi;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -17,6 +16,7 @@ import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
 import org.apache.http.protocol.HTTP;
@@ -62,12 +62,17 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerReque
     }
 
     @Override
-    protected Intent onAllowRequest() {
+    protected ResponseBundle onAllowRequest() {
         WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         Bundle response = new Bundle();
-        mOperation.mFunction.execute(wifi, mRequest, response);
-        return super.onAllowRequest()
-                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
-                .putExtra(Police.ENTITY_BODY, response);
+        try {
+            mOperation.mFunction.execute(wifi, mRequest, response);
+        } catch (Throwable error) {
+            return newBadRequestResponse(error);
+        }
+        return newAllowResponse()
+                .connection(HTTP.CONN_CLOSE)
+                .contentType(Police.APPLICATION_BUNDLE)
+                .body(response);
     }
 }

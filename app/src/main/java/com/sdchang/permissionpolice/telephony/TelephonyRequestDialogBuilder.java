@@ -2,7 +2,6 @@ package com.sdchang.permissionpolice.telephony;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -17,6 +16,7 @@ import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
 import org.apache.http.protocol.HTTP;
@@ -56,12 +56,17 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyMa
     }
 
     @Override
-    protected Intent onAllowRequest() {
+    protected ResponseBundle onAllowRequest() {
         TelephonyManager tele = (TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE);
         Bundle response = new Bundle();
-        mOperation.mFunction.execute(tele, mRequest, response);
-        return super.onAllowRequest()
-                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
-                .putExtra(Police.ENTITY_BODY, response);
+        try {
+            mOperation.mFunction.execute(tele, mRequest, response);
+        } catch (Throwable error) {
+            return newBadRequestResponse(error);
+        }
+        return newAllowResponse()
+                .connection(HTTP.CONN_CLOSE)
+                .contentType(Police.APPLICATION_BUNDLE)
+                .body(response);
     }
 }

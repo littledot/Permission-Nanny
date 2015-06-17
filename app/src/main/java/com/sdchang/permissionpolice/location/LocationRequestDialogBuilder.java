@@ -18,10 +18,10 @@ import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.ProxyService;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
-import org.apache.http.HttpStatus;
 import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
@@ -60,24 +60,19 @@ public class LocationRequestDialogBuilder extends BaseDialogBuilder<LocationRequ
     }
 
     @Override
-    protected Intent onAllowRequest() {
+    protected ResponseBundle onAllowRequest() {
         if (mOperation.mFunction != null) { // one-shot request
             LocationManager lm = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
             Bundle response = new Bundle();
             try {
                 mOperation.mFunction.execute(lm, mRequest, response);
-                return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                        .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
-                        .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK)
-                        .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
-                        .putExtra(Police.ENTITY_BODY, response);
             } catch (Throwable error) {
-                return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                        .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
-                        .putExtra(Police.STATUS_CODE, HttpStatus.SC_BAD_REQUEST)
-                        .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
-                        .putExtra(Police.ENTITY_ERROR, error);
+                return newBadRequestResponse(error);
             }
+            return newAllowResponse()
+                    .connection(HTTP.CONN_CLOSE)
+                    .contentType(Police.APPLICATION_BUNDLE)
+                    .body(response);
         }
 
         // ongoing request
@@ -86,8 +81,6 @@ public class LocationRequestDialogBuilder extends BaseDialogBuilder<LocationRequ
         server.putExtra(ProxyService.REQUEST, mRequest);
         Timber.wtf("Operation.function is null, starting service with args: " + BundleUtil.toString(server));
         mActivity.startService(server);
-        return new Intent().putExtra(Police.HTTP_VERSION, Police.HTTP_1_1)
-                .putExtra(Police.SERVER, Police.AUTHORIZATION_SERVICE)
-                .putExtra(Police.STATUS_CODE, HttpStatus.SC_OK);
+        return newAllowResponse();
     }
 }

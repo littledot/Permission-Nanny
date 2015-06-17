@@ -1,7 +1,6 @@
 package com.sdchang.permissionpolice.sms;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -16,6 +15,7 @@ import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.sms.SmsRequest;
 import org.apache.http.protocol.HTTP;
@@ -55,12 +55,17 @@ public class SmsRequestDialogBuilder extends BaseDialogBuilder<SmsRequest> {
     }
 
     @Override
-    protected Intent onAllowRequest() {
+    protected ResponseBundle onAllowRequest() {
         SmsManager sms = SmsManager.getDefault();
         Bundle response = new Bundle();
-        mOperation.mFunction.execute(sms, mRequest, response);
-        return super.onAllowRequest()
-                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
-                .putExtra(Police.ENTITY_BODY, response);
+        try {
+            mOperation.mFunction.execute(sms, mRequest, response);
+        } catch (Throwable error) {
+            return newBadRequestResponse(error);
+        }
+        return newAllowResponse()
+                .connection(HTTP.CONN_CLOSE)
+                .contentType(Police.APPLICATION_BUNDLE)
+                .body(response);
     }
 }

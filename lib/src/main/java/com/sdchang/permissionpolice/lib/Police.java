@@ -13,6 +13,9 @@ public class Police {
     public static final String ENTITY_BODY = "Entity-Body";
     public static final String ENTITY_ERROR = "Entity-Error";
 
+    public static final String APPLICATION_BUNDLE = "application/bundle";
+    public static final String APPLICATION_SERIALIZABLE = "application/serializable";
+
     public static final String SERVER = "Server";
     public static final String AUTHORIZATION_SERVICE = "AuthorizationService";
     public static final String LOCATION_SERVICE = "LocationService";

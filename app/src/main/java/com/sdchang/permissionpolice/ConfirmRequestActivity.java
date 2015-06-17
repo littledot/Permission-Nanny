@@ -10,6 +10,7 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.content.CursorRequestDialogBuilder;
 import com.sdchang.permissionpolice.lib.request.BaseRequest;
 import com.sdchang.permissionpolice.location.LocationRequestDialogBuilder;
@@ -74,19 +75,19 @@ public class ConfirmRequestActivity extends BaseActivity {
 
     @OnClick(R.id.btnPositive)
     void onAllow() {
-        sendResults(builder.onAllowRequest());
+        sendResults(builder.onAllowRequest().build());
     }
 
     @OnClick(R.id.btnNegative)
     void onDeny() {
-        sendResults(builder.onDenyRequest());
+        sendResults(builder.onDenyRequest().build());
     }
 
-    private void sendResults(Intent response) {
+    private void sendResults(Bundle response) {
         if (response != null && mClientId != null) {
-            response.setAction(mClientId);
-            Timber.d("server broadcasting=" + response);
-            sendBroadcast(response);
+            Timber.d("server broadcasting=" + BundleUtil.toString(response));
+            Intent intent = new Intent(mClientId).putExtras(response);
+            sendBroadcast(intent);
         }
         finish();
     }

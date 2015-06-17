@@ -1,7 +1,6 @@
 package com.sdchang.permissionpolice.content;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
@@ -15,6 +14,8 @@ import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.ResponseBundle;
+import com.sdchang.permissionpolice.lib.Police;
 import com.sdchang.permissionpolice.lib.request.content.CursorEvent;
 import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
 import org.apache.http.protocol.HTTP;
@@ -57,7 +58,7 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<CursorRequest>
     }
 
     @Override
-    protected Intent onAllowRequest() {
+    protected ResponseBundle onAllowRequest() {
         long nonce = new SecureRandom().nextLong();
         Timber.wtf("nonce=" + nonce);
 
@@ -65,8 +66,11 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<CursorRequest>
         CursorContentProvider.approvedRequests.put(nonce, mRequest);
 
         // return nonce to client
-        return super.onAllowRequest()
-                .putExtra(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE)
-                .putExtra(CursorEvent.NONCE, nonce);
+        Bundle response = new Bundle();
+        response.putLong(CursorEvent.NONCE, nonce);
+        return newAllowResponse()
+                .connection(HTTP.CONN_CLOSE)
+                .contentType(Police.APPLICATION_BUNDLE)
+                .body(response);
     }
 }

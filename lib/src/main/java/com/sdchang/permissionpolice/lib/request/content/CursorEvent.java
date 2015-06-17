@@ -36,7 +36,7 @@ public class CursorEvent implements Event {
     public void process(Context context, Intent intent) {
         Uri authorized = null;
         if (HttpStatus.SC_OK == intent.getIntExtra(Police.STATUS_CODE, 0)) {
-            long nonce = intent.getLongExtra(NONCE, 0);
+            long nonce = intent.getBundleExtra(Police.ENTITY_BODY).getLong(NONCE, 0);
             authorized = PROVIDER.buildUpon().appendPath(Long.toString(nonce)).build();
         }
 
