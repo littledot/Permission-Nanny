@@ -69,8 +69,8 @@ public class ConfirmRequestActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         onDeny();
+        super.onBackPressed();
     }
 
     @OnClick(R.id.btnPositive)
