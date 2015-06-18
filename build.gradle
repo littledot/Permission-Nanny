@@ -7,6 +7,29 @@ buildscript {
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.10.1'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.1.1'
+    }
+    project.ext {
+        compileSdk = 22
+        buildTools = "22.0.1"
+        minSdk = 9
+        targetSdk = 22
+
+        autoParcelProcessor = 'com.github.frankiesardo:auto-parcel-processor:0.3'
+        daggerCompiler = 'com.google.dagger:dagger-compiler:2.0.1'
+        androidLeveldb = 'com.litl:android-leveldb:1.0.3@aar'
+        kryo = 'com.esotericsoftware:kryo:3.0.2'
+
+        junit = 'junit:junit:4.12'
+        mockitoCore = 'org.mockito:mockito-core:1.9.5'
+        dexmakerMockito = 'com.google.dexmaker:dexmaker-mockito:1.2'
+        robolectric = 'org.robolectric:robolectric:3.0-rc3'
+        asm = 'org.ow2.asm:asm:5.0.3' // Resolved versions for app (5.0.3) and test app (5.0.1) differ.
+        objenesis = 'org.objenesis:objenesis:2.1' // Resolved versions for app (2.1) and test app (1.0) differ.
+        runner = 'com.android.support.test:runner:0.3'
+        rules = 'com.android.support.test:rules:0.3'
+        espressoCore = 'com.android.support.test.espresso:espresso-core:2.2'
+        uiautomator = 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
     }
 }
 

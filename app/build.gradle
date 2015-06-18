@@ -2,17 +2,20 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion project.compileSdk
+    buildToolsVersion project.buildTools
 
     defaultConfig {
         applicationId "com.sdchang.permissionpolice"
-        minSdkVersion 9
-        targetSdkVersion 22
+        minSdkVersion project.minSdk
+        targetSdkVersion project.targetSdk
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -21,11 +24,35 @@ android {
     lintOptions {
         lintConfig file("../lint.xml")
     }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+
 }
 
 dependencies {
-    apt 'com.github.frankiesardo:auto-parcel-processor:0.3'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
+    apt project.autoParcelProcessor
+    apt project.daggerCompiler
 
     compile project(':common')
+    compile project.androidLeveldb
+    compile project.kryo
+
+    testCompile project.junit
+    testCompile project.mockitoCore
+    testCompile project.robolectric
+    testCompile project.asm
+    testCompile project.objenesis
+
+    androidTestCompile project.junit
+    androidTestCompile(project.mockitoCore)
+    androidTestCompile(project.dexmakerMockito)
+//    androidTestCompile project.robolectric
+    androidTestCompile project.runner
+    androidTestCompile project.rules
+    androidTestCompile project.espressoCore
+    androidTestCompile project.asm
+    androidTestCompile project.objenesis
+
+
 }

@@ -2,13 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion project.compileSdk
+    buildToolsVersion project.buildTools
 
     defaultConfig {
         // TODO #31: Report to Google - Setting minSdk to 1 causes ManifestMerger to fail
         minSdkVersion 9
-        targetSdkVersion 22
+        targetSdkVersion project.targetSdk
         versionCode 1
         versionName "1.0"
     }
