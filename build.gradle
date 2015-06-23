@@ -11,14 +11,26 @@ buildscript {
     }
     project.ext {
         compileSdk = 22
-        buildTools = "22.0.1"
+        buildTools = '22.0.1'
         minSdk = 9
         targetSdk = 22
 
+        supportV4 = 'com.android.support:support-v4:22.2.0'
+        appcompatV7 = 'com.android.support:appcompat-v7:22.2.0'
+        cardviewV7 = 'com.android.support:cardview-v7:22.2.0'
+        gridlayoutV7 = 'com.android.support:gridlayout-v7:22.2.0'
+        paletteV7 = 'com.android.support:palette-v7:22.2.0'
+        recyclerviewV7 = 'com.android.support:recyclerview-v7:22.2.0'
+        playServices = 'com.google.android.gms:play-services:7.5.0'
+
+        androidLeveldb = 'com.litl:android-leveldb:1.0.3@aar'
         autoParcelProcessor = 'com.github.frankiesardo:auto-parcel-processor:0.3'
         daggerCompiler = 'com.google.dagger:dagger-compiler:2.0.1'
-        androidLeveldb = 'com.litl:android-leveldb:1.0.3@aar'
+        javaxInject = 'javax.inject:javax.inject:1'
         kryo = 'com.esotericsoftware:kryo:3.0.2'
+        logansquare = 'com.bluelinelabs:logansquare:1.1.0'
+        logansquareCompiler = 'com.bluelinelabs:logansquare-compiler:1.1.0'
+        snappydbLib = 'com.snappydb:snappydb-lib:0.5.2'
 
         junit = 'junit:junit:4.12'
         mockitoCore = 'org.mockito:mockito-core:1.9.5'
@@ -30,6 +42,7 @@ buildscript {
         rules = 'com.android.support.test:rules:0.3'
         espressoCore = 'com.android.support.test.espresso:espresso-core:2.2'
         uiautomator = 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
+        lorem = 'com.thedeanda:lorem:1.2'
     }
 }
 
