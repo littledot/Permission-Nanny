@@ -3,12 +3,16 @@ package com.sdchang.permissionpolice;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import com.sdchang.permissionpolice.dagger.ActivityComponent;
+import com.sdchang.permissionpolice.dagger.DaggerActivityComponent;
 import timber.log.Timber;
 
 /**
  *
  */
 public class BaseService extends Service {
+
+    private ActivityComponent mActivityComponent;
 
     @Override
     public void onCreate() {
@@ -30,7 +34,25 @@ public class BaseService extends Service {
 
     @Override
     public void onDestroy() {
-        Timber.wtf("");
+        Timber.wtf("destroy");
         super.onDestroy();
+    }
+
+    /**
+     * @param builder
+     * @return
+     */
+    protected DaggerActivityComponent.Builder buildActivityComponent(DaggerActivityComponent.Builder builder) {
+        return builder.appComponent(((App) getApplication()).getAppComponent());
+    }
+
+    /**
+     * @return
+     */
+    public ActivityComponent getActivityComponent() {
+        if (mActivityComponent == null) {
+            mActivityComponent = buildActivityComponent(DaggerActivityComponent.builder()).build();
+        }
+        return mActivityComponent;
     }
 }

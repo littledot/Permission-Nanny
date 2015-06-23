@@ -13,36 +13,42 @@ import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
 import com.sdchang.permissionpolice.location.ProxyGpsStatusListener;
 import com.sdchang.permissionpolice.location.ProxyLocationListener;
 import com.sdchang.permissionpolice.location.ProxyNmeaListener;
+import com.snappydb.KeyIterator;
 import timber.log.Timber;
 
-import java.security.SecureRandom;
+import javax.inject.Inject;
 
 /**
  *
  */
 public class ProxyService extends BaseService {
 
+    public static final String SERVER_ID = "com.permission.police.ProxyService";
     public static final String CLIENT_ID = "clientId";
     public static final String REQUEST = "request";
 
-    private LocationManager mLocationManager;
     private SimpleArrayMap<String, ProxyClient> mClients = new SimpleArrayMap<>();
     private AckReceiver mAckReceiver = new AckReceiver();
-    private String mServerId;
+    private LocationManager mLocationManager;
+
+    @Inject MySnappy mDB;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        mServerId = "LocationServerService" + new SecureRandom().nextLong();
-        registerReceiver(mAckReceiver, new IntentFilter(mServerId));
+        registerReceiver(mAckReceiver, new IntentFilter(SERVER_ID));
+        getActivityComponent().inject(this);
+        Timber.wtf("init service");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent == null) { // Service killed by OS? Restore client state
+            restoreState();
+            return super.onStartCommand(intent, flags, startId);
+        }
         Timber.wtf("Server started with args: " + BundleUtil.toString(intent));
-        // TODO #40: java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String android.content
-        // .Intent.getStringExtra(java.lang.String)' on a null object reference
         String clientId = intent.getStringExtra(CLIENT_ID);
         RequestParams requestParams = intent.getParcelableExtra(REQUEST);
         handleRequest(clientId, requestParams);
@@ -54,8 +60,29 @@ public class ProxyService extends BaseService {
         super.onDestroy();
         unregisterReceiver(mAckReceiver);
     }
+
+    private void save(String clientId, RequestParams request) {
+        mDB.put(clientId, request);
+    }
+
+    private void restoreState() {
+        KeyIterator iterator = mDB.iterator();
+        if (iterator.hasNext()) {
+            String[] clients = iterator.next(Integer.MAX_VALUE);
+            for (String client : clients) {
+                Timber.wtf("restoring client=" + client);
+                RequestParams request = mDB.get(client, RequestParams.class);
+                handleRequest(client, request);
+            }
+            Timber.wtf("restored " + clients.length + " clients");
+        } else {
+            Timber.wtf("no clients to restore");
+        }
+    }
+
     private void handleRequest(String clientId, RequestParams requestParams) {
         Timber.wtf("handling client=" + clientId + " req=" + requestParams);
+        save(clientId, requestParams);
         switch (requestParams.opCode()) {
         case LocationRequest.ADD_GPS_STATUS_LISTENER:
             handleAddGpsStatusListenerRequest(requestParams, clientId);
@@ -90,6 +117,7 @@ public class ProxyService extends BaseService {
 
     public void removeProxyClient(String clientId) {
         mClients.remove(clientId);
+        mDB.del(clientId);
         if (mClients.isEmpty()) { // no more clients? kill service
             stopSelf();
         }
