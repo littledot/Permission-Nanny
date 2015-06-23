@@ -3,130 +3,102 @@ package com.sdchang.permissionpolice.lib.request.content;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import auto.parcel.AutoParcel;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.lib.request.PermissionRequest;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 import java.util.List;
 
-@AutoParcel
-public abstract class CursorRequest extends BaseRequest {
+public class CursorRequest extends PermissionRequest {
+
+    public static final String SELECT = "Select";
+    public static final String INSERT = "Insert";
+    public static final String UPDATE = "Update";
+    public static final String DELETE = "Delete";
+
+    public CursorRequest(RequestParams params) {
+        super(params);
+    }
 
     @Override
     public int getRequestType() {
         return CURSOR_REQUEST;
     }
 
-    @Op
-    public abstract int operation();
-
-    public abstract Uri uri();
-
-    @Nullable
-    public abstract List<String> projection();
-
-    @Nullable
-    public abstract String selection();
-
-    @Nullable
-    public abstract List<String> selectionArgs();
-
-    @Nullable
-    public abstract String sortOrder();
-
-    @Nullable
-    public abstract ContentValues contentValues();
-
     public static Builder newBuilder() {
-        return new AutoParcel_CursorRequest.Builder();
+        return new Builder();
     }
 
-    @AutoParcel.Builder
-    public abstract static class Builder {
+    public static class Builder {
 
-        public abstract Builder operation(@Op int operation);
+        RequestParams.Builder builder = RequestParams.newBuilder();
 
         public Builder select() {
-            operation(SELECT);
+            builder.opCode(SELECT);
             return this;
         }
 
         public Builder insert() {
-            operation(INSERT);
+            builder.opCode(INSERT);
             return this;
         }
 
         public Builder update() {
-            operation(UPDATE);
+            builder.opCode(UPDATE);
             return this;
         }
 
         public Builder delete() {
-            operation(DELETE);
+            builder.opCode(DELETE);
             return this;
         }
 
-        public abstract Builder uri(Uri uri);
+        public Builder uri(Uri uri) {
+            builder.uri0(uri);
+            return this;
+        }
 
-        public abstract Builder projection(@Nullable List<String> projection);
+        public Builder projection(@Nullable List<String> projection) {
+            builder.listOfStrings0(projection);
+            return this;
+        }
 
         public Builder projection(@Nullable String[] projection) {
             projection(Arrays.asList(projection));
             return this;
         }
 
-        public abstract Builder selection(@Nullable String selection);
+        public Builder selection(@Nullable String selection) {
+            builder.string0(selection);
+            return this;
+        }
 
-        public abstract Builder selectionArgs(@Nullable List<String> selectionArgs);
+        public Builder selectionArgs(@Nullable List<String> selectionArgs) {
+            builder.listOfStrings1(selectionArgs);
+            return this;
+        }
 
         public Builder selectionArgs(@Nullable String[] selectionArgs) {
             selectionArgs(Arrays.asList(selectionArgs));
             return this;
         }
 
-        public abstract Builder sortOrder(@Nullable String sortOrder);
+        public Builder sortOrder(@Nullable String sortOrder) {
+            builder.string1(sortOrder);
+            return this;
+        }
 
-        public abstract Builder contentValues(@Nullable ContentValues contentValues);
+        public Builder contentValues(@Nullable ContentValues contentValues) {
+            builder.contentValues(contentValues);
+            return this;
+        }
 
-        public abstract CursorRequest build();
-
-//        auto-parcel 0.3 does not support query methods in builders
-//        abstract List<String> projection();
-//
-//        abstract Builder hasProjection(boolean has);
-//
-//        abstract List<String> selectionArgs();
-//
-//        abstract Builder hasSelectionArgs(boolean has);
-//
-//        public CursorRequest validateAndBuild() {
-//            hasProjection(projection() != null);
-//            hasSelectionArgs(selectionArgs() != null);
-//            return build();
-//        }
-
-        /**
-         * @param context
-         * @param reason
-         */
-        public void startRequest(@NonNull Context context, @NonNull String reason, CursorListener listener) {
-            build().startRequest(context, reason, listener);
+        public CursorRequest build() {
+            RequestParams params = builder.build();
+            return new CursorRequest(params);
         }
     }
-
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({SELECT, INSERT, UPDATE, DELETE})
-    public @interface Op {}
-
-    public static final int SELECT = 0;
-    public static final int INSERT = 1;
-    public static final int UPDATE = 1 << 1;
-    public static final int DELETE = 1 << 2;
 
     /**
      * @param context
@@ -135,7 +107,7 @@ public abstract class CursorRequest extends BaseRequest {
      */
     public void startRequest(Context context, String reason, CursorListener listener) {
         // begin handshake
-        addFilter(new CursorEvent(this, listener));
+        addFilter(new CursorEvent(mParams, listener));
         super.startRequest(context, reason);
     }
 }

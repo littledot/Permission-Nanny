@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.common.BundleUtil;
-import com.sdchang.permissionpolice.lib.request.OpRequest;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 import com.sdchang.permissionpolice.lib.request.location.LocationEvent;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
 import com.sdchang.permissionpolice.location.ProxyGpsStatusListener;
@@ -44,28 +44,8 @@ public class ProxyService extends BaseService {
         // TODO #40: java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String android.content
         // .Intent.getStringExtra(java.lang.String)' on a null object reference
         String clientId = intent.getStringExtra(CLIENT_ID);
-        OpRequest opRequest = intent.getParcelableExtra(REQUEST);
-
-        LocationRequest request;
-        switch (opRequest.opCode()) {
-        case LocationRequest.ADD_GPS_STATUS_LISTENER:
-            ProxyGpsStatusListener gpsStatusListener = new ProxyGpsStatusListener(this, clientId, mServerId);
-            mClients.put(clientId, new ProxyClient(clientId, opRequest, gpsStatusListener));
-            mLocationManager.addGpsStatusListener(gpsStatusListener);
-            break;
-        case LocationRequest.ADD_NMEA_LISTENER:
-            ProxyNmeaListener nmeaListener = new ProxyNmeaListener(this, clientId, mServerId);
-            mClients.put(clientId, new ProxyClient(clientId, opRequest, nmeaListener));
-            mLocationManager.addNmeaListener(nmeaListener);
-            break;
-        case LocationRequest.REQUEST_LOCATION_UPDATES1:
-            request = (LocationRequest) opRequest;
-            ProxyLocationListener locationListener = new ProxyLocationListener(this, clientId, mServerId);
-            mClients.put(clientId, new ProxyClient(clientId, opRequest, locationListener));
-            mLocationManager.requestLocationUpdates(request.long0(), request.float0(), request.criteria0(),
-                    locationListener, null);
-            break;
-        }
+        RequestParams requestParams = intent.getParcelableExtra(REQUEST);
+        handleRequest(clientId, requestParams);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -73,6 +53,39 @@ public class ProxyService extends BaseService {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mAckReceiver);
+    }
+    private void handleRequest(String clientId, RequestParams requestParams) {
+        Timber.wtf("handling client=" + clientId + " req=" + requestParams);
+        switch (requestParams.opCode()) {
+        case LocationRequest.ADD_GPS_STATUS_LISTENER:
+            handleAddGpsStatusListenerRequest(requestParams, clientId);
+            break;
+        case LocationRequest.ADD_NMEA_LISTENER:
+            handleAddNmeaListener(requestParams, clientId);
+            break;
+        case LocationRequest.REQUEST_LOCATION_UPDATES1:
+            handleRequestLocationUpdates1(requestParams, clientId);
+            break;
+        }
+    }
+
+    private void handleAddGpsStatusListenerRequest(RequestParams request, String clientId) {
+        ProxyGpsStatusListener gpsStatusListener = new ProxyGpsStatusListener(this, clientId, SERVER_ID);
+        mClients.put(clientId, new ProxyClient(clientId, request, gpsStatusListener));
+        mLocationManager.addGpsStatusListener(gpsStatusListener);
+    }
+
+    private void handleAddNmeaListener(RequestParams request, String clientId) {
+        ProxyNmeaListener nmeaListener = new ProxyNmeaListener(this, clientId, SERVER_ID);
+        mClients.put(clientId, new ProxyClient(clientId, request, nmeaListener));
+        mLocationManager.addNmeaListener(nmeaListener);
+    }
+
+    private void handleRequestLocationUpdates1(RequestParams request, String clientId) {
+        ProxyLocationListener locationListener = new ProxyLocationListener(this, clientId, SERVER_ID);
+        mClients.put(clientId, new ProxyClient(clientId, request, locationListener));
+        mLocationManager.requestLocationUpdates(request.long0(), request.float0(), request.criteria0(),
+                locationListener, null);
     }
 
     public void removeProxyClient(String clientId) {

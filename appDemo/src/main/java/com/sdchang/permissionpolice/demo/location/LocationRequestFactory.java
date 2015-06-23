@@ -17,7 +17,7 @@ import com.sdchang.permissionpolice.demo.extra.Extra;
 import com.sdchang.permissionpolice.demo.extra.ExtrasDialogBuilder;
 import com.sdchang.permissionpolice.demo.extra.FloatExtra;
 import com.sdchang.permissionpolice.demo.extra.LongExtra;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.lib.request.PermissionRequest;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
@@ -45,7 +45,7 @@ public class LocationRequestFactory implements DemoRequestFactory {
     private ExtrasDialogBuilder mBuilder = new ExtrasDialogBuilder();
 
     @Override
-    public BaseRequest getRequest(final int position) {
+    public PermissionRequest getRequest(final int position) {
         Extra[] extras = mExtras.get(position);
         switch (position) {
         case 0:

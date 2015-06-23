@@ -12,7 +12,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.content.CursorRequestDialogBuilder;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.lib.request.PermissionRequest;
 import com.sdchang.permissionpolice.location.LocationRequestDialogBuilder;
 import com.sdchang.permissionpolice.sms.SmsRequestDialogBuilder;
 import com.sdchang.permissionpolice.telephony.TelephonyRequestDialogBuilder;
@@ -45,18 +45,18 @@ public class ConfirmRequestActivity extends BaseActivity {
         }
 
         mArgs = getIntent().getExtras();
-        mClientId = mArgs.getString(BaseRequest.CLIENT_ID);
+        mClientId = mArgs.getString(PermissionRequest.CLIENT_ID);
 
-        int type = mArgs.getInt(BaseRequest.REQUEST_TYPE, 0);
-        if (type == BaseRequest.CURSOR_REQUEST) {
+        int type = mArgs.getInt(PermissionRequest.REQUEST_TYPE, 0);
+        if (type == PermissionRequest.CURSOR_REQUEST) {
             builder = new CursorRequestDialogBuilder(this, mArgs);
-        } else if (type == BaseRequest.WIFI_REQUEST) {
+        } else if (type == PermissionRequest.WIFI_REQUEST) {
             builder = new WifiRequestDialogBuilder(this, mArgs);
-        } else if (type == BaseRequest.TELEPHONY_REQUEST) {
+        } else if (type == PermissionRequest.TELEPHONY_REQUEST) {
             builder = new TelephonyRequestDialogBuilder(this, mArgs);
-        } else if (type == BaseRequest.SMS_REQUEST) {
+        } else if (type == PermissionRequest.SMS_REQUEST) {
             builder = new SmsRequestDialogBuilder(this, mArgs);
-        } else if (type == BaseRequest.LOCATION_REQUEST) {
+        } else if (type == PermissionRequest.LOCATION_REQUEST) {
             builder = new LocationRequestDialogBuilder(this, mArgs);
         }
 

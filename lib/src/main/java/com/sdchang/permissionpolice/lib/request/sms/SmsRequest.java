@@ -5,102 +5,28 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-import auto.parcel.AutoParcel;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.lib.request.PermissionRequest;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 
 /**
  *
  */
-@AutoParcel
-public abstract class SmsRequest extends BaseRequest {
+public class SmsRequest extends PermissionRequest {
 
-    static Builder newBuilder() {
-        return new AutoParcel_SmsRequest.Builder();
+    public SmsRequest(RequestParams params) {
+        super(params);
     }
 
-    @AutoParcel.Builder
-    public static abstract class Builder {
-        public abstract Builder opCode(@Op String value);
-
-        public abstract Builder string0(String value);
-
-        public abstract Builder string1(String value);
-
-        public abstract Builder string2(String value);
-
-        public abstract Builder short0(short value);
-
-        public abstract Builder byteArray0(byte[] value);
-
-        public abstract Builder pendingIntent0(PendingIntent value);
-
-        public abstract Builder pendingIntent1(PendingIntent value);
-
-        public abstract Builder uri0(Uri value);
-
-        public abstract Builder bundle0(Bundle value);
-
-        public abstract Builder arrayListOfStrings0(ArrayList<String> value);
-
-        public abstract Builder arrayListOfPendingIntents0(ArrayList<PendingIntent> value);
-
-        public abstract Builder arrayListOfPendingIntents1(ArrayList<PendingIntent> value);
-
-        public abstract SmsRequest build();
+    static RequestParams.Builder newBuilder() {
+        return RequestParams.newBuilder();
     }
-
-    public abstract String opCode();
-
-    @Nullable
-    public abstract String string0();
-
-    @Nullable
-    public abstract String string1();
-
-    @Nullable
-    public abstract String string2();
-
-    @Nullable
-    public abstract short short0();
-
-    @Nullable
-    public abstract byte[] byteArray0();
-
-    @Nullable
-    public abstract PendingIntent pendingIntent0();
-
-    @Nullable
-    public abstract PendingIntent pendingIntent1();
-
-    @Nullable
-    public abstract Uri uri0();
-
-    @Nullable
-    public abstract Bundle bundle0();
-
-    @Nullable
-    public abstract ArrayList<String> arrayListOfStrings0();
-
-    @Nullable
-    public abstract ArrayList<PendingIntent> arrayListOfPendingIntents0();
-
-    @Nullable
-    public abstract ArrayList<PendingIntent> arrayListOfPendingIntents1();
 
     @Override
     public int getRequestType() {
         return SMS_REQUEST;
     }
-
-    @Retention(RetentionPolicy.SOURCE)
-    @StringDef({SEND_DATA_MESSAGE, SEND_MULTIMEDIA_MESSAGE, SEND_MULTIPART_TEXT_MESSAGE, SEND_TEXT_MESSAGE})
-    public @interface Op {}
 
     public static final String SEND_DATA_MESSAGE = "sendDataMessage";
     public static final String SEND_MULTIMEDIA_MESSAGE = "sendMultimediaMessage";
@@ -108,10 +34,8 @@ public abstract class SmsRequest extends BaseRequest {
     public static final String SEND_TEXT_MESSAGE = "sendTextMessage";
 
     /**
-     * Send a data based SMS to a specific application port.
-     * <p/>
-     * <p class="note"><strong>Note:</strong> Using this method requires that your app has the {@link
-     * android.Manifest.permission#SEND_SMS} permission.</p>
+     * Send a data based SMS to a specific application port. <p/> <p class="note"><strong>Note:</strong> Using this
+     * method requires that your app has the {@link android.Manifest.permission#SEND_SMS} permission.</p>
      *
      * @param destinationAddress the address to send the message to
      * @param scAddress          is the service center address or null to use the current default SMSC
@@ -136,9 +60,10 @@ public abstract class SmsRequest extends BaseRequest {
                                              byte[] data,
                                              PendingIntent sentIntent,
                                              PendingIntent deliveryIntent) {
-        return newBuilder().opCode(SEND_DATA_MESSAGE).string0(destinationAddress).string1(scAddress)
+        RequestParams params = newBuilder().opCode(SEND_DATA_MESSAGE).string0(destinationAddress).string1(scAddress)
                 .short0(destinationPort).byteArray0(data).pendingIntent0(sentIntent).pendingIntent1(deliveryIntent)
                 .build();
+        return new SmsRequest(params);
     }
 
     /**
@@ -158,20 +83,18 @@ public abstract class SmsRequest extends BaseRequest {
                                                    String locationUrl,
                                                    Bundle configOverrides,
                                                    PendingIntent sentIntent) {
-        return newBuilder().opCode(SEND_MULTIMEDIA_MESSAGE).uri0(contentUri).string0(locationUrl)
+        RequestParams params = newBuilder().opCode(SEND_MULTIMEDIA_MESSAGE).uri0(contentUri).string0(locationUrl)
                 .bundle0(configOverrides).pendingIntent0(sentIntent).build();
+        return new SmsRequest(params);
     }
 
     /**
      * Send a multi-part text based SMS.  The callee should have already divided the message into correctly sized parts
-     * by calling <code>divideMessage</code>.
-     * <p/>
-     * <p class="note"><strong>Note:</strong> Using this method requires that your app has the {@link
-     * android.Manifest.permission#SEND_SMS} permission.</p>
-     * <p/>
-     * <p class="note"><strong>Note:</strong> Beginning with Android 4.4 (API level 19), if <em>and only if</em> an app
-     * is not selected as the default SMS app, the system automatically writes messages sent using this method to the
-     * SMS Provider (the default SMS app is always responsible for writing its sent messages to the SMS Provider). For
+     * by calling <code>divideMessage</code>. <p/> <p class="note"><strong>Note:</strong> Using this method requires
+     * that your app has the {@link android.Manifest.permission#SEND_SMS} permission.</p> <p/> <p
+     * class="note"><strong>Note:</strong> Beginning with Android 4.4 (API level 19), if <em>and only if</em> an app is
+     * not selected as the default SMS app, the system automatically writes messages sent using this method to the SMS
+     * Provider (the default SMS app is always responsible for writing its sent messages to the SMS Provider). For
      * information about how to behave as the default SMS app, see {@link android.provider.Telephony}.</p>
      *
      * @param destinationAddress the address to send the message to
@@ -198,21 +121,19 @@ public abstract class SmsRequest extends BaseRequest {
                                                       ArrayList<String> parts,
                                                       ArrayList<PendingIntent> sentIntents,
                                                       ArrayList<PendingIntent> deliveryIntents) {
-        return newBuilder().opCode(SEND_MULTIPART_TEXT_MESSAGE).string0(destinationAddress).string1(scAddress)
-                .arrayListOfStrings0(parts).arrayListOfPendingIntents0(sentIntents)
+        RequestParams params = newBuilder().opCode(SEND_MULTIPART_TEXT_MESSAGE).string0(destinationAddress)
+                .string1(scAddress).arrayListOfStrings0(parts).arrayListOfPendingIntents0(sentIntents)
                 .arrayListOfPendingIntents1(deliveryIntents).build();
+        return new SmsRequest(params);
     }
 
     /**
-     * Send a text based SMS.
-     * <p/>
-     * <p class="note"><strong>Note:</strong> Using this method requires that your app has the {@link
-     * android.Manifest.permission#SEND_SMS} permission.</p>
-     * <p/>
-     * <p class="note"><strong>Note:</strong> Beginning with Android 4.4 (API level 19), if <em>and only if</em> an app
-     * is not selected as the default SMS app, the system automatically writes messages sent using this method to the
-     * SMS Provider (the default SMS app is always responsible for writing its sent messages to the SMS Provider). For
-     * information about how to behave as the default SMS app, see {@link android.provider.Telephony}.</p>
+     * Send a text based SMS. <p/> <p class="note"><strong>Note:</strong> Using this method requires that your app has
+     * the {@link android.Manifest.permission#SEND_SMS} permission.</p> <p/> <p class="note"><strong>Note:</strong>
+     * Beginning with Android 4.4 (API level 19), if <em>and only if</em> an app is not selected as the default SMS app,
+     * the system automatically writes messages sent using this method to the SMS Provider (the default SMS app is
+     * always responsible for writing its sent messages to the SMS Provider). For information about how to behave as the
+     * default SMS app, see {@link android.provider.Telephony}.</p>
      *
      * @param destinationAddress the address to send the message to
      * @param scAddress          is the service center address or null to use the current default SMSC
@@ -235,7 +156,8 @@ public abstract class SmsRequest extends BaseRequest {
                                              String text,
                                              PendingIntent sentIntent,
                                              PendingIntent deliveryIntent) {
-        return newBuilder().opCode(SEND_TEXT_MESSAGE).string0(destinationAddress).string1(scAddress).string2(text)
-                .pendingIntent0(sentIntent).pendingIntent1(deliveryIntent).build();
+        RequestParams params = newBuilder().opCode(SEND_TEXT_MESSAGE).string0(destinationAddress).string1(scAddress)
+                .string2(text).pendingIntent0(sentIntent).pendingIntent1(deliveryIntent).build();
+        return new SmsRequest(params);
     }
 }

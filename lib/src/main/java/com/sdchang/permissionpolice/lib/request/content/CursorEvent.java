@@ -9,6 +9,7 @@ import android.net.Uri.Builder;
 import android.os.Bundle;
 import com.sdchang.permissionpolice.lib.Event;
 import com.sdchang.permissionpolice.lib.Police;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 import org.apache.http.HttpStatus;
 
 /**
@@ -17,12 +18,11 @@ import org.apache.http.HttpStatus;
 public class CursorEvent implements Event {
     public static final Uri PROVIDER = new Builder().scheme("content").authority(Police.PROVIDER_AUTHORITY).build();
     public static final String NONCE = "nonce";
-    public static final String CURSOR_SERVICE = "cursorService";
 
-    private CursorRequest mRequest;
+    private RequestParams mRequest;
     private CursorListener mListener;
 
-    public CursorEvent(CursorRequest request, CursorListener listener) {
+    public CursorEvent(RequestParams request, CursorListener listener) {
         mRequest = request;
         mListener = listener;
     }
@@ -47,14 +47,19 @@ public class CursorEvent implements Event {
         int rowsDeleted = 0;
 
         ContentResolver cr = context.getContentResolver();
-        if (CursorRequest.SELECT == mRequest.operation()) {
+        switch (mRequest.opCode()) {
+        case CursorRequest.SELECT:
             data = authorized == null ? null : cr.query(authorized, null, null, null, null);
-        } else if (CursorRequest.INSERT == mRequest.operation()) {
+            break;
+        case CursorRequest.INSERT:
             inserted = authorized == null ? null : cr.insert(authorized, null);
-        } else if (CursorRequest.UPDATE == mRequest.operation()) {
+            break;
+        case CursorRequest.UPDATE:
             rowsUpdated = authorized == null ? 0 : cr.update(authorized, null, null, null);
-        } else if (CursorRequest.DELETE == mRequest.operation()) {
+            break;
+        case CursorRequest.DELETE:
             rowsDeleted = authorized == null ? 0 : cr.delete(authorized, null, null);
+            break;
         }
 
         mListener.onResult(result, data, inserted, rowsUpdated, rowsDeleted);

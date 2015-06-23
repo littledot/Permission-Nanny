@@ -17,13 +17,13 @@ import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
-import com.sdchang.permissionpolice.lib.request.sms.SmsRequest;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 import org.apache.http.protocol.HTTP;
 
 /**
  *
  */
-public class SmsRequestDialogBuilder extends BaseDialogBuilder<SmsRequest> {
+public class SmsRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     private SmsOperation mOperation;
 

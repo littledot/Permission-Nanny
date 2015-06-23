@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.ViewStub;
 import com.sdchang.permissionpolice.lib.Police;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.lib.request.PermissionRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
@@ -32,10 +32,10 @@ public class BaseDialogBuilder<T extends Parcelable> {
         mActivity = activity;
         mPM = mActivity.getPackageManager();
 
-        mAppPackage = args.getString(BaseRequest.SENDER_PACKAGE);
-        mReason = args.getString(BaseRequest.REQUEST_REASON);
-        mClientId = args.getString(BaseRequest.CLIENT_ID);
-        mRequest = args.getParcelable(BaseRequest.REQUEST_BODY);
+        mAppPackage = args.getString(PermissionRequest.SENDER_PACKAGE);
+        mReason = args.getString(PermissionRequest.REQUEST_REASON);
+        mClientId = args.getString(PermissionRequest.CLIENT_ID);
+        mRequest = args.getParcelable(PermissionRequest.REQUEST_BODY);
         Timber.d("clientIntentFilter=" + mClientId);
 
         try {

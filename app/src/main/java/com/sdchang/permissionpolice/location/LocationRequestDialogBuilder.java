@@ -21,14 +21,14 @@ import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.lib.Police;
-import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
 /**
  *
  */
-public class LocationRequestDialogBuilder extends BaseDialogBuilder<LocationRequest> {
+public class LocationRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     private LocationOperation mOperation;
 

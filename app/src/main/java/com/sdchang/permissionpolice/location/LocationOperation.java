@@ -4,6 +4,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import com.sdchang.permissionpolice.R;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
 
 /**
@@ -18,7 +19,7 @@ class LocationOperation {
             new LocationOperation(LocationRequest.ADD_PROXIMITY_ALERT,
                     R.string.dialogTitle_locationAddProximityAlert, 1, new LocationFunction() {
                 @Override
-                public void execute(LocationManager lm, LocationRequest request, Bundle response) {
+                public void execute(LocationManager lm, RequestParams request, Bundle response) {
                     lm.addProximityAlert(request.double0(), request.double1(), request.float0(),
                             request.long0(), request.pendingIntent0());
                 }
@@ -26,7 +27,7 @@ class LocationOperation {
             new LocationOperation(LocationRequest.GET_LAST_KNOWN_LOCATION,
                     R.string.dialogTitle_locationGetLastKnownLocation, 1, new LocationFunction() {
                 @Override
-                public void execute(LocationManager lm, LocationRequest request, Bundle response) {
+                public void execute(LocationManager lm, RequestParams request, Bundle response) {
                     response.putParcelable(request.opCode(), lm.getLastKnownLocation(request.string0()));
                 }
             }),
@@ -37,7 +38,7 @@ class LocationOperation {
             new LocationOperation(LocationRequest.REMOVE_PROXIMITY_ALERT,
                     R.string.dialogTitle_locationRemoveProximityAlert, 1, new LocationFunction() {
                 @Override
-                public void execute(LocationManager lm, LocationRequest request, Bundle response) {
+                public void execute(LocationManager lm, RequestParams request, Bundle response) {
                     lm.removeProximityAlert(request.pendingIntent0());
                 }
             }),
@@ -48,7 +49,7 @@ class LocationOperation {
             new LocationOperation(LocationRequest.REQUEST_LOCATION_UPDATES,
                     R.string.dialogTitle_locationRequestLocationUpdates, 9, new LocationFunction() {
                 @Override
-                public void execute(LocationManager lm, LocationRequest request, Bundle response) {
+                public void execute(LocationManager lm, RequestParams request, Bundle response) {
                     lm.requestLocationUpdates(request.long0(), request.float0(), request.criteria0(),
                             request.pendingIntent0());
                 }

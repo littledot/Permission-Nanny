@@ -3,7 +3,6 @@ package com.sdchang.permissionpolice.lib.request;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import com.sdchang.permissionpolice.lib.BundleEvent;
@@ -18,7 +17,7 @@ import java.security.SecureRandom;
 /**
  *
  */
-public abstract class BaseRequest implements Parcelable {
+public abstract class PermissionRequest {
 
     public static final String ACTION = "ppAction";
     public static final String REQUEST_TYPE = "requestType";
@@ -39,6 +38,11 @@ public abstract class BaseRequest implements Parcelable {
     public static final int WIFI_REQUEST = 400;
 
     protected PermissionReceiver mReceiver;
+    protected RequestParams mParams;
+
+    public PermissionRequest(RequestParams body) {
+        mParams = body;
+    }
 
     @RequestType
     public abstract int getRequestType();
@@ -47,7 +51,7 @@ public abstract class BaseRequest implements Parcelable {
         Intent intent = newBroadcastIntent()
                 .putExtra(SENDER_PACKAGE, context.getPackageName())
                 .putExtra(REQUEST_TYPE, getRequestType())
-                .putExtra(REQUEST_BODY, this)
+                .putExtra(REQUEST_BODY, mParams)
                 .putExtra(REQUEST_REASON, reason);
         if (clientFilter != null) {
             intent.putExtra(CLIENT_ID, clientFilter);
@@ -64,11 +68,11 @@ public abstract class BaseRequest implements Parcelable {
                 "com.sdchang.permissionpolice.ExternalRequestService");
     }
 
-    public BaseRequest listener(BundleListener listener) {
+    public PermissionRequest listener(BundleListener listener) {
         return addFilter(new BundleEvent(listener));
     }
 
-    protected BaseRequest addFilter(Event event) {
+    protected PermissionRequest addFilter(Event event) {
         if (mReceiver == null) {
             mReceiver = new PermissionReceiver();
         }
@@ -76,7 +80,7 @@ public abstract class BaseRequest implements Parcelable {
         return this;
     }
 
-    public BaseRequest startRequest(Context context, String reason) {
+    public PermissionRequest startRequest(Context context, String reason) {
         String clientId = null;
         if (mReceiver != null) {
             clientId = Long.toString(new SecureRandom().nextLong());

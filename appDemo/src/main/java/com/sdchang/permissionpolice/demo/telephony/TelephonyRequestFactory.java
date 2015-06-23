@@ -3,49 +3,49 @@ package com.sdchang.permissionpolice.demo.telephony;
 import android.app.Dialog;
 import android.content.Context;
 import com.sdchang.permissionpolice.demo.DemoRequestFactory;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
-import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
+import com.sdchang.permissionpolice.lib.request.PermissionRequest;
+import com.sdchang.permissionpolice.lib.request.telephony.TelephonyRequest;
 
 /**
  *
  */
 public class TelephonyRequestFactory implements DemoRequestFactory {
     private static String[] mLabels = new String[]{
-            TelephonyManagerRequest.GET_ALL_CELL_INFO,
-            TelephonyManagerRequest.GET_DEVICE_ID,
-            TelephonyManagerRequest.GET_DEVICE_SOFTWARE_VERSION,
-            TelephonyManagerRequest.GET_GROUP_ID_LEVEL_1,
-            TelephonyManagerRequest.GET_LINE_1_NUMBER,
-            TelephonyManagerRequest.GET_NEIGHBORING_CELL_INFO,
-            TelephonyManagerRequest.GET_SIM_SERIAL_NUMBER,
-            TelephonyManagerRequest.GET_SUBSCRIBER_ID,
-            TelephonyManagerRequest.GET_VOICE_MAIL_ALPHA_TAG,
-            TelephonyManagerRequest.GET_VOICE_MAIL_NUMBER,
+            TelephonyRequest.GET_ALL_CELL_INFO,
+            TelephonyRequest.GET_DEVICE_ID,
+            TelephonyRequest.GET_DEVICE_SOFTWARE_VERSION,
+            TelephonyRequest.GET_GROUP_ID_LEVEL_1,
+            TelephonyRequest.GET_LINE_1_NUMBER,
+            TelephonyRequest.GET_NEIGHBORING_CELL_INFO,
+            TelephonyRequest.GET_SIM_SERIAL_NUMBER,
+            TelephonyRequest.GET_SUBSCRIBER_ID,
+            TelephonyRequest.GET_VOICE_MAIL_ALPHA_TAG,
+            TelephonyRequest.GET_VOICE_MAIL_NUMBER,
     };
 
     @Override
-    public BaseRequest getRequest(int position) {
+    public PermissionRequest getRequest(int position) {
         switch (position) {
         case 0:
-            return TelephonyManagerRequest.getAllCellInfo();
+            return TelephonyRequest.getAllCellInfo();
         case 1:
-            return TelephonyManagerRequest.getDeviceId();
+            return TelephonyRequest.getDeviceId();
         case 2:
-            return TelephonyManagerRequest.getDeviceSoftwareVersion();
+            return TelephonyRequest.getDeviceSoftwareVersion();
         case 3:
-            return TelephonyManagerRequest.getGroupIdLevel1();
+            return TelephonyRequest.getGroupIdLevel1();
         case 4:
-            return TelephonyManagerRequest.getLine1Number();
+            return TelephonyRequest.getLine1Number();
         case 5:
-            return TelephonyManagerRequest.getNeighboringCellInfo();
+            return TelephonyRequest.getNeighboringCellInfo();
         case 6:
-            return TelephonyManagerRequest.getSimSerialNumber();
+            return TelephonyRequest.getSimSerialNumber();
         case 7:
-            return TelephonyManagerRequest.getSubscriberId();
+            return TelephonyRequest.getSubscriberId();
         case 8:
-            return TelephonyManagerRequest.getVoiceMailAlphaTag();
+            return TelephonyRequest.getVoiceMailAlphaTag();
         case 9:
-            return TelephonyManagerRequest.getVoiceMailNumber();
+            return TelephonyRequest.getVoiceMailNumber();
         }
         return null;
     }

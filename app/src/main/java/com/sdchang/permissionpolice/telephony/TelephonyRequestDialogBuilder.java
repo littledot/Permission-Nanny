@@ -18,13 +18,13 @@ import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
-import com.sdchang.permissionpolice.lib.request.telephony.TelephonyManagerRequest;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 import org.apache.http.protocol.HTTP;
 
 /**
  *
  */
-public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<TelephonyManagerRequest> {
+public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     private TelephonyOperation mOperation;
 

@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.Build.VERSION;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
-import com.sdchang.permissionpolice.lib.request.content.CursorRequest;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class CursorContentProvider extends ContentProvider {
     // TODO #1: Set a TTL for approved CursorRequests.
-    static LongSparseArray<CursorRequest> approvedRequests = new LongSparseArray<>();
+    static LongSparseArray<RequestParams> approvedRequests = new LongSparseArray<>();
 
     @Override
     public boolean onCreate() {
@@ -32,40 +32,40 @@ public class CursorContentProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         if (VERSION.SDK_INT >= 15) {
-            CursorRequest request = validateRequest(uri);
+            RequestParams request = validateRequest(uri);
             return request == null ? null : new CrossProcessCursorWrapper(getContext().getContentResolver()
-                    .query(request.uri(), toArray(request.projection()), request.selection(),
-                            toArray(request.selectionArgs()), request.sortOrder()));
+                    .query(request.uri0(), toArray(request.listOfStrings0()), request.string0(),
+                            toArray(request.listOfStrings1()), request.string1()));
         }
         return null;
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        CursorRequest request = validateRequest(uri);
+        RequestParams request = validateRequest(uri);
         return request == null ? null : getContext().getContentResolver()
-                .insert(request.uri(), request.contentValues());
+                .insert(request.uri0(), request.contentValues());
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        CursorRequest request = validateRequest(uri);
+        RequestParams request = validateRequest(uri);
         return request == null ? 0 : getContext().getContentResolver()
-                .delete(request.uri(), request.selection(), toArray(request.selectionArgs()));
+                .delete(request.uri0(), request.string0(), toArray(request.listOfStrings1()));
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        CursorRequest request = validateRequest(uri);
+        RequestParams request = validateRequest(uri);
         return request == null ? 0 : getContext().getContentResolver()
-                .update(request.uri(), request.contentValues(), request.selection(), toArray(request.selectionArgs()));
+                .update(request.uri0(), request.contentValues(), request.string0(), toArray(request.listOfStrings1()));
     }
 
     /**
      * @param uri
      * @return
      */
-    private CursorRequest validateRequest(Uri uri) {
+    private RequestParams validateRequest(Uri uri) {
         long nonce;
         try {
             nonce = Long.parseLong(uri.getLastPathSegment());
@@ -73,7 +73,7 @@ public class CursorContentProvider extends ContentProvider {
             return null;
         }
 
-        CursorRequest request = approvedRequests.get(nonce);
+        RequestParams request = approvedRequests.get(nonce);
         approvedRequests.remove(nonce);
         return request;
     }

@@ -18,13 +18,14 @@ import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
+import com.sdchang.permissionpolice.lib.request.RequestParams;
 import com.sdchang.permissionpolice.lib.request.wifi.WifiManagerRequest;
 import org.apache.http.protocol.HTTP;
 
 /**
  *
  */
-public class WifiRequestDialogBuilder extends BaseDialogBuilder<WifiManagerRequest> {
+public class WifiRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     private WifiOperation mOperation;
 

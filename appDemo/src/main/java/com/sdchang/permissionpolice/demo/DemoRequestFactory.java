@@ -2,13 +2,13 @@ package com.sdchang.permissionpolice.demo;
 
 import android.app.Dialog;
 import android.content.Context;
-import com.sdchang.permissionpolice.lib.request.BaseRequest;
+import com.sdchang.permissionpolice.lib.request.PermissionRequest;
 
 /**
  *
  */
 public interface DemoRequestFactory {
-    abstract BaseRequest getRequest(int position);
+    abstract PermissionRequest getRequest(int position);
 
     abstract int getCount();
 
