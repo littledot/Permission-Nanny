@@ -48,4 +48,12 @@ public class MySnappy {
         }
         return null;
     }
+
+    public String[] allKeys() {
+        KeyIterator iterator = iterator();
+        if (iterator.hasNext()) {
+            return iterator.next(Integer.MAX_VALUE);
+        }
+        return new String[0];
+    }
 }

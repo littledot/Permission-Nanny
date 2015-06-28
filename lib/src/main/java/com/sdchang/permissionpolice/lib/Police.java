@@ -6,6 +6,11 @@ package com.sdchang.permissionpolice.lib;
 public class Police {
     public static final String PROVIDER_AUTHORITY = "com.permissionpolice.provider";
 
+    /** Custom permission declared by app. */
+    public static final String OFFICIAL_SEAL = "com.permissionpolice.RUBBER_STAMP";
+
+    public static final String ACTION_GET_PERMISSION_USAGES = "com.permissionpolice.GET_PERMISSION_USAGES";
+
     public static final String HOST = "Host";
     public static final String HTTP_VERSION = "HTTP-Version";
     public static final String HTTP_1_1 = "HTTP/1.1";

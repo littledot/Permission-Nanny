@@ -12,14 +12,15 @@ import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.sdchang.permissionpolice.App;
+import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.MySnappy;
 import com.sdchang.permissionpolice.lib.request.RequestParams;
-import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
 import dagger.Module;
 import dagger.Provides;
 import net.engio.mbassy.bus.MBassador;
+import timber.log.Timber;
 
 import javax.inject.Singleton;
 import java.net.InetAddress;
@@ -133,18 +134,27 @@ public class AppModule {
 
     @Provides
     @Singleton
-    DB provideDB(Context context, Kryo kryo) {
+    @Type(C.TYPE_ONGOING_REQUESTS)
+    MySnappy provideMySnappy(Context context, Kryo kryo) {
         try {
-            return DBFactory.open(context, kryo);
+            // TODO #36: Migrate to android-leveldb
+            return new MySnappy(DBFactory.open(context, kryo));
         } catch (SnappydbException e) {
-            e.printStackTrace();
+            Timber.e(e, "SnappyDB TYPE_ONGOING_REQUESTS:");
         }
         return null;
     }
 
     @Provides
     @Singleton
-    MySnappy provideMySnappy(DB db) {
-        return new MySnappy(db);
+    @Type(C.TYPE_APP_PERMISSION_CONFIG)
+    MySnappy providePermissionUsageDatabase(Context context, Kryo kryo) {
+        try {
+            // TODO #36: Migrate to android-leveldb
+            return new MySnappy(DBFactory.open(context, "clientPermissionUsage", kryo));
+        } catch (SnappydbException e) {
+            Timber.e(e, "SnappyDB TYPE_APP_PERMISSION_CONFIG:");
+        }
+        return null;
     }
 }

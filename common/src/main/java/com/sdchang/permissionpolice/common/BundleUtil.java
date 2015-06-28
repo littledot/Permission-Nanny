@@ -3,6 +3,9 @@ package com.sdchang.permissionpolice.common;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import org.json.JSONException;
+import org.json.JSONObject;
+import timber.log.Timber;
 
 /**
  *
@@ -13,12 +16,16 @@ public class BundleUtil {
             return "null bundle";
         }
 
-        StringBuilder str = new StringBuilder("{");
-        for (String key : bundle.keySet()) {
-            str.append("\"" + key + "\" : " + bundle.get(key) + ",");
+        JSONObject json = new JSONObject();
+        try {
+            for (String key : bundle.keySet()) {
+                json.put(key, bundle.get(key));
+            }
+            return json.toString(4);
+        } catch (JSONException e) {
+            Timber.e(e, "Error parsing bundle to json.");
+            return "Error parsing bundle to json.";
         }
-        str.deleteCharAt(str.length() - 1);
-        return str.append("}").toString();
     }
 
     public static String toString(@Nullable Intent intent) {

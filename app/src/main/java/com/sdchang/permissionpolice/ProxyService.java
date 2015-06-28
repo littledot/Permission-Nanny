@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.common.BundleUtil;
+import com.sdchang.permissionpolice.dagger.Type;
 import com.sdchang.permissionpolice.lib.request.RequestParams;
 import com.sdchang.permissionpolice.lib.request.location.LocationEvent;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
@@ -31,7 +32,7 @@ public class ProxyService extends BaseService {
     private AckReceiver mAckReceiver = new AckReceiver();
     private LocationManager mLocationManager;
 
-    @Inject MySnappy mDB;
+    @Inject @Type(C.TYPE_ONGOING_REQUESTS) MySnappy mDB;
 
     @Override
     public void onCreate() {

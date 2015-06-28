@@ -19,6 +19,12 @@
 
         <activity android:name=".DemoActivity"/>
 
+        <receiver android:name=".DemoPermissionUsageReceiver">
+            <intent-filter>
+                <action android:name="com.permissionpolice.GET_PERMISSION_USAGES"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="access_configurations">
+        <item>Always Ask</item>
+        <item>Always Allow</item>
+        <item>Always Deny</item>
+    </array>
+</resources>
