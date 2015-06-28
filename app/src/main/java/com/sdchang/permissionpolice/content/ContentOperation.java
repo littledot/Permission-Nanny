@@ -45,6 +45,15 @@ class ContentOperation {
             new ContentOperation(Sms.CONTENT_URI, R.string.dialogTitle_contentSms, 19),
     };
 
+    public static ContentOperation getOperation(Uri uri) {
+        for (ContentOperation operation : ContentOperation.operations) {
+            if (uri.toString().startsWith(operation.mUri.toString())) {
+                return operation;
+            }
+        }
+        return null;
+    }
+
     public final Uri mUri;
     @StringRes public final int mDialogTitle;
     public final int mMinSdk;

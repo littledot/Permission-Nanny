@@ -1,9 +1,7 @@
 package com.sdchang.permissionpolice.wifi;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Typeface;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -15,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
+import com.sdchang.permissionpolice.ProxyOperation;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
@@ -27,18 +26,13 @@ import org.apache.http.protocol.HTTP;
  */
 public class WifiRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
-    private WifiOperation mOperation;
+    private ProxyOperation mOperation;
 
     @InjectView(R.id.tvReason) TextView tvReason;
 
     public WifiRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        for (WifiOperation operation : WifiOperation.operations) {
-            if (operation.mOpCode.equals(mRequest.opCode())) {
-                mOperation = operation;
-                break;
-            }
-        }
+        mOperation = WifiOperation.getOperation(mRequest.opCode());
     }
 
     @Override
@@ -64,10 +58,9 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     @Override
     protected ResponseBundle onAllowRequest() {
-        WifiManager wifi = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         Bundle response = new Bundle();
         try {
-            mOperation.mFunction.execute(wifi, mRequest, response);
+            mOperation.mFunction.execute(mActivity, mRequest, response);
         } catch (Throwable error) {
             return newBadRequestResponse(error);
         }

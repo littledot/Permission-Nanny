@@ -1,10 +1,8 @@
 package com.sdchang.permissionpolice.location;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -16,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
+import com.sdchang.permissionpolice.ProxyOperation;
 import com.sdchang.permissionpolice.ProxyService;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
@@ -30,18 +29,13 @@ import timber.log.Timber;
  */
 public class LocationRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
-    private LocationOperation mOperation;
+    private ProxyOperation mOperation;
 
     @InjectView(R.id.tvReason) TextView tvReason;
 
     public LocationRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        for (int i = 0, len = LocationOperation.operations.length; i < len; i++) {
-            if (LocationOperation.operations[i].mOpCode.equals(mRequest.opCode())) {
-                mOperation = LocationOperation.operations[i];
-                break;
-            }
-        }
+        mOperation = LocationOperation.getOperation(mRequest.opCode());
     }
 
     @Override
@@ -62,10 +56,9 @@ public class LocationRequestDialogBuilder extends BaseDialogBuilder<RequestParam
     @Override
     protected ResponseBundle onAllowRequest() {
         if (mOperation.mFunction != null) { // one-shot request
-            LocationManager lm = (LocationManager) mActivity.getSystemService(Context.LOCATION_SERVICE);
             Bundle response = new Bundle();
             try {
-                mOperation.mFunction.execute(lm, mRequest, response);
+                mOperation.mFunction.execute(mActivity, mRequest, response);
             } catch (Throwable error) {
                 return newBadRequestResponse(error);
             }

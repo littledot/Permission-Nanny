@@ -3,7 +3,6 @@ package com.sdchang.permissionpolice.sms;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
@@ -14,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
+import com.sdchang.permissionpolice.ProxyOperation;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
@@ -25,18 +25,13 @@ import org.apache.http.protocol.HTTP;
  */
 public class SmsRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
-    private SmsOperation mOperation;
+    private ProxyOperation mOperation;
 
     @InjectView(R.id.tvReason) TextView tvReason;
 
     public SmsRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        for (SmsOperation operation : SmsOperation.operations) {
-            if (operation.mOpCode.equals(mRequest.opCode())) {
-                mOperation = operation;
-                break;
-            }
-        }
+        mOperation = SmsOperation.getOperation(mRequest.opCode());
     }
 
     @Override
@@ -56,10 +51,9 @@ public class SmsRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     @Override
     protected ResponseBundle onAllowRequest() {
-        SmsManager sms = SmsManager.getDefault();
         Bundle response = new Bundle();
         try {
-            mOperation.mFunction.execute(sms, mRequest, response);
+            mOperation.mFunction.execute(mActivity, mRequest, response);
         } catch (Throwable error) {
             return newBadRequestResponse(error);
         }

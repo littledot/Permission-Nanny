@@ -1,10 +1,8 @@
 package com.sdchang.permissionpolice.telephony;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
@@ -15,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseDialogBuilder;
 import com.sdchang.permissionpolice.C;
+import com.sdchang.permissionpolice.ProxyOperation;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.ResponseBundle;
 import com.sdchang.permissionpolice.lib.Police;
@@ -26,18 +25,13 @@ import org.apache.http.protocol.HTTP;
  */
 public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
-    private TelephonyOperation mOperation;
+    private ProxyOperation mOperation;
 
     @InjectView(R.id.tvReason) TextView tvReason;
 
     public TelephonyRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        for (TelephonyOperation operation : TelephonyOperation.operations) {
-            if (operation.mOpCode.equals(mRequest.opCode())) {
-                mOperation = operation;
-                break;
-            }
-        }
+        mOperation = TelephonyOperation.getOperation(mRequest.opCode());
     }
 
     @Override
@@ -57,10 +51,9 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<RequestPara
 
     @Override
     protected ResponseBundle onAllowRequest() {
-        TelephonyManager tele = (TelephonyManager) mActivity.getSystemService(Context.TELEPHONY_SERVICE);
         Bundle response = new Bundle();
         try {
-            mOperation.mFunction.execute(tele, mRequest, response);
+            mOperation.mFunction.execute(mActivity, mRequest, response);
         } catch (Throwable error) {
             return newBadRequestResponse(error);
         }

@@ -34,12 +34,7 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<RequestParams>
 
     public CursorRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        for (ContentOperation operation : ContentOperation.operations) {
-            if (mRequest.uri0().toString().startsWith(operation.mUri.toString())) {
-                mOperation = operation;
-                break;
-            }
-        }
+        mOperation = ContentOperation.getOperation(mRequest.uri0());
     }
 
     @Override
