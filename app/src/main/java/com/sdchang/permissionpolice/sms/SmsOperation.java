@@ -1,5 +1,6 @@
 package com.sdchang.permissionpolice.sms;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Build.VERSION;
 import android.os.Bundle;
@@ -14,8 +15,9 @@ import com.sdchang.permissionpolice.lib.request.sms.SmsRequest;
  *
  */
 public class SmsOperation {
-    private static final ProxyOperation[] operations = new ProxyOperation[]{
+    public static final ProxyOperation[] operations = new ProxyOperation[]{
             new ProxyOperation(SmsRequest.SEND_DATA_MESSAGE,
+                    Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendDataMessage, 4, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -26,6 +28,7 @@ public class SmsOperation {
                 }
             }),
             new ProxyOperation(SmsRequest.SEND_MULTIMEDIA_MESSAGE,
+                    Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendMultimediaMessage, 21, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -37,6 +40,7 @@ public class SmsOperation {
                 }
             }),
             new ProxyOperation(SmsRequest.SEND_MULTIPART_TEXT_MESSAGE,
+                    Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendMultipartTextMessage, 4, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -47,6 +51,7 @@ public class SmsOperation {
                 }
             }),
             new ProxyOperation(SmsRequest.SEND_TEXT_MESSAGE,
+                    Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendTextMessage, 4, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {

@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.MySnappy;
+import com.sdchang.permissionpolice.ProxyOperation;
 import com.sdchang.permissionpolice.Util;
 import com.sdchang.permissionpolice.dagger.Type;
 
@@ -48,6 +49,7 @@ public class PermissionConfigDataManager {
             // New permission usage? Create new entry
             newConfigs.put(permission, new PermissionConfig(appPackageName, permission, PermissionConfig.ALWAYS_ASK));
         }
+        // TODO #39: Persist settings
         mConfigs.put(info, newConfigs);
     }
 
@@ -56,17 +58,24 @@ public class PermissionConfigDataManager {
     }
 
     public void changeConfig(PermissionConfig config, int newSetting) {
+        // TODO #39: Persist settings
         config.mSetting = newSetting;
     }
 
-    public int getPermissionSetting(String appPackageName, String permission) {
+    @PermissionConfig.UserSetting
+    public int getPermissionSetting(String appPackageName, ProxyOperation operation) {
+        String permission = operation.mPermission;
+        if (permission == null) { // Operation does not require any permissions? ALWAYS_ALLOW
+            return PermissionConfig.ALWAYS_ALLOW;
+        }
+
         ApplicationInfo app = mApps.get(appPackageName);
         if (app == null) { // App not registered yet? Default to ALWAYS_ASK
             return PermissionConfig.ALWAYS_ASK;
         }
 
         SimpleArrayMap<String, PermissionConfig> permissions = mConfigs.get(app);
-        if (permissions == null) {
+        if (permissions == null) { // Null safety - this should never happen though
             return PermissionConfig.ALWAYS_ASK;
         }
 

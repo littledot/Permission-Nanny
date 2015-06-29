@@ -19,6 +19,9 @@ import com.sdchang.permissionpolice.SimpleOnItemSelectedListener;
  */
 public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static int[] settingsMapping = new int[]{PermissionConfig.ALWAYS_ASK, PermissionConfig.ALWAYS_ALLOW,
+            PermissionConfig.ALWAYS_DENY};
+
     private Context mContext;
     private PackageManager mPM;
     private PermissionConfigDataManager mConfigManager;
@@ -86,7 +89,7 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.sPermissionAccess.setOnItemSelectedListener(new SimpleOnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mConfigManager.changeConfig(config, position);
+                mConfigManager.changeConfig(config, settingsMapping[position]);
             }
         });
     }

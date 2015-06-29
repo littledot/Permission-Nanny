@@ -13,5 +13,7 @@ public class DemoPermissionUsageReceiver extends PermissionUsageReceiver {
     protected void setupPermissionUsage(Context context) {
         usesPermission(Manifest.permission.ACCESS_FINE_LOCATION);
         usesPermission(Manifest.permission.READ_CONTACTS);
+        usesPermission(Manifest.permission.READ_PHONE_STATE);
+        usesPermission(Manifest.permission.ACCESS_WIFI_STATE);
     }
 }

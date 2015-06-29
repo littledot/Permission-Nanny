@@ -1,5 +1,6 @@
 package com.sdchang.permissionpolice.wifi;
 
+import android.Manifest;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -15,8 +16,9 @@ import java.util.ArrayList;
  *
  */
 public class WifiOperation {
-    static final ProxyOperation[] operations = new ProxyOperation[]{
+    public static final ProxyOperation[] operations = new ProxyOperation[]{
             new ProxyOperation(WifiManagerRequest.ADD_NETWORK,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiAddNetwork, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -25,6 +27,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.DISABLE_NETWORK,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiDisableNetwork, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -33,6 +36,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.DISCONNECT,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiDisconnect, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -41,6 +45,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.ENABLE_NETWORK,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiEnableNetwork, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -49,6 +54,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_CONFIGURED_NETWORKS,
+                    Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetConfiguredNetworks, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -57,6 +63,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_CONNECTION_INFO,
+                    Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetConnectionInfo, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -65,6 +72,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_DHCP_INFO,
+                    Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetDhcpInfo, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -73,6 +81,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_SCAN_RESULTS,
+                    Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetScanResults, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -81,6 +90,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_WIFI_STATE,
+                    Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetWifiState, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -89,6 +99,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.IS_WIFI_ENABLED,
+                    Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiIsWifiEnabled, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -97,6 +108,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.PING_SUPPLICANT,
+                    Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiPingSupplicant, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -105,6 +117,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.REASSOCIATE,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiReassociate, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -113,6 +126,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.RECONNECT,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiReconnect, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -121,6 +135,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.REMOVE_NETWORK,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiRemoveNetwork, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -129,6 +144,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.SAVE_CONFIGURATION,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiSaveConfiguration, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -137,6 +153,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.SET_WIFI_ENABLED,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     0, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -145,6 +162,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.START_SCAN,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiStartScan, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -153,6 +171,7 @@ public class WifiOperation {
                 }
             }),
             new ProxyOperation(WifiManagerRequest.UPDATE_NETWORK,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiUpdateNetwork, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
