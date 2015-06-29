@@ -8,13 +8,14 @@ import android.location.LocationManager;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.common.BundleUtil;
 import com.sdchang.permissionpolice.dagger.Type;
+import com.sdchang.permissionpolice.db.CryDB;
+import com.sdchang.permissionpolice.db.CryIterator;
 import com.sdchang.permissionpolice.lib.request.RequestParams;
 import com.sdchang.permissionpolice.lib.request.location.LocationEvent;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
 import com.sdchang.permissionpolice.location.ProxyGpsStatusListener;
 import com.sdchang.permissionpolice.location.ProxyLocationListener;
 import com.sdchang.permissionpolice.location.ProxyNmeaListener;
-import com.snappydb.KeyIterator;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -32,7 +33,7 @@ public class ProxyService extends BaseService {
     private AckReceiver mAckReceiver = new AckReceiver();
     private LocationManager mLocationManager;
 
-    @Inject @Type(C.TYPE_ONGOING_REQUESTS) MySnappy mDB;
+    @Inject @Type(C.TYPE_ONGOING_REQUESTS) CryDB mDB;
 
     @Override
     public void onCreate() {
@@ -67,18 +68,16 @@ public class ProxyService extends BaseService {
     }
 
     private void restoreState() {
-        KeyIterator iterator = mDB.iterator();
-        if (iterator.hasNext()) {
-            String[] clients = iterator.next(Integer.MAX_VALUE);
-            for (String client : clients) {
-                Timber.wtf("restoring client=" + client);
-                RequestParams request = mDB.get(client, RequestParams.class);
-                handleRequest(client, request);
-            }
-            Timber.wtf("restored " + clients.length + " clients");
-        } else {
-            Timber.wtf("no clients to restore");
+        int count = 0;
+        CryIterator<RequestParams> iterator = mDB.iterator(RequestParams.class);
+        while (iterator.moveToNext()) {
+            count++;
+            String client = iterator.key();
+            RequestParams params = iterator.val();
+            handleRequest(client, params);
         }
+        iterator.close();
+        Timber.wtf("restored " + count + " clients");
     }
 
     private void handleRequest(String clientId, RequestParams requestParams) {

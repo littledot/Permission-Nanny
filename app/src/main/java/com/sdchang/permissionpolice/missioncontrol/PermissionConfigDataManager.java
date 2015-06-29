@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.C;
-import com.sdchang.permissionpolice.MySnappy;
 import com.sdchang.permissionpolice.ProxyOperation;
 import com.sdchang.permissionpolice.Util;
 import com.sdchang.permissionpolice.dagger.Type;
+import com.sdchang.permissionpolice.db.CryDB;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,13 +20,13 @@ import java.util.ArrayList;
 public class PermissionConfigDataManager {
 
     private Context mContext;
-    private MySnappy mDB;
+    private CryDB mDB;
 
     SimpleArrayMap<String, ApplicationInfo> mApps = new SimpleArrayMap<>();
     SimpleArrayMap<ApplicationInfo, SimpleArrayMap<String, PermissionConfig>> mConfigs = new SimpleArrayMap<>();
 
     @Inject
-    public PermissionConfigDataManager(Context context, @Type(C.TYPE_APP_PERMISSION_CONFIG) MySnappy db) {
+    public PermissionConfigDataManager(Context context, @Type(C.TYPE_APP_PERMISSION_CONFIG) CryDB db) {
         mContext = context;
         mDB = db;
     }

@@ -11,18 +11,17 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.Serializer;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.litl.leveldb.DB;
 import com.sdchang.permissionpolice.App;
 import com.sdchang.permissionpolice.C;
-import com.sdchang.permissionpolice.MySnappy;
+import com.sdchang.permissionpolice.db.CryDB;
 import com.sdchang.permissionpolice.lib.request.RequestParams;
-import com.snappydb.DBFactory;
-import com.snappydb.SnappydbException;
 import dagger.Module;
 import dagger.Provides;
 import net.engio.mbassy.bus.MBassador;
-import timber.log.Timber;
 
 import javax.inject.Singleton;
+import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,26 +134,18 @@ public class AppModule {
     @Provides
     @Singleton
     @Type(C.TYPE_ONGOING_REQUESTS)
-    MySnappy provideMySnappy(Context context, Kryo kryo) {
-        try {
-            // TODO #36: Migrate to android-leveldb
-            return new MySnappy(DBFactory.open(context, kryo));
-        } catch (SnappydbException e) {
-            Timber.e(e, "SnappyDB TYPE_ONGOING_REQUESTS:");
-        }
-        return null;
+    CryDB provideMySnappy(Context context, Kryo kryo) {
+        CryDB db = new CryDB(new DB(new File(context.getFilesDir(), "ongoingRequests")), kryo);
+        db.open();
+        return db;
     }
 
     @Provides
     @Singleton
     @Type(C.TYPE_APP_PERMISSION_CONFIG)
-    MySnappy providePermissionUsageDatabase(Context context, Kryo kryo) {
-        try {
-            // TODO #36: Migrate to android-leveldb
-            return new MySnappy(DBFactory.open(context, "clientPermissionUsage", kryo));
-        } catch (SnappydbException e) {
-            Timber.e(e, "SnappyDB TYPE_APP_PERMISSION_CONFIG:");
-        }
-        return null;
+    CryDB providePermissionUsageDatabase(Context context, Kryo kryo) {
+        CryDB db = new CryDB(new DB(new File(context.getFilesDir(), "clientPermissionUsage")), kryo);
+        db.open();
+        return db;
     }
 }

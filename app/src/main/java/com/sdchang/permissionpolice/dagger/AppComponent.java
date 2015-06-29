@@ -4,7 +4,7 @@ import android.content.Context;
 import com.sdchang.permissionpolice.AppPermissionUsageReceiver;
 import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.ExternalRequestReceiver;
-import com.sdchang.permissionpolice.MySnappy;
+import com.sdchang.permissionpolice.db.CryDB;
 import com.sdchang.permissionpolice.missioncontrol.PermissionConfigDataManager;
 import dagger.Component;
 
@@ -19,10 +19,10 @@ public interface AppComponent {
     Context appContext();
 
     @Type(C.TYPE_APP_PERMISSION_CONFIG)
-    MySnappy db();
+    CryDB db();
 
     @Type(C.TYPE_ONGOING_REQUESTS)
-    MySnappy db2();
+    CryDB db2();
 
     PermissionConfigDataManager pcdm();
 
