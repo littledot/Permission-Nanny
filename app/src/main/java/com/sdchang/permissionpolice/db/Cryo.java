@@ -53,7 +53,7 @@ public class Cryo {
         try {
             val = (T) mKryo.readObject(input, type);
         } catch (ClassCastException e) {
-            Timber.wtf(e, "Expected " + type.getCanonicalName());
+            Timber.wtf(e, "Actual type: " + type.getCanonicalName());
         }
         release(input);
         return val;
