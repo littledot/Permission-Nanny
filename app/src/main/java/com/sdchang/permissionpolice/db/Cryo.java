@@ -4,6 +4,7 @@ import android.support.v4.util.Pools;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
@@ -47,10 +48,13 @@ public class Cryo {
     public <T> T deserialize(byte[] data) {
         Input input = acquireInput();
         input.setBuffer(data);
+        Class type = mKryo.readClass(input).getType();
         T val = null;
         try {
-            val = (T) mKryo.readObject(input, mKryo.readClass(input).getClass());
-        } catch (ClassCastException e) {}
+            val = (T) mKryo.readObject(input, type);
+        } catch (ClassCastException e) {
+            Timber.wtf(e, "Expected " + type.getCanonicalName());
+        }
         release(input);
         return val;
     }
