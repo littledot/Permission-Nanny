@@ -27,8 +27,8 @@ public class LocationOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                    mgr.addProximityAlert(request.double0(), request.double1(), request.float0(),
-                            request.long0(), request.pendingIntent0());
+                    mgr.addProximityAlert(request.double0, request.double1, request.float0,
+                            request.long0, request.pendingIntent0);
                 }
             }),
             new ProxyOperation(LocationRequest.GET_LAST_KNOWN_LOCATION,
@@ -37,7 +37,7 @@ public class LocationOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                    response.putParcelable(request.opCode(), mgr.getLastKnownLocation(request.string0()));
+                    response.putParcelable(request.opCode, mgr.getLastKnownLocation(request.string0));
                 }
             }),
             new ProxyOperation(LocationRequest.REMOVE_GPS_STATUS_LISTENER,
@@ -49,7 +49,7 @@ public class LocationOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                    mgr.removeProximityAlert(request.pendingIntent0());
+                    mgr.removeProximityAlert(request.pendingIntent0);
                 }
             }),
             new ProxyOperation(LocationRequest.REMOVE_UPDATES,
@@ -62,8 +62,8 @@ public class LocationOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-                    mgr.requestLocationUpdates(request.long0(), request.float0(), request.criteria0(),
-                            request.pendingIntent0());
+                    mgr.requestLocationUpdates(request.long0, request.float0, request.criteria0,
+                            request.pendingIntent0);
                 }
             }),
             new ProxyOperation(LocationRequest.REQUEST_LOCATION_UPDATES1,

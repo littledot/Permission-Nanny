@@ -16,10 +16,6 @@ import com.sdchang.permissionpolice.lib.request.RequestParams;
  */
 public class LocationRequest extends PermissionRequest {
 
-    public static RequestParams.Builder newBuilder() {
-        return RequestParams.newBuilder();
-    }
-
     private Context mContext;
 
     public LocationRequest(RequestParams params) {
@@ -51,30 +47,38 @@ public class LocationRequest extends PermissionRequest {
     public static final String requestSingleUpdate3 = "requestSingleUpdate3";
 
     public static LocationRequest addGpsStatusListener(Listener listener) {
-        RequestParams params = newBuilder().opCode(ADD_GPS_STATUS_LISTENER).build();
-        LocationRequest request = new LocationRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = ADD_GPS_STATUS_LISTENER;
+        LocationRequest request = new LocationRequest(p);
         request.addFilter(new GpsStatusEvent(listener));
         return request;
     }
 
     public static LocationRequest addNmeaListener(NmeaListener listener) {
-        RequestParams params = newBuilder().opCode(ADD_NMEA_LISTENER).build();
-        LocationRequest request = new LocationRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = ADD_NMEA_LISTENER;
+        LocationRequest request = new LocationRequest(p);
         request.addFilter(new NmeaEvent(listener));
         return request;
     }
 
     public static LocationRequest addProximityAlert(double latitude, double longtitude, float radius, long
             expiration, PendingIntent intent) {
-        RequestParams params = newBuilder().opCode(ADD_PROXIMITY_ALERT).double0(latitude).double1(longtitude).float0
-                (radius)
-                .long0(expiration).pendingIntent0(intent).build();
-        return new LocationRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = ADD_PROXIMITY_ALERT;
+        p.double0 = latitude;
+        p.double1 = longtitude;
+        p.float0 = radius;
+        p.long0 = expiration;
+        p.pendingIntent0 = intent;
+        return new LocationRequest(p);
     }
 
     public static LocationRequest getLastKnownLocation(String provider) {
-        RequestParams params = newBuilder().opCode(GET_LAST_KNOWN_LOCATION).string0(provider).build();
-        return new LocationRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_LAST_KNOWN_LOCATION;
+        p.string0 = provider;
+        return new LocationRequest(p);
     }
 
 //    public static LocationRequest removeGpsStatusListener(Listener listener) {
@@ -86,13 +90,17 @@ public class LocationRequest extends PermissionRequest {
 //    }
 
     public static LocationRequest removeProximityAlert(PendingIntent intent) {
-        RequestParams params = newBuilder().opCode(REMOVE_PROXIMITY_ALERT).pendingIntent0(intent).build();
-        return new LocationRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = REMOVE_PROXIMITY_ALERT;
+        p.pendingIntent0 = intent;
+        return new LocationRequest(p);
     }
 
     public static LocationRequest removeUpdates(PendingIntent intent) {
-        RequestParams params = newBuilder().opCode(REMOVE_UPDATES).pendingIntent0(intent).build();
-        return new LocationRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = REMOVE_UPDATES;
+        p.pendingIntent0 = intent;
+        return new LocationRequest(p);
     }
 
 //    public static LocationRequest removeUpdates(LocationListener listener) {
@@ -103,9 +111,13 @@ public class LocationRequest extends PermissionRequest {
                                                          float minDistance,
                                                          Criteria criteria,
                                                          PendingIntent intent) {
-        RequestParams params = newBuilder().opCode(REQUEST_LOCATION_UPDATES).long0(minTime).float0(minDistance)
-                .criteria0(criteria).pendingIntent0(intent).build();
-        return new LocationRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_LOCATION_UPDATES;
+        p.long0 = minTime;
+        p.float0 = minDistance;
+        p.criteria0 = criteria;
+        p.pendingIntent0 = intent;
+        return new LocationRequest(p);
     }
 
     public static LocationRequest requestLocationUpdates(long minTime,
@@ -113,11 +125,13 @@ public class LocationRequest extends PermissionRequest {
                                                          Criteria criteria,
                                                          LocationListener listener,
                                                          Looper looper) {
-        Handler handler = looper != null ? new Handler(looper) : new Handler();
-        RequestParams params = newBuilder().opCode(REQUEST_LOCATION_UPDATES1).long0(minTime).float0(minDistance)
-                .criteria0(criteria).build();
-        LocationRequest request = new LocationRequest(params);
-        request.addFilter(new LocationEvent(listener, handler));
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_LOCATION_UPDATES1;
+        p.long0 = minTime;
+        p.float0 = minDistance;
+        p.criteria0 = criteria;
+        LocationRequest request = new LocationRequest(p);
+        request.addFilter(new LocationEvent(listener, looper != null ? new Handler(looper) : new Handler()));
         return request;
     }
 

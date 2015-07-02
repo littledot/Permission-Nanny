@@ -23,7 +23,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putInt(request.opCode(), mgr.addNetwork(request.wifiConfiguration0()));
+                    response.putInt(request.opCode, mgr.addNetwork(request.wifiConfiguration0));
                 }
             }),
             new ProxyOperation(WifiManagerRequest.DISABLE_NETWORK,
@@ -32,7 +32,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.disableNetwork(request.int0()));
+                    response.putBoolean(request.opCode, mgr.disableNetwork(request.int0));
                 }
             }),
             new ProxyOperation(WifiManagerRequest.DISCONNECT,
@@ -41,7 +41,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.disconnect());
+                    response.putBoolean(request.opCode, mgr.disconnect());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.ENABLE_NETWORK,
@@ -50,7 +50,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.enableNetwork(request.int0(), request.boolean0()));
+                    response.putBoolean(request.opCode, mgr.enableNetwork(request.int0, request.boolean0));
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_CONFIGURED_NETWORKS,
@@ -59,7 +59,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putParcelableArrayList(request.opCode(), new ArrayList<>(mgr.getConfiguredNetworks()));
+                    response.putParcelableArrayList(request.opCode, new ArrayList<>(mgr.getConfiguredNetworks()));
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_CONNECTION_INFO,
@@ -68,7 +68,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putParcelable(request.opCode(), mgr.getConnectionInfo());
+                    response.putParcelable(request.opCode, mgr.getConnectionInfo());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_DHCP_INFO,
@@ -77,7 +77,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putParcelable(request.opCode(), mgr.getDhcpInfo());
+                    response.putParcelable(request.opCode, mgr.getDhcpInfo());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_SCAN_RESULTS,
@@ -86,7 +86,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putParcelableArrayList(request.opCode(), new ArrayList<>(mgr.getScanResults()));
+                    response.putParcelableArrayList(request.opCode, new ArrayList<>(mgr.getScanResults()));
                 }
             }),
             new ProxyOperation(WifiManagerRequest.GET_WIFI_STATE,
@@ -95,7 +95,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putInt(request.opCode(), mgr.getWifiState());
+                    response.putInt(request.opCode, mgr.getWifiState());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.IS_WIFI_ENABLED,
@@ -104,7 +104,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.isWifiEnabled());
+                    response.putBoolean(request.opCode, mgr.isWifiEnabled());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.PING_SUPPLICANT,
@@ -113,7 +113,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.pingSupplicant());
+                    response.putBoolean(request.opCode, mgr.pingSupplicant());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.REASSOCIATE,
@@ -122,7 +122,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.reassociate());
+                    response.putBoolean(request.opCode, mgr.reassociate());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.RECONNECT,
@@ -131,7 +131,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.reconnect());
+                    response.putBoolean(request.opCode, mgr.reconnect());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.REMOVE_NETWORK,
@@ -140,7 +140,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.removeNetwork(request.int0()));
+                    response.putBoolean(request.opCode, mgr.removeNetwork(request.int0));
                 }
             }),
             new ProxyOperation(WifiManagerRequest.SAVE_CONFIGURATION,
@@ -149,7 +149,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.saveConfiguration());
+                    response.putBoolean(request.opCode, mgr.saveConfiguration());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.SET_WIFI_ENABLED,
@@ -158,7 +158,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.setWifiEnabled(request.boolean0()));
+                    response.putBoolean(request.opCode, mgr.setWifiEnabled(request.boolean0));
                 }
             }),
             new ProxyOperation(WifiManagerRequest.START_SCAN,
@@ -167,7 +167,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putBoolean(request.opCode(), mgr.startScan());
+                    response.putBoolean(request.opCode, mgr.startScan());
                 }
             }),
             new ProxyOperation(WifiManagerRequest.UPDATE_NETWORK,
@@ -176,7 +176,7 @@ public class WifiOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     WifiManager mgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                    response.putInt(request.opCode(), mgr.updateNetwork(request.wifiConfiguration0()));
+                    response.putInt(request.opCode, mgr.updateNetwork(request.wifiConfiguration0));
                 }
             })
     };

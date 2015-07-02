@@ -65,11 +65,12 @@ public class ProxyService extends BaseService {
 
     private void save(String clientId, RequestParams request) {
         mDB.put(clientId, request);
+        RequestParams p = mDB.get(clientId, RequestParams.class);
     }
 
     private void restoreState() {
         int count = 0;
-        CryIterator<RequestParams> iterator = mDB.iterator(RequestParams.class);
+        CryIterator<? extends RequestParams> iterator = mDB.iterator(RequestParams.class);
         while (iterator.moveToNext()) {
             count++;
             String client = iterator.key();
@@ -83,7 +84,7 @@ public class ProxyService extends BaseService {
     private void handleRequest(String clientId, RequestParams requestParams) {
         Timber.wtf("handling client=" + clientId + " req=" + requestParams);
         save(clientId, requestParams);
-        switch (requestParams.opCode()) {
+        switch (requestParams.opCode) {
         case LocationRequest.ADD_GPS_STATUS_LISTENER:
             handleAddGpsStatusListenerRequest(requestParams, clientId);
             break;
@@ -111,8 +112,8 @@ public class ProxyService extends BaseService {
     private void handleRequestLocationUpdates1(RequestParams request, String clientId) {
         ProxyLocationListener locationListener = new ProxyLocationListener(this, clientId, SERVER_ID);
         mClients.put(clientId, new ProxyClient(clientId, request, locationListener));
-        mLocationManager.requestLocationUpdates(request.long0(), request.float0(), request.criteria0(),
-                locationListener, null);
+        mLocationManager.requestLocationUpdates(request.long0, request.float0, request.criteria0, locationListener,
+                null);
     }
 
     public void removeProxyClient(String clientId) {

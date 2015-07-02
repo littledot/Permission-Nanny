@@ -13,10 +13,6 @@ public class WifiManagerRequest extends PermissionRequest {
         super(params);
     }
 
-    static RequestParams.Builder newBuilder() {
-        return RequestParams.newBuilder();
-    }
-
     @Override
     public int getRequestType() {
         return WIFI_REQUEST;
@@ -42,92 +38,117 @@ public class WifiManagerRequest extends PermissionRequest {
     public static final String UPDATE_NETWORK = "updateNetwork";
 
     public static WifiManagerRequest addNetwork(WifiConfiguration wifiConfiguration) {
-        RequestParams params = newBuilder().opCode(ADD_NETWORK).wifiConfiguration0(wifiConfiguration).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = ADD_NETWORK;
+        p.wifiConfiguration0 = wifiConfiguration;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest disableNetwork(int netId) {
-        RequestParams params = newBuilder().opCode(DISABLE_NETWORK).int0(netId).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = DISABLE_NETWORK;
+        p.int0 = netId;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest disconnect() {
-        RequestParams params = newBuilder().opCode(DISCONNECT).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = DISCONNECT;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest enableNetwork(int netId, boolean disableOthers) {
-        RequestParams params = newBuilder().opCode(ENABLE_NETWORK).int0(netId).boolean0(disableOthers).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = ENABLE_NETWORK;
+        p.int0 = netId;
+        p.boolean0 = disableOthers;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest getConfiguredNetworks() {
-        RequestParams params = newBuilder().opCode(GET_CONFIGURED_NETWORKS).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_CONFIGURED_NETWORKS;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest getConnectionInfo() {
-        RequestParams params = newBuilder().opCode(GET_CONNECTION_INFO).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_CONNECTION_INFO;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest getDhcpInfo() {
-        RequestParams params = newBuilder().opCode(GET_DHCP_INFO).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_DHCP_INFO;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest getScanResults() {
-        RequestParams params = newBuilder().opCode(GET_SCAN_RESULTS).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_SCAN_RESULTS;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest getWifiState() {
-        RequestParams params = newBuilder().opCode(GET_WIFI_STATE).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_WIFI_STATE;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest isWifiEnabled() {
-        RequestParams params = newBuilder().opCode(IS_WIFI_ENABLED).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = IS_WIFI_ENABLED;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest pingSupplicant() {
-        RequestParams params = newBuilder().opCode(PING_SUPPLICANT).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = PING_SUPPLICANT;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest reassociate() {
-        RequestParams params = newBuilder().opCode(REASSOCIATE).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = REASSOCIATE;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest reconnect() {
-        RequestParams params = newBuilder().opCode(RECONNECT).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = RECONNECT;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest removeNetwork(int netId) {
-        RequestParams params = newBuilder().opCode(REMOVE_NETWORK).int0(netId).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = REMOVE_NETWORK;
+        p.int0 = netId;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest saveConfiguration() {
-        RequestParams params = newBuilder().opCode(SAVE_CONFIGURATION).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = SAVE_CONFIGURATION;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest setWifiEnabled(boolean enabled) {
-        RequestParams params = newBuilder().opCode(SET_WIFI_ENABLED).boolean0(enabled).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = SET_WIFI_ENABLED;
+        p.boolean0 = enabled;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest startScan() {
-        RequestParams params = newBuilder().opCode(START_SCAN).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = START_SCAN;
+        return new WifiManagerRequest(p);
     }
 
     public static WifiManagerRequest updateNetwork(WifiConfiguration wifiConfiguration) {
-        RequestParams params = newBuilder().opCode(UPDATE_NETWORK).wifiConfiguration0(wifiConfiguration).build();
-        return new WifiManagerRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = UPDATE_NETWORK;
+        p.wifiConfiguration0 = wifiConfiguration;
+        return new WifiManagerRequest(p);
     }
 }

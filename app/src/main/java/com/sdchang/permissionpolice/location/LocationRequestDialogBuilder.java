@@ -35,7 +35,7 @@ public class LocationRequestDialogBuilder extends BaseDialogBuilder<RequestParam
 
     public LocationRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        mOperation = LocationOperation.getOperation(mRequest.opCode());
+        mOperation = LocationOperation.getOperation(mRequest.opCode);
     }
 
     @Override

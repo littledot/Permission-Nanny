@@ -19,10 +19,6 @@ public class SmsRequest extends PermissionRequest {
         super(params);
     }
 
-    static RequestParams.Builder newBuilder() {
-        return RequestParams.newBuilder();
-    }
-
     @Override
     public int getRequestType() {
         return SMS_REQUEST;
@@ -60,10 +56,15 @@ public class SmsRequest extends PermissionRequest {
                                              byte[] data,
                                              PendingIntent sentIntent,
                                              PendingIntent deliveryIntent) {
-        RequestParams params = newBuilder().opCode(SEND_DATA_MESSAGE).string0(destinationAddress).string1(scAddress)
-                .short0(destinationPort).byteArray0(data).pendingIntent0(sentIntent).pendingIntent1(deliveryIntent)
-                .build();
-        return new SmsRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = SEND_DATA_MESSAGE;
+        p.string0 = destinationAddress;
+        p.string1 = scAddress;
+        p.int0 = destinationPort;
+        p.byteArray0 = data;
+        p.pendingIntent0 = sentIntent;
+        p.pendingIntent1 = deliveryIntent;
+        return new SmsRequest(p);
     }
 
     /**
@@ -83,9 +84,13 @@ public class SmsRequest extends PermissionRequest {
                                                    String locationUrl,
                                                    Bundle configOverrides,
                                                    PendingIntent sentIntent) {
-        RequestParams params = newBuilder().opCode(SEND_MULTIMEDIA_MESSAGE).uri0(contentUri).string0(locationUrl)
-                .bundle0(configOverrides).pendingIntent0(sentIntent).build();
-        return new SmsRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = SEND_MULTIMEDIA_MESSAGE;
+        p.uri0 = contentUri;
+        p.string0 = locationUrl;
+        p.bundle0 = configOverrides;
+        p.pendingIntent0 = sentIntent;
+        return new SmsRequest(p);
     }
 
     /**
@@ -121,10 +126,14 @@ public class SmsRequest extends PermissionRequest {
                                                       ArrayList<String> parts,
                                                       ArrayList<PendingIntent> sentIntents,
                                                       ArrayList<PendingIntent> deliveryIntents) {
-        RequestParams params = newBuilder().opCode(SEND_MULTIPART_TEXT_MESSAGE).string0(destinationAddress)
-                .string1(scAddress).arrayListOfStrings0(parts).arrayListOfPendingIntents0(sentIntents)
-                .arrayListOfPendingIntents1(deliveryIntents).build();
-        return new SmsRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = SEND_MULTIPART_TEXT_MESSAGE;
+        p.string0 = destinationAddress;
+        p.string1 = scAddress;
+        p.arrayListOfStrings0 = parts;
+        p.arrayListOfPendingIntents0 = sentIntents;
+        p.arrayListOfPendingIntents1 = deliveryIntents;
+        return new SmsRequest(p);
     }
 
     /**
@@ -156,8 +165,13 @@ public class SmsRequest extends PermissionRequest {
                                              String text,
                                              PendingIntent sentIntent,
                                              PendingIntent deliveryIntent) {
-        RequestParams params = newBuilder().opCode(SEND_TEXT_MESSAGE).string0(destinationAddress).string1(scAddress)
-                .string2(text).pendingIntent0(sentIntent).pendingIntent1(deliveryIntent).build();
-        return new SmsRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = SEND_TEXT_MESSAGE;
+        p.string0 = destinationAddress;
+        p.string1 = scAddress;
+        p.string2 = text;
+        p.pendingIntent0 = sentIntent;
+        p.pendingIntent1 = deliveryIntent;
+        return new SmsRequest(p);
     }
 }

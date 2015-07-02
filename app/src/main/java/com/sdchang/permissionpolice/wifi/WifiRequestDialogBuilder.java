@@ -32,7 +32,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     public WifiRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        mOperation = WifiOperation.getOperation(mRequest.opCode());
+        mOperation = WifiOperation.getOperation(mRequest.opCode);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, appLabel.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         int dialogTitle = mOperation.mDialogTitle;
-        if (WifiManagerRequest.SET_WIFI_ENABLED.equals(mRequest.opCode())) {
-            dialogTitle = mRequest.boolean0() ? R.string.dialogTitle_wifiSetWifiEnabled_enable :
+        if (WifiManagerRequest.SET_WIFI_ENABLED.equals(mRequest.opCode)) {
+            dialogTitle = mRequest.boolean0 ? R.string.dialogTitle_wifiSetWifiEnabled_enable :
                     R.string.dialogTitle_wifiSetWifiEnabled_disable;
         }
         return boldAppLabel.append(C.SPACE).append(mActivity.getText(dialogTitle));

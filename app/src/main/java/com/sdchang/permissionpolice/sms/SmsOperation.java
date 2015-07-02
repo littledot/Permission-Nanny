@@ -22,9 +22,8 @@ public class SmsOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     SmsManager mgr = SmsManager.getDefault();
-                    mgr.sendDataMessage(request.string0(), request.string1(), request.short0(), request
-                                    .byteArray0(),
-                            request.pendingIntent0(), request.pendingIntent1());
+                    mgr.sendDataMessage(request.string0, request.string1, (short) request.int0, request.byteArray0,
+                            request.pendingIntent0, request.pendingIntent1);
                 }
             }),
             new ProxyOperation(SmsRequest.SEND_MULTIMEDIA_MESSAGE,
@@ -34,8 +33,8 @@ public class SmsOperation {
                 public void execute(Context context, RequestParams request, Bundle response) {
                     if (VERSION.SDK_INT >= 21) {
                         SmsManager mgr = SmsManager.getDefault();
-                        mgr.sendMultimediaMessage(null, request.uri0(), request.string0(), request.bundle0(),
-                                request.pendingIntent0());
+                        mgr.sendMultimediaMessage(null, request.uri0, request.string0, request.bundle0,
+                                request.pendingIntent0);
                     }
                 }
             }),
@@ -45,9 +44,8 @@ public class SmsOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     SmsManager mgr = SmsManager.getDefault();
-                    mgr.sendMultipartTextMessage(request.string0(), request.string1(), request
-                                    .arrayListOfStrings0(),
-                            request.arrayListOfPendingIntents0(), request.arrayListOfPendingIntents1());
+                    mgr.sendMultipartTextMessage(request.string0, request.string1, request.arrayListOfStrings0,
+                            request.arrayListOfPendingIntents0, request.arrayListOfPendingIntents1);
                 }
             }),
             new ProxyOperation(SmsRequest.SEND_TEXT_MESSAGE,
@@ -56,8 +54,8 @@ public class SmsOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     SmsManager mgr = SmsManager.getDefault();
-                    mgr.sendTextMessage(request.string0(), request.string1(), request.string2(),
-                            request.pendingIntent0(), request.pendingIntent1());
+                    mgr.sendTextMessage(request.string0, request.string1, request.string2,
+                            request.pendingIntent0, request.pendingIntent1);
                 }
             }),
     };

@@ -30,7 +30,7 @@ public class ProxyOperation {
     }
 
     public static ProxyOperation getOperation(RequestParams params) {
-        return operations.get(params.opCode());
+        return operations.get(params.opCode);
     }
 
     public final String mOpCode;

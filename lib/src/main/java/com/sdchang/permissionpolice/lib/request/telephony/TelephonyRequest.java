@@ -12,10 +12,6 @@ public class TelephonyRequest extends PermissionRequest {
         super(params);
     }
 
-    static RequestParams.Builder newBuilder() {
-        return RequestParams.newBuilder();
-    }
-
     @Override
     public int getRequestType() {
         return TELEPHONY_REQUEST;
@@ -39,8 +35,9 @@ public class TelephonyRequest extends PermissionRequest {
     public static final int SEND_ENVELOPE_WITH_STATUS = 17;
 
     public static TelephonyRequest getAllCellInfo() {
-        RequestParams params = newBuilder().opCode(GET_ALL_CELL_INFO).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_ALL_CELL_INFO;
+        return new TelephonyRequest(p);
     }
 
 //    public static TelephonyManagerRequest getCellLocation() {
@@ -48,47 +45,56 @@ public class TelephonyRequest extends PermissionRequest {
 //    }
 
     public static TelephonyRequest getDeviceId() {
-        RequestParams params = newBuilder().opCode(GET_DEVICE_ID).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_DEVICE_ID;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getDeviceSoftwareVersion() {
-        RequestParams params = newBuilder().opCode(GET_DEVICE_SOFTWARE_VERSION).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_DEVICE_SOFTWARE_VERSION;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getGroupIdLevel1() {
-        RequestParams params = newBuilder().opCode(GET_GROUP_ID_LEVEL_1).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_GROUP_ID_LEVEL_1;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getLine1Number() {
-        RequestParams params = newBuilder().opCode(GET_LINE_1_NUMBER).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_LINE_1_NUMBER;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getNeighboringCellInfo() {
-        RequestParams params = newBuilder().opCode(GET_NEIGHBORING_CELL_INFO).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_NEIGHBORING_CELL_INFO;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getSimSerialNumber() {
-        RequestParams params = newBuilder().opCode(GET_SIM_SERIAL_NUMBER).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_SIM_SERIAL_NUMBER;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getSubscriberId() {
-        RequestParams params = newBuilder().opCode(GET_SUBSCRIBER_ID).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_SUBSCRIBER_ID;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getVoiceMailAlphaTag() {
-        RequestParams params = newBuilder().opCode(GET_VOICE_MAIL_ALPHA_TAG).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_VOICE_MAIL_ALPHA_TAG;
+        return new TelephonyRequest(p);
     }
 
     public static TelephonyRequest getVoiceMailNumber() {
-        RequestParams params = newBuilder().opCode(GET_VOICE_MAIL_NUMBER).build();
-        return new TelephonyRequest(params);
+        RequestParams p = new RequestParams();
+        p.opCode = GET_VOICE_MAIL_NUMBER;
+        return new TelephonyRequest(p);
     }
 }

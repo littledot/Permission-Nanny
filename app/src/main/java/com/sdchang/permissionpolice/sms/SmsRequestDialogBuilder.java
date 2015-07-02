@@ -31,7 +31,7 @@ public class SmsRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
 
     public SmsRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        mOperation = SmsOperation.getOperation(mRequest.opCode());
+        mOperation = SmsOperation.getOperation(mRequest.opCode);
     }
 
     @Override

@@ -47,7 +47,7 @@ public class CursorEvent implements Event {
         int rowsDeleted = 0;
 
         ContentResolver cr = context.getContentResolver();
-        switch (mRequest.opCode()) {
+        switch (mRequest.opCode) {
         case CursorRequest.SELECT:
             data = authorized == null ? null : cr.query(authorized, null, null, null, null);
             break;

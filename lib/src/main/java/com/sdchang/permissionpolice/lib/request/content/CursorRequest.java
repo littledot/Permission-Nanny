@@ -7,9 +7,6 @@ import android.support.annotation.Nullable;
 import com.sdchang.permissionpolice.lib.request.PermissionRequest;
 import com.sdchang.permissionpolice.lib.request.RequestParams;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class CursorRequest extends PermissionRequest {
 
     public static final String SELECT = "Select";
@@ -32,70 +29,59 @@ public class CursorRequest extends PermissionRequest {
 
     public static class Builder {
 
-        RequestParams.Builder builder = RequestParams.newBuilder();
+        private RequestParams params = new RequestParams();
 
         public Builder select() {
-            builder.opCode(SELECT);
+            params.opCode = SELECT;
             return this;
         }
 
         public Builder insert() {
-            builder.opCode(INSERT);
+            params.opCode = INSERT;
             return this;
         }
 
         public Builder update() {
-            builder.opCode(UPDATE);
+            params.opCode = UPDATE;
             return this;
         }
 
         public Builder delete() {
-            builder.opCode(DELETE);
+            params.opCode = DELETE;
             return this;
         }
 
         public Builder uri(Uri uri) {
-            builder.uri0(uri);
-            return this;
-        }
-
-        public Builder projection(@Nullable List<String> projection) {
-            builder.listOfStrings0(projection);
+            params.uri0 = uri;
             return this;
         }
 
         public Builder projection(@Nullable String[] projection) {
-            projection(Arrays.asList(projection));
+            params.stringArray0 = projection;
             return this;
         }
 
         public Builder selection(@Nullable String selection) {
-            builder.string0(selection);
-            return this;
-        }
-
-        public Builder selectionArgs(@Nullable List<String> selectionArgs) {
-            builder.listOfStrings1(selectionArgs);
+            params.string0 = selection;
             return this;
         }
 
         public Builder selectionArgs(@Nullable String[] selectionArgs) {
-            selectionArgs(Arrays.asList(selectionArgs));
+            params.stringArray1 = selectionArgs;
             return this;
         }
 
         public Builder sortOrder(@Nullable String sortOrder) {
-            builder.string1(sortOrder);
+            params.string1 = sortOrder;
             return this;
         }
 
         public Builder contentValues(@Nullable ContentValues contentValues) {
-            builder.contentValues(contentValues);
+            params.contentValues0 = contentValues;
             return this;
         }
 
         public CursorRequest build() {
-            RequestParams params = builder.build();
             return new CursorRequest(params);
         }
     }

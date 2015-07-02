@@ -31,7 +31,7 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<RequestPara
 
     public TelephonyRequestDialogBuilder(Activity activity, Bundle args) {
         super(activity, args);
-        mOperation = TelephonyOperation.getOperation(mRequest.opCode());
+        mOperation = TelephonyOperation.getOperation(mRequest.opCode);
     }
 
     @Override

@@ -6,11 +6,8 @@ import android.database.CrossProcessCursorWrapper;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build.VERSION;
-import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import com.sdchang.permissionpolice.lib.request.RequestParams;
-
-import java.util.List;
 
 /**
  *
@@ -34,8 +31,7 @@ public class CursorContentProvider extends ContentProvider {
         if (VERSION.SDK_INT >= 15) {
             RequestParams request = validateRequest(uri);
             return request == null ? null : new CrossProcessCursorWrapper(getContext().getContentResolver()
-                    .query(request.uri0(), toArray(request.listOfStrings0()), request.string0(),
-                            toArray(request.listOfStrings1()), request.string1()));
+                    .query(request.uri0, request.stringArray0, request.string0, request.stringArray1, request.string1));
         }
         return null;
     }
@@ -44,21 +40,21 @@ public class CursorContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         RequestParams request = validateRequest(uri);
         return request == null ? null : getContext().getContentResolver()
-                .insert(request.uri0(), request.contentValues());
+                .insert(request.uri0, request.contentValues0);
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         RequestParams request = validateRequest(uri);
         return request == null ? 0 : getContext().getContentResolver()
-                .delete(request.uri0(), request.string0(), toArray(request.listOfStrings1()));
+                .delete(request.uri0, request.string0, request.stringArray1);
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         RequestParams request = validateRequest(uri);
         return request == null ? 0 : getContext().getContentResolver()
-                .update(request.uri0(), request.contentValues(), request.string0(), toArray(request.listOfStrings1()));
+                .update(request.uri0, request.contentValues0, request.string0, request.stringArray1);
     }
 
     /**
@@ -76,9 +72,5 @@ public class CursorContentProvider extends ContentProvider {
         RequestParams request = approvedRequests.get(nonce);
         approvedRequests.remove(nonce);
         return request;
-    }
-
-    private String[] toArray(@Nullable List<String> list) {
-        return list != null ? list.toArray(new String[list.size()]) : null;
     }
 }

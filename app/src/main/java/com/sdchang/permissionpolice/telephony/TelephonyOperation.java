@@ -25,7 +25,7 @@ public class TelephonyOperation {
                 public void execute(Context context, RequestParams request, Bundle response) {
                     if (VERSION.SDK_INT >= 17) {
                         TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                        response.putParcelableArrayList(request.opCode(), new ArrayList<>(mgr.getAllCellInfo()));
+                        response.putParcelableArrayList(request.opCode, new ArrayList<>(mgr.getAllCellInfo()));
                     }
                 }
             }),
@@ -35,7 +35,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putString(request.opCode(), mgr.getDeviceId());
+                    response.putString(request.opCode, mgr.getDeviceId());
                 }
             }),
             new ProxyOperation(TelephonyRequest.GET_DEVICE_SOFTWARE_VERSION,
@@ -44,7 +44,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putString(request.opCode(), mgr.getDeviceSoftwareVersion());
+                    response.putString(request.opCode, mgr.getDeviceSoftwareVersion());
                 }
             }),
             new ProxyOperation(TelephonyRequest.GET_GROUP_ID_LEVEL_1,
@@ -54,7 +54,7 @@ public class TelephonyOperation {
                 public void execute(Context context, RequestParams request, Bundle response) {
                     if (VERSION.SDK_INT >= 18) {
                         TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                        response.putString(request.opCode(), mgr.getGroupIdLevel1());
+                        response.putString(request.opCode, mgr.getGroupIdLevel1());
                     }
                 }
             }),
@@ -64,7 +64,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putString(request.opCode(), mgr.getLine1Number());
+                    response.putString(request.opCode, mgr.getLine1Number());
                 }
             }),
             new ProxyOperation(TelephonyRequest.GET_NEIGHBORING_CELL_INFO,
@@ -73,7 +73,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putParcelableArrayList(request.opCode(), new ArrayList<>(mgr.getNeighboringCellInfo()));
+                    response.putParcelableArrayList(request.opCode, new ArrayList<>(mgr.getNeighboringCellInfo()));
                 }
             }),
             new ProxyOperation(TelephonyRequest.GET_SIM_SERIAL_NUMBER,
@@ -82,7 +82,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putString(request.opCode(), mgr.getSimSerialNumber());
+                    response.putString(request.opCode, mgr.getSimSerialNumber());
                 }
             }),
             new ProxyOperation(TelephonyRequest.GET_SUBSCRIBER_ID,
@@ -91,7 +91,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putString(request.opCode(), mgr.getSubscriberId());
+                    response.putString(request.opCode, mgr.getSubscriberId());
                 }
             }),
             new ProxyOperation(TelephonyRequest.GET_VOICE_MAIL_ALPHA_TAG,
@@ -100,7 +100,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putString(request.opCode(), mgr.getVoiceMailAlphaTag());
+                    response.putString(request.opCode, mgr.getVoiceMailAlphaTag());
                 }
             }),
             new ProxyOperation(TelephonyRequest.GET_VOICE_MAIL_NUMBER,
@@ -109,7 +109,7 @@ public class TelephonyOperation {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
                     TelephonyManager mgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                    response.putString(request.opCode(), mgr.getVoiceMailNumber());
+                    response.putString(request.opCode, mgr.getVoiceMailNumber());
                 }
             }),
     };
