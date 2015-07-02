@@ -35,7 +35,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.0'
 //    compile 'com.android.support:support-v13:22.2.0'
 //    compile 'com.android.support:leanback-v17:22.2.0'
-    compile 'com.google.android.gms:play-services:7.5.0'
+//    compile 'com.google.android.gms:play-services:7.5.0'
 
     compile 'com.github.frankiesardo:auto-parcel:0.3'
     compile 'com.google.dagger:dagger:2.0.1'
