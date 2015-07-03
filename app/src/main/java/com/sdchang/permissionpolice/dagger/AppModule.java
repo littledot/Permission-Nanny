@@ -5,10 +5,10 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 import com.litl.leveldb.DB;
 import com.sdchang.permissionpolice.App;
-import com.sdchang.permissionpolice.C;
-import com.sdchang.permissionpolice.db.CryDB;
+import com.sdchang.permissionpolice.db.AppDB;
 import dagger.Module;
 import dagger.Provides;
+import io.snapdb.SnapDB;
 import net.engio.mbassy.bus.MBassador;
 
 import javax.inject.Singleton;
@@ -49,18 +49,18 @@ public class AppModule {
 
     @Provides
     @Singleton
-    @Type(C.TYPE_ONGOING_REQUESTS)
-    CryDB provideMySnappy(Context context, Kryo kryo) {
-        CryDB db = new CryDB(new DB(new File(context.getFilesDir(), "ongoingRequests")), kryo);
+    SnapDB provideMySnappy(Context context, Kryo kryo) {
+        SnapDB db = new SnapDB(new DB(new File(context.getFilesDir(), "ongoingRequests")), kryo);
         db.open();
         return db;
     }
 
     @Provides
     @Singleton
-    @Type(C.TYPE_APP_PERMISSION_CONFIG)
-    CryDB providePermissionUsageDatabase(Context context, Kryo kryo) {
-        CryDB db = new CryDB(new DB(new File(context.getFilesDir(), "clientPermissionUsage")), kryo);
+    AppDB providePermissionUsageDatabase(Context context, Kryo kryo) {
+        DB leveldb = new DB(new File(context.getFilesDir(), "clientPermissionUsage"));
+        SnapDB snapdb = new SnapDB(leveldb, kryo);
+        AppDB db = new AppDB(snapdb);
         db.open();
         return db;
     }

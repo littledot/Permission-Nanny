@@ -7,15 +7,14 @@ import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.common.BundleUtil;
-import com.sdchang.permissionpolice.dagger.Type;
-import com.sdchang.permissionpolice.db.CryDB;
-import com.sdchang.permissionpolice.db.CryIterator;
 import com.sdchang.permissionpolice.lib.request.RequestParams;
 import com.sdchang.permissionpolice.lib.request.location.LocationEvent;
 import com.sdchang.permissionpolice.lib.request.location.LocationRequest;
 import com.sdchang.permissionpolice.location.ProxyGpsStatusListener;
 import com.sdchang.permissionpolice.location.ProxyLocationListener;
 import com.sdchang.permissionpolice.location.ProxyNmeaListener;
+import io.snapdb.CryIterator;
+import io.snapdb.SnapDB;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -33,7 +32,7 @@ public class ProxyService extends BaseService {
     private AckReceiver mAckReceiver = new AckReceiver();
     private LocationManager mLocationManager;
 
-    @Inject @Type(C.TYPE_ONGOING_REQUESTS) CryDB mDB;
+    @Inject SnapDB mDB;
 
     @Override
     public void onCreate() {
@@ -65,7 +64,6 @@ public class ProxyService extends BaseService {
 
     private void save(String clientId, RequestParams request) {
         mDB.put(clientId, request);
-        RequestParams p = mDB.get(clientId, RequestParams.class);
     }
 
     private void restoreState() {

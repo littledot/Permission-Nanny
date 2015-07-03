@@ -34,8 +34,7 @@ dependencies {
     apt project.daggerCompiler
 
     compile project(':common')
-    compile project.androidLeveldb
-    compile project.kryo
+    compile project.snapdb
 
     testCompile project.junit
     testCompile project.mockitoCore

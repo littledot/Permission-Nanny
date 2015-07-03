@@ -28,9 +28,11 @@ buildscript {
         daggerCompiler = 'com.google.dagger:dagger-compiler:2.0.1'
         javaxInject = 'javax.inject:javax.inject:1'
         kryo = 'com.esotericsoftware:kryo:3.0.2'
+        kryoSerializers = 'de.javakaffee:kryo-serializers:0.33'
         logansquare = 'com.bluelinelabs:logansquare:1.1.0'
         logansquareCompiler = 'com.bluelinelabs:logansquare-compiler:1.1.0'
         snappydbLib = 'com.snappydb:snappydb-lib:0.5.2'
+        snapdb = 'io.snapdb:snapdb:0.0.2'
 
         junit = 'junit:junit:4.12'
         mockitoCore = 'org.mockito:mockito-core:1.9.5'
