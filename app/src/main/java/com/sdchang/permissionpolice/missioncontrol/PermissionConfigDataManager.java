@@ -79,9 +79,11 @@ public class PermissionConfigDataManager {
     }
 
     public void changeConfig(PermissionConfig config, int newSetting) {
-        config.mSetting = newSetting;
-        mDB.putConfig(config);
-        Timber.wtf("Updated config=" + config);
+        if (config.mSetting != newSetting) {
+            config.mSetting = newSetting;
+            mDB.putConfig(config);
+            Timber.wtf("Updated config=" + config);
+        }
     }
 
     @PermissionConfig.UserSetting
