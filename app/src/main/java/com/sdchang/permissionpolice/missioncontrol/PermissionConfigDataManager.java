@@ -1,16 +1,15 @@
 package com.sdchang.permissionpolice.missioncontrol;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.support.v4.util.SimpleArrayMap;
-import com.sdchang.permissionpolice.C;
 import com.sdchang.permissionpolice.ProxyOperation;
-import com.sdchang.permissionpolice.Util;
 import com.sdchang.permissionpolice.db.AppDB;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -21,60 +20,79 @@ public class PermissionConfigDataManager {
     private Context mContext;
     private AppDB mDB;
 
-    SimpleArrayMap<String, ApplicationInfo> mApps = new SimpleArrayMap<>();
-    SimpleArrayMap<ApplicationInfo, SimpleArrayMap<String, PermissionConfig>> mConfigs = new SimpleArrayMap<>();
+    SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> mConfigs = new SimpleArrayMap<>();
 
     @Inject
     public PermissionConfigDataManager(Context context, AppDB db) {
         mContext = context;
         mDB = db;
+        readDB();
     }
 
-    public void registerApp(String appPackageName, ArrayList<String> permissions) {
-        ApplicationInfo info = Util.getApplicationInfo(mContext, appPackageName);
-        mApps.put(appPackageName, info);
+    private void readDB() {
+        PermissionConfig[] configs = mDB.getAllConfigs();
+        Timber.wtf("Read " + Arrays.toString(configs));
 
-        SimpleArrayMap<String, PermissionConfig> oldConfigs = mConfigs.get(info);
+        for (PermissionConfig config : configs) {
+            SimpleArrayMap<String, PermissionConfig> configMap = mConfigs.get(config.mAppPackageName);
+            if (configMap == null) {
+                configMap = new SimpleArrayMap<>();
+                mConfigs.put(config.mAppPackageName, configMap);
+            }
+
+            configMap.put(config.mPermissionName, config);
+        }
+    }
+
+    public void registerApp(String appPackage, ArrayList<String> permissions) {
+        SimpleArrayMap<String, PermissionConfig> oldConfigs = mConfigs.get(appPackage);
         SimpleArrayMap<String, PermissionConfig> newConfigs = new SimpleArrayMap<>();
 
         for (String permission : permissions) {
-            if (oldConfigs != null) { // New app? All permissions are new
+            if (oldConfigs != null) { // Existing app? Look for existing configs
                 PermissionConfig oldConfig = oldConfigs.get(permission);
-                if (oldConfig != null) { // User config exists? Retain it
+                if (oldConfig != null) { // Permission config exists? Retain it
+                    Timber.wtf("Existing config=" + oldConfig);
                     newConfigs.put(permission, oldConfig);
+                    oldConfigs.remove(oldConfig);
                     continue;
                 }
             }
-            // New permission usage? Create new entry
-            newConfigs.put(permission, new PermissionConfig(appPackageName, permission, PermissionConfig.ALWAYS_ASK));
+            // New permission config? Create new entry
+            PermissionConfig newConfig = new PermissionConfig(appPackage, permission, PermissionConfig.ALWAYS_ASK);
+            newConfigs.put(permission, newConfig);
+            mDB.putConfig(newConfig);
+            Timber.wtf("New config=" + newConfig);
         }
-        // TODO #39: Persist settings
-        mConfigs.put(info, newConfigs);
+
+        if (oldConfigs != null) { // Delete permission configs that are no longer in use
+            for (int i = 0, l = oldConfigs.size(); i < l; i++) {
+                mDB.delConfig(oldConfigs.valueAt(i));
+            }
+        }
+
+        mConfigs.put(appPackage, newConfigs);
     }
 
-    public SimpleArrayMap<ApplicationInfo, SimpleArrayMap<String, PermissionConfig>> getConfig() {
+    public SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> getConfig() {
         return mConfigs;
     }
 
     public void changeConfig(PermissionConfig config, int newSetting) {
-        // TODO #39: Persist settings
         config.mSetting = newSetting;
+        mDB.putConfig(config);
+        Timber.wtf("Updated config=" + config);
     }
 
     @PermissionConfig.UserSetting
-    public int getPermissionSetting(String appPackageName, ProxyOperation operation) {
+    public int getPermissionSetting(String appPackage, ProxyOperation operation) {
         String permission = operation.mPermission;
         if (permission == null) { // Operation does not require any permissions? ALWAYS_ALLOW
             return PermissionConfig.ALWAYS_ALLOW;
         }
 
-        ApplicationInfo app = mApps.get(appPackageName);
-        if (app == null) { // App not registered yet? Default to ALWAYS_ASK
-            return PermissionConfig.ALWAYS_ASK;
-        }
-
-        SimpleArrayMap<String, PermissionConfig> permissions = mConfigs.get(app);
-        if (permissions == null) { // Null safety - this should never happen though
+        SimpleArrayMap<String, PermissionConfig> permissions = mConfigs.get(appPackage);
+        if (permissions == null) { // App not registered yet? Default to ALWAYS_ASK
             return PermissionConfig.ALWAYS_ASK;
         }
 

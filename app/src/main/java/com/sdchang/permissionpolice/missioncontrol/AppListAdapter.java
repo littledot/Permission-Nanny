@@ -1,7 +1,6 @@
 package com.sdchang.permissionpolice.missioncontrol;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.widget.RecyclerView;
@@ -18,17 +17,15 @@ import com.sdchang.permissionpolice.SimpleOnItemSelectedListener;
  *
  */
 public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private static int[] settingsMapping = new int[]{PermissionConfig.ALWAYS_ASK, PermissionConfig.ALWAYS_ALLOW,
+    private static int[] settingsToSelection = new int[]{0, 1, 2};
+    private static int[] selectionToSettings = new int[]{PermissionConfig.ALWAYS_ASK, PermissionConfig.ALWAYS_ALLOW,
             PermissionConfig.ALWAYS_DENY};
 
     private Context mContext;
     private PackageManager mPM;
     private PermissionConfigDataManager mConfigManager;
 
-    private SimpleArrayMap<ApplicationInfo, SimpleArrayMap<String, PermissionConfig>> mAppPermissionUsage = new
-            SimpleArrayMap<>();
-    private SparseArray<ApplicationInfo> mAppsPositions = new SparseArray<>();
+    private SparseArray<String> mAppsPositions = new SparseArray<>();
     private SparseArray<PermissionConfig> mPermissionPositions = new SparseArray<>();
 
     public AppListAdapter(Context context, PermissionConfigDataManager manager) {
@@ -37,14 +34,13 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mConfigManager = manager;
     }
 
-    public void setData(SimpleArrayMap<ApplicationInfo, SimpleArrayMap<String, PermissionConfig>> usage) {
-        mAppPermissionUsage = usage;
+    public void setData(SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> usage) {
         mAppsPositions.clear();
         mPermissionPositions.clear();
         int index = 0;
-        for (int i = 0, l = mAppPermissionUsage.size(); i < l; i++) {
-            mAppsPositions.put(index++, mAppPermissionUsage.keyAt(i));
-            SimpleArrayMap<String, PermissionConfig> permissions = mAppPermissionUsage.valueAt(i);
+        for (int i = 0, l = usage.size(); i < l; i++) {
+            mAppsPositions.put(index++, usage.keyAt(i));
+            SimpleArrayMap<String, PermissionConfig> permissions = usage.valueAt(i);
             for (int j = 0, m = permissions.size(); j < m; j++) {
                 mPermissionPositions.put(index++, permissions.valueAt(j));
             }
@@ -77,8 +73,8 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void bindAppViewHolder(AppListViewHolder holder, int position) {
-        ApplicationInfo app = mAppsPositions.get(position);
-        holder.tvAppName.setText(mPM.getApplicationLabel(app));
+        String app = mAppsPositions.get(position);
+        holder.tvAppName.setText(app);
     }
 
     private void bindPermissionSwitchViewHolder(PermissionSwitchViewHolder holder, int position) {
@@ -86,10 +82,11 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.tvPermissionName.setText(config.mPermissionName);
         holder.sPermissionAccess.setAdapter(ArrayAdapter.createFromResource(mContext, R.array.access_configurations,
                 android.R.layout.simple_spinner_dropdown_item));
+        holder.sPermissionAccess.setSelection(settingsToSelection[config.mSetting]);
         holder.sPermissionAccess.setOnItemSelectedListener(new SimpleOnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mConfigManager.changeConfig(config, settingsMapping[position]);
+                mConfigManager.changeConfig(config, selectionToSettings[position]);
             }
         });
     }

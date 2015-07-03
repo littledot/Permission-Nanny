@@ -22,9 +22,20 @@ public class PermissionConfig {
     public String mPermissionName;
     @UserSetting public int mSetting;
 
+    public PermissionConfig() {}
+
     public PermissionConfig(String appPackageName, String permissionName, int setting) {
         mAppPackageName = appPackageName;
         mPermissionName = permissionName;
         mSetting = setting;
+    }
+
+    @Override
+    public String toString() {
+        return "PermissionConfig{" +
+                "mAppPackageName='" + mAppPackageName + '\'' +
+                ", mPermissionName='" + mPermissionName + '\'' +
+                ", mSetting=" + mSetting +
+                '}';
     }
 }
