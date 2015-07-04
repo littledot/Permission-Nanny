@@ -2,13 +2,15 @@ package com.sdchang.permissionpolice.missioncontrol;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.sdchang.permissionpolice.R;
 
 public class AppListViewHolder extends RecyclerView.ViewHolder {
-    @InjectView(R.id.tvAppName) TextView tvAppName;
+    @InjectView(R.id.appName) TextView tvAppName;
+    @InjectView(R.id.appIcon) ImageView ivAppIcon;
 
     public AppListViewHolder(View itemView) {
         super(itemView);

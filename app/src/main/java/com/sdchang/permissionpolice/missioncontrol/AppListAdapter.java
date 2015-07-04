@@ -1,7 +1,9 @@
 package com.sdchang.permissionpolice.missioncontrol;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.sdchang.permissionpolice.R;
 import com.sdchang.permissionpolice.SimpleOnItemSelectedListener;
+import com.sdchang.permissionpolice.Util;
 
 /**
  *
@@ -73,8 +76,21 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void bindAppViewHolder(AppListViewHolder holder, int position) {
-        String app = mAppsPositions.get(position);
-        holder.tvAppName.setText(app);
+        String appPackage = mAppsPositions.get(position);
+        String appName = appPackage;
+        Drawable appIcon = null;
+
+        ApplicationInfo info = Util.getApplicationInfo(mContext, appPackage);
+        if (info != null) {
+            CharSequence appLabel = mPM.getApplicationLabel(info);
+            if (appLabel != null) {
+                appName = appLabel.toString();
+            }
+            appIcon = mPM.getApplicationIcon(info);
+        }
+        
+        holder.ivAppIcon.setImageDrawable(appIcon);
+        holder.tvAppName.setText(appName);
     }
 
     private void bindPermissionSwitchViewHolder(PermissionSwitchViewHolder holder, int position) {
