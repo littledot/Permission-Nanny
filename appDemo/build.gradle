@@ -28,8 +28,11 @@ dependencies {
     apt project.daggerCompiler
 
     compile project.appcompatV7
+    compile project.recyclerviewV7
 
     compile project(':common')
+    compile project(':lib')
+    compile project.butterknife
     compile project.eventbus
     compile project.lorem
 
