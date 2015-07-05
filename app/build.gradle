@@ -30,12 +30,23 @@ android {
 }
 
 dependencies {
-    apt project.autoParcelProcessor
     apt project.daggerCompiler
 
-    compile project(':common')
     compile project.design
+    compile project.supportV4
+    compile project.appcompatV7
+    compile project.cardviewV7
+    compile project.recyclerviewV7
+
+    compile project(':common')
+    compile project(':lib')
+    compile project.dagger
+    compile project.butterknife
+    compile project.javaxAnnotation
+    compile project.javaxInject
+    compile project.mbassador
     compile project.snapdb
+    compile project.timber
 
     testCompile project.junit
     testCompile project.mockitoCore

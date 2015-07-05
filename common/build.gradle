@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion project.compileSdk
@@ -24,8 +23,6 @@ android {
 }
 
 dependencies {
-    apt 'com.github.frankiesardo:auto-parcel-processor:0.3'
-    apt 'com.google.dagger:dagger-compiler:2.0.1'
-
-    compile project(':lib')
+    compile project.supportAnnotations
+    compile project.timber
 }

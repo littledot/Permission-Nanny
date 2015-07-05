@@ -27,9 +27,11 @@ dependencies {
     apt project.autoParcelProcessor
     apt project.daggerCompiler
 
-    compile project(':common')
-    compile project.lorem
-    compile 'de.greenrobot:eventbus:3.0.0-beta1'
+    compile project.appcompatV7
 
-    provided 'de.greenrobot:eventbus-annotation-processor:3.0.0-beta1'
+    compile project(':common')
+    compile project.eventbus
+    compile project.lorem
+
+    provided project.eventbusAnnotationProcessor
 }
