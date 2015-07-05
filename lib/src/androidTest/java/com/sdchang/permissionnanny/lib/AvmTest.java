@@ -1,11 +1,11 @@
 package com.sdchang.permissionnanny.lib;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class AvmTest {
-
     @Test
-    public void test() throws Exception {
-
+    public void avmTest() throws Exception {
+        Assert.fail("avm tests working.");
     }
 }

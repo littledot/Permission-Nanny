@@ -10,6 +10,7 @@ android {
         targetSdkVersion project.targetSdk
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -20,11 +21,30 @@ android {
     lintOptions {
         lintConfig file("../lint.xml")
     }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }
 
 dependencies {
     compile project.supportV4
     compile project.appcompatV7
+
+    testCompile project.junit
+    testCompile project.mockitoCore
+    testCompile project.robolectric
+    testCompile project.asm
+    testCompile project.objenesis
+
+    androidTestCompile project.junit
+    androidTestCompile project.mockitoCore
+    androidTestCompile project.dexmakerMockito
+//    androidTestCompile project.robolectric
+    androidTestCompile project.runner
+    androidTestCompile project.rules
+    androidTestCompile project.espressoCore
+    androidTestCompile project.asm
+    androidTestCompile project.objenesis
 }
 
 apply from: '../bintray.gradle'
