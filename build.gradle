@@ -8,6 +8,7 @@ buildscript {
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.10.1'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.1.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1'
     }
     project.ext {
         compileSdk = 22

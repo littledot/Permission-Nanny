@@ -26,3 +26,5 @@ dependencies {
     compile project.supportV4
     compile project.appcompatV7
 }
+
+apply from: '../bintray.gradle'
