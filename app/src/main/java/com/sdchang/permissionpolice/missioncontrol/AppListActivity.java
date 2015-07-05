@@ -5,6 +5,8 @@ import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseActivity;
@@ -33,6 +35,22 @@ public class AppListActivity extends BaseActivity {
         rvAppList.setLayoutManager(new LinearLayoutManager(this));
         rvAppList.setAdapter(mAdapter);
         rvAppList.addItemDecoration(new SpacesItemDecoration(this, TypedValue.COMPLEX_UNIT_DIP, 0, 8, 0, 8));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.app_list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_refresh:
+            mConfigManager.refreshData();
+            break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
