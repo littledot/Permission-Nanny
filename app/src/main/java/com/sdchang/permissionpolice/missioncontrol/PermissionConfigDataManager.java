@@ -1,9 +1,12 @@
 package com.sdchang.permissionpolice.missioncontrol;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.util.SimpleArrayMap;
 import com.sdchang.permissionpolice.ProxyOperation;
+import com.sdchang.permissionpolice.dagger.AppModule;
 import com.sdchang.permissionpolice.db.AppDB;
+import com.sdchang.permissionpolice.lib.Police;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -19,17 +22,25 @@ public class PermissionConfigDataManager {
 
     private Context mContext;
     private AppDB mDB;
+    private AppModule.Bus mBus;
 
     SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> mConfigs = new SimpleArrayMap<>();
 
     @Inject
-    public PermissionConfigDataManager(Context context, AppDB db) {
+    public PermissionConfigDataManager(Context context, AppDB db, AppModule.Bus bus) {
         mContext = context;
         mDB = db;
+        mBus = bus;
         readDB();
     }
 
+    public void refreshData() {
+        Intent uses = new Intent(Police.ACTION_GET_PERMISSION_USAGES);
+        mContext.sendBroadcast(uses);
+    }
+
     private void readDB() {
+
         PermissionConfig[] configs = mDB.getAllConfigs();
         Timber.wtf("Read " + Arrays.toString(configs));
 
@@ -72,6 +83,7 @@ public class PermissionConfigDataManager {
         }
 
         mConfigs.put(appPackage, newConfigs);
+        mBus.publish(mConfigs);
     }
 
     public SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> getConfig() {

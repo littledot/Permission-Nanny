@@ -22,6 +22,8 @@ public interface AppComponent {
 
     AppDB db2();
 
+    AppModule.Bus bus();
+
     PermissionConfigDataManager pcdm();
 
     void inject(AppPermissionUsageReceiver victim);
