@@ -2,33 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:gravity="center_vertical">
+    android:paddingRight="16dp">
 
     <LinearLayout
-        android:layout_width="0px"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/permissionName"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             style="@style/TextAppearance.AppCompat.Title"/>
 
-        <TextView
-            android:id="@+id/permissionDesc"
+        <Spinner
+            android:id="@+id/permissionAccess"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Subhead"/>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/permissionAccess"
+    <TextView
+        android:id="@+id/permissionDesc"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
 
 </LinearLayout>
