@@ -1,6 +1,7 @@
 package com.sdchang.permissionpolice;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -32,7 +33,8 @@ public class BaseDialogBuilder<T extends Parcelable> {
         mActivity = activity;
         mPM = mActivity.getPackageManager();
 
-        mAppPackage = args.getString(PermissionRequest.SENDER_PACKAGE);
+        PendingIntent sender = args.getParcelable(PermissionRequest.SENDER_PACKAGE);
+        mAppPackage = sender.getIntentSender().getTargetPackage();
         mReason = args.getString(PermissionRequest.REQUEST_REASON);
         mClientId = args.getString(PermissionRequest.CLIENT_ID);
         mRequest = args.getParcelable(PermissionRequest.REQUEST_BODY);

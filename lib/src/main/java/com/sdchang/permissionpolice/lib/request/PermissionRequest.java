@@ -1,5 +1,6 @@
 package com.sdchang.permissionpolice.lib.request;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -37,6 +38,9 @@ public abstract class PermissionRequest {
     public static final int TELEPHONY_REQUEST = 300;
     public static final int WIFI_REQUEST = 400;
 
+    /** An empty intent. This constant must not be modified. */
+    private static final Intent EMPTY_INTENT = new Intent();
+
     protected PermissionReceiver mReceiver;
     protected RequestParams mParams;
 
@@ -47,9 +51,8 @@ public abstract class PermissionRequest {
     @RequestType
     public abstract int getRequestType();
 
-    public Intent newIntent(Context context, String reason, @Nullable String clientFilter) {
-        Intent intent = newBroadcastIntent()
-                .putExtra(SENDER_PACKAGE, context.getPackageName())
+    public Intent decorateIntent(Intent intent, Context context, String reason, @Nullable String clientFilter) {
+        intent.putExtra(SENDER_PACKAGE, PendingIntent.getBroadcast(context, 0, EMPTY_INTENT, 0))
                 .putExtra(REQUEST_TYPE, getRequestType())
                 .putExtra(REQUEST_BODY, mParams)
                 .putExtra(REQUEST_REASON, reason);
@@ -59,8 +62,9 @@ public abstract class PermissionRequest {
         return intent;
     }
 
-    public Intent newBroadcastIntent() {
-        return new Intent(ACTION).setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+    public Intent newBroadcastIntent(Context context, String reason, @Nullable String clientFilter) {
+        Intent intent = new Intent(ACTION).setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        return decorateIntent(intent, context, reason, clientFilter);
     }
 
     public Intent newBindServiceIntent() {
@@ -86,7 +90,7 @@ public abstract class PermissionRequest {
             clientId = Long.toString(new SecureRandom().nextLong());
             context.registerReceiver(mReceiver, new IntentFilter(clientId));
         }
-        context.sendBroadcast(newIntent(context, reason, clientId));
+        context.sendBroadcast(newBroadcastIntent(context, reason, clientId));
         return this;
     }
 }
