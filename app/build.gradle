@@ -34,6 +34,7 @@ dependencies {
     apt project.daggerCompiler
 
     compile project(':common')
+    compile project.design
     compile project.snapdb
 
     testCompile project.junit

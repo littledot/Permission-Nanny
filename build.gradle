@@ -15,6 +15,7 @@ buildscript {
         minSdk = 9
         targetSdk = 22
 
+        design = 'com.android.support:design:22.2.0'
         supportV4 = 'com.android.support:support-v4:22.2.0'
         appcompatV7 = 'com.android.support:appcompat-v7:22.2.0'
         cardviewV7 = 'com.android.support:cardview-v7:22.2.0'
