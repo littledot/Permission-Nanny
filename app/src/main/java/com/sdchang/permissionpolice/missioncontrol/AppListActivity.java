@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.sdchang.permissionpolice.BaseActivity;
@@ -29,6 +30,7 @@ public class AppListActivity extends BaseActivity {
         mAdapter = new AppListAdapter(this, mConfigManager);
         rvAppList.setLayoutManager(new LinearLayoutManager(this));
         rvAppList.setAdapter(mAdapter);
+        rvAppList.addItemDecoration(new SpacesItemDecoration(this, TypedValue.COMPLEX_UNIT_DIP, 0, 8, 0, 8));
 
         Intent uses = new Intent(Police.ACTION_GET_PERMISSION_USAGES);
         sendBroadcast(uses);

@@ -40,7 +40,7 @@ public class AppDB {
     }
 
     private String key(PermissionConfig config) {
-        return key(config.mAppPackageName, config.mPermissionName);
+        return key(config.appPackageName, config.permissionName);
     }
 
     private String key(String appPackage, String permission) {

@@ -88,14 +88,29 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
             appIcon = mPM.getApplicationIcon(info);
         }
-        
+
         holder.ivAppIcon.setImageDrawable(appIcon);
         holder.tvAppName.setText(appName);
     }
 
     private void bindPermissionSwitchViewHolder(PermissionSwitchViewHolder holder, int position) {
         final PermissionConfig config = mPermissionPositions.get(position);
-        holder.tvPermissionName.setText(config.mPermissionName);
+
+        String permName = config.permissionName;
+        String permDesc = null;
+
+        int permNameRes = PermRes.getLabel(config.permissionName);
+        if (permNameRes > 0) {
+            permName = capitalize(mContext.getString(permNameRes));
+        }
+        int permDescRes = PermRes.getDescription(config.permissionName);
+        if (permDescRes > 0) {
+            permDesc = mContext.getString(permDescRes);
+        }
+
+        holder.tvPermissionName.setText(permName);
+        holder.tvPermissionDesc.setText(permDesc);
+
         holder.sPermissionAccess.setAdapter(ArrayAdapter.createFromResource(mContext, R.array.access_configurations,
                 android.R.layout.simple_spinner_dropdown_item));
         holder.sPermissionAccess.setSelection(settingsToSelection[config.mSetting]);
@@ -105,5 +120,9 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 mConfigManager.changeConfig(config, selectionToSettings[position]);
             }
         });
+    }
+
+    private String capitalize(String line) {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }
 }

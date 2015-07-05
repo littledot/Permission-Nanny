@@ -34,13 +34,13 @@ public class PermissionConfigDataManager {
         Timber.wtf("Read " + Arrays.toString(configs));
 
         for (PermissionConfig config : configs) {
-            SimpleArrayMap<String, PermissionConfig> configMap = mConfigs.get(config.mAppPackageName);
+            SimpleArrayMap<String, PermissionConfig> configMap = mConfigs.get(config.appPackageName);
             if (configMap == null) {
                 configMap = new SimpleArrayMap<>();
-                mConfigs.put(config.mAppPackageName, configMap);
+                mConfigs.put(config.appPackageName, configMap);
             }
 
-            configMap.put(config.mPermissionName, config);
+            configMap.put(config.permissionName, config);
         }
     }
 

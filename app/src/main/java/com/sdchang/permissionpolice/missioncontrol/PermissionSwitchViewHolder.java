@@ -10,6 +10,7 @@ import com.sdchang.permissionpolice.R;
 
 public class PermissionSwitchViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.permissionName) TextView tvPermissionName;
+    @InjectView(R.id.permissionDesc) TextView tvPermissionDesc;
     @InjectView(R.id.permissionAccess) Spinner sPermissionAccess;
 
     public PermissionSwitchViewHolder(View itemView) {

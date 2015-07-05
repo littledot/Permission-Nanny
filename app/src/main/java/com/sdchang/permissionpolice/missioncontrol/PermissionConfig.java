@@ -18,23 +18,23 @@ public class PermissionConfig {
     public static final int ALWAYS_ALLOW = 1;
     public static final int ALWAYS_DENY = 1 << 1;
 
-    public String mAppPackageName;
-    public String mPermissionName;
+    public String appPackageName;
+    public String permissionName;
     @UserSetting public int mSetting;
 
     public PermissionConfig() {}
 
     public PermissionConfig(String appPackageName, String permissionName, int setting) {
-        mAppPackageName = appPackageName;
-        mPermissionName = permissionName;
+        this.appPackageName = appPackageName;
+        this.permissionName = permissionName;
         mSetting = setting;
     }
 
     @Override
     public String toString() {
         return "PermissionConfig{" +
-                "mAppPackageName='" + mAppPackageName + '\'' +
-                ", mPermissionName='" + mPermissionName + '\'' +
+                "appPackageName='" + appPackageName + '\'' +
+                ", permissionName='" + permissionName + '\'' +
                 ", mSetting=" + mSetting +
                 '}';
     }
