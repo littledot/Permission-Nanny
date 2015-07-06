@@ -69,20 +69,29 @@ public class Nanny {
     public static final String ENTITY_ERROR = "Entity-Error";
 
     // experimental
+    /** Permission Nanny application package name. */
+    public static final String SERVER_PACKAGE = "com.permissionnanny";
+
     /** Authority that resolves to Permission Nanny's cursor request content provider. */
-    public static final String PROVIDER_AUTHORITY = "com.permissionnanny.cursor_content_provider";
+    public static final String PROVIDER_AUTHORITY = SERVER_PACKAGE + ".cursor_content_provider";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions do you plan to use. */
-    public static final String ACTION_GET_PERMISSION_USAGES = "com.permissionnanny.GET_PERMISSION_USAGES";
+    public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";
 
     public static final String ACK_SERVER = "ackServer";
 
-    public static boolean isPermissionPoliceInstalled(Context context) {
+    /**
+     * Checks if Permission Nanny is installed.
+     *
+     * @param context Activity, Service, etc.
+     * @return {@code true} if Permission Nanny is installed
+     */
+    public static boolean isPermissionNannyInstalled(Context context) {
         PackageManager pm = context.getPackageManager();
         ApplicationInfo server = null;
         try {
-            server = pm.getApplicationInfo("com.permissionnanny", 0);
+            server = pm.getApplicationInfo(SERVER_PACKAGE, 0);
         } catch (PackageManager.NameNotFoundException e) {/* Nothing to see here. */}
-        return server == null;
+        return server != null;
     }
 }

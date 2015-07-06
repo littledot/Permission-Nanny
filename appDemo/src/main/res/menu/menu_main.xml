@@ -8,8 +8,8 @@
         android:checkable="true"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/opt_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/opt_serverCheck"
+        android:title="@string/opt_serverCheck"
         android:orderInCategory="100"
         app:showAsAction="never"/>
 </menu>

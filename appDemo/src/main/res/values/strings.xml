@@ -3,6 +3,6 @@
 
     <string name="app_name">appDemo</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="opt_serverCheck">Check server</string>
 
 </resources>
