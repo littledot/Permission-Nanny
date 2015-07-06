@@ -77,7 +77,7 @@ public class BaseDialogBuilder<T extends Parcelable> {
     public final ResponseBundle newDenyResponse() {
         return new ResponseBundle()
                 .server(Nanny.AUTHORIZATION_SERVICE)
-                .status(Nanny.SC_UNAUTHORIZED)
+                .status(Nanny.SC_FORBIDDEN)
                 .connection(Nanny.CLOSE);
     }
 

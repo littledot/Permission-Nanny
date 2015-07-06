@@ -23,7 +23,6 @@ public class Nanny {
     public static final int SC_OK = 200;
     /** Response value: Server could not process request due to incorrect request parameters. */
     public static final int SC_BAD_REQUEST = 400;
-    // TODO #44: Respond with 403 instead of 401 when user denies a request
     /** Response value: Client is not authorized to make a request. */
     public static final int SC_UNAUTHORIZED = 401;
     /** Response value: User denied your request. */

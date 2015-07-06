@@ -15,7 +15,7 @@ public class ResponseFactory {
     public static ResponseBundle newDenyResponse() {
         return new ResponseBundle()
                 .server(Nanny.AUTHORIZATION_SERVICE)
-                .status(Nanny.SC_UNAUTHORIZED)
+                .status(Nanny.SC_FORBIDDEN)
                 .connection(Nanny.CLOSE);
     }
 
