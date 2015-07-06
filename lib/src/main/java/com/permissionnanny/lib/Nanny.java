@@ -17,7 +17,7 @@ public class Nanny {
     /** Request value: Permission Nanny Protocol v1.0 */
     public static final String PNP_1_0 = "PNP/1.0";
 
-    /** Response field: Result status code. */
+    /** Response field: Result status code. Type: int */
     public static final String STATUS_CODE = "Status-Code";
     /** Response value: Request succeeded. */
     public static final int SC_OK = 200;
@@ -28,12 +28,7 @@ public class Nanny {
     /** Response value: User denied your request. */
     public static final int SC_FORBIDDEN = 403;
 
-    /** Request/Response field: Data payload. */
-    public static final String ENTITY_BODY = "Entity-Body";
-    /** Response field: Error payload. */
-    public static final String ENTITY_ERROR = "Entity-Error";
-
-    /** Response field: Connection options. */
+    /** Response field: Connection options. Type: string */
     public static final String CONNECTION = "Connection";
     /**
      * Response value: Client shall receive no further responses from the server; it is safe to unregister receivers or
@@ -41,12 +36,9 @@ public class Nanny {
      */
     public static final String CLOSE = "Close";
 
-    /** Request/Response field: Entity class type. */
-    public static final String CONTENT_TYPE = "Content-Type";
-
     /**
      * Request/Response field: Entity encoding; the receiving end should use the appropriately-typed {@link
-     * Intent#getExtras()} method to decode the entity.
+     * Intent#getExtras()} method to decode the entity. Type: string
      */
     public static final String CONTENT_ENCODING = "Content-Encoding";
     /** Request/Response value: Entity is a {@link Bundle}; use {@link Intent#getBundleExtra(String)} to decode. */
@@ -57,7 +49,10 @@ public class Nanny {
      */
     public static final String ENCODING_SERIALIZABLE = "encoding/serializable";
 
-    /** Response field: Service that handled the request. */
+    /** Request/Response field: Entity class type. Type: string */
+    public static final String CONTENT_TYPE = "Content-Type";
+
+    /** Response field: Service that handled the request. Type: string */
     public static final String SERVER = "Server";
     /** Response value: Service that authorizes requests. */
     public static final String AUTHORIZATION_SERVICE = "AuthorizationService";
@@ -67,6 +62,11 @@ public class Nanny {
     public static final String GPS_STATUS_SERVICE = "GpsStatusService";
     /** Response value: Service that delivers NMEA updates. */
     public static final String NMEA_SERVICE = "NmeaService";
+
+    /** Request/Response field: Data payload. Type: see {@link #CONTENT_ENCODING} & {@link #CONTENT_TYPE}. */
+    public static final String ENTITY_BODY = "Entity-Body";
+    /** Response field: Error payload. Type: see {@link #CONTENT_ENCODING} & {@link #CONTENT_TYPE}. */
+    public static final String ENTITY_ERROR = "Entity-Error";
 
     // experimental
     /** Authority that resolves to Permission Nanny's cursor request content provider. */
