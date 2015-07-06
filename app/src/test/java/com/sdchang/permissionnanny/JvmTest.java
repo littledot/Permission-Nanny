@@ -1,4 +1,4 @@
-package com.sdchang.permissionnanny;
+package com.permissionnanny;
 
 import org.junit.Assert;
 import org.junit.Test;

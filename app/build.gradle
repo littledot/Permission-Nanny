@@ -7,7 +7,7 @@ android {
     buildToolsVersion project.buildTools
 
     defaultConfig {
-        applicationId "com.sdchang.permissionpolice"
+        applicationId "com.permissionnanny"
         minSdkVersion project.minSdk
         targetSdkVersion project.targetSdk
         versionCode 1
