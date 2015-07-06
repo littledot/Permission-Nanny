@@ -4,22 +4,27 @@ apply plugin: 'com.getkeepsafe.dexcount'
 android {
     compileSdkVersion project.compileSdk
     buildToolsVersion project.buildTools
+    publishNonDefault true
 
     defaultConfig {
         minSdkVersion project.minSdk
         targetSdkVersion project.targetSdk
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionName '1.0'
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', 'SERVER_PACKAGE', '\"com.permissionnanny.debug\"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'SERVER_PACKAGE', '\"com.permissionnanny\"'
         }
     }
     lintOptions {
-        lintConfig file("../lint.xml")
+        lintConfig file('../lint.xml')
     }
     packagingOptions {
         exclude 'LICENSE.txt'

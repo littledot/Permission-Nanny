@@ -40,19 +40,19 @@
 
         <receiver android:name=".AppPermissionUsageReceiver">
             <intent-filter>
-                <action android:name="serverPermissionUsage"/>
+                <action android:name="${applicationId}.SEND_PERMISSION_USAGE"/>
             </intent-filter>
         </receiver>
 
         <receiver android:name=".ExternalRequestReceiver">
             <intent-filter>
-                <action android:name="ppAction"/>
+                <action android:name="${applicationId}.EXECUTE_REQUEST"/>
             </intent-filter>
         </receiver>
 
         <provider
             android:name=".content.CursorContentProvider"
-            android:authorities="com.permissionnanny.cursor_content_provider"
+            android:authorities="${applicationId}.cursor_content_provider"
             android:exported="true"/>
 
     </application>

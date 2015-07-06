@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import com.permissionnanny.lib.BundleEvent;
 import com.permissionnanny.lib.BundleListener;
 import com.permissionnanny.lib.Event;
+import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.PermissionReceiver;
 
 import java.lang.annotation.Retention;
@@ -20,7 +21,6 @@ import java.security.SecureRandom;
  */
 public abstract class PermissionRequest {
 
-    public static final String ACTION = "ppAction";
     public static final String REQUEST_TYPE = "requestType";
     public static final String REQUEST_BODY = "requestBody";
     public static final String REQUEST_REASON = "requestReason";
@@ -63,7 +63,7 @@ public abstract class PermissionRequest {
     }
 
     public Intent newBroadcastIntent(Context context, String reason, @Nullable String clientFilter) {
-        Intent intent = new Intent(ACTION).setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        Intent intent = new Intent(Nanny.ACTION_EXECUTE_REQUEST).setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         return decorateIntent(intent, context, reason, clientFilter);
     }
 
