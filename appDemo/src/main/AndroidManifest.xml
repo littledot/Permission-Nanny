@@ -21,7 +21,7 @@
 
         <receiver android:name=".DemoPermissionUsageReceiver">
             <intent-filter>
-                <action android:name="com.permissionpolice.GET_PERMISSION_USAGES"/>
+                <action android:name="com.permissionnanny.GET_PERMISSION_USAGES"/>
             </intent-filter>
         </receiver>
 

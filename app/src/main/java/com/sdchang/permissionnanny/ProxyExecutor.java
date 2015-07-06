@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.sdchang.permissionnanny.common.BundleUtil;
 import com.sdchang.permissionnanny.lib.Nanny;
 import com.sdchang.permissionnanny.lib.request.RequestParams;
-import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
 /**
@@ -38,8 +37,8 @@ public class ProxyExecutor {
                 return ResponseFactory.newBadRequestResponse(error);
             }
             return ResponseFactory.newAllowResponse()
-                    .connection(HTTP.CONN_CLOSE)
-                    .contentType(Nanny.APPLICATION_BUNDLE)
+                    .connection(Nanny.CLOSE)
+                    .contentEncoding(Nanny.ENCODING_BUNDLE)
                     .body(response);
         }
 

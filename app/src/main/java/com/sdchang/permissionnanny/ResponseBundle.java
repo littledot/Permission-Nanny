@@ -2,7 +2,6 @@ package com.sdchang.permissionnanny;
 
 import android.os.Bundle;
 import com.sdchang.permissionnanny.lib.Nanny;
-import org.apache.http.protocol.HTTP;
 
 /**
  * TODO #32: Add typedef annotations to method parameters.
@@ -12,7 +11,7 @@ public class ResponseBundle {
 
     public ResponseBundle() {
         mResponse = new Bundle();
-        mResponse.putString(Nanny.HTTP_VERSION, Nanny.HTTP_1_1);
+        mResponse.putString(Nanny.PROTOCOL_VERSION, Nanny.PNP_1_0);
     }
 
     public ResponseBundle(Bundle response) {
@@ -25,7 +24,7 @@ public class ResponseBundle {
     }
 
     public ResponseBundle connection(String connection) {
-        mResponse.putString(HTTP.CONN_DIRECTIVE, connection);
+        mResponse.putString(Nanny.CONNECTION, connection);
         return this;
     }
 
@@ -34,8 +33,13 @@ public class ResponseBundle {
         return this;
     }
 
-    public ResponseBundle contentType(String type) {
-        mResponse.putString(HTTP.CONTENT_TYPE, type);
+    public ResponseBundle contentType(Class type) {
+        mResponse.putString(Nanny.CONTENT_TYPE, type.getCanonicalName());
+        return this;
+    }
+
+    public ResponseBundle contentEncoding(String encoding) {
+        mResponse.putString(Nanny.CONTENT_ENCODING, encoding);
         return this;
     }
 

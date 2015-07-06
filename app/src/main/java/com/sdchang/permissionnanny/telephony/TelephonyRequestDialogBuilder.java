@@ -59,7 +59,7 @@ public class TelephonyRequestDialogBuilder extends BaseDialogBuilder<RequestPara
         }
         return newAllowResponse()
                 .connection(HTTP.CONN_CLOSE)
-                .contentType(Nanny.APPLICATION_BUNDLE)
+                .contentEncoding(Nanny.ENCODING_BUNDLE)
                 .body(response);
     }
 }

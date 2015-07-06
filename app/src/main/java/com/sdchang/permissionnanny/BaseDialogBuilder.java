@@ -11,8 +11,6 @@ import android.os.Parcelable;
 import android.view.ViewStub;
 import com.sdchang.permissionnanny.lib.Nanny;
 import com.sdchang.permissionnanny.lib.request.PermissionRequest;
-import org.apache.http.HttpStatus;
-import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
 /**
@@ -73,22 +71,22 @@ public class BaseDialogBuilder<T extends Parcelable> {
     public final ResponseBundle newAllowResponse() {
         return new ResponseBundle()
                 .server(Nanny.AUTHORIZATION_SERVICE)
-                .status(HttpStatus.SC_OK);
+                .status(Nanny.SC_OK);
     }
 
     public final ResponseBundle newDenyResponse() {
         return new ResponseBundle()
                 .server(Nanny.AUTHORIZATION_SERVICE)
-                .status(HttpStatus.SC_UNAUTHORIZED)
-                .connection(HTTP.CONN_CLOSE);
+                .status(Nanny.SC_UNAUTHORIZED)
+                .connection(Nanny.CLOSE);
     }
 
     public final ResponseBundle newBadRequestResponse(Throwable error) {
         return new ResponseBundle()
                 .server(Nanny.AUTHORIZATION_SERVICE)
-                .status(HttpStatus.SC_BAD_REQUEST)
-                .connection(HTTP.CONN_CLOSE)
-                .contentType(Nanny.APPLICATION_SERIALIZABLE)
+                .status(Nanny.SC_BAD_REQUEST)
+                .connection(Nanny.CLOSE)
+                .contentEncoding(Nanny.ENCODING_SERIALIZABLE)
                 .error(error);
     }
 }

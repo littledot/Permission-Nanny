@@ -18,7 +18,6 @@ import com.sdchang.permissionnanny.ResponseBundle;
 import com.sdchang.permissionnanny.lib.Nanny;
 import com.sdchang.permissionnanny.lib.request.RequestParams;
 import com.sdchang.permissionnanny.lib.request.content.CursorEvent;
-import org.apache.http.protocol.HTTP;
 import timber.log.Timber;
 
 import java.security.SecureRandom;
@@ -64,8 +63,8 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<RequestParams>
         Bundle response = new Bundle();
         response.putLong(CursorEvent.NONCE, nonce);
         return newAllowResponse()
-                .connection(HTTP.CONN_CLOSE)
-                .contentType(Nanny.APPLICATION_BUNDLE)
+                .connection(Nanny.CLOSE)
+                .contentEncoding(Nanny.ENCODING_BUNDLE)
                 .body(response);
     }
 }

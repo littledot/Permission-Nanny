@@ -52,7 +52,7 @@
 
         <provider
             android:name=".content.CursorContentProvider"
-            android:authorities="com.permissionpolice.provider"
+            android:authorities="com.permissionnanny.cursor_content_provider"
             android:exported="true"/>
 
     </application>

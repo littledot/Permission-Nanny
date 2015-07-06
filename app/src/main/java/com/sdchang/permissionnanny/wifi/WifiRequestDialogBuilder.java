@@ -66,7 +66,7 @@ public class WifiRequestDialogBuilder extends BaseDialogBuilder<RequestParams> {
         }
         return newAllowResponse()
                 .connection(HTTP.CONN_CLOSE)
-                .contentType(Nanny.APPLICATION_BUNDLE)
+                .contentEncoding(Nanny.ENCODING_BUNDLE)
                 .body(response);
     }
 }
