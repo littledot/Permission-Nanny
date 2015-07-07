@@ -63,7 +63,9 @@ public abstract class PermissionRequest {
     }
 
     public Intent newBroadcastIntent(Context context, String reason, @Nullable String clientFilter) {
-        Intent intent = new Intent(Nanny.ACTION_EXECUTE_REQUEST).setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        Intent intent = new Intent()
+                .setClassName(Nanny.SERVER_PACKAGE, Nanny.CLIENT_REQUEST_RECEIVER)
+                .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         return decorateIntent(intent, context, reason, clientFilter);
     }
 

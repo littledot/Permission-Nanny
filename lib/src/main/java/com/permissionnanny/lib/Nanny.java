@@ -72,8 +72,8 @@ public class Nanny {
     /** Permission Nanny application package name. */
     public static final String SERVER_PACKAGE = BuildConfig.SERVER_PACKAGE;
 
-    /** Broadcast Action: Sent when a client wants Permission Nanny to execute a request. */
-    public static final String ACTION_EXECUTE_REQUEST = SERVER_PACKAGE + ".EXECUTE_REQUEST";
+    /** Broadcast Component: Sent when a client wants Permission Nanny to execute a request. */
+    public static final String CLIENT_REQUEST_RECEIVER = "com.permissionnanny.ClientRequestReceiver";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
     public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";

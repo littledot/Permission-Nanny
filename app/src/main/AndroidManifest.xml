@@ -44,7 +44,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".ExternalRequestReceiver">
+        <receiver android:name=".ClientRequestReceiver">
             <intent-filter>
                 <action android:name="${applicationId}.EXECUTE_REQUEST"/>
             </intent-filter>

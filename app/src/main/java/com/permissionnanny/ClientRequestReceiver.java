@@ -17,7 +17,7 @@ import javax.inject.Inject;
 /**
  *
  */
-public class ExternalRequestReceiver extends BroadcastReceiver {
+public class ClientRequestReceiver extends BroadcastReceiver {
 
     private static final String NO_SENDER_PACKAGE = "SENDER_PACKAGE is missing.";
     private static final String NO_REQUEST_BODY = "REQUEST_BODY is missing";
