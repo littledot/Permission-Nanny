@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">PermissionPolice</string>
+    <string name="app_name">Permission Nanny</string>
     <string name="menu_refresh">Refresh</string>
 
     <string name="dialog_allow">Allow</string>
