@@ -38,17 +38,13 @@
 
         <service android:name=".ProxyService"/>
 
-        <receiver android:name=".AppPermissionUsageReceiver">
-            <intent-filter>
-                <action android:name="${applicationId}.SEND_PERMISSION_USAGE"/>
-            </intent-filter>
-        </receiver>
+        <receiver
+            android:name=".ClientPermissionUsageReceiver"
+            android:exported="true"/>
 
-        <receiver android:name=".ClientRequestReceiver">
-            <intent-filter>
-                <action android:name="${applicationId}.EXECUTE_REQUEST"/>
-            </intent-filter>
-        </receiver>
+        <receiver
+            android:name=".ClientRequestReceiver"
+            android:exported="true"/>
 
         <provider
             android:name=".content.CursorContentProvider"

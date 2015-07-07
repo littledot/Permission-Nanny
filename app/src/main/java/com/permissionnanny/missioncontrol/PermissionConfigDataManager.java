@@ -35,12 +35,11 @@ public class PermissionConfigDataManager {
     }
 
     public void refreshData() {
-        Intent uses = new Intent(Nanny.ACTION_GET_PERMISSION_USAGES);
+        Intent uses = new Intent(Nanny.ACTION_GET_PERMISSION_USAGES).setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         mContext.sendBroadcast(uses);
     }
 
     private void readDB() {
-
         PermissionConfig[] configs = mDB.getAllConfigs();
         Timber.wtf("Read " + Arrays.toString(configs));
 

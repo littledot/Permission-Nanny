@@ -69,20 +69,24 @@ public class Nanny {
     public static final String ENTITY_ERROR = "Entity-Error";
 
     // experimental
-    /** Permission Nanny application package name. */
-    public static final String SERVER_PACKAGE = BuildConfig.SERVER_PACKAGE;
+    /** Permission Nanny release build package name. */
+    public static final String SERVER_PACKAGE = "com.permissionnanny";
+    /** Permission Nanny debug build package name. */
+    public static final String SERVER_DEBUG_PACKAGE = "com.permissionnanny.debug";
+    /** Permission Nanny's app ID changes depending on the build type to avoid conflict with each other. */
+    public static final String SERVER_APP_ID = BuildConfig.DEBUG ? SERVER_DEBUG_PACKAGE : SERVER_PACKAGE;
 
-    /** Broadcast Component: Sent when a client wants Permission Nanny to execute a request. */
-    public static final String CLIENT_REQUEST_RECEIVER = "com.permissionnanny.ClientRequestReceiver";
+    /** Server Component that handles client requests. */
+    public static final String CLIENT_REQUEST_RECEIVER = SERVER_PACKAGE + ".ClientRequestReceiver";
+
+    /** Server Component that listens for client permission usages. */
+    public static final String CLIENT_PERMISSION_USAGE_RECEIVER = SERVER_PACKAGE + ".ClientPermissionUsageReceiver";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
     public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";
 
-    /** Broadcast Action: Sent when a client responds to Permission Nanny's {@link #ACTION_GET_PERMISSION_USAGES}. */
-    public static final String ACTION_SEND_PERMISSION_USAGE = SERVER_PACKAGE + ".SEND_PERMISSION_USAGE";
-
     /** Authority that resolves to Permission Nanny's cursor request content provider. */
-    public static final String PROVIDER_AUTHORITY = SERVER_PACKAGE + ".cursor_content_provider";
+    public static final String PROVIDER_AUTHORITY = SERVER_APP_ID + ".cursor_content_provider";
 
     public static final String ACK_SERVER = "ackServer";
 
@@ -96,7 +100,7 @@ public class Nanny {
         PackageManager pm = context.getPackageManager();
         ApplicationInfo server = null;
         try {
-            server = pm.getApplicationInfo(SERVER_PACKAGE, 0);
+            server = pm.getApplicationInfo(SERVER_APP_ID, 0);
         } catch (PackageManager.NameNotFoundException e) {/* Nothing to see here. */}
         return server != null;
     }

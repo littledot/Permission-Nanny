@@ -1,7 +1,7 @@
 package com.permissionnanny.dagger;
 
 import android.content.Context;
-import com.permissionnanny.AppPermissionUsageReceiver;
+import com.permissionnanny.ClientPermissionUsageReceiver;
 import com.permissionnanny.ClientRequestReceiver;
 import com.permissionnanny.db.AppDB;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
@@ -26,7 +26,7 @@ public interface AppComponent {
 
     PermissionConfigDataManager pcdm();
 
-    void inject(AppPermissionUsageReceiver victim);
+    void inject(ClientPermissionUsageReceiver victim);
 
     void inject(ClientRequestReceiver victim);
 }

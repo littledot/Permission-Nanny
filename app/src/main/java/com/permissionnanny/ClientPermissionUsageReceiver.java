@@ -13,7 +13,7 @@ import java.util.Arrays;
 /**
  *
  */
-public class AppPermissionUsageReceiver extends BroadcastReceiver {
+public class ClientPermissionUsageReceiver extends BroadcastReceiver {
 
     @Inject PermissionConfigDataManager mConfigManager;
 
