@@ -12,10 +12,10 @@ import java.io.Serializable;
  *
  */
 public class Nanny {
-    /** Request field: Protocol version of the request the client is using. */
+    /** Request/Response field: Protocol version of the request the client is using. Type: string */
     public static final String PROTOCOL_VERSION = "Protocol-Version";
-    /** Request value: Permission Nanny Protocol v1.0 */
-    public static final String PNP_1_0 = "PNP/1.0";
+    /** Request/Response value: Permission Police Protocol v1.0 */
+    public static final String PPP_1_0 = "PPP/1.0";
 
     /** Response field: Result status code. Type: int */
     public static final String STATUS_CODE = "Status-Code";
@@ -75,7 +75,7 @@ public class Nanny {
     /** Broadcast Action: Sent when a client wants Permission Nanny to execute a request. */
     public static final String ACTION_EXECUTE_REQUEST = SERVER_PACKAGE + ".EXECUTE_REQUEST";
 
-    /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients plan to use. */
+    /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
     public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";
 
     /** Broadcast Action: Sent when a client responds to Permission Nanny's {@link #ACTION_GET_PERMISSION_USAGES}. */
