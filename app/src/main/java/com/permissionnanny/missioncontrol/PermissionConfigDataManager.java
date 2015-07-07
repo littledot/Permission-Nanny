@@ -64,7 +64,7 @@ public class PermissionConfigDataManager {
                 if (oldConfig != null) { // Permission config exists? Retain it
                     Timber.wtf("Existing config=" + oldConfig);
                     newConfigs.put(permission, oldConfig);
-                    oldConfigs.remove(oldConfig);
+                    oldConfigs.remove(permission);
                     continue;
                 }
             }
@@ -78,6 +78,7 @@ public class PermissionConfigDataManager {
         if (oldConfigs != null) { // Delete permission configs that are no longer in use
             for (int i = 0, l = oldConfigs.size(); i < l; i++) {
                 mDB.delConfig(oldConfigs.valueAt(i));
+                Timber.wtf("Delete config=" + oldConfigs.valueAt(i));
             }
         }
 
