@@ -19,7 +19,7 @@ android {
         }
     }
     lintOptions {
-        lintConfig file("../lint.xml")
+        lintConfig project.rootProject.file('lint.xml')
     }
 }
 

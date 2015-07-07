@@ -36,7 +36,7 @@ android {
         }
     }
     lintOptions {
-        lintConfig file("../lint.xml")
+        lintConfig project.rootProject.file('lint.xml')
     }
     packagingOptions {
         exclude 'LICENSE.txt'
