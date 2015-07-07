@@ -91,8 +91,8 @@ public class PermissionConfigDataManager {
     }
 
     public void changeConfig(PermissionConfig config, int newSetting) {
-        if (config.mSetting != newSetting) {
-            config.mSetting = newSetting;
+        if (config.setting != newSetting) {
+            config.setting = newSetting;
             mDB.putConfig(config);
             Timber.wtf("Updated config=" + config);
         }
@@ -115,6 +115,6 @@ public class PermissionConfigDataManager {
             return PermissionConfig.ALWAYS_ASK;
         }
 
-        return config.mSetting;
+        return config.setting;
     }
 }

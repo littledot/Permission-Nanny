@@ -34,6 +34,8 @@
              Otherwise there will always be a white flash and then black background. -->
         <!-- android:taskAffinity is set to a unique value so that we don't launch the confirm request dialog on top of
              any server activities. Otherwise it will look like the client deep-linked the user into our app. -->
+        <!-- android:excludeFromRecents is set to true so that the activity does not remain in the Recents list, giving
+             off a dialog feel. -->
         <activity
             android:name=".ConfirmRequestActivity"
             android:theme="@style/Nanny.Dialog.NoActionBar"

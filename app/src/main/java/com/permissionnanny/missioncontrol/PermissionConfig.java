@@ -20,14 +20,14 @@ public class PermissionConfig {
 
     public String appPackageName;
     public String permissionName;
-    @UserSetting public int mSetting;
+    @UserSetting public int setting;
 
     public PermissionConfig() {}
 
     public PermissionConfig(String appPackageName, String permissionName, int setting) {
         this.appPackageName = appPackageName;
         this.permissionName = permissionName;
-        mSetting = setting;
+        this.setting = setting;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PermissionConfig {
         return "PermissionConfig{" +
                 "appPackageName='" + appPackageName + '\'' +
                 ", permissionName='" + permissionName + '\'' +
-                ", mSetting=" + mSetting +
+                ", setting=" + setting +
                 '}';
     }
 }

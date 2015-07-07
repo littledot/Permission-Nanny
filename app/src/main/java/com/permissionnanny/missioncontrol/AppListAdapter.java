@@ -113,7 +113,7 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         holder.sPermissionAccess.setAdapter(ArrayAdapter.createFromResource(mContext, R.array.access_configurations,
                 android.R.layout.simple_spinner_dropdown_item));
-        holder.sPermissionAccess.setSelection(settingsToSelection[config.mSetting]);
+        holder.sPermissionAccess.setSelection(settingsToSelection[config.setting]);
         holder.sPermissionAccess.setOnItemSelectedListener(new SimpleOnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
