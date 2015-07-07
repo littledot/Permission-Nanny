@@ -30,11 +30,15 @@
             </intent-filter>
         </activity>
 
-        <!--Theme attribute must be set in xml instead of in java to achieve transparent background.
-            Otherwise there will always be a white flash and then black background.-->
+        <!-- android:theme must be set here in xml instead of in java to achieve transparent background.
+             Otherwise there will always be a white flash and then black background. -->
+        <!-- android:taskAffinity is set to a unique value so that we don't launch the confirm request dialog on top of
+             any server activities. Otherwise it will look like the client deep-linked the user into our app. -->
         <activity
             android:name=".ConfirmRequestActivity"
-            android:theme="@style/Nanny.Dialog.NoActionBar"/>
+            android:theme="@style/Nanny.Dialog.NoActionBar"
+            android:excludeFromRecents="true"
+            android:taskAffinity=".confirmDialogTask"/>
 
         <service android:name=".ProxyService"/>
 
