@@ -1,7 +1,6 @@
 package com.permissionnanny;
 
 import android.app.PendingIntent;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -19,13 +18,10 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.Optional;
-import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.operation.ProxyOperation;
-import org.apache.http.protocol.HTTP;
-import timber.log.Timber;
 
 /**
  *
@@ -38,6 +34,7 @@ public class ConfirmRequestActivity extends BaseActivity {
     @InjectView(R.id.btnPositive) Button btnAllow;
     @InjectView(R.id.btnNegative) Button btnDeny;
 
+    private ProxyExecutor mExecutor;
     private String mClientAddr;
     private String mAppPackage;
     private ApplicationInfo mAppInfo;
@@ -48,6 +45,7 @@ public class ConfirmRequestActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Nanny_Light_Dialog_NoActionBar);
         super.onCreate(savedInstanceState);
+        mExecutor = new ProxyExecutor(this);
 
         mClientAddr = getIntent().getStringExtra(Nanny.CLIENT_ADDRESS);
         Bundle args = getIntent().getBundleExtra(Nanny.ENTITY_BODY);
@@ -93,50 +91,13 @@ public class ConfirmRequestActivity extends BaseActivity {
 
     @OnClick(R.id.btnPositive)
     void onAllow() {
-        sendResults(onAllowRequest().build());
-    }
-
-    private ResponseBundle onAllowRequest() {
-        if (mOperation.mFunction != null) { // one-shot request
-            Bundle response = new Bundle();
-            try {
-                mOperation.mFunction.execute(this, mRequest, response);
-            } catch (Throwable error) {
-                return ResponseFactory.newBadRequestResponse(error);
-            }
-            return ResponseFactory.newAllowResponse()
-                    .connection(HTTP.CONN_CLOSE)
-                    .contentEncoding(Nanny.ENCODING_BUNDLE)
-                    .body(response);
-        }
-
-        // ongoing request
-        Intent server = new Intent(this, ProxyService.class);
-        server.putExtra(ProxyService.CLIENT_ID, mClientAddr);
-        server.putExtra(ProxyService.REQUEST, mRequest);
-        Timber.wtf("Operation.function is null, starting service with args: " + BundleUtil.toString(server));
-        startService(server);
-        return ResponseFactory.newAllowResponse();
+        mExecutor.executeAllow(mOperation, mRequest, mClientAddr);
+        finish();
     }
 
     @OnClick(R.id.btnNegative)
     void onDeny() {
-        sendResults(onDenyRequest().build());
-    }
-
-    private ResponseBundle onDenyRequest() {
-        return new ResponseBundle()
-                .server(Nanny.AUTHORIZATION_SERVICE)
-                .status(Nanny.SC_FORBIDDEN)
-                .connection(Nanny.CLOSE);
-    }
-
-    private void sendResults(Bundle response) {
-        if (response != null && mClientAddr != null) {
-            Timber.d("server broadcasting=" + BundleUtil.toString(response));
-            Intent intent = new Intent(mClientAddr).putExtras(response);
-            sendBroadcast(intent);
-        }
+        mExecutor.executeDeny(mOperation, mRequest, mClientAddr);
         finish();
     }
 }
