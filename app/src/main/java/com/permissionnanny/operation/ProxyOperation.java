@@ -1,12 +1,9 @@
-package com.permissionnanny;
+package com.permissionnanny.operation;
 
 import android.support.annotation.StringRes;
 import android.support.v4.util.SimpleArrayMap;
+import com.permissionnanny.ProxyFunction;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.location.LocationOperation;
-import com.permissionnanny.sms.SmsOperation;
-import com.permissionnanny.telephony.TelephonyOperation;
-import com.permissionnanny.wifi.WifiOperation;
 
 /**
  *

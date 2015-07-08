@@ -31,8 +31,8 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<RequestParams>
 
     @InjectView(R.id.tvReason) TextView tvReason;
 
-    public CursorRequestDialogBuilder(Activity activity, Bundle args) {
-        super(activity, args);
+    public CursorRequestDialogBuilder(Activity activity, Bundle args, String clientAddr) {
+        super(activity, args, clientAddr);
         mOperation = ContentOperation.getOperation(mRequest.uri0);
     }
 

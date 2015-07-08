@@ -19,7 +19,9 @@ public class BundleUtil {
         JSONObject json = new JSONObject();
         try {
             for (String key : bundle.keySet()) {
-                json.put(key, bundle.get(key));
+                Object val = bundle.get(key);
+                Object str = val instanceof Bundle ? BundleUtil.toString((Bundle) val) : val;
+                json.put(key, str);
             }
             return json.toString(4);
         } catch (JSONException e) {

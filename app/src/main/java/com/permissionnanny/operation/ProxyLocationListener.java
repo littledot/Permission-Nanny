@@ -1,4 +1,4 @@
-package com.permissionnanny.location;
+package com.permissionnanny.operation;
 
 import android.content.Context;
 import android.content.Intent;

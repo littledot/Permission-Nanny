@@ -1,4 +1,4 @@
-package com.permissionnanny.sms;
+package com.permissionnanny.operation;
 
 import android.Manifest;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import com.permissionnanny.ProxyFunction;
-import com.permissionnanny.ProxyOperation;
 import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.sms.SmsRequest;

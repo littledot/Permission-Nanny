@@ -1,33 +1,32 @@
-package com.permissionnanny.location;
+package com.permissionnanny.operation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.GpsStatus.NmeaListener;
+import android.location.GpsStatus.Listener;
 import android.location.LocationManager;
 import com.permissionnanny.ProxyListener;
 import com.permissionnanny.ProxyService;
-import com.permissionnanny.lib.request.location.NmeaEvent;
+import com.permissionnanny.lib.request.location.GpsStatusEvent;
 
 /**
  *
  */
-public class ProxyNmeaListener extends ProxyListener implements NmeaListener {
+public class ProxyGpsStatusListener extends ProxyListener implements Listener {
 
-    public ProxyNmeaListener(ProxyService service, String clientId, String serverId) {
+    public ProxyGpsStatusListener(ProxyService service, String clientId, String serverId) {
         super(service, clientId, serverId);
     }
 
     @Override
     protected void unregister(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        lm.removeNmeaListener(this);
+        lm.removeGpsStatusListener(this);
     }
 
     @Override
-    public void onNmeaReceived(long timestamp, String nmea) {
+    public void onGpsStatusChanged(int event) {
         Intent intent = newResponseIntent()
-                .putExtra(NmeaEvent.TIMESTAMP, timestamp)
-                .putExtra(NmeaEvent.NMEA, nmea);
+                .putExtra(GpsStatusEvent.EVENT, event);
         sendBroadcast(intent);
     }
 }

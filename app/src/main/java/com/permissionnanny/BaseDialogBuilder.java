@@ -24,19 +24,19 @@ public class BaseDialogBuilder<T extends Parcelable> {
     ApplicationInfo mAppInfo;
     protected final String mReason;
     /** Action string client is filtering to receive broadcast Intents. */
-    protected final String mClientId;
+    protected final String mClientAddr;
     protected final T mRequest;
 
-    public BaseDialogBuilder(Activity activity, Bundle args) {
+    public BaseDialogBuilder(Activity activity, Bundle args, String clientAddr) {
         mActivity = activity;
         mPM = mActivity.getPackageManager();
 
-        PendingIntent sender = args.getParcelable(PermissionRequest.SENDER_PACKAGE);
+        PendingIntent sender = args.getParcelable(PermissionRequest.CLIENT_PACKAGE);
         mAppPackage = sender.getIntentSender().getTargetPackage();
         mReason = args.getString(PermissionRequest.REQUEST_REASON);
-        mClientId = args.getString(PermissionRequest.CLIENT_ID);
-        mRequest = args.getParcelable(PermissionRequest.REQUEST_BODY);
-        Timber.d("clientIntentFilter=" + mClientId);
+        mRequest = args.getParcelable(PermissionRequest.REQUEST_PARAMS);
+        mClientAddr = clientAddr;
+        Timber.d("clientIntentFilter=" + mClientAddr);
 
         try {
             mAppInfo = mPM.getApplicationInfo(mAppPackage, 0);

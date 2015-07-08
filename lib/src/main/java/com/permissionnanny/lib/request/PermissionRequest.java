@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import com.permissionnanny.lib.BundleEvent;
@@ -22,11 +23,9 @@ import java.security.SecureRandom;
 public abstract class PermissionRequest {
 
     public static final String REQUEST_TYPE = "requestType";
-    public static final String REQUEST_BODY = "requestBody";
+    public static final String REQUEST_PARAMS = "requestParams";
     public static final String REQUEST_REASON = "requestReason";
-    public static final String SENDER_PACKAGE = "senderPackage";
-    public static final String CLIENT_ID = "clientId";
-    public static final String ERROR = "error";
+    public static final String CLIENT_PACKAGE = "clientPackage";
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({CURSOR_REQUEST, LOCATION_REQUEST, SMS_REQUEST, TELEPHONY_REQUEST, WIFI_REQUEST})
@@ -52,14 +51,19 @@ public abstract class PermissionRequest {
     public abstract int getRequestType();
 
     public Intent decorateIntent(Intent intent, Context context, String reason, @Nullable String clientFilter) {
-        intent.putExtra(SENDER_PACKAGE, PendingIntent.getBroadcast(context, 0, EMPTY_INTENT, 0))
-                .putExtra(REQUEST_TYPE, getRequestType())
-                .putExtra(REQUEST_BODY, mParams)
-                .putExtra(REQUEST_REASON, reason);
+        Bundle entity = new Bundle();
+        entity.putParcelable(CLIENT_PACKAGE, PendingIntent.getBroadcast(context, 0, EMPTY_INTENT, 0));
+        entity.putInt(REQUEST_TYPE, getRequestType());
+        entity.putParcelable(REQUEST_PARAMS, mParams);
+        entity.putString(REQUEST_REASON, reason);
+
         if (clientFilter != null) {
-            intent.putExtra(CLIENT_ID, clientFilter);
+            intent.putExtra(Nanny.CLIENT_ADDRESS, clientFilter);
         }
-        return intent;
+        return intent.putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
+                .putExtra(Nanny.CONTENT_TYPE, Bundle.class.getCanonicalName())
+                .putExtra(Nanny.CONTENT_ENCODING, Nanny.ENCODING_BUNDLE)
+                .putExtra(Nanny.ENTITY_BODY, entity);
     }
 
     public Intent newBroadcastIntent(Context context, String reason, @Nullable String clientFilter) {

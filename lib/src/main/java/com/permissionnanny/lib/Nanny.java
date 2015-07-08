@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,6 +29,9 @@ public class Nanny {
     /** Response value: User denied your request. */
     public static final int SC_FORBIDDEN = 403;
 
+    /** Request field: Address client is listening on. */
+    public static final String CLIENT_ADDRESS = "Client-Address";
+
     /** Response field: Connection options. Type: string */
     public static final String CONNECTION = "Connection";
     /**
@@ -48,9 +52,15 @@ public class Nanny {
      * decode.
      */
     public static final String ENCODING_SERIALIZABLE = "encoding/serializable";
+    /**
+     * Request/Response value: Entity is an {@link ArrayList ArrayList&lt;String&gt;}; use {@link
+     * Intent#getStringArrayListExtra(String)} to decode.
+     */
+    public static final String ENCODING_STRING_ARRAY_LIST = "encoding/string-array-list";
 
     /** Request/Response field: Entity class type. Type: string */
     public static final String CONTENT_TYPE = "Content-Type";
+    public static final String TYPE_STRING_ARRAY_LIST = ArrayList.class.getCanonicalName() + "<String>";
 
     /** Response field: Service that handled the request. Type: string */
     public static final String SERVER = "Server";

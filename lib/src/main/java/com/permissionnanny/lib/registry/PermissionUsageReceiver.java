@@ -20,7 +20,10 @@ public class PermissionUsageReceiver extends BroadcastReceiver {
 
         Intent usage = new Intent()
                 .setClassName(Nanny.SERVER_APP_ID, Nanny.CLIENT_PERMISSION_USAGE_RECEIVER)
-                .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
+                .putExtra(Nanny.CONTENT_TYPE, Nanny.TYPE_STRING_ARRAY_LIST)
+                .putExtra(Nanny.CONTENT_ENCODING, Nanny.ENCODING_STRING_ARRAY_LIST);
         // TODO #40: Use PendingIntent to validate identity
         usage.putExtra("senderPackage", context.getPackageName());
         usage.putStringArrayListExtra("permissionUsage", mPermissions);

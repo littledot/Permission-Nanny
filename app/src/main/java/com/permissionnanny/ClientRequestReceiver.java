@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.IntentUtil;
+import com.permissionnanny.lib.InvalidRequestException;
+import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.missioncontrol.PermissionConfig;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
+import com.permissionnanny.operation.ProxyOperation;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -19,8 +22,9 @@ import javax.inject.Inject;
  */
 public class ClientRequestReceiver extends BroadcastReceiver {
 
-    private static final String NO_SENDER_PACKAGE = "SENDER_PACKAGE is missing.";
-    private static final String NO_REQUEST_BODY = "REQUEST_BODY is missing";
+    private static final String NO_ENTITY = "ENTITY_BODY is missing.";
+    private static final String NO_CLIENT_PACKAGE = "CLIENT_PACKAGE is missing.";
+    private static final String NO_REQUEST_BODY = "REQUEST_PARAMS is missing";
     private static final String UNSUPPORTED_OPCODE = "Requested operation [%s] is unsupported.";
 
     @Inject PermissionConfigDataManager mConfigManager;
@@ -32,17 +36,23 @@ public class ClientRequestReceiver extends BroadcastReceiver {
         ProxyExecutor executor = new ProxyExecutor(context);
 
         // Validate requests and ensure required parameters are present
-        String clientId = intent.getStringExtra(PermissionRequest.CLIENT_ID);
-        RequestParams request = intent.getParcelableExtra(PermissionRequest.REQUEST_BODY);
-        if (request == null) {
-            badRequest(context, clientId, new InvalidRequestException(NO_REQUEST_BODY));
+        String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
+        Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
+        if (entity == null) {
+            badRequest(context, clientAddr, new InvalidRequestException(NO_ENTITY));
             return;
         }
-        PendingIntent sender = intent.getParcelableExtra(PermissionRequest.SENDER_PACKAGE);
+        PendingIntent sender = entity.getParcelable(PermissionRequest.CLIENT_PACKAGE);
         if (sender == null) {
-            badRequest(context, clientId, new InvalidRequestException(NO_SENDER_PACKAGE));
+            badRequest(context, clientAddr, new InvalidRequestException(NO_CLIENT_PACKAGE));
             return;
         }
+        RequestParams request = entity.getParcelable(PermissionRequest.REQUEST_PARAMS);
+        if (request == null) {
+            badRequest(context, clientAddr, new InvalidRequestException(NO_REQUEST_BODY));
+            return;
+        }
+
         String clientPackage = sender.getIntentSender().getTargetPackage();
 
         // TODO #37: Figure out how to incorporate user settings into CursorRequests
@@ -56,7 +66,7 @@ public class ClientRequestReceiver extends BroadcastReceiver {
 
         ProxyOperation operation = ProxyOperation.getOperation(request);
         if (operation == null) {
-            badRequest(context, clientId, new InvalidRequestException(UNSUPPORTED_OPCODE, request.opCode));
+            badRequest(context, clientAddr, new InvalidRequestException(UNSUPPORTED_OPCODE, request.opCode));
             return;
         }
 
@@ -68,15 +78,16 @@ public class ClientRequestReceiver extends BroadcastReceiver {
                     .putExtras(intent));
             break;
         case PermissionConfig.ALWAYS_ALLOW:
-            executor.executeAllow(operation, request, clientId);
+            executor.executeAllow(operation, request, clientAddr);
             break;
         case PermissionConfig.ALWAYS_DENY:
-            executor.executeDeny(operation, request, clientId);
+            executor.executeDeny(operation, request, clientAddr);
             break;
         }
     }
 
     private void badRequest(Context context, String clientId, Throwable error) {
+        Timber.wtf("err=" + error.getMessage());
         if (clientId != null && !clientId.isEmpty()) {
             Bundle args = ResponseFactory.newBadRequestResponse(error).build();
             Intent response = new Intent(clientId).putExtras(args);

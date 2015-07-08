@@ -64,11 +64,10 @@ public class DemoAdapter extends Adapter<DemoViewHolder> {
             holder.tvResponse.setText(null);
             holder.itemView.setBackgroundColor(0);
         } else if (HttpStatus.SC_OK == results.getInt(Nanny.STATUS_CODE)) {
-            Bundle response = results.getBundle(Nanny.ENTITY_BODY);
-            holder.tvResponse.setText("Allowed\n" + BundleUtil.toString(response));
+            holder.tvResponse.setText("Allowed\n" + BundleUtil.toString(results));
             holder.itemView.setBackgroundColor(0xFF00FF00);
         } else {
-            holder.tvResponse.setText("Denied");
+            holder.tvResponse.setText("Denied\n" + BundleUtil.toString(results));
             holder.itemView.setBackgroundColor(0xFFFF0000);
         }
     }

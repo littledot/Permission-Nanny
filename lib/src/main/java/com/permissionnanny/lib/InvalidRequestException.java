@@ -1,4 +1,4 @@
-package com.permissionnanny;
+package com.permissionnanny.lib;
 
 /**
  *

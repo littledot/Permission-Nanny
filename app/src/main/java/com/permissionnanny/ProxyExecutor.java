@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
+import com.permissionnanny.operation.ProxyOperation;
 import timber.log.Timber;
 
 /**

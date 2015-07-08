@@ -1,11 +1,11 @@
-package com.permissionnanny.location;
+package com.permissionnanny.operation;
 
 import android.Manifest;
 import android.content.Context;
 import android.location.LocationManager;
 import android.os.Bundle;
 import com.permissionnanny.ProxyFunction;
-import com.permissionnanny.ProxyOperation;
+import com.permissionnanny.operation.ProxyOperation;
 import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.location.LocationRequest;
