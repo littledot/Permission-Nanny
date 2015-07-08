@@ -9,8 +9,8 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.permissionnanny.BaseDialogBuilder;
 import com.permissionnanny.C;
 import com.permissionnanny.R;
@@ -29,7 +29,7 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<RequestParams>
 
     private ContentOperation mOperation;
 
-    @InjectView(R.id.tvReason) TextView tvReason;
+    @Bind(R.id.tvReason) TextView tvReason;
 
     public CursorRequestDialogBuilder(Activity activity, Bundle args, String clientAddr) {
         super(activity, args, clientAddr);
@@ -47,7 +47,7 @@ public class CursorRequestDialogBuilder extends BaseDialogBuilder<RequestParams>
     public void inflateViewStub(ViewStub stub) {
         stub.setLayoutResource(R.layout.dialog_text);
         View view = stub.inflate();
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         tvReason.setText(mReason);
     }
 

@@ -27,7 +27,7 @@ buildscript {
         playServices = 'com.google.android.gms:play-services:7.5.0'
 
         autoParcelProcessor = 'com.github.frankiesardo:auto-parcel-processor:0.3'
-        butterknife = 'com.jakewharton:butterknife:6.1.0'
+        butterknife = 'com.jakewharton:butterknife:7.0.1'
         dagger = 'com.google.dagger:dagger:2.0.1'
         daggerCompiler = 'com.google.dagger:dagger-compiler:2.0.1'
         eventbus = 'de.greenrobot:eventbus:3.0.0-beta1'

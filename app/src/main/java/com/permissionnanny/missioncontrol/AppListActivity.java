@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.permissionnanny.BaseActivity;
 import com.permissionnanny.R;
 import com.permissionnanny.dagger.AppModule;
@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 public class AppListActivity extends BaseActivity {
 
-    @InjectView(R.id.rv) RecyclerView rvAppList;
+    @Bind(R.id.rv) RecyclerView rvAppList;
 
     @Inject PermissionConfigDataManager mConfigManager;
     @Inject AppModule.Bus mBus;
@@ -28,7 +28,7 @@ public class AppListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_app_list);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         getActivityComponent().inject(this);
 
         mAdapter = new AppListAdapter(this, mConfigManager);

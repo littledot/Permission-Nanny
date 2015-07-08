@@ -20,7 +20,7 @@ public class FloatExtra implements Extra<Float> {
     @Override
     public View getView(Context context, ViewGroup parent, String label) {
         View view = LayoutInflater.from(context).inflate(R.layout.extras_integer, parent, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         ((TextView) view.findViewById(R.id.tvLabel)).setText(label);
         EditText etValue = (EditText) view.findViewById(R.id.etValue);
         etValue.setText("" + mValue);

@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.permissionnanny.demo.content.CursorDemoAdapter;
 import com.permissionnanny.demo.content.CursorRequestFactory;
 import com.permissionnanny.demo.location.LocationDemoAdapter;
@@ -15,14 +15,14 @@ import com.permissionnanny.demo.location.LocationDemoAdapter;
  *
  */
 public class DemoActivity extends BaseActivity {
-    @InjectView(R.id.rv) RecyclerView rv;
+    @Bind(R.id.rv) RecyclerView rv;
     Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wifi_activity);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         Intent src = getIntent();
         int factoryId = src.getIntExtra(MainActivity.FACTORY_ID, -1);

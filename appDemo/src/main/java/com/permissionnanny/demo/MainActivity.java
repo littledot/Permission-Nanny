@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.permissionnanny.demo.content.CursorRequestFactory;
 import com.permissionnanny.demo.location.LocationRequestFactory;
 import com.permissionnanny.demo.telephony.TelephonyRequestFactory;
@@ -34,13 +34,13 @@ public class MainActivity extends BaseActivity {
             new WifiRequestFactory(),
     };
 
-    @InjectView(R.id.rv) RecyclerView rv;
+    @Bind(R.id.rv) RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(new MyAdapter());
@@ -73,11 +73,11 @@ public class MainActivity extends BaseActivity {
     }
 
     class MyViewHolder extends ViewHolder {
-        @InjectView(R.id.tv1) TextView tv1;
+        @Bind(R.id.tv1) TextView tv1;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

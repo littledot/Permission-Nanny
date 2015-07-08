@@ -21,7 +21,7 @@ public class BooleanExtra implements Extra<Boolean> {
     @Override
     public View getView(Context context, ViewGroup parent, String label) {
         View view = LayoutInflater.from(context).inflate(R.layout.extras_boolean, parent, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         ((TextView) view.findViewById(R.id.tvLabel)).setText(label);
         ((SwitchCompat) view.findViewById(R.id.sValue)).setChecked(mValue);
         return view;

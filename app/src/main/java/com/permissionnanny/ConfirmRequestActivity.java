@@ -14,10 +14,9 @@ import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.Optional;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
@@ -28,11 +27,11 @@ import com.permissionnanny.operation.ProxyOperation;
  */
 public class ConfirmRequestActivity extends BaseActivity {
 
-    @InjectView(R.id.tvTitle) TextView tvTitle;
-    @InjectView(R.id.ivIcon) ImageView ivIcon;
-    @InjectView(R.id.vsStub) @Optional ViewStub vsStub;
-    @InjectView(R.id.btnPositive) Button btnAllow;
-    @InjectView(R.id.btnNegative) Button btnDeny;
+    @Bind(R.id.tvTitle) TextView tvTitle;
+    @Bind(R.id.ivIcon) ImageView ivIcon;
+    @Bind(R.id.vsStub) ViewStub vsStub;
+    @Bind(R.id.btnPositive) Button btnAllow;
+    @Bind(R.id.btnNegative) Button btnDeny;
 
     private ProxyExecutor mExecutor;
     private String mClientAddr;
@@ -56,7 +55,7 @@ public class ConfirmRequestActivity extends BaseActivity {
         mOperation = ProxyOperation.getOperation(mRequest);
 
         setContentView(R.layout.dialog);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= 11) {
             setFinishOnTouchOutside(false);
         }
