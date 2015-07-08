@@ -14,7 +14,7 @@ import com.permissionnanny.lib.request.RequestParams;
  */
 public class CursorContentProvider extends ContentProvider {
     // TODO #1: Set a TTL for approved CursorRequests.
-    static LongSparseArray<RequestParams> approvedRequests = new LongSparseArray<>();
+    public static LongSparseArray<RequestParams> approvedRequests = new LongSparseArray<>();
 
     @Override
     public boolean onCreate() {

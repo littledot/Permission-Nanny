@@ -20,7 +20,6 @@ import butterknife.OnClick;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.operation.ProxyOperation;
 
 /**
  *
@@ -38,7 +37,7 @@ public class ConfirmRequestActivity extends BaseActivity {
     private String mAppPackage;
     private ApplicationInfo mAppInfo;
     private RequestParams mRequest;
-    private ProxyOperation mOperation;
+    private Operation mOperation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +46,13 @@ public class ConfirmRequestActivity extends BaseActivity {
         mExecutor = new ProxyExecutor(this);
 
         mClientAddr = getIntent().getStringExtra(Nanny.CLIENT_ADDRESS);
-        Bundle args = getIntent().getBundleExtra(Nanny.ENTITY_BODY);
-        PendingIntent sender = args.getParcelable(PermissionRequest.CLIENT_PACKAGE);
+        Bundle entity = getIntent().getBundleExtra(Nanny.ENTITY_BODY);
+        PendingIntent sender = entity.getParcelable(PermissionRequest.CLIENT_PACKAGE);
         mAppPackage = sender.getIntentSender().getTargetPackage();
         mAppInfo = Util.getApplicationInfo(this, mAppPackage);
-        mRequest = args.getParcelable(PermissionRequest.REQUEST_PARAMS);
-        mOperation = ProxyOperation.getOperation(mRequest);
+        mRequest = entity.getParcelable(PermissionRequest.REQUEST_PARAMS);
+        int type = entity.getInt(PermissionRequest.REQUEST_TYPE, -1);
+        mOperation = Operation.getOperation(mRequest, type);
 
         setContentView(R.layout.dialog);
         ButterKnife.bind(this);
@@ -68,7 +68,7 @@ public class ConfirmRequestActivity extends BaseActivity {
         } else {
             ivIcon.setImageDrawable(icon);
         }
-        new TextDialogStub().inflateViewStub(vsStub, args);
+        new TextDialogStub().inflateViewStub(vsStub, entity);
     }
 
     private CharSequence getDialogTitle() {

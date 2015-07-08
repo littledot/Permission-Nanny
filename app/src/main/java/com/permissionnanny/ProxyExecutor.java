@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.BundleUtil;
+import com.permissionnanny.content.ContentOperation;
+import com.permissionnanny.content.CursorContentProvider;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
+import com.permissionnanny.lib.request.content.CursorEvent;
 import com.permissionnanny.operation.ProxyOperation;
 import timber.log.Timber;
+
+import java.security.SecureRandom;
 
 /**
  *
@@ -20,7 +25,40 @@ public class ProxyExecutor {
         mContext = context;
     }
 
-    public void executeAllow(ProxyOperation operation, RequestParams request, String clientId) {
+    public void executeAllow(Operation operation, RequestParams request, String clientId) {
+        if (operation instanceof ProxyOperation) {
+            executeAllow((ProxyOperation) operation, request, clientId);
+        } else if (operation instanceof ContentOperation) {
+            executeAllow((ContentOperation) operation, request, clientId);
+        }
+    }
+
+    private void executeAllow(ContentOperation operation, RequestParams request, String clientId) {
+        Bundle response = execute(request).build();
+        if (response != null && clientId != null) {
+            Timber.d("server broadcasting=" + BundleUtil.toString(response));
+            Intent intent = new Intent(clientId).putExtras(response);
+            mContext.sendBroadcast(intent);
+        }
+    }
+
+    private ResponseBundle execute(RequestParams request) {
+        long nonce = new SecureRandom().nextLong();
+        Timber.wtf("nonce=" + nonce);
+
+        // cache request params
+        CursorContentProvider.approvedRequests.put(nonce, request);
+
+        // return nonce to client
+        Bundle response = new Bundle();
+        response.putLong(CursorEvent.NONCE, nonce);
+        return ResponseFactory.newAllowResponse()
+                .connection(Nanny.CLOSE)
+                .contentEncoding(Nanny.ENCODING_BUNDLE)
+                .body(response);
+    }
+
+    private void executeAllow(ProxyOperation operation, RequestParams request, String clientId) {
         Bundle response = execute(operation, request, clientId).build();
         if (response != null && clientId != null) {
             Timber.d("server broadcasting=" + BundleUtil.toString(response));
@@ -52,7 +90,7 @@ public class ProxyExecutor {
         return ResponseFactory.newAllowResponse();
     }
 
-    public void executeDeny(ProxyOperation operation, RequestParams request, String clientId) {
+    public void executeDeny(Operation operation, RequestParams request, String clientId) {
         if (clientId != null) {
             Bundle response = ResponseFactory.newDenyResponse().build();
             if (response != null) {

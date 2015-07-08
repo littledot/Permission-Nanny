@@ -1,14 +1,14 @@
 package com.permissionnanny.operation;
 
-import android.support.annotation.StringRes;
 import android.support.v4.util.SimpleArrayMap;
+import com.permissionnanny.Operation;
 import com.permissionnanny.ProxyFunction;
 import com.permissionnanny.lib.request.RequestParams;
 
 /**
  *
  */
-public class ProxyOperation {
+public class ProxyOperation extends Operation {
     public static final SimpleArrayMap<String, ProxyOperation> operations = new SimpleArrayMap<>();
 
     static {
@@ -32,8 +32,6 @@ public class ProxyOperation {
 
     public final String mOpCode;
     public final String mPermission;
-    @StringRes public final int mDialogTitle;
-    public final int mMinSdk;
     public final ProxyFunction mFunction;
 
     public ProxyOperation(String opCode,
@@ -41,10 +39,9 @@ public class ProxyOperation {
                           int dialogTitle,
                           int minSdk,
                           ProxyFunction function) {
+        super(dialogTitle, minSdk);
         mOpCode = opCode;
         mPermission = permission;
-        mDialogTitle = dialogTitle;
-        mMinSdk = minSdk;
         mFunction = function;
     }
 }

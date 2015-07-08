@@ -1,12 +1,17 @@
 package com.permissionnanny.missioncontrol;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.util.SimpleArrayMap;
-import com.permissionnanny.operation.ProxyOperation;
+import com.permissionnanny.Operation;
+import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.dagger.AppModule;
 import com.permissionnanny.db.AppDB;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.request.RequestParams;
+import com.permissionnanny.lib.request.content.CursorRequest;
+import com.permissionnanny.operation.ProxyOperation;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -101,8 +106,30 @@ public class PermissionConfigDataManager {
     }
 
     @PermissionConfig.UserSetting
-    public int getPermissionSetting(String appPackage, ProxyOperation operation) {
-        String permission = operation.mPermission;
+    public int getPermissionSetting(String appPackage, Operation operation, RequestParams params) {
+        if (operation instanceof ProxyOperation) {
+            return getPermissionSetting(appPackage, (ProxyOperation) operation, params);
+        } else if (operation instanceof ContentOperation) {
+            return getPermissionSetting(appPackage, (ContentOperation) operation, params);
+        }
+        return PermissionConfig.ALWAYS_DENY;
+    }
+
+    @PermissionConfig.UserSetting
+    private int getPermissionSetting(String appPackage, ProxyOperation operation, RequestParams params) {
+        return getUserConfig(appPackage, operation.mPermission);
+    }
+
+    @PermissionConfig.UserSetting
+    private int getPermissionSetting(String appPackage, ContentOperation operation, RequestParams request) {
+        String permission = contentPermissionMap(operation, request);
+        int userConfig = getUserConfig(appPackage, permission);
+        Timber.wtf("permission=" + permission + " config=" + userConfig);
+        return userConfig;
+    }
+
+    @PermissionConfig.UserSetting
+    private int getUserConfig(String appPackage, String permission) {
         if (permission == null) { // Operation does not require any permissions? ALWAYS_ALLOW
             return PermissionConfig.ALWAYS_ALLOW;
         }
@@ -118,5 +145,37 @@ public class PermissionConfigDataManager {
         }
 
         return config.setting;
+    }
+
+    private String contentPermissionMap(ContentOperation operation, RequestParams request) {
+        switch (request.opCode) {
+        case CursorRequest.SELECT:
+            switch (operation.mContentType) {
+            case ContentOperation.CONTENT_CALENDAR:
+                return Manifest.permission.READ_CALENDAR;
+            case ContentOperation.CONTENT_CONTACTS:
+                return Manifest.permission.READ_CONTACTS;
+            case ContentOperation.CONTENT_EXTERNAL_STORAGE:
+                return Manifest.permission.READ_EXTERNAL_STORAGE;
+            case ContentOperation.CONTENT_SMS:
+                return Manifest.permission.READ_SMS;
+            }
+            break;
+        case CursorRequest.INSERT:
+        case CursorRequest.UPDATE:
+        case CursorRequest.DELETE:
+            switch (operation.mContentType) {
+            case ContentOperation.CONTENT_CALENDAR:
+                return Manifest.permission.WRITE_CALENDAR;
+            case ContentOperation.CONTENT_CONTACTS:
+                return Manifest.permission.WRITE_CONTACTS;
+            case ContentOperation.CONTENT_EXTERNAL_STORAGE:
+                return Manifest.permission.WRITE_EXTERNAL_STORAGE;
+            case ContentOperation.CONTENT_SMS:
+                return Manifest.permission.WRITE_SMS;
+            }
+            break;
+        }
+        return null;
     }
 }
