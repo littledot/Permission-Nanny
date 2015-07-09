@@ -15,14 +15,14 @@ import org.apache.http.HttpStatus;
 /**
  *
  */
-public class CursorEvent implements Event {
+public class ContentEvent implements Event {
     public static final Uri PROVIDER = new Builder().scheme("content").authority(Nanny.PROVIDER_AUTHORITY).build();
     public static final String NONCE = "nonce";
 
     private RequestParams mRequest;
-    private CursorListener mListener;
+    private ContentListener mListener;
 
-    public CursorEvent(RequestParams request, CursorListener listener) {
+    public ContentEvent(RequestParams request, ContentListener listener) {
         mRequest = request;
         mListener = listener;
     }
@@ -48,16 +48,16 @@ public class CursorEvent implements Event {
 
         ContentResolver cr = context.getContentResolver();
         switch (mRequest.opCode) {
-        case CursorRequest.SELECT:
+        case ContentRequest.SELECT:
             data = authorized == null ? null : cr.query(authorized, null, null, null, null);
             break;
-        case CursorRequest.INSERT:
+        case ContentRequest.INSERT:
             inserted = authorized == null ? null : cr.insert(authorized, null);
             break;
-        case CursorRequest.UPDATE:
+        case ContentRequest.UPDATE:
             rowsUpdated = authorized == null ? 0 : cr.update(authorized, null, null, null);
             break;
-        case CursorRequest.DELETE:
+        case ContentRequest.DELETE:
             rowsDeleted = authorized == null ? 0 : cr.delete(authorized, null, null);
             break;
         }

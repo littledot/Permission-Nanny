@@ -53,8 +53,8 @@
             android:exported="true"/>
 
         <provider
-            android:name=".content.CursorContentProvider"
-            android:authorities="${applicationId}.cursor_content_provider"
+            android:name=".content.ProxyContentProvider"
+            android:authorities="${applicationId}.proxy_content_provider"
             android:exported="true"/>
 
     </application>

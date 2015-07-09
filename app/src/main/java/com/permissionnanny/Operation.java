@@ -11,7 +11,7 @@ import com.permissionnanny.operation.ProxyOperation;
  */
 public class Operation {
     public static Operation getOperation(RequestParams request, int type) {
-        return type == PermissionRequest.CURSOR_REQUEST ?
+        return type == PermissionRequest.CONTENT_REQUEST ?
                 ContentOperation.getOperation(request) : ProxyOperation.getOperation(request);
     }
 

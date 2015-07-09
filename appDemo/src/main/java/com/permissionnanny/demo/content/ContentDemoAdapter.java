@@ -8,18 +8,18 @@ import android.view.View;
 import com.permissionnanny.demo.DemoAdapter;
 import com.permissionnanny.demo.DemoViewHolder;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.request.content.CursorListener;
+import com.permissionnanny.lib.request.content.ContentListener;
 import org.apache.http.HttpStatus;
 
 /**
  *
  */
-public class CursorDemoAdapter extends DemoAdapter {
-    private CursorRequestFactory mFactory;
+public class ContentDemoAdapter extends DemoAdapter {
+    private ContentRequestFactory mFactory;
     private Bundle[] mResults;
     private String[] mContent;
 
-    public CursorDemoAdapter(CursorRequestFactory factory) {
+    public ContentDemoAdapter(ContentRequestFactory factory) {
         super(factory);
         mFactory = factory;
         mResults = new Bundle[mFactory.getCount()];
@@ -32,7 +32,7 @@ public class CursorDemoAdapter extends DemoAdapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFactory.getRequest(position).startRequest(v.getContext(), "demo", new CursorListener() {
+                mFactory.getRequest(position).startRequest(v.getContext(), "demo", new ContentListener() {
                     @Override
                     public void onResult(Bundle result, Cursor data, Uri inserted, int rowsUpdated, int rowsDeleted) {
                         mResults[position] = result;

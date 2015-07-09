@@ -99,8 +99,8 @@ public class Nanny {
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
     public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";
 
-    /** Authority that resolves to Permission Nanny's cursor request content provider. */
-    public static final String PROVIDER_AUTHORITY = SERVER_APP_ID + ".cursor_content_provider";
+    /** Authority that resolves to Permission Nanny's proxy content provider. */
+    public static final String PROVIDER_AUTHORITY = SERVER_APP_ID + ".proxy_content_provider";
 
     public static final String ACK_SERVER = "ackServer";
 

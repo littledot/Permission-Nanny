@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.permissionnanny.demo.content.CursorDemoAdapter;
-import com.permissionnanny.demo.content.CursorRequestFactory;
+import com.permissionnanny.demo.content.ContentDemoAdapter;
+import com.permissionnanny.demo.content.ContentRequestFactory;
 import com.permissionnanny.demo.location.LocationDemoAdapter;
 
 /**
@@ -28,7 +28,7 @@ public class DemoActivity extends BaseActivity {
         int factoryId = src.getIntExtra(MainActivity.FACTORY_ID, -1);
         switch (factoryId) {
         case 0:
-            mAdapter = new CursorDemoAdapter(new CursorRequestFactory());
+            mAdapter = new ContentDemoAdapter(new ContentRequestFactory());
             break;
         case 1:
             mAdapter = new LocationDemoAdapter();

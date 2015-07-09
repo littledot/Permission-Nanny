@@ -9,12 +9,12 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.provider.Telephony;
 import com.permissionnanny.demo.DemoRequestFactory;
-import com.permissionnanny.lib.request.content.CursorRequest;
+import com.permissionnanny.lib.request.content.ContentRequest;
 
 /**
  *
  */
-public class CursorRequestFactory implements DemoRequestFactory {
+public class ContentRequestFactory implements DemoRequestFactory {
     private String[] mLabels = new String[]{
             "Calendar",
             "Contacts",
@@ -30,55 +30,55 @@ public class CursorRequestFactory implements DemoRequestFactory {
 
     @TargetApi(19)
     @Override
-    public CursorRequest getRequest(int position) {
+    public ContentRequest getRequest(int position) {
         switch (position) {
         case 0:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(CalendarContract.Calendars.CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 1:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(ContactsContract.Contacts.CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 2:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 3:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(MediaStore.Files.getContentUri("external"))
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 4:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 5:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 6:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(Telephony.Carriers.CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 7:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(Telephony.Mms.CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 8:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();
         case 9:
-            return CursorRequest.newBuilder().select()
+            return ContentRequest.newBuilder().select()
                     .uri(Telephony.Sms.CONTENT_URI)
                     .sortOrder(BaseColumns._ID + " limit 5")
                     .build();

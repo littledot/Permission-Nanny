@@ -10,7 +10,7 @@ import com.permissionnanny.dagger.AppModule;
 import com.permissionnanny.db.AppDB;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.content.CursorRequest;
+import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.operation.ProxyOperation;
 import timber.log.Timber;
 
@@ -149,7 +149,7 @@ public class PermissionConfigDataManager {
 
     private String contentPermissionMap(ContentOperation operation, RequestParams request) {
         switch (request.opCode) {
-        case CursorRequest.SELECT:
+        case ContentRequest.SELECT:
             switch (operation.mContentType) {
             case ContentOperation.CONTENT_CALENDAR:
                 return Manifest.permission.READ_CALENDAR;
@@ -161,9 +161,9 @@ public class PermissionConfigDataManager {
                 return Manifest.permission.READ_SMS;
             }
             break;
-        case CursorRequest.INSERT:
-        case CursorRequest.UPDATE:
-        case CursorRequest.DELETE:
+        case ContentRequest.INSERT:
+        case ContentRequest.UPDATE:
+        case ContentRequest.DELETE:
             switch (operation.mContentType) {
             case ContentOperation.CONTENT_CALENDAR:
                 return Manifest.permission.WRITE_CALENDAR;

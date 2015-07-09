@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.content.ContentOperation;
-import com.permissionnanny.content.CursorContentProvider;
+import com.permissionnanny.content.ProxyContentProvider;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.content.CursorEvent;
+import com.permissionnanny.lib.request.content.ContentEvent;
 import com.permissionnanny.operation.ProxyOperation;
 import timber.log.Timber;
 
@@ -47,11 +47,11 @@ public class ProxyExecutor {
         Timber.wtf("nonce=" + nonce);
 
         // cache request params
-        CursorContentProvider.approvedRequests.put(nonce, request);
+        ProxyContentProvider.approvedRequests.put(nonce, request);
 
         // return nonce to client
         Bundle response = new Bundle();
-        response.putLong(CursorEvent.NONCE, nonce);
+        response.putLong(ContentEvent.NONCE, nonce);
         return ResponseFactory.newAllowResponse()
                 .connection(Nanny.CLOSE)
                 .contentEncoding(Nanny.ENCODING_BUNDLE)

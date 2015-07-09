@@ -7,20 +7,20 @@ import android.support.annotation.Nullable;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
 
-public class CursorRequest extends PermissionRequest {
+public class ContentRequest extends PermissionRequest {
 
     public static final String SELECT = "Select";
     public static final String INSERT = "Insert";
     public static final String UPDATE = "Update";
     public static final String DELETE = "Delete";
 
-    public CursorRequest(RequestParams params) {
+    public ContentRequest(RequestParams params) {
         super(params);
     }
 
     @Override
     public int getRequestType() {
-        return CURSOR_REQUEST;
+        return CONTENT_REQUEST;
     }
 
     public static Builder newBuilder() {
@@ -81,8 +81,8 @@ public class CursorRequest extends PermissionRequest {
             return this;
         }
 
-        public CursorRequest build() {
-            return new CursorRequest(params);
+        public ContentRequest build() {
+            return new ContentRequest(params);
         }
     }
 
@@ -91,9 +91,9 @@ public class CursorRequest extends PermissionRequest {
      * @param reason
      * @param listener
      */
-    public void startRequest(Context context, String reason, CursorListener listener) {
+    public void startRequest(Context context, String reason, ContentListener listener) {
         // begin handshake
-        addFilter(new CursorEvent(mParams, listener));
+        addFilter(new ContentEvent(mParams, listener));
         super.startRequest(context, reason);
     }
 }

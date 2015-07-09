@@ -24,11 +24,11 @@ import java.security.SecureRandom;
 public abstract class PermissionRequest {
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({SIMPLE_REQUEST, CURSOR_REQUEST})
+    @IntDef({SIMPLE_REQUEST, CONTENT_REQUEST})
     public @interface RequestType {}
 
     public static final int SIMPLE_REQUEST = 1;
-    public static final int CURSOR_REQUEST = 2;
+    public static final int CONTENT_REQUEST = 2;
 
     protected PermissionReceiver mReceiver;
     protected RequestParams mParams;

@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
-public interface CursorListener {
+public interface ContentListener {
     /**
      * @param data
      * @param inserted
