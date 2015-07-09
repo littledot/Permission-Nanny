@@ -45,7 +45,7 @@
         <service android:name=".ProxyService"/>
 
         <receiver
-            android:name=".ClientPermissionUsageReceiver"
+            android:name=".ClientPermissionManifestReceiver"
             android:exported="true"/>
 
         <receiver

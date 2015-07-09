@@ -94,7 +94,8 @@ public class Nanny {
     public static final String CLIENT_REQUEST_RECEIVER = SERVER_PACKAGE + ".ClientRequestReceiver";
 
     /** Server Component that listens for client permission usages. */
-    public static final String CLIENT_PERMISSION_USAGE_RECEIVER = SERVER_PACKAGE + ".ClientPermissionUsageReceiver";
+    public static final String CLIENT_PERMISSION_MANIFEST_RECEIVER = SERVER_PACKAGE +
+            ".ClientPermissionManifestReceiver";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
     public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";

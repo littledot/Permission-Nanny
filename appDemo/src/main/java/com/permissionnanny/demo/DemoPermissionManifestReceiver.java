@@ -7,7 +7,7 @@ import com.permissionnanny.lib.registry.PermissionUsageReceiver;
 /**
  *
  */
-public class DemoPermissionUsageReceiver extends PermissionUsageReceiver {
+public class DemoPermissionManifestReceiver extends PermissionUsageReceiver {
 
     @Override
     protected void setupPermissionUsage(Context context) {

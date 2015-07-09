@@ -19,7 +19,7 @@
 
         <activity android:name=".DemoActivity"/>
 
-        <receiver android:name=".DemoPermissionUsageReceiver">
+        <receiver android:name=".DemoPermissionManifestReceiver">
             <intent-filter>
                 <action android:name="com.permissionnanny.GET_PERMISSION_USAGES"/>
             </intent-filter>
