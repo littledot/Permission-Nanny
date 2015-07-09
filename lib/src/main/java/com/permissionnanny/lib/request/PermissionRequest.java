@@ -28,14 +28,11 @@ public abstract class PermissionRequest {
     public static final String CLIENT_PACKAGE = "clientPackage";
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({CURSOR_REQUEST, LOCATION_REQUEST, SMS_REQUEST, TELEPHONY_REQUEST, WIFI_REQUEST})
+    @IntDef({SIMPLE_REQUEST, CURSOR_REQUEST})
     public @interface RequestType {}
 
-    public static final int CURSOR_REQUEST = 1;
-    public static final int LOCATION_REQUEST = 100;
-    public static final int SMS_REQUEST = 200;
-    public static final int TELEPHONY_REQUEST = 300;
-    public static final int WIFI_REQUEST = 400;
+    public static final int SIMPLE_REQUEST = 1;
+    public static final int CURSOR_REQUEST = 2;
 
     /** An empty intent. This constant must not be modified. */
     private static final Intent EMPTY_INTENT = new Intent();
@@ -43,8 +40,8 @@ public abstract class PermissionRequest {
     protected PermissionReceiver mReceiver;
     protected RequestParams mParams;
 
-    public PermissionRequest(RequestParams body) {
-        mParams = body;
+    public PermissionRequest(RequestParams params) {
+        mParams = params;
     }
 
     @RequestType

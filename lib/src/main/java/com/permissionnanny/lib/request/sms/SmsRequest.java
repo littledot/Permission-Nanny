@@ -21,7 +21,7 @@ public class SmsRequest extends PermissionRequest {
 
     @Override
     public int getRequestType() {
-        return SMS_REQUEST;
+        return SIMPLE_REQUEST;
     }
 
     public static final String SEND_DATA_MESSAGE = "sendDataMessage";

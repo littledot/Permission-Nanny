@@ -15,7 +15,7 @@ public class WifiManagerRequest extends PermissionRequest {
 
     @Override
     public int getRequestType() {
-        return WIFI_REQUEST;
+        return SIMPLE_REQUEST;
     }
 
     public static final String ADD_NETWORK = "addNetwork";

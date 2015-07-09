@@ -24,7 +24,7 @@ public class LocationRequest extends PermissionRequest {
 
     @Override
     public int getRequestType() {
-        return LOCATION_REQUEST;
+        return SIMPLE_REQUEST;
     }
 
     public static final String ADD_GPS_STATUS_LISTENER = "addGpsStatusListener";

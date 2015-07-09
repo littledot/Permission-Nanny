@@ -14,7 +14,7 @@ public class TelephonyRequest extends PermissionRequest {
 
     @Override
     public int getRequestType() {
-        return TELEPHONY_REQUEST;
+        return SIMPLE_REQUEST;
     }
 
     public static final String GET_ALL_CELL_INFO = "getAllCellInfo";

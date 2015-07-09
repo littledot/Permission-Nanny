@@ -51,7 +51,6 @@ public class ClientRequestReceiver extends BroadcastReceiver {
             badRequest(context, clientAddr, new InvalidRequestException(NO_REQUEST_BODY));
             return;
         }
-        // TODO: Reconsider this field
         int type = entity.getInt(PermissionRequest.REQUEST_TYPE, -1);
         if (type == -1) {
             badRequest(context, clientAddr, new InvalidRequestException(NO_REQUEST_TYPE));
