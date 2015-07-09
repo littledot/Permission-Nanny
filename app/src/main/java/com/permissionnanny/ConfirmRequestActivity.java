@@ -18,7 +18,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
 
 /**
@@ -47,11 +46,11 @@ public class ConfirmRequestActivity extends BaseActivity {
 
         mClientAddr = getIntent().getStringExtra(Nanny.CLIENT_ADDRESS);
         Bundle entity = getIntent().getBundleExtra(Nanny.ENTITY_BODY);
-        PendingIntent sender = entity.getParcelable(PermissionRequest.CLIENT_PACKAGE);
+        PendingIntent sender = entity.getParcelable(Nanny.CLIENT_PACKAGE);
         mAppPackage = sender.getIntentSender().getTargetPackage();
         mAppInfo = Util.getApplicationInfo(this, mAppPackage);
-        mRequest = entity.getParcelable(PermissionRequest.REQUEST_PARAMS);
-        int type = entity.getInt(PermissionRequest.REQUEST_TYPE, -1);
+        mRequest = entity.getParcelable(Nanny.REQUEST_PARAMS);
+        int type = entity.getInt(Nanny.REQUEST_TYPE, -1);
         mOperation = Operation.getOperation(mRequest, type);
 
         setContentView(R.layout.dialog);

@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  *
@@ -52,15 +51,9 @@ public class Nanny {
      * decode.
      */
     public static final String ENCODING_SERIALIZABLE = "encoding/serializable";
-    /**
-     * Request/Response value: Entity is an {@link ArrayList ArrayList&lt;String&gt;}; use {@link
-     * Intent#getStringArrayListExtra(String)} to decode.
-     */
-    public static final String ENCODING_STRING_ARRAY_LIST = "encoding/string-array-list";
 
     /** Request/Response field: Entity class type. Type: string */
     public static final String CONTENT_TYPE = "Content-Type";
-    public static final String TYPE_STRING_ARRAY_LIST = ArrayList.class.getCanonicalName() + "<String>";
 
     /** Response field: Service that handled the request. Type: string */
     public static final String SERVER = "Server";
@@ -77,6 +70,17 @@ public class Nanny {
     public static final String ENTITY_BODY = "Entity-Body";
     /** Response field: Error payload. Type: see {@link #CONTENT_ENCODING} & {@link #CONTENT_TYPE}. */
     public static final String ENTITY_ERROR = "Entity-Error";
+
+    /** Entity field: */
+    public static final String REQUEST_TYPE = "RequestType";
+    /** Entity field: */
+    public static final String REQUEST_PARAMS = "RequestParams";
+    /** Entity field: */
+    public static final String REQUEST_REASON = "RequestReason";
+    /** Entity field: */
+    public static final String CLIENT_PACKAGE = "ClientPackage";
+    /** Entity field: */
+    public static final String PERMISSION_MANIFEST = "PermissionManifest";
 
     // experimental
     /** Permission Nanny release build package name. */

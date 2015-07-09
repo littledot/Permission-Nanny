@@ -9,6 +9,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import com.permissionnanny.lib.BundleEvent;
 import com.permissionnanny.lib.BundleListener;
+import com.permissionnanny.lib.C;
 import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.PermissionReceiver;
@@ -22,20 +23,12 @@ import java.security.SecureRandom;
  */
 public abstract class PermissionRequest {
 
-    public static final String REQUEST_TYPE = "requestType";
-    public static final String REQUEST_PARAMS = "requestParams";
-    public static final String REQUEST_REASON = "requestReason";
-    public static final String CLIENT_PACKAGE = "clientPackage";
-
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({SIMPLE_REQUEST, CURSOR_REQUEST})
     public @interface RequestType {}
 
     public static final int SIMPLE_REQUEST = 1;
     public static final int CURSOR_REQUEST = 2;
-
-    /** An empty intent. This constant must not be modified. */
-    private static final Intent EMPTY_INTENT = new Intent();
 
     protected PermissionReceiver mReceiver;
     protected RequestParams mParams;
@@ -49,10 +42,10 @@ public abstract class PermissionRequest {
 
     public Intent decorateIntent(Intent intent, Context context, String reason, @Nullable String clientFilter) {
         Bundle entity = new Bundle();
-        entity.putParcelable(CLIENT_PACKAGE, PendingIntent.getBroadcast(context, 0, EMPTY_INTENT, 0));
-        entity.putInt(REQUEST_TYPE, getRequestType());
-        entity.putParcelable(REQUEST_PARAMS, mParams);
-        entity.putString(REQUEST_REASON, reason);
+        entity.putParcelable(Nanny.CLIENT_PACKAGE, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
+        entity.putInt(Nanny.REQUEST_TYPE, getRequestType());
+        entity.putParcelable(Nanny.REQUEST_PARAMS, mParams);
+        entity.putString(Nanny.REQUEST_REASON, reason);
 
         if (clientFilter != null) {
             intent.putExtra(Nanny.CLIENT_ADDRESS, clientFilter);

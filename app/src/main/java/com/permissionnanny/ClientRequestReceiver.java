@@ -8,7 +8,6 @@ import android.os.Bundle;
 import com.permissionnanny.common.IntentUtil;
 import com.permissionnanny.lib.InvalidRequestException;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.missioncontrol.PermissionConfig;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
@@ -41,17 +40,17 @@ public class ClientRequestReceiver extends BroadcastReceiver {
             badRequest(context, clientAddr, new InvalidRequestException(NO_ENTITY));
             return;
         }
-        PendingIntent sender = entity.getParcelable(PermissionRequest.CLIENT_PACKAGE);
-        if (sender == null) {
+        PendingIntent client = entity.getParcelable(Nanny.CLIENT_PACKAGE);
+        if (client == null) {
             badRequest(context, clientAddr, new InvalidRequestException(NO_CLIENT_PACKAGE));
             return;
         }
-        RequestParams request = entity.getParcelable(PermissionRequest.REQUEST_PARAMS);
+        RequestParams request = entity.getParcelable(Nanny.REQUEST_PARAMS);
         if (request == null) {
             badRequest(context, clientAddr, new InvalidRequestException(NO_REQUEST_BODY));
             return;
         }
-        int type = entity.getInt(PermissionRequest.REQUEST_TYPE, -1);
+        int type = entity.getInt(Nanny.REQUEST_TYPE, -1);
         if (type == -1) {
             badRequest(context, clientAddr, new InvalidRequestException(NO_REQUEST_TYPE));
             return;
@@ -62,7 +61,7 @@ public class ClientRequestReceiver extends BroadcastReceiver {
             return;
         }
 
-        String clientPackage = sender.getIntentSender().getTargetPackage();
+        String clientPackage = client.getIntentSender().getTargetPackage();
         int userConfig = mConfigManager.getPermissionSetting(clientPackage, operation, request);
         ProxyExecutor executor = new ProxyExecutor(context);
         switch (userConfig) {
