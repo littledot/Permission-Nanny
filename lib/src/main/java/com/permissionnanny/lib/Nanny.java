@@ -1,18 +1,15 @@
 package com.permissionnanny.lib;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import java.io.Serializable;
 
 /**
  *
  */
 public class Nanny {
-    /** Request/Response field: Protocol version of the request the client is using. Type: string */
+    /** Request/Response field: Protocol version of the request the client is using. Type: {@link String} */
     public static final String PROTOCOL_VERSION = "Protocol-Version";
     /** Request/Response value: Permission Police Protocol v1.0 */
     public static final String PPP_1_0 = "PPP/1.0";
@@ -31,7 +28,7 @@ public class Nanny {
     /** Request field: Address client is listening on. */
     public static final String CLIENT_ADDRESS = "Client-Address";
 
-    /** Response field: Connection options. Type: string */
+    /** Response field: Connection options. Type: {@link String} */
     public static final String CONNECTION = "Connection";
     /**
      * Response value: Client shall receive no further responses from the server; it is safe to unregister receivers or
@@ -39,23 +36,7 @@ public class Nanny {
      */
     public static final String CLOSE = "Close";
 
-    /**
-     * Request/Response field: Entity encoding; the receiving end should use the appropriately-typed {@link
-     * Intent#getExtras()} method to decode the entity. Type: string
-     */
-    public static final String CONTENT_ENCODING = "Content-Encoding";
-    /** Request/Response value: Entity is a {@link Bundle}; use {@link Intent#getBundleExtra(String)} to decode. */
-    public static final String ENCODING_BUNDLE = "encoding/bundle";
-    /**
-     * Request/Response value: Entity is a {@link Serializable}; use {@link Intent#getSerializableExtra(String)} to
-     * decode.
-     */
-    public static final String ENCODING_SERIALIZABLE = "encoding/serializable";
-
-    /** Request/Response field: Entity class type. Type: string */
-    public static final String CONTENT_TYPE = "Content-Type";
-
-    /** Response field: Service that handled the request. Type: string */
+    /** Response field: Service that handled the request. Type: {@link String} */
     public static final String SERVER = "Server";
     /** Response value: Service that authorizes requests. */
     public static final String AUTHORIZATION_SERVICE = "AuthorizationService";
@@ -66,9 +47,9 @@ public class Nanny {
     /** Response value: Service that delivers NMEA updates. */
     public static final String NMEA_SERVICE = "NmeaService";
 
-    /** Request/Response field: Data payload. Type: see {@link #CONTENT_ENCODING} and {@link #CONTENT_TYPE}. */
+    /** Request/Response field: Data payload. Type: {@link Bundle}. */
     public static final String ENTITY_BODY = "Entity-Body";
-    /** Response field: Error payload. Type: see {@link #CONTENT_ENCODING} & {@link #CONTENT_TYPE}. */
+    /** Response field: Error payload. Type: {@link NannyException}. */
     public static final String ENTITY_ERROR = "Entity-Error";
 
     /** Entity field: */

@@ -54,7 +54,6 @@ public class ProxyExecutor {
         response.putLong(ContentEvent.NONCE, nonce);
         return ResponseFactory.newAllowResponse()
                 .connection(Nanny.CLOSE)
-                .contentEncoding(Nanny.ENCODING_BUNDLE)
                 .body(response);
     }
 
@@ -77,7 +76,6 @@ public class ProxyExecutor {
             }
             return ResponseFactory.newAllowResponse()
                     .connection(Nanny.CLOSE)
-                    .contentEncoding(Nanny.ENCODING_BUNDLE)
                     .body(response);
         }
 

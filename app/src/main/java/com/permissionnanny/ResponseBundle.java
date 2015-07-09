@@ -33,16 +33,6 @@ public class ResponseBundle {
         return this;
     }
 
-    public ResponseBundle contentType(Class type) {
-        mResponse.putString(Nanny.CONTENT_TYPE, type.getCanonicalName());
-        return this;
-    }
-
-    public ResponseBundle contentEncoding(String encoding) {
-        mResponse.putString(Nanny.CONTENT_ENCODING, encoding);
-        return this;
-    }
-
     public ResponseBundle body(Bundle body) {
         mResponse.putBundle(Nanny.ENTITY_BODY, body);
         return this;

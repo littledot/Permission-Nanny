@@ -24,7 +24,6 @@ public class ResponseFactory {
                 .server(Nanny.AUTHORIZATION_SERVICE)
                 .status(Nanny.SC_BAD_REQUEST)
                 .connection(Nanny.CLOSE)
-                .contentEncoding(Nanny.ENCODING_SERIALIZABLE)
                 .error(error);
     }
 }

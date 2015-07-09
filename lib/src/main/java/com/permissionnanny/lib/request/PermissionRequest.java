@@ -51,8 +51,6 @@ public abstract class PermissionRequest {
             intent.putExtra(Nanny.CLIENT_ADDRESS, clientFilter);
         }
         return intent.putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
-                .putExtra(Nanny.CONTENT_TYPE, Bundle.class.getCanonicalName())
-                .putExtra(Nanny.CONTENT_ENCODING, Nanny.ENCODING_BUNDLE)
                 .putExtra(Nanny.ENTITY_BODY, entity);
     }
 
