@@ -59,7 +59,7 @@ public class Nanny {
     /** Entity field: */
     @PPP public static final String REQUEST_REASON = "RequestReason";
     /** Entity field: */
-    @PPP public static final String CLIENT_PACKAGE = "ClientPackage";
+    @PPP public static final String SENDER_IDENTITY = "SenderIdentity";
     /** Entity field: */
     @PPP public static final String PERMISSION_MANIFEST = "PermissionManifest";
     /** Entity field: */
@@ -81,7 +81,7 @@ public class Nanny {
             ".ClientPermissionManifestReceiver";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
-    @PPP public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";
+    @PPP public static final String ACTION_GET_PERMISSION_MANIFEST = SERVER_PACKAGE + ".GET_PERMISSION_MANIFEST";
 
     /** Authority that resolves to Permission Nanny's proxy content provider. */
     @PPP public static final String PROVIDER_AUTHORITY = SERVER_APP_ID + ".proxy_content_provider";

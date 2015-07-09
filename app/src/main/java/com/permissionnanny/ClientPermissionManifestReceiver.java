@@ -29,7 +29,7 @@ public class ClientPermissionManifestReceiver extends BroadcastReceiver {
         if (entity == null) {
             return;
         }
-        PendingIntent client = entity.getParcelable(Nanny.CLIENT_PACKAGE);
+        PendingIntent client = entity.getParcelable(Nanny.SENDER_IDENTITY);
         if (client == null) {
             return;
         }

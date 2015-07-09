@@ -2,12 +2,12 @@ package com.permissionnanny.demo;
 
 import android.Manifest;
 import android.content.Context;
-import com.permissionnanny.lib.registry.PermissionUsageReceiver;
+import com.permissionnanny.lib.registry.PermissionManifestReceiver;
 
 /**
  *
  */
-public class DemoPermissionManifestReceiver extends PermissionUsageReceiver {
+public class DemoPermissionManifestReceiver extends PermissionManifestReceiver {
 
     @Override
     protected void setupPermissionUsage(Context context) {

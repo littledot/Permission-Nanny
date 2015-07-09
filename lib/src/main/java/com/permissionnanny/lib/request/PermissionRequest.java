@@ -42,7 +42,7 @@ public abstract class PermissionRequest {
 
     public Intent decorateIntent(Intent intent, Context context, String reason, @Nullable String clientFilter) {
         Bundle entity = new Bundle();
-        entity.putParcelable(Nanny.CLIENT_PACKAGE, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
+        entity.putParcelable(Nanny.SENDER_IDENTITY, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
         entity.putInt(Nanny.REQUEST_TYPE, getRequestType());
         entity.putParcelable(Nanny.REQUEST_PARAMS, mParams);
         entity.putString(Nanny.REQUEST_REASON, reason);

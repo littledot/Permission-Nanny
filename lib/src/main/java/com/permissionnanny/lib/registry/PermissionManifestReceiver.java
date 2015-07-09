@@ -13,16 +13,29 @@ import java.util.ArrayList;
 /**
  *
  */
-public class PermissionUsageReceiver extends BroadcastReceiver {
+public class PermissionManifestReceiver extends BroadcastReceiver {
 
     private ArrayList<String> mPermissions = new ArrayList<>();
 
     @Override
     public final void onReceive(Context context, Intent intent) {
+        Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
+        if (entity == null) {
+            return;
+        }
+        PendingIntent sender = entity.getParcelable(Nanny.SENDER_IDENTITY);
+        if (sender == null) {
+            return;
+        }
+        String senderPackage = sender.getIntentSender().getTargetPackage();
+        if (!Nanny.SERVER_APP_ID.equals(senderPackage)) {
+            return;
+        }
+
         setupPermissionUsage(context);
 
-        Bundle entity = new Bundle();
-        entity.putParcelable(Nanny.CLIENT_PACKAGE, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
+        entity = new Bundle();
+        entity.putParcelable(Nanny.SENDER_IDENTITY, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
         entity.putStringArrayList(Nanny.PERMISSION_MANIFEST, mPermissions);
 
         Intent usage = new Intent()

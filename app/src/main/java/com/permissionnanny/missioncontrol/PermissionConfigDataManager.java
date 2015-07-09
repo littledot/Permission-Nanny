@@ -3,7 +3,9 @@ package com.permissionnanny.missioncontrol;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.util.SimpleArrayMap;
+import com.permissionnanny.App;
 import com.permissionnanny.Operation;
 import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.dagger.AppModule;
@@ -40,9 +42,13 @@ public class PermissionConfigDataManager {
     }
 
     public void refreshData() {
-        Intent uses = new Intent(Nanny.ACTION_GET_PERMISSION_USAGES)
+        Bundle entity = new Bundle();
+        entity.putParcelable(Nanny.SENDER_IDENTITY, App.IDENTITY);
+
+        Intent uses = new Intent(Nanny.ACTION_GET_PERMISSION_MANIFEST)
                 .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0);
+                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
+                .putExtra(Nanny.ENTITY_BODY, entity);
         mContext.sendBroadcast(uses);
     }
 

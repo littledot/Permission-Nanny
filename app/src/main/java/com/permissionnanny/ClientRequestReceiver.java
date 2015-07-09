@@ -21,7 +21,7 @@ import javax.inject.Inject;
 public class ClientRequestReceiver extends BroadcastReceiver {
 
     private static final String NO_ENTITY = "ENTITY_BODY is missing.";
-    private static final String NO_CLIENT_PACKAGE = "CLIENT_PACKAGE is missing.";
+    private static final String NO_SENDER_IDENTITY = "SENDER_IDENTITY is missing.";
     private static final String NO_REQUEST_BODY = "REQUEST_PARAMS is missing";
     private static final String NO_REQUEST_TYPE = "REQUEST_TYPE is missing";
     private static final String UNSUPPORTED_OPCODE = "Requested operation [%s] is unsupported.";
@@ -40,9 +40,9 @@ public class ClientRequestReceiver extends BroadcastReceiver {
             badRequest(context, clientAddr, new InvalidRequestException(NO_ENTITY));
             return;
         }
-        PendingIntent client = entity.getParcelable(Nanny.CLIENT_PACKAGE);
+        PendingIntent client = entity.getParcelable(Nanny.SENDER_IDENTITY);
         if (client == null) {
-            badRequest(context, clientAddr, new InvalidRequestException(NO_CLIENT_PACKAGE));
+            badRequest(context, clientAddr, new InvalidRequestException(NO_SENDER_IDENTITY));
             return;
         }
         RequestParams request = entity.getParcelable(Nanny.REQUEST_PARAMS);

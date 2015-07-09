@@ -46,7 +46,7 @@ public class ConfirmRequestActivity extends BaseActivity {
 
         mClientAddr = getIntent().getStringExtra(Nanny.CLIENT_ADDRESS);
         Bundle entity = getIntent().getBundleExtra(Nanny.ENTITY_BODY);
-        PendingIntent sender = entity.getParcelable(Nanny.CLIENT_PACKAGE);
+        PendingIntent sender = entity.getParcelable(Nanny.SENDER_IDENTITY);
         mAppPackage = sender.getIntentSender().getTargetPackage();
         mAppInfo = Util.getApplicationInfo(this, mAppPackage);
         mRequest = entity.getParcelable(Nanny.REQUEST_PARAMS);
