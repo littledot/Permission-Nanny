@@ -2,6 +2,8 @@ package com.permissionnanny;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
 import timber.log.Timber;
 
@@ -9,19 +11,17 @@ import timber.log.Timber;
  *
  */
 public class ProxyListener {
-    private final ProxyService mService;
-    private final String mClientId;
-    private final String mServerId;
+    protected final ProxyService mService;
+    private final String mClientAddr;
 
     /** Time of last broadcast. */
     private long mLastBroadcast;
     /** Time of last ACK received. */
     private long mLastAck;
 
-    public ProxyListener(ProxyService service, String clientId, String serverId) {
+    public ProxyListener(ProxyService service, String clientAddr) {
         mService = service;
-        mClientId = clientId;
-        mServerId = serverId;
+        mClientAddr = clientAddr;
     }
 
     public void updateAck(long time) {
@@ -30,9 +30,9 @@ public class ProxyListener {
 
     protected void sendBroadcast(Intent intent) {
         if (mLastAck - mLastBroadcast > 5000) { // no recent ack? assume client died
-            Timber.wtf("Dead client. Removing " + mClientId);
+            Timber.wtf("Dead client. Removing " + mClientAddr);
             unregister(mService);
-            mService.removeProxyClient(mClientId);
+            mService.removeProxyClient(mClientAddr);
             return;
         }
         mLastBroadcast = System.currentTimeMillis();
@@ -41,8 +41,15 @@ public class ProxyListener {
 
     protected void unregister(Context context) {}
 
-    protected Intent newResponseIntent() {
-        return new Intent(mClientId)
-                .putExtra(Nanny.ACK_SERVER, mServerId);
+    protected Intent newResponseIntent(String server, Bundle entity) {
+        entity.putString(Nanny.ACK_SERVER_ADDRESS, mService.getAckAddress());
+
+        Intent response = new Intent(mClientAddr)
+                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
+                .putExtra(Nanny.SERVER, server)
+                .putExtra(Nanny.STATUS_CODE, Nanny.SC_OK)
+                .putExtra(Nanny.ENTITY_BODY, entity);
+        Timber.wtf(BundleUtil.toString(response));
+        return response;
     }
 }

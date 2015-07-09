@@ -5,10 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.support.v4.util.SimpleArrayMap;
 import com.permissionnanny.common.BundleUtil;
+import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.location.LocationEvent;
 import com.permissionnanny.lib.request.location.LocationRequest;
 import com.permissionnanny.operation.ProxyGpsStatusListener;
 import com.permissionnanny.operation.ProxyLocationListener;
@@ -18,28 +19,30 @@ import io.snapdb.SnapDB;
 import timber.log.Timber;
 
 import javax.inject.Inject;
+import java.security.SecureRandom;
 
 /**
  *
  */
 public class ProxyService extends BaseService {
 
-    public static final String SERVER_ID = "com.permission.police.ProxyService";
-    public static final String CLIENT_ID = "clientId";
-    public static final String REQUEST = "request";
+    public static final String CLIENT_ADDR = "clientAddr";
+    public static final String REQUEST_PARAMS = "requestParams";
 
     private SimpleArrayMap<String, ProxyClient> mClients = new SimpleArrayMap<>();
     private AckReceiver mAckReceiver = new AckReceiver();
     private LocationManager mLocationManager;
+    private String mAckServerAddr;
 
     @Inject SnapDB mDB;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        registerReceiver(mAckReceiver, new IntentFilter(SERVER_ID));
         getActivityComponent().inject(this);
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        mAckServerAddr = Long.toString(new SecureRandom().nextLong());
+        registerReceiver(mAckReceiver, new IntentFilter(mAckServerAddr));
         Timber.wtf("init service");
     }
 
@@ -50,8 +53,8 @@ public class ProxyService extends BaseService {
             return super.onStartCommand(intent, flags, startId);
         }
         Timber.wtf("Server started with args: " + BundleUtil.toString(intent));
-        String clientId = intent.getStringExtra(CLIENT_ID);
-        RequestParams requestParams = intent.getParcelableExtra(REQUEST);
+        String clientId = intent.getStringExtra(CLIENT_ADDR);
+        RequestParams requestParams = intent.getParcelableExtra(REQUEST_PARAMS);
         handleRequest(clientId, requestParams);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -95,21 +98,21 @@ public class ProxyService extends BaseService {
         }
     }
 
-    private void handleAddGpsStatusListenerRequest(RequestParams request, String clientId) {
-        ProxyGpsStatusListener gpsStatusListener = new ProxyGpsStatusListener(this, clientId, SERVER_ID);
-        mClients.put(clientId, new ProxyClient(clientId, request, gpsStatusListener));
+    private void handleAddGpsStatusListenerRequest(RequestParams request, String clientAddr) {
+        ProxyGpsStatusListener gpsStatusListener = new ProxyGpsStatusListener(this, clientAddr);
+        mClients.put(clientAddr, new ProxyClient(clientAddr, request, gpsStatusListener));
         mLocationManager.addGpsStatusListener(gpsStatusListener);
     }
 
-    private void handleAddNmeaListener(RequestParams request, String clientId) {
-        ProxyNmeaListener nmeaListener = new ProxyNmeaListener(this, clientId, SERVER_ID);
-        mClients.put(clientId, new ProxyClient(clientId, request, nmeaListener));
+    private void handleAddNmeaListener(RequestParams request, String clientAddr) {
+        ProxyNmeaListener nmeaListener = new ProxyNmeaListener(this, clientAddr);
+        mClients.put(clientAddr, new ProxyClient(clientAddr, request, nmeaListener));
         mLocationManager.addNmeaListener(nmeaListener);
     }
 
-    private void handleRequestLocationUpdates1(RequestParams request, String clientId) {
-        ProxyLocationListener locationListener = new ProxyLocationListener(this, clientId, SERVER_ID);
-        mClients.put(clientId, new ProxyClient(clientId, request, locationListener));
+    private void handleRequestLocationUpdates1(RequestParams request, String clientAddr) {
+        ProxyLocationListener locationListener = new ProxyLocationListener(this, clientAddr);
+        mClients.put(clientAddr, new ProxyClient(clientAddr, request, locationListener));
         mLocationManager.requestLocationUpdates(request.long0, request.float0, request.criteria0, locationListener,
                 null);
     }
@@ -122,11 +125,17 @@ public class ProxyService extends BaseService {
         }
     }
 
+    public String getAckAddress() {
+        return mAckServerAddr;
+    }
+
     class AckReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String clientId = intent.getStringExtra(LocationEvent.CLIENT_ID);
-            ProxyClient client = mClients.get(clientId);
+            // TODO: validate
+            Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
+            String clientAddr = entity.getString(Nanny.CLIENT_ADDRESS);
+            ProxyClient client = mClients.get(clientAddr);
             if (client != null) {
                 client.mListener.updateAck(System.currentTimeMillis());
             }

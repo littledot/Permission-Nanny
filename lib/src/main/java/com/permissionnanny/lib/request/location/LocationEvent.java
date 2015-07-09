@@ -8,24 +8,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.PPP;
+import com.permissionnanny.lib.request.BaseEvent;
 
 /**
  *
  */
-public class LocationEvent implements Event {
-    public static final String TYPE = "type";
-    public static final String LOCATION = "location";
-    public static final String PROVIDER = "provider";
-    public static final String STATUS = "status";
-    public static final String EXTRAS = "extras";
+public class LocationEvent extends BaseEvent implements Event {
 
-    public static final String ON_LOCATION_CHANGED = "onLocationChanged";
-    public static final String ON_PROVIDER_DISABLED = "onProviderDisabled";
-    public static final String ON_PROVIDER_ENABLED = "onProviderEnabled";
-    public static final String ON_STATUS_CHANGED = "onStatusChanged";
+    @PPP public static final String LOCATION = "location";
+    @PPP public static final String PROVIDER = "provider";
+    @PPP public static final String STATUS = "status";
+    @PPP public static final String EXTRAS = "extras";
 
-    // experimental
-    public static final String CLIENT_ID = "clientId";
+    @PPP public static final String ON_LOCATION_CHANGED = "onLocationChanged";
+    @PPP public static final String ON_PROVIDER_DISABLED = "onProviderDisabled";
+    @PPP public static final String ON_PROVIDER_ENABLED = "onProviderEnabled";
+    @PPP public static final String ON_STATUS_CHANGED = "onStatusChanged";
 
     private LocationListener mLocationListener;
     private Handler mHandler;
@@ -41,29 +40,27 @@ public class LocationEvent implements Event {
     }
 
     @Override
-    public void process(Context context, final Intent intent) {
-        // send ack
-        String ackServerId = intent.getStringExtra(Nanny.ACK_SERVER);
-        String clientId = intent.getAction();
-        context.sendBroadcast(new Intent(ackServerId).putExtra(CLIENT_ID, clientId));
+    public void process(Context context, Intent intent) {
+        sendAck(context, intent);
 
+        final Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                String type = intent.getStringExtra(TYPE);
+                String type = entity.getString(TYPE);
                 if (ON_LOCATION_CHANGED.equals(type)) {
-                    Location location = intent.getParcelableExtra(LOCATION);
+                    Location location = entity.getParcelable(LOCATION);
                     mLocationListener.onLocationChanged(location);
                 } else if (ON_PROVIDER_DISABLED.equals(type)) {
-                    String provider = intent.getStringExtra(PROVIDER);
+                    String provider = entity.getString(PROVIDER);
                     mLocationListener.onProviderDisabled(provider);
                 } else if (ON_PROVIDER_ENABLED.equals(type)) {
-                    String provider = intent.getStringExtra(PROVIDER);
+                    String provider = entity.getString(PROVIDER);
                     mLocationListener.onProviderEnabled(provider);
                 } else if (ON_STATUS_CHANGED.equals(type)) {
-                    String provider = intent.getStringExtra(PROVIDER);
-                    int status = intent.getIntExtra(STATUS, -1);
-                    Bundle extras = intent.getBundleExtra(EXTRAS);
+                    String provider = entity.getString(PROVIDER);
+                    int status = entity.getInt(STATUS, -1);
+                    Bundle extras = entity.getBundle(EXTRAS);
                     mLocationListener.onStatusChanged(provider, status, extras);
                 }
             }

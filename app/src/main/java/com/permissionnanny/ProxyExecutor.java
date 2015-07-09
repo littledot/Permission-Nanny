@@ -81,8 +81,8 @@ public class ProxyExecutor {
 
         // ongoing request
         Intent server = new Intent(mContext, ProxyService.class);
-        server.putExtra(ProxyService.CLIENT_ID, clientId);
-        server.putExtra(ProxyService.REQUEST, request);
+        server.putExtra(ProxyService.CLIENT_ADDR, clientId);
+        server.putExtra(ProxyService.REQUEST_PARAMS, request);
         Timber.wtf("Operation.function is null, starting service with args: " + BundleUtil.toString(server));
         mContext.startService(server);
         return ResponseFactory.newAllowResponse();

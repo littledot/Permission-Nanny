@@ -1,11 +1,12 @@
 package com.permissionnanny.operation;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.GpsStatus.Listener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import com.permissionnanny.ProxyListener;
 import com.permissionnanny.ProxyService;
+import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.location.GpsStatusEvent;
 
 /**
@@ -13,8 +14,8 @@ import com.permissionnanny.lib.request.location.GpsStatusEvent;
  */
 public class ProxyGpsStatusListener extends ProxyListener implements Listener {
 
-    public ProxyGpsStatusListener(ProxyService service, String clientId, String serverId) {
-        super(service, clientId, serverId);
+    public ProxyGpsStatusListener(ProxyService service, String clientAddr) {
+        super(service, clientAddr);
     }
 
     @Override
@@ -25,8 +26,9 @@ public class ProxyGpsStatusListener extends ProxyListener implements Listener {
 
     @Override
     public void onGpsStatusChanged(int event) {
-        Intent intent = newResponseIntent()
-                .putExtra(GpsStatusEvent.EVENT, event);
-        sendBroadcast(intent);
+        Bundle entity = new Bundle();
+        entity.putInt(GpsStatusEvent.EVENT, event);
+
+        sendBroadcast(newResponseIntent(Nanny.GPS_STATUS_SERVICE, entity));
     }
 }

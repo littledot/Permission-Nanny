@@ -10,81 +10,81 @@ import android.os.Bundle;
  */
 public class Nanny {
     /** Request/Response field: Protocol version of the request the client is using. Type: {@link String} */
-    public static final String PROTOCOL_VERSION = "Protocol-Version";
+    @PPP public static final String PROTOCOL_VERSION = "Protocol-Version";
     /** Request/Response value: Permission Police Protocol v1.0 */
-    public static final String PPP_1_0 = "PPP/1.0";
+    @PPP public static final String PPP_1_0 = "PPP/1.0";
 
     /** Response field: Result status code. Type: int */
-    public static final String STATUS_CODE = "Status-Code";
+    @PPP public static final String STATUS_CODE = "Status-Code";
     /** Response value: Request succeeded. */
-    public static final int SC_OK = 200;
+    @PPP public static final int SC_OK = 200;
     /** Response value: Server could not process request due to incorrect request parameters. */
-    public static final int SC_BAD_REQUEST = 400;
+    @PPP public static final int SC_BAD_REQUEST = 400;
     /** Response value: Client is not authorized to make a request. */
-    public static final int SC_UNAUTHORIZED = 401;
+    @PPP public static final int SC_UNAUTHORIZED = 401;
     /** Response value: User denied your request. */
-    public static final int SC_FORBIDDEN = 403;
+    @PPP public static final int SC_FORBIDDEN = 403;
 
     /** Request field: Address client is listening on. */
-    public static final String CLIENT_ADDRESS = "Client-Address";
+    @PPP public static final String CLIENT_ADDRESS = "Client-Address";
 
     /** Response field: Connection options. Type: {@link String} */
-    public static final String CONNECTION = "Connection";
+    @PPP public static final String CONNECTION = "Connection";
     /**
      * Response value: Client shall receive no further responses from the server; it is safe to unregister receivers or
      * unbind services.*
      */
-    public static final String CLOSE = "Close";
+    @PPP public static final String CLOSE = "Close";
 
     /** Response field: Service that handled the request. Type: {@link String} */
-    public static final String SERVER = "Server";
+    @PPP public static final String SERVER = "Server";
     /** Response value: Service that authorizes requests. */
-    public static final String AUTHORIZATION_SERVICE = "AuthorizationService";
+    @PPP public static final String AUTHORIZATION_SERVICE = "AuthorizationService";
     /** Response value: Service that delivers location updates. */
-    public static final String LOCATION_SERVICE = "LocationService";
+    @PPP public static final String LOCATION_SERVICE = "LocationService";
     /** Response value: Service that delivers GPS status updates. */
-    public static final String GPS_STATUS_SERVICE = "GpsStatusService";
+    @PPP public static final String GPS_STATUS_SERVICE = "GpsStatusService";
     /** Response value: Service that delivers NMEA updates. */
-    public static final String NMEA_SERVICE = "NmeaService";
+    @PPP public static final String NMEA_SERVICE = "NmeaService";
 
     /** Request/Response field: Data payload. Type: {@link Bundle}. */
-    public static final String ENTITY_BODY = "Entity-Body";
+    @PPP public static final String ENTITY_BODY = "Entity-Body";
     /** Response field: Error payload. Type: {@link NannyException}. */
-    public static final String ENTITY_ERROR = "Entity-Error";
+    @PPP public static final String ENTITY_ERROR = "Entity-Error";
 
     /** Entity field: */
-    public static final String REQUEST_TYPE = "RequestType";
+    @PPP public static final String REQUEST_TYPE = "RequestType";
     /** Entity field: */
-    public static final String REQUEST_PARAMS = "RequestParams";
+    @PPP public static final String REQUEST_PARAMS = "RequestParams";
     /** Entity field: */
-    public static final String REQUEST_REASON = "RequestReason";
+    @PPP public static final String REQUEST_REASON = "RequestReason";
     /** Entity field: */
-    public static final String CLIENT_PACKAGE = "ClientPackage";
+    @PPP public static final String CLIENT_PACKAGE = "ClientPackage";
     /** Entity field: */
-    public static final String PERMISSION_MANIFEST = "PermissionManifest";
+    @PPP public static final String PERMISSION_MANIFEST = "PermissionManifest";
+    /** Entity field: */
+    @PPP public static final String ACK_SERVER_ADDRESS = "AckServerAddress";
 
     // experimental
     /** Permission Nanny release build package name. */
-    public static final String SERVER_PACKAGE = "com.permissionnanny";
+    @PPP public static final String SERVER_PACKAGE = "com.permissionnanny";
     /** Permission Nanny debug build package name. */
     public static final String SERVER_DEBUG_PACKAGE = "com.permissionnanny.debug";
     /** Permission Nanny's app ID changes depending on the build type to avoid conflict with each other. */
     public static final String SERVER_APP_ID = BuildConfig.DEBUG ? SERVER_DEBUG_PACKAGE : SERVER_PACKAGE;
 
     /** Server Component that handles client requests. */
-    public static final String CLIENT_REQUEST_RECEIVER = SERVER_PACKAGE + ".ClientRequestReceiver";
+    @PPP public static final String CLIENT_REQUEST_RECEIVER = SERVER_PACKAGE + ".ClientRequestReceiver";
 
     /** Server Component that listens for client permission usages. */
-    public static final String CLIENT_PERMISSION_MANIFEST_RECEIVER = SERVER_PACKAGE +
+    @PPP public static final String CLIENT_PERMISSION_MANIFEST_RECEIVER = SERVER_PACKAGE +
             ".ClientPermissionManifestReceiver";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
-    public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";
+    @PPP public static final String ACTION_GET_PERMISSION_USAGES = SERVER_PACKAGE + ".GET_PERMISSION_USAGES";
 
     /** Authority that resolves to Permission Nanny's proxy content provider. */
-    public static final String PROVIDER_AUTHORITY = SERVER_APP_ID + ".proxy_content_provider";
-
-    public static final String ACK_SERVER = "ackServer";
+    @PPP public static final String PROVIDER_AUTHORITY = SERVER_APP_ID + ".proxy_content_provider";
 
     /**
      * Checks if Permission Nanny is installed.

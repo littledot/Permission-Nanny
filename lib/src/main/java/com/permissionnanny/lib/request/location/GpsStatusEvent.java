@@ -3,14 +3,16 @@ package com.permissionnanny.lib.request.location;
 import android.content.Context;
 import android.content.Intent;
 import android.location.GpsStatus.Listener;
-import com.permissionnanny.lib.Event;
+import android.os.Bundle;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.PPP;
+import com.permissionnanny.lib.request.BaseEvent;
 
 /**
  *
  */
-public class GpsStatusEvent implements Event {
-    public static final String EVENT = "event";
+public class GpsStatusEvent extends BaseEvent {
+    @PPP public static final String EVENT = "event";
 
     private Listener mListener;
 
@@ -25,7 +27,10 @@ public class GpsStatusEvent implements Event {
 
     @Override
     public void process(Context context, Intent intent) {
-        int event = intent.getIntExtra(EVENT, -1);
+        sendAck(context, intent);
+
+        Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
+        int event = entity.getInt(EVENT, -1);
         mListener.onGpsStatusChanged(event);
     }
 }
