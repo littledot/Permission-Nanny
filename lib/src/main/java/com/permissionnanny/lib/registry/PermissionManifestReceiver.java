@@ -41,7 +41,7 @@ public class PermissionManifestReceiver extends BroadcastReceiver {
         Intent usage = new Intent()
                 .setClassName(Nanny.SERVER_APP_ID, Nanny.CLIENT_PERMISSION_MANIFEST_RECEIVER)
                 .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
+                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
                 .putExtra(Nanny.ENTITY_BODY, entity);
         context.sendBroadcast(usage);
     }

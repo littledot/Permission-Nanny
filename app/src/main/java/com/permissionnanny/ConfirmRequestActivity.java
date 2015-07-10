@@ -50,7 +50,7 @@ public class ConfirmRequestActivity extends BaseActivity {
         mAppPackage = sender.getIntentSender().getTargetPackage();
         mAppInfo = Util.getApplicationInfo(this, mAppPackage);
         mRequest = entity.getParcelable(Nanny.REQUEST_PARAMS);
-        int type = entity.getInt(Nanny.REQUEST_TYPE, -1);
+        int type = entity.getInt(Nanny.TYPE, -1);
         mOperation = Operation.getOperation(mRequest, type);
 
         setContentView(R.layout.dialog);

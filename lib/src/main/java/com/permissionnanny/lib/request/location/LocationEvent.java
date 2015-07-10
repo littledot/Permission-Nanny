@@ -47,7 +47,7 @@ public class LocationEvent extends BaseEvent implements Event {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                String type = entity.getString(TYPE);
+                String type = entity.getString(Nanny.TYPE);
                 if (ON_LOCATION_CHANGED.equals(type)) {
                     Location location = entity.getParcelable(LOCATION);
                     mLocationListener.onLocationChanged(location);

@@ -47,7 +47,7 @@ public class PermissionConfigDataManager {
 
         Intent uses = new Intent(Nanny.ACTION_GET_PERMISSION_MANIFEST)
                 .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
+                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
                 .putExtra(Nanny.ENTITY_BODY, entity);
         mContext.sendBroadcast(uses);
     }

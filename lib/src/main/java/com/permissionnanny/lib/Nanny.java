@@ -11,8 +11,8 @@ import android.os.Bundle;
 public class Nanny {
     /** Request/Response field: Protocol version of the request the client is using. Type: {@link String} */
     @PPP public static final String PROTOCOL_VERSION = "Protocol-Version";
-    /** Request/Response value: Permission Police Protocol v1.0 */
-    @PPP public static final String PPP_1_0 = "PPP/1.0";
+    /** Request/Response value: Permission Police Protocol v0.1 */
+    @PPP public static final String PPP_0_1 = "PPP/0.1";
 
     /** Response field: Result status code. Type: int */
     @PPP public static final String STATUS_CODE = "Status-Code";
@@ -53,7 +53,7 @@ public class Nanny {
     @PPP public static final String ENTITY_ERROR = "Entity-Error";
 
     /** Entity field: */
-    @PPP public static final String REQUEST_TYPE = "RequestType";
+    @PPP public static final String TYPE = "Type";
     /** Entity field: */
     @PPP public static final String REQUEST_PARAMS = "RequestParams";
     /** Entity field: */

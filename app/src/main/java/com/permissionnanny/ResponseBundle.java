@@ -11,7 +11,7 @@ public class ResponseBundle {
 
     public ResponseBundle() {
         mResponse = new Bundle();
-        mResponse.putString(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0);
+        mResponse.putString(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1);
     }
 
     public ResponseBundle(Bundle response) {

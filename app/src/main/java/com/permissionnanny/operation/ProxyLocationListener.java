@@ -25,7 +25,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
     @Override
     public void onLocationChanged(Location location) {
         Bundle entity = new Bundle();
-        entity.putString(LocationEvent.TYPE, LocationEvent.ON_LOCATION_CHANGED);
+        entity.putString(Nanny.TYPE, LocationEvent.ON_LOCATION_CHANGED);
         entity.putParcelable(LocationEvent.LOCATION, location);
 
         sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
@@ -34,7 +34,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
     @Override
     public void onProviderDisabled(String provider) {
         Bundle entity = new Bundle();
-        entity.putString(LocationEvent.TYPE, LocationEvent.ON_PROVIDER_DISABLED);
+        entity.putString(Nanny.TYPE, LocationEvent.ON_PROVIDER_DISABLED);
         entity.putString(LocationEvent.PROVIDER, provider);
 
         sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
@@ -43,7 +43,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
     @Override
     public void onProviderEnabled(String provider) {
         Bundle entity = new Bundle();
-        entity.putString(LocationEvent.TYPE, LocationEvent.ON_PROVIDER_ENABLED);
+        entity.putString(Nanny.TYPE, LocationEvent.ON_PROVIDER_ENABLED);
         entity.putString(LocationEvent.PROVIDER, provider);
 
         sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
@@ -52,7 +52,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Bundle entity = new Bundle();
-        entity.putString(LocationEvent.TYPE, LocationEvent.ON_STATUS_CHANGED);
+        entity.putString(Nanny.TYPE, LocationEvent.ON_STATUS_CHANGED);
         entity.putString(LocationEvent.PROVIDER, provider);
         entity.putInt(LocationEvent.STATUS, status);
         entity.putBundle(LocationEvent.EXTRAS, extras);

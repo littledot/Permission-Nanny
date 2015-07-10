@@ -45,7 +45,7 @@ public class ProxyListener {
         entity.putString(Nanny.ACK_SERVER_ADDRESS, mService.getAckAddress());
 
         Intent response = new Intent(mClientAddr)
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_1_0)
+                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
                 .putExtra(Nanny.SERVER, server)
                 .putExtra(Nanny.STATUS_CODE, Nanny.SC_OK)
                 .putExtra(Nanny.ENTITY_BODY, entity);
