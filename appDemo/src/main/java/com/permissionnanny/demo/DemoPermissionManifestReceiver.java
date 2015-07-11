@@ -2,7 +2,7 @@ package com.permissionnanny.demo;
 
 import android.Manifest;
 import android.content.Context;
-import com.permissionnanny.lib.registry.PermissionManifestReceiver;
+import com.permissionnanny.lib.manifest.PermissionManifestReceiver;
 
 /**
  *

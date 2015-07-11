@@ -1,4 +1,4 @@
-package com.permissionnanny.lib.registry;
+package com.permissionnanny.lib.manifest;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
