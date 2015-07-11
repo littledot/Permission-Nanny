@@ -3,6 +3,7 @@ package com.permissionnanny.demo.location;
 import android.animation.ObjectAnimator;
 import android.os.Build.VERSION;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.permissionnanny.demo.Config;
 import com.permissionnanny.demo.DemoViewHolder;
 import com.permissionnanny.demo.EzMap;
 import com.permissionnanny.demo.R;
-import com.permissionnanny.lib.BundleListener;
+import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.Nanny;
 import com.thedeanda.lorem.Lorem;
 import de.greenrobot.event.EventBus;
@@ -58,9 +59,9 @@ public class LocationDemoAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFactory.getRequest(position).listener(new BundleListener() {
+                mFactory.getRequest(position).listener(new SimpleListener() {
                     @Override
-                    public void onResponse(Bundle results) {
+                    public void onResponse(@NonNull Bundle results) {
                         mResults[position] = results;
                         Bundle response = results.getBundle(Nanny.ENTITY_BODY);
                         if (response != null) {

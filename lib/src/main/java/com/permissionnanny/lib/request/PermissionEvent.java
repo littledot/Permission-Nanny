@@ -1,17 +1,20 @@
-package com.permissionnanny.lib;
+package com.permissionnanny.lib.request;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import com.permissionnanny.lib.Event;
+import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.request.simple.SimpleListener;
 
 /**
  *
  */
-public class BundleEvent implements Event {
+public class PermissionEvent implements Event {
 
-    private BundleListener mListener;
+    private SimpleListener mListener;
 
-    public BundleEvent(BundleListener listener) {
+    public PermissionEvent(SimpleListener listener) {
         mListener = listener;
     }
 

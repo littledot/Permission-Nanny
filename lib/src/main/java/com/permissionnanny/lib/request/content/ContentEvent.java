@@ -62,6 +62,6 @@ public class ContentEvent implements Event {
             break;
         }
 
-        mListener.onResult(result, data, inserted, rowsUpdated, rowsDeleted);
+        mListener.onResponse(result, data, inserted, rowsUpdated, rowsDeleted);
     }
 }

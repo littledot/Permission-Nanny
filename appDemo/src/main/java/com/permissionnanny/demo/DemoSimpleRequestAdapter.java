@@ -1,13 +1,14 @@
 package com.permissionnanny.demo;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import com.permissionnanny.common.BundleUtil;
-import com.permissionnanny.lib.BundleListener;
+import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.Nanny;
 import com.thedeanda.lorem.Lorem;
 import org.apache.http.HttpStatus;
@@ -49,9 +50,9 @@ public class DemoSimpleRequestAdapter extends Adapter<DemoViewHolder> {
         holder.itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFactory.getRequest(position).listener(new BundleListener() {
+                mFactory.getRequest(position).listener(new SimpleListener() {
                     @Override
-                    public void onResponse(Bundle response) {
+                    public void onResponse(@NonNull Bundle response) {
                         mResults[position] = response;
                         notifyItemChanged(position);
                     }

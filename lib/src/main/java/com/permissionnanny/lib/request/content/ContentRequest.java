@@ -3,25 +3,36 @@ package com.permissionnanny.lib.request.content;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
 
+/**
+ * A request to Permission Nanny to access {@link android.content.ContentProvider}s that are protected by Android
+ * permissions on your behalf.
+ * <p/>
+ * <h1>How does the Protocol Work?</h1>
+ * <p/>
+ * <h1>How to Create a Request</h1>
+ * <p/>
+ * Use the {@link ContentRequest.Builder} to craft your query.
+ * <p/>
+ * <h1>How to Listen for a Response</h1>
+ * <p/>
+ * After creating a request, attach a listener to it via {@link #listener(ContentListener)}.
+ * <p/>
+ * <h1>How to Start a Request</h1>
+ * <p/>
+ * Send the request to Permission Nanny via {@link #startRequest(Context, String)}.
+ */
 public class ContentRequest extends PermissionRequest {
 
-    public static final String SELECT = "Select";
-    public static final String INSERT = "Insert";
-    public static final String UPDATE = "Update";
-    public static final String DELETE = "Delete";
-
-    public ContentRequest(RequestParams params) {
-        super(params);
-    }
-
-    @Override
-    public int getRequestType() {
-        return CONTENT_REQUEST;
-    }
+    @PPP public static final String SELECT = "Select";
+    @PPP public static final String INSERT = "Insert";
+    @PPP public static final String UPDATE = "Update";
+    @PPP public static final String DELETE = "Delete";
 
     public static Builder newBuilder() {
         return new Builder();
@@ -86,14 +97,35 @@ public class ContentRequest extends PermissionRequest {
         }
     }
 
+    public ContentRequest(RequestParams params) {
+        super(params);
+    }
+
     /**
      * Attach a listener.
      *
-     * @param listener Content result receiver
+     * @param listener Response receiver
      * @return itself
      */
     public ContentRequest listener(@NonNull ContentListener listener) {
-        addFilter(new ContentEvent(mParams, listener));
-        return this;
+        return (ContentRequest) addFilter(new ContentEvent(mParams, listener));
+    }
+
+    /**
+     * /** Start the request.
+     *
+     * @param context  Activity, Service, etc.
+     * @param reason   Explain to the user why you need to access the feature. This is displayed to the user in a dialog
+     *                 when Permission Nanny needs to ask the user for authorization.
+     * @param listener Response receiver
+     */
+    public void startRequest(@NonNull Context context, @Nullable String reason, @NonNull ContentListener listener) {
+        listener(listener);
+        startRequest(context, reason);
+    }
+
+    @Override
+    public int getRequestType() {
+        return CONTENT_REQUEST;
     }
 }

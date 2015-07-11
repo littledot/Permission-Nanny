@@ -1,9 +1,11 @@
-package com.permissionnanny.lib;
+package com.permissionnanny.lib.request;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.util.SimpleArrayMap;
+import com.permissionnanny.lib.Event;
+import com.permissionnanny.lib.Nanny;
 import org.apache.http.protocol.HTTP;
 
 /**
