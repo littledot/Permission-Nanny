@@ -8,13 +8,13 @@ import android.provider.CalendarContract;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.provider.Telephony;
-import com.permissionnanny.demo.DemoRequestFactory;
+import com.permissionnanny.demo.ContentRequestFactory;
 import com.permissionnanny.lib.request.content.ContentRequest;
 
 /**
  *
  */
-public class ContentRequestFactory implements DemoRequestFactory {
+public class DemoContentRequestFactory implements ContentRequestFactory {
     private String[] mLabels = new String[]{
             "Calendar",
             "Contacts",

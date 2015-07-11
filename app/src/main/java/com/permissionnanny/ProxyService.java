@@ -10,7 +10,7 @@ import android.support.v4.util.SimpleArrayMap;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.location.LocationRequest;
+import com.permissionnanny.lib.request.simple.LocationRequest;
 import com.permissionnanny.operation.ProxyGpsStatusListener;
 import com.permissionnanny.operation.ProxyLocationListener;
 import com.permissionnanny.operation.ProxyNmeaListener;

@@ -8,7 +8,7 @@ import android.telephony.SmsManager;
 import com.permissionnanny.ProxyFunction;
 import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.sms.SmsRequest;
+import com.permissionnanny.lib.request.simple.SmsRequest;
 
 /**
  *

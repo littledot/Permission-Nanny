@@ -4,9 +4,13 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import com.permissionnanny.demo.DemoAdapter;
+import android.view.ViewGroup;
+import com.permissionnanny.demo.ContentRequestFactory;
 import com.permissionnanny.demo.DemoViewHolder;
+import com.permissionnanny.demo.R;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.content.ContentListener;
 import org.apache.http.HttpStatus;
@@ -14,32 +18,42 @@ import org.apache.http.HttpStatus;
 /**
  *
  */
-public class ContentDemoAdapter extends DemoAdapter {
+public class DemoContentRequestAdapter extends RecyclerView.Adapter<DemoViewHolder> {
+
     private ContentRequestFactory mFactory;
     private Bundle[] mResults;
     private String[] mContent;
 
-    public ContentDemoAdapter(ContentRequestFactory factory) {
-        super(factory);
+    public DemoContentRequestAdapter(ContentRequestFactory factory) {
         mFactory = factory;
         mResults = new Bundle[mFactory.getCount()];
         mContent = new String[mFactory.getCount()];
     }
 
     @Override
+    public int getItemCount() {
+        return mFactory.getCount();
+    }
+
+    @Override
+    public DemoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new DemoViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.wifi_listitem, parent, false));
+    }
+
+    @Override
     public void onBindViewHolder(DemoViewHolder holder, final int position) {
-        super.onBindViewHolder(holder, position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFactory.getRequest(position).startRequest(v.getContext(), "demo", new ContentListener() {
+                mFactory.getRequest(position).listener(new ContentListener() {
                     @Override
                     public void onResult(Bundle result, Cursor data, Uri inserted, int rowsUpdated, int rowsDeleted) {
                         mResults[position] = result;
                         mContent[position] = DatabaseUtils.dumpCursorToString(data);
                         notifyItemChanged(position);
                     }
-                });
+                }).startRequest(v.getContext(), "demo");
             }
         });
 

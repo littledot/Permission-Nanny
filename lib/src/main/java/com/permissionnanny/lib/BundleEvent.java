@@ -23,6 +23,6 @@ public class BundleEvent implements Event {
     @Override
     public void process(Context context, Intent intent) {
         Bundle response = intent.getExtras();
-        mListener.onResult(response);
+        mListener.onResponse(response);
     }
 }

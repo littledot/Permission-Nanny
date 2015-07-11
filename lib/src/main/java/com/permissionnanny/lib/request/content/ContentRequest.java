@@ -87,13 +87,13 @@ public class ContentRequest extends PermissionRequest {
     }
 
     /**
-     * @param context
-     * @param reason
-     * @param listener
+     * Attach a listener.
+     *
+     * @param listener Content result receiver
+     * @return itself
      */
-    public void startRequest(Context context, String reason, ContentListener listener) {
-        // begin handshake
+    public ContentRequest listener(@NonNull ContentListener listener) {
         addFilter(new ContentEvent(mParams, listener));
-        super.startRequest(context, reason);
+        return this;
     }
 }

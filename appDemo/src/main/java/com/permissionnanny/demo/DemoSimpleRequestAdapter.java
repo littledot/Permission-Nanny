@@ -15,12 +15,12 @@ import org.apache.http.HttpStatus;
 /**
  *
  */
-public class DemoAdapter extends Adapter<DemoViewHolder> {
+public class DemoSimpleRequestAdapter extends Adapter<DemoViewHolder> {
 
-    private DemoRequestFactory mFactory;
+    private SimpleRequestFactory mFactory;
     private Bundle[] mResults;
 
-    public DemoAdapter(DemoRequestFactory factory) {
+    public DemoSimpleRequestAdapter(SimpleRequestFactory factory) {
         mFactory = factory;
         mResults = new Bundle[mFactory.getCount()];
     }
@@ -51,8 +51,8 @@ public class DemoAdapter extends Adapter<DemoViewHolder> {
             public void onClick(View v) {
                 mFactory.getRequest(position).listener(new BundleListener() {
                     @Override
-                    public void onResult(Bundle results) {
-                        mResults[position] = results;
+                    public void onResponse(Bundle response) {
+                        mResults[position] = response;
                         notifyItemChanged(position);
                     }
                 }).startRequest(v.getContext(), Config.longReason ? Lorem.getParagraphs(10, 10) : "demo reason");

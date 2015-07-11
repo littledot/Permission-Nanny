@@ -66,9 +66,6 @@ public abstract class PermissionRequest {
                 "com.sdchang.permissionpolice.ExternalRequestService");
     }
 
-    public PermissionRequest listener(BundleListener listener) {
-        return addFilter(new BundleEvent(listener));
-    }
 
     protected PermissionRequest addFilter(Event event) {
         if (mReceiver == null) {

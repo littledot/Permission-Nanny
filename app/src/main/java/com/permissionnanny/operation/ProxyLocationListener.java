@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.permissionnanny.ProxyListener;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.request.location.LocationEvent;
+import com.permissionnanny.lib.request.simple.LocationEvent;
 
 public class ProxyLocationListener extends ProxyListener implements LocationListener {
 

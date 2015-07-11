@@ -8,7 +8,7 @@ import android.telephony.TelephonyManager;
 import com.permissionnanny.ProxyFunction;
 import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.telephony.TelephonyRequest;
+import com.permissionnanny.lib.request.simple.TelephonyRequest;
 
 import java.util.ArrayList;
 

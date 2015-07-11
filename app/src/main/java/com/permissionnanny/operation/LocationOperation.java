@@ -5,10 +5,9 @@ import android.content.Context;
 import android.location.LocationManager;
 import android.os.Bundle;
 import com.permissionnanny.ProxyFunction;
-import com.permissionnanny.operation.ProxyOperation;
 import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.location.LocationRequest;
+import com.permissionnanny.lib.request.simple.LocationRequest;
 
 /**
  *

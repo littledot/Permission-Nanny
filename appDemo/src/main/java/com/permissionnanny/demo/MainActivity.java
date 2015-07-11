@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.permissionnanny.demo.content.ContentRequestFactory;
 import com.permissionnanny.demo.location.LocationRequestFactory;
 import com.permissionnanny.demo.telephony.TelephonyRequestFactory;
 import com.permissionnanny.demo.wifi.WifiRequestFactory;
@@ -27,8 +26,7 @@ public class MainActivity extends BaseActivity {
             "TelephonyRequestDemo",
             "WifiRequestDemo",
     };
-    public static DemoRequestFactory[] mFactories = new DemoRequestFactory[]{
-            new ContentRequestFactory(),
+    public static SimpleRequestFactory[] mFactories = new SimpleRequestFactory[]{
             new LocationRequestFactory(),
             new TelephonyRequestFactory(),
             new WifiRequestFactory(),

@@ -60,7 +60,7 @@ public class LocationDemoAdapter extends RecyclerView.Adapter<DemoViewHolder> {
             public void onClick(View v) {
                 mFactory.getRequest(position).listener(new BundleListener() {
                     @Override
-                    public void onResult(Bundle results) {
+                    public void onResponse(Bundle results) {
                         mResults[position] = results;
                         Bundle response = results.getBundle(Nanny.ENTITY_BODY);
                         if (response != null) {

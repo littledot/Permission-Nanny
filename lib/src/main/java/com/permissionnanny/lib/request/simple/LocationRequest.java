@@ -1,4 +1,4 @@
-package com.permissionnanny.lib.request.location;
+package com.permissionnanny.lib.request.simple;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,24 +8,14 @@ import android.location.GpsStatus.NmeaListener;
 import android.location.LocationListener;
 import android.os.Handler;
 import android.os.Looper;
-import com.permissionnanny.lib.request.PermissionRequest;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.permissionnanny.lib.request.RequestParams;
 
 /**
- *
+ * Factory that creates {@link android.location.LocationManager} requests.
  */
-public class LocationRequest extends PermissionRequest {
-
-    private Context mContext;
-
-    public LocationRequest(RequestParams params) {
-        super(params);
-    }
-
-    @Override
-    public int getRequestType() {
-        return SIMPLE_REQUEST;
-    }
+public class LocationRequest extends SimpleRequest {
 
     public static final String ADD_GPS_STATUS_LISTENER = "addGpsStatusListener";
     public static final String ADD_NMEA_LISTENER = "addNmeaListener";
@@ -135,11 +125,16 @@ public class LocationRequest extends PermissionRequest {
         return request;
     }
 
+    private Context mContext;
+
+    public LocationRequest(RequestParams params) {
+        super(params);
+    }
+
     @Override
-    public LocationRequest startRequest(Context context, String reason) {
+    public void startRequest(@NonNull Context context, @Nullable String reason) {
         mContext = context;
         super.startRequest(context, reason);
-        return this;
     }
 
     public void stop() {

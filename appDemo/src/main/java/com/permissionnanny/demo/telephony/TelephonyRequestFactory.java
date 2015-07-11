@@ -2,14 +2,14 @@ package com.permissionnanny.demo.telephony;
 
 import android.app.Dialog;
 import android.content.Context;
-import com.permissionnanny.demo.DemoRequestFactory;
-import com.permissionnanny.lib.request.PermissionRequest;
-import com.permissionnanny.lib.request.telephony.TelephonyRequest;
+import com.permissionnanny.demo.SimpleRequestFactory;
+import com.permissionnanny.lib.request.simple.SimpleRequest;
+import com.permissionnanny.lib.request.simple.TelephonyRequest;
 
 /**
  *
  */
-public class TelephonyRequestFactory implements DemoRequestFactory {
+public class TelephonyRequestFactory implements SimpleRequestFactory {
     private static String[] mLabels = new String[]{
             TelephonyRequest.GET_ALL_CELL_INFO,
             TelephonyRequest.GET_DEVICE_ID,
@@ -24,7 +24,7 @@ public class TelephonyRequestFactory implements DemoRequestFactory {
     };
 
     @Override
-    public PermissionRequest getRequest(int position) {
+    public SimpleRequest getRequest(int position) {
         switch (position) {
         case 0:
             return TelephonyRequest.getAllCellInfo();

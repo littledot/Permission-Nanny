@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.permissionnanny.ProxyListener;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.request.location.NmeaEvent;
+import com.permissionnanny.lib.request.simple.NmeaEvent;
 
 /**
  *

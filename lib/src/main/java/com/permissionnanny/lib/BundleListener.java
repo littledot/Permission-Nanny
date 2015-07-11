@@ -6,5 +6,5 @@ import android.os.Bundle;
  *
  */
 public interface BundleListener {
-    void onResult(Bundle results);
+    void onResponse(Bundle response);
 }

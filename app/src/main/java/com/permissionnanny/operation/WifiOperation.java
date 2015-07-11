@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.permissionnanny.ProxyFunction;
 import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.wifi.WifiManagerRequest;
+import com.permissionnanny.lib.request.simple.WifiRequest;
 
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class WifiOperation {
     public static final ProxyOperation[] operations = new ProxyOperation[]{
-            new ProxyOperation(WifiManagerRequest.ADD_NETWORK,
+            new ProxyOperation(WifiRequest.ADD_NETWORK,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiAddNetwork, 1, new ProxyFunction() {
                 @Override
@@ -25,7 +25,7 @@ public class WifiOperation {
                     response.putInt(request.opCode, mgr.addNetwork(request.wifiConfiguration0));
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.DISABLE_NETWORK,
+            new ProxyOperation(WifiRequest.DISABLE_NETWORK,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiDisableNetwork, 1, new ProxyFunction() {
                 @Override
@@ -34,7 +34,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.disableNetwork(request.int0));
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.DISCONNECT,
+            new ProxyOperation(WifiRequest.DISCONNECT,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiDisconnect, 1, new ProxyFunction() {
                 @Override
@@ -43,7 +43,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.disconnect());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.ENABLE_NETWORK,
+            new ProxyOperation(WifiRequest.ENABLE_NETWORK,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiEnableNetwork, 1, new ProxyFunction() {
                 @Override
@@ -52,7 +52,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.enableNetwork(request.int0, request.boolean0));
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.GET_CONFIGURED_NETWORKS,
+            new ProxyOperation(WifiRequest.GET_CONFIGURED_NETWORKS,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetConfiguredNetworks, 1, new ProxyFunction() {
                 @Override
@@ -61,7 +61,7 @@ public class WifiOperation {
                     response.putParcelableArrayList(request.opCode, new ArrayList<>(mgr.getConfiguredNetworks()));
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.GET_CONNECTION_INFO,
+            new ProxyOperation(WifiRequest.GET_CONNECTION_INFO,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetConnectionInfo, 1, new ProxyFunction() {
                 @Override
@@ -70,7 +70,7 @@ public class WifiOperation {
                     response.putParcelable(request.opCode, mgr.getConnectionInfo());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.GET_DHCP_INFO,
+            new ProxyOperation(WifiRequest.GET_DHCP_INFO,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetDhcpInfo, 1, new ProxyFunction() {
                 @Override
@@ -79,7 +79,7 @@ public class WifiOperation {
                     response.putParcelable(request.opCode, mgr.getDhcpInfo());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.GET_SCAN_RESULTS,
+            new ProxyOperation(WifiRequest.GET_SCAN_RESULTS,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetScanResults, 1, new ProxyFunction() {
                 @Override
@@ -88,7 +88,7 @@ public class WifiOperation {
                     response.putParcelableArrayList(request.opCode, new ArrayList<>(mgr.getScanResults()));
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.GET_WIFI_STATE,
+            new ProxyOperation(WifiRequest.GET_WIFI_STATE,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiGetWifiState, 1, new ProxyFunction() {
                 @Override
@@ -97,7 +97,7 @@ public class WifiOperation {
                     response.putInt(request.opCode, mgr.getWifiState());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.IS_WIFI_ENABLED,
+            new ProxyOperation(WifiRequest.IS_WIFI_ENABLED,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiIsWifiEnabled, 1, new ProxyFunction() {
                 @Override
@@ -106,7 +106,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.isWifiEnabled());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.PING_SUPPLICANT,
+            new ProxyOperation(WifiRequest.PING_SUPPLICANT,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     R.string.dialogTitle_wifiPingSupplicant, 1, new ProxyFunction() {
                 @Override
@@ -115,7 +115,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.pingSupplicant());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.REASSOCIATE,
+            new ProxyOperation(WifiRequest.REASSOCIATE,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiReassociate, 1, new ProxyFunction() {
                 @Override
@@ -124,7 +124,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.reassociate());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.RECONNECT,
+            new ProxyOperation(WifiRequest.RECONNECT,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiReconnect, 1, new ProxyFunction() {
                 @Override
@@ -133,7 +133,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.reconnect());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.REMOVE_NETWORK,
+            new ProxyOperation(WifiRequest.REMOVE_NETWORK,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiRemoveNetwork, 1, new ProxyFunction() {
                 @Override
@@ -142,7 +142,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.removeNetwork(request.int0));
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.SAVE_CONFIGURATION,
+            new ProxyOperation(WifiRequest.SAVE_CONFIGURATION,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiSaveConfiguration, 1, new ProxyFunction() {
                 @Override
@@ -151,7 +151,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.saveConfiguration());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.SET_WIFI_ENABLED,
+            new ProxyOperation(WifiRequest.SET_WIFI_ENABLED,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     0, 1, new ProxyFunction() {
                 @Override
@@ -160,7 +160,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.setWifiEnabled(request.boolean0));
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.START_SCAN,
+            new ProxyOperation(WifiRequest.START_SCAN,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiStartScan, 1, new ProxyFunction() {
                 @Override
@@ -169,7 +169,7 @@ public class WifiOperation {
                     response.putBoolean(request.opCode, mgr.startScan());
                 }
             }),
-            new ProxyOperation(WifiManagerRequest.UPDATE_NETWORK,
+            new ProxyOperation(WifiRequest.UPDATE_NETWORK,
                     Manifest.permission.CHANGE_WIFI_STATE,
                     R.string.dialogTitle_wifiUpdateNetwork, 1, new ProxyFunction() {
                 @Override

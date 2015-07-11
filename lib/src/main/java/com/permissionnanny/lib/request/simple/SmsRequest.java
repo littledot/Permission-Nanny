@@ -1,33 +1,24 @@
-package com.permissionnanny.lib.request.sms;
+package com.permissionnanny.lib.request.simple;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import com.permissionnanny.lib.request.PermissionRequest;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
 
 import java.util.ArrayList;
 
 /**
- *
+ * Factory that creates {@link android.telephony.SmsManager} requests.
  */
-public class SmsRequest extends PermissionRequest {
+public class SmsRequest extends SimpleRequest {
 
-    public SmsRequest(RequestParams params) {
-        super(params);
-    }
-
-    @Override
-    public int getRequestType() {
-        return SIMPLE_REQUEST;
-    }
-
-    public static final String SEND_DATA_MESSAGE = "sendDataMessage";
-    public static final String SEND_MULTIMEDIA_MESSAGE = "sendMultimediaMessage";
-    public static final String SEND_MULTIPART_TEXT_MESSAGE = "sendMultipartTextMessage";
-    public static final String SEND_TEXT_MESSAGE = "sendTextMessage";
+    @PPP public static final String SEND_DATA_MESSAGE = "sendDataMessage";
+    @PPP public static final String SEND_MULTIMEDIA_MESSAGE = "sendMultimediaMessage";
+    @PPP public static final String SEND_MULTIPART_TEXT_MESSAGE = "sendMultipartTextMessage";
+    @PPP public static final String SEND_TEXT_MESSAGE = "sendTextMessage";
 
     /**
      * Send a data based SMS to a specific application port. <p/> <p class="note"><strong>Note:</strong> Using this
@@ -173,5 +164,9 @@ public class SmsRequest extends PermissionRequest {
         p.pendingIntent0 = sentIntent;
         p.pendingIntent1 = deliveryIntent;
         return new SmsRequest(p);
+    }
+
+    public SmsRequest(RequestParams params) {
+        super(params);
     }
 }

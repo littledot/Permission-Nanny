@@ -3,36 +3,36 @@ package com.permissionnanny.demo.wifi;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.SparseArray;
+import com.permissionnanny.demo.SimpleRequestFactory;
 import com.permissionnanny.demo.extra.BooleanExtra;
-import com.permissionnanny.demo.DemoRequestFactory;
 import com.permissionnanny.demo.extra.Extra;
 import com.permissionnanny.demo.extra.ExtrasDialogBuilder;
 import com.permissionnanny.demo.extra.IntegerExtra;
-import com.permissionnanny.lib.request.wifi.WifiManagerRequest;
+import com.permissionnanny.lib.request.simple.WifiRequest;
 
 /**
  *
  */
-public class WifiRequestFactory implements DemoRequestFactory {
+public class WifiRequestFactory implements SimpleRequestFactory {
     private String[] mLabels = new String[]{
-            WifiManagerRequest.ADD_NETWORK,
-            WifiManagerRequest.DISABLE_NETWORK,
-            WifiManagerRequest.DISCONNECT,
-            WifiManagerRequest.ENABLE_NETWORK,
-            WifiManagerRequest.GET_CONFIGURED_NETWORKS,
-            WifiManagerRequest.GET_CONNECTION_INFO,
-            WifiManagerRequest.GET_DHCP_INFO,
-            WifiManagerRequest.GET_SCAN_RESULTS,
-            WifiManagerRequest.GET_WIFI_STATE,
-            WifiManagerRequest.IS_WIFI_ENABLED,
-            WifiManagerRequest.PING_SUPPLICANT,
-            WifiManagerRequest.REASSOCIATE,
-            WifiManagerRequest.RECONNECT,
-            WifiManagerRequest.REMOVE_NETWORK,
-            WifiManagerRequest.SAVE_CONFIGURATION,
-            WifiManagerRequest.SET_WIFI_ENABLED,
-            WifiManagerRequest.START_SCAN,
-            WifiManagerRequest.UPDATE_NETWORK,
+            WifiRequest.ADD_NETWORK,
+            WifiRequest.DISABLE_NETWORK,
+            WifiRequest.DISCONNECT,
+            WifiRequest.ENABLE_NETWORK,
+            WifiRequest.GET_CONFIGURED_NETWORKS,
+            WifiRequest.GET_CONNECTION_INFO,
+            WifiRequest.GET_DHCP_INFO,
+            WifiRequest.GET_SCAN_RESULTS,
+            WifiRequest.GET_WIFI_STATE,
+            WifiRequest.IS_WIFI_ENABLED,
+            WifiRequest.PING_SUPPLICANT,
+            WifiRequest.REASSOCIATE,
+            WifiRequest.RECONNECT,
+            WifiRequest.REMOVE_NETWORK,
+            WifiRequest.SAVE_CONFIGURATION,
+            WifiRequest.SET_WIFI_ENABLED,
+            WifiRequest.START_SCAN,
+            WifiRequest.UPDATE_NETWORK,
     };
     private SparseArray<Extra[]> mExtras = new SparseArray<Extra[]>() {{
         put(1, new Extra[]{new IntegerExtra()});
@@ -52,45 +52,45 @@ public class WifiRequestFactory implements DemoRequestFactory {
     private ExtrasDialogBuilder mBuilder = new ExtrasDialogBuilder();
 
     @Override
-    public WifiManagerRequest getRequest(int position) {
+    public WifiRequest getRequest(int position) {
         Extra[] extras = mExtras.get(position);
         switch (position) {
         case 0:
-            return WifiManagerRequest.addNetwork(null);
+            return WifiRequest.addNetwork(null);
         case 1:
-            return WifiManagerRequest.disableNetwork((int) extras[0].getValue());
+            return WifiRequest.disableNetwork((int) extras[0].getValue());
         case 2:
-            return WifiManagerRequest.disconnect();
+            return WifiRequest.disconnect();
         case 3:
-            return WifiManagerRequest.enableNetwork((int) extras[0].getValue(), (boolean) extras[1].getValue());
+            return WifiRequest.enableNetwork((int) extras[0].getValue(), (boolean) extras[1].getValue());
         case 4:
-            return WifiManagerRequest.getConfiguredNetworks();
+            return WifiRequest.getConfiguredNetworks();
         case 5:
-            return WifiManagerRequest.getConnectionInfo();
+            return WifiRequest.getConnectionInfo();
         case 6:
-            return WifiManagerRequest.getDhcpInfo();
+            return WifiRequest.getDhcpInfo();
         case 7:
-            return WifiManagerRequest.getScanResults();
+            return WifiRequest.getScanResults();
         case 8:
-            return WifiManagerRequest.getWifiState();
+            return WifiRequest.getWifiState();
         case 9:
-            return WifiManagerRequest.isWifiEnabled();
+            return WifiRequest.isWifiEnabled();
         case 10:
-            return WifiManagerRequest.pingSupplicant();
+            return WifiRequest.pingSupplicant();
         case 11:
-            return WifiManagerRequest.reassociate();
+            return WifiRequest.reassociate();
         case 12:
-            return WifiManagerRequest.reconnect();
+            return WifiRequest.reconnect();
         case 13:
-            return WifiManagerRequest.removeNetwork((int) extras[0].getValue());
+            return WifiRequest.removeNetwork((int) extras[0].getValue());
         case 14:
-            return WifiManagerRequest.saveConfiguration();
+            return WifiRequest.saveConfiguration();
         case 15:
-            return WifiManagerRequest.setWifiEnabled((boolean) extras[0].getValue());
+            return WifiRequest.setWifiEnabled((boolean) extras[0].getValue());
         case 16:
-            return WifiManagerRequest.startScan();
+            return WifiRequest.startScan();
         case 17:
-            return WifiManagerRequest.updateNetwork(null);
+            return WifiRequest.updateNetwork(null);
         }
         return null;
     }

@@ -1,32 +1,23 @@
-package com.permissionnanny.lib.request.telephony;
+package com.permissionnanny.lib.request.simple;
 
-import com.permissionnanny.lib.request.PermissionRequest;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
 
 /**
- *
+ * Factory that create {@link android.telephony.TelephonyManager} requests.
  */
-public class TelephonyRequest extends PermissionRequest {
+public class TelephonyRequest extends SimpleRequest {
 
-    public TelephonyRequest(RequestParams params) {
-        super(params);
-    }
-
-    @Override
-    public int getRequestType() {
-        return SIMPLE_REQUEST;
-    }
-
-    public static final String GET_ALL_CELL_INFO = "getAllCellInfo";
-    public static final String GET_DEVICE_ID = "getDeviceId";
-    public static final String GET_DEVICE_SOFTWARE_VERSION = "getDeviceSoftwareVersion";
-    public static final String GET_GROUP_ID_LEVEL_1 = "getGroupIdLevel1";
-    public static final String GET_LINE_1_NUMBER = "getLine1Number";
-    public static final String GET_NEIGHBORING_CELL_INFO = "getNeighboringCellInfo";
-    public static final String GET_SIM_SERIAL_NUMBER = "getSimSerialNumber";
-    public static final String GET_SUBSCRIBER_ID = "getSubscriberId";
-    public static final String GET_VOICE_MAIL_ALPHA_TAG = "getVoiceMailAlphaTag";
-    public static final String GET_VOICE_MAIL_NUMBER = "getVoiceMailNumber";
+    @PPP public static final String GET_ALL_CELL_INFO = "getAllCellInfo";
+    @PPP public static final String GET_DEVICE_ID = "getDeviceId";
+    @PPP public static final String GET_DEVICE_SOFTWARE_VERSION = "getDeviceSoftwareVersion";
+    @PPP public static final String GET_GROUP_ID_LEVEL_1 = "getGroupIdLevel1";
+    @PPP public static final String GET_LINE_1_NUMBER = "getLine1Number";
+    @PPP public static final String GET_NEIGHBORING_CELL_INFO = "getNeighboringCellInfo";
+    @PPP public static final String GET_SIM_SERIAL_NUMBER = "getSimSerialNumber";
+    @PPP public static final String GET_SUBSCRIBER_ID = "getSubscriberId";
+    @PPP public static final String GET_VOICE_MAIL_ALPHA_TAG = "getVoiceMailAlphaTag";
+    @PPP public static final String GET_VOICE_MAIL_NUMBER = "getVoiceMailNumber";
     public static final int ICC_CLOSE_LOGICAL_CHANNEL = 12;
     public static final int ICC_EXCHANGE_SIM_IO = 13;
     public static final int ICC_OPEN_LOGICAL_CHANNEL = 14;
@@ -96,5 +87,9 @@ public class TelephonyRequest extends PermissionRequest {
         RequestParams p = new RequestParams();
         p.opCode = GET_VOICE_MAIL_NUMBER;
         return new TelephonyRequest(p);
+    }
+
+    public TelephonyRequest(RequestParams params) {
+        super(params);
     }
 }

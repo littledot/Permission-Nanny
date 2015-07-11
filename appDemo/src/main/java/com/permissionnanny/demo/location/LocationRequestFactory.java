@@ -10,22 +10,22 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.demo.C;
-import com.permissionnanny.demo.DemoRequestFactory;
+import com.permissionnanny.demo.SimpleRequestFactory;
 import com.permissionnanny.demo.EzMap;
 import com.permissionnanny.demo.extra.CriteriaExtra;
 import com.permissionnanny.demo.extra.Extra;
 import com.permissionnanny.demo.extra.ExtrasDialogBuilder;
 import com.permissionnanny.demo.extra.FloatExtra;
 import com.permissionnanny.demo.extra.LongExtra;
-import com.permissionnanny.lib.request.PermissionRequest;
-import com.permissionnanny.lib.request.location.LocationRequest;
+import com.permissionnanny.lib.request.simple.LocationRequest;
+import com.permissionnanny.lib.request.simple.SimpleRequest;
 import de.greenrobot.event.EventBus;
 import timber.log.Timber;
 
 /**
  *
  */
-public class LocationRequestFactory implements DemoRequestFactory {
+public class LocationRequestFactory implements SimpleRequestFactory {
 
     EventBus bus = EventBus.getDefault();
 
@@ -45,7 +45,7 @@ public class LocationRequestFactory implements DemoRequestFactory {
     private ExtrasDialogBuilder mBuilder = new ExtrasDialogBuilder();
 
     @Override
-    public PermissionRequest getRequest(final int position) {
+    public SimpleRequest getRequest(final int position) {
         Extra[] extras = mExtras.get(position);
         switch (position) {
         case 0:

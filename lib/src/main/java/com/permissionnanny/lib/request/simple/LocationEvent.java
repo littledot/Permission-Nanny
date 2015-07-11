@@ -1,4 +1,4 @@
-package com.permissionnanny.lib.request.location;
+package com.permissionnanny.lib.request.simple;
 
 import android.content.Context;
 import android.content.Intent;
