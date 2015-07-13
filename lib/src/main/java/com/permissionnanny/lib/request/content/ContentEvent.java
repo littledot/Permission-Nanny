@@ -19,7 +19,6 @@ import org.apache.http.HttpStatus;
 public class ContentEvent implements Event {
 
     @PPP public static final Uri PROVIDER = new Builder().scheme("content").authority(Nanny.PROVIDER_AUTHORITY).build();
-    @PPP public static final String NONCE = "nonce";
 
     private RequestParams mRequest;
     private ContentListener mListener;
@@ -38,7 +37,7 @@ public class ContentEvent implements Event {
     public void process(Context context, Intent intent) {
         Uri authorized = null;
         if (HttpStatus.SC_OK == intent.getIntExtra(Nanny.STATUS_CODE, 0)) {
-            long nonce = intent.getBundleExtra(Nanny.ENTITY_BODY).getLong(NONCE, 0);
+            long nonce = intent.getBundleExtra(Nanny.ENTITY_BODY).getLong(Nanny.URI_PATH, 0);
             authorized = PROVIDER.buildUpon().appendPath(Long.toString(nonce)).build();
         }
 

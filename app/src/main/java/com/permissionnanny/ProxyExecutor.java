@@ -8,7 +8,6 @@ import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.content.ProxyContentProvider;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.lib.request.content.ContentEvent;
 import com.permissionnanny.operation.SimpleOperation;
 import timber.log.Timber;
 
@@ -34,7 +33,7 @@ public class ProxyExecutor {
     }
 
     private void executeAllow(ContentOperation operation, RequestParams request, String clientId) {
-        Bundle response = execute(request).build();
+        Bundle response = executeContentOperation(request).build();
         if (response != null && clientId != null) {
             Timber.d("server broadcasting=" + BundleUtil.toString(response));
             Intent intent = new Intent(clientId).putExtras(response);
@@ -42,7 +41,7 @@ public class ProxyExecutor {
         }
     }
 
-    private ResponseBundle execute(RequestParams request) {
+    private ResponseBundle executeContentOperation(RequestParams request) {
         long nonce = new SecureRandom().nextLong();
         Timber.wtf("nonce=" + nonce);
 
@@ -51,14 +50,14 @@ public class ProxyExecutor {
 
         // return nonce to client
         Bundle response = new Bundle();
-        response.putLong(ContentEvent.NONCE, nonce);
+        response.putLong(Nanny.URI_PATH, nonce);
         return ResponseFactory.newAllowResponse()
                 .connection(Nanny.CLOSE)
                 .body(response);
     }
 
     private void executeAllow(SimpleOperation operation, RequestParams request, String clientId) {
-        Bundle response = execute(operation, request, clientId).build();
+        Bundle response = executeSimpleOperation(operation, request, clientId).build();
         if (response != null && clientId != null) {
             Timber.d("server broadcasting=" + BundleUtil.toString(response));
             Intent intent = new Intent(clientId).putExtras(response);
@@ -66,7 +65,7 @@ public class ProxyExecutor {
         }
     }
 
-    private ResponseBundle execute(SimpleOperation operation, RequestParams request, String clientId) {
+    private ResponseBundle executeSimpleOperation(SimpleOperation operation, RequestParams request, String clientId) {
         if (operation.mFunction != null) { // one-shot request
             Bundle response = new Bundle();
             try {

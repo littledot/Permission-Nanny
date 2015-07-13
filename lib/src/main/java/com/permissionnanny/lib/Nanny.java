@@ -35,8 +35,8 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * Intent broadcasts. There are 3 handshake flows depending on the type of the request - One-shot, Ongoing and Content.
  * <p/>
  * <i>If you are not interested in low-level details of how the handshakes are implemented and would like to know how to
- * integrate your application with Permission Nanny, feel free to skip the rest and proceed to {@link
- * PermissionRequest}</i>.
+ * make requests and listen for responses using the SDK or integrating your application with Permission Nanny, please
+ * feel free to skip the rest and proceed to {@link PermissionRequest}</i>.
  * <p/>
  * <h2>One-shot Request Handshake Flow</h2>
  * <p/>
@@ -49,16 +49,36 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * #SENDER_IDENTITY} so that Permission Nanny knows who sent the request, {@link #REQUEST_PARAMS} to know what resource
  * to access and {@link #TYPE} to distinguish between {@link SimpleRequest} and {@link ContentRequest}. Request metadata
  * <b>may</b> contain a {@link #REQUEST_REASON} String to explain to the user why the client needs access to the
- * resource and a {@link #CLIENT_ADDRESS} String to tell Permission Nanny where to deliver the response. If {@link
- * #CLIENT_ADDRESS} is empty, Permission Nanny will not send back a response and you will not know the status of your
- * request.
- * <p/>
- * Permission Nanny's response Intent <b>must</b> contain a {@link #PROTOCOL_VERSION} String, a {@link #STATUS_CODE}
- * integer similar to HTTP, a {@link #CONNECTION} String fixed to {@link #CLOSE} and a {@link #SERVER} String fixed to
- * {@link #AUTHORIZATION_SERVICE}. If {@link #STATUS_CODE} indicates success, the response <b>must</b> contain an {@link
- * #ENTITY_BODY} Bundle containing the requested resource; otherwise, the response <b>must</b> contain an {@link
- * #ENTITY_ERROR}.
- * <p/>
+ * resource. The request <b>may</b> also contain a {@link #CLIENT_ADDRESS} String to tell Permission Nanny where to
+ * deliver the response. If {@link #CLIENT_ADDRESS} is empty, Permission Nanny will not send back a response and you
+ * will not know the status of your request.
+ * <pre>
+ *  {
+ *      {@link #PROTOCOL_VERSION}*
+ *      {@link #CLIENT_ADDRESS}*
+ *      {@link #ENTITY_BODY}* = {
+ *          {@link #SENDER_IDENTITY}*
+ *          {@link #TYPE}*
+ *          {@link #REQUEST_PARAMS}*
+ *          {@link #REQUEST_REASON}
+ *      }
+ *  }
+ * </pre>
+ * Permission Nanny will return one authorization response. The response Intent <b>must</b> contain a {@link
+ * #PROTOCOL_VERSION} String, a {@link #STATUS_CODE} integer similar to HTTP, a {@link #CONNECTION} String fixed to
+ * {@link #CLOSE} and a {@link #SERVER} String fixed to {@link #AUTHORIZATION_SERVICE}. If {@link #STATUS_CODE}
+ * indicates success, the response <b>must</b> contain an {@link #ENTITY_BODY} Bundle containing the requested resource;
+ * otherwise, the response <b>must</b> contain an {@link #ENTITY_ERROR}.
+ * <pre>
+ *  {
+ *      {@link #PROTOCOL_VERSION}*
+ *      {@link #STATUS_CODE}*
+ *      {@link #CONNECTION}* = {@link #CLOSE}
+ *      {@link #SERVER}* = {@link #AUTHORIZATION_SERVICE}
+ *      {@link #ENTITY_BODY}
+ *      {@link #ENTITY_ERROR}
+ *  }
+ * </pre>
  * <h4>Privacy and {@linkplain #CLIENT_ADDRESS}</h4>
  * <p/>
  * Because PPP is implemented using broadcast Intents, anyone with the correct IntentFilters could intercept the
@@ -70,22 +90,85 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * <p/>
  * <h2>Ongoing Request Handshake Flow</h2>
  * <p/>
- * A request that accesses a stream of resources over a period of time - such as {@link
+ * A request that accesses a stream of resources over a period of time and requires an Android callback - such as {@link
  * LocationRequest#requestLocationUpdates(long, float, Criteria, LocationListener, Looper)} is considered an ongoing
  * request.
  * <p/>
- * The request Intent is validated exactly the same way as one-shot.
- *
- *
+ * The requirements for an ongoing request is exactly the same as one-shot requests.
  * <p/>
+ * Permission Nanny will return one authorization response followed by a series of resource responses.
+ * <p/>
+ * <h4>Authorization Response</h4>
+ * <p/>
+ * Similar to one-shot responses, the authorization response <b>must</b> contain {@link #PROTOCOL_VERSION}, {@link
+ * #STATUS_CODE} and {@link #SERVER}. But it's {@link #CONNECTION} String <b>must not</b> be set to {@link #CLOSE}. In
+ * addition, it <b>must not</b> contain an {@link #ENTITY_BODY}; resources are packaged in the subsequent resource
+ * responses. It <b>may</b> contain an {@link #ENTITY_ERROR} if the request failed.
+ * <pre>
+ *  {
+ *      {@link #PROTOCOL_VERSION}*
+ *      {@link #STATUS_CODE}*
+ *      {@link #SERVER} = {@link #AUTHORIZATION_SERVICE}*
+ *      {@link #ENTITY_ERROR}
+ *  }
+ * </pre>
+ * <h4>Resource Response</h4>
+ * <p/>
+ * If the user authorizes the request, a series of resource responses will follow the authorization response. Resource
+ * responses <b>must</b> contain {@link #PROTOCOL_VERSION}, {@link #STATUS_CODE}, {@link #SERVER} and {@link
+ * #ENTITY_BODY}. {@link #SERVER} <b>must not</b> be set to {@link #AUTHORIZATION_SERVICE}. {@link #ENTITY_BODY}
+ * <b>must</b> contain the requested resource and a {@link #ACK_SERVER_ADDRESS}, which is used by the client the send
+ * acknowledgements for resource responses.
+ * <pre>
+ *  {
+ *      {@link #PROTOCOL_VERSION}*
+ *      {@link #STATUS_CODE}*
+ *      {@link #SERVER}*
+ *      {@link #ENTITY_BODY}* = {
+ *          {@link #ACK_SERVER_ADDRESS}*
+ *      }
+ *      {@link #ENTITY_ERROR}
+ *  }
+ * </pre>
+ * <h4>Acknowledging Ongoing Resource Responses</h4>
+ * <p/>
+ * When the client receives an ongoing resource response, it <b>must</b> let Permission Nanny know by sending an
+ * acknowledgement Intent to Permission Nanny. If no acknowledgement is sent, Permission Nanny will deem the client
+ * dormant, stop delivering resources and tell the client to close its connection. The client can make another request
+ * to re-establish the connection.
+ * <p/>
+ * The acknowledgement <b>must</b> contain {@link #PROTOCOL_VERSION} and {@link #CLIENT_ADDRESS}.
+ * <pre>
+ *  {
+ *      {@link #PROTOCOL_VERSION}*
+ *      {@link #CLIENT_ADDRESS}*
+ *  }
+ * </pre>
  * <h2>Content Request Handshake Flow</h2>
  * <p/>
- * <h1>Differences from HTTP</h1>
+ * A request that accesses resources stored in {@link android.content.ContentProvider}s is considered a content
+ * request.
  * <p/>
- * The two major differences are (1) 'Server' header is reinterpreted to the service that handled the request. (2) A new
- * 'Entity-Error' header used to return errors encountered when processing a request.
- * <p/>
- * <h1>Security</h1>
+ * The requirements for a content request is exactly the same as one-shot requests. Clients start the flow by sending a
+ * content request to Permission Nanny. If the user authorizes the request, Permission Nanny will return a content
+ * response. The content response <b>must</b> contain an {@link #ENTITY_BODY} Bundle, which <b>must</b> only contain a
+ * {@link #URI_PATH} String. The client <b>must</b> then make a 2nd request to Permission Nanny's content provider with
+ * the {@link #URI_PATH} appended to the {@link #PROVIDER_AUTHORITY} as the Uri. The 2nd request will be handled by
+ * Permission Nanny's ProxyContentProvider which will execute the content request and return results.
+ * <pre>
+ *  {
+ *      {@link #PROTOCOL_VERSION}*
+ *      {@link #STATUS_CODE}*
+ *      {@link #CONNECTION}* = {@link #CLOSE}
+ *      {@link #SERVER}* = {@link #AUTHORIZATION_SERVICE}
+ *      {@link #ENTITY_BODY} = {
+ *          {@link #URI_PATH}*
+ *      }
+ *      {@link #ENTITY_ERROR}
+ *  }
+ * </pre>
+ * <i>If you would like to know how to make requests and listen for responses using the SDK or integrating your
+ * application with Permission Nanny, please proceed to {@link PermissionRequest}</i>.
  */
 public class Nanny {
     /** Request/Response field: Protocol version of the request the client is using. Type: {@link String} */
@@ -143,6 +226,8 @@ public class Nanny {
     @PPP public static final String PERMISSION_MANIFEST = "PermissionManifest";
     /** Entity field: */
     @PPP public static final String ACK_SERVER_ADDRESS = "AckServerAddress";
+    /** Entity field: */
+    @PPP public static final String URI_PATH = "UriPath";
 
     // experimental
     /** Permission Nanny release build package name. */
