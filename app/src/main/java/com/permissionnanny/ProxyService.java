@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.support.v4.util.SimpleArrayMap;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
@@ -133,8 +132,7 @@ public class ProxyService extends BaseService {
         @Override
         public void onReceive(Context context, Intent intent) {
             // TODO: validate
-            Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
-            String clientAddr = entity.getString(Nanny.CLIENT_ADDRESS);
+            String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
             ProxyClient client = mClients.get(clientAddr);
             if (client != null) {
                 client.mListener.updateAck(System.currentTimeMillis());

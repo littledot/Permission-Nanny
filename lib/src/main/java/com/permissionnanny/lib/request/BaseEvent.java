@@ -16,11 +16,9 @@ public abstract class BaseEvent implements Event {
         String ackServerAddr = entity.getString(Nanny.ACK_SERVER_ADDRESS);
         String clientAddr = response.getAction();
 
-        Bundle ack = new Bundle();
-        ack.putString(Nanny.CLIENT_ADDRESS, clientAddr);
         Intent ackIntent = new Intent(ackServerAddr)
                 .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                .putExtra(Nanny.ENTITY_BODY, ack);
+                .putExtra(Nanny.CLIENT_ADDRESS, clientAddr);
         context.sendBroadcast(ackIntent);
     }
 }
