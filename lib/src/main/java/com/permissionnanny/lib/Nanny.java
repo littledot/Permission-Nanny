@@ -167,6 +167,14 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  *      {@link #ENTITY_ERROR}
  *  }
  * </pre>
+ * <h4>{@linkplain #URI_PATH} and {@linkplain android.database.CrossProcessCursorWrapper}</h4>
+ * <p/>
+ * Android 15 introduced the {@link android.database.CrossProcessCursorWrapper}, which facilitated sending Cursor data
+ * between processes. This is the same mechanism Permission Nanny uses to deliver content resources to the client. After
+ * the 1st handshake, Permission Nanny uses SecureRandom to generate a key to cache the query parameters; the key is
+ * returned to the client as the {@link #URI_PATH}. The client then appends the key to the {@link #PROVIDER_AUTHORITY}
+ * and starts the 2nd handshake with ProxyContentProvider.
+ * <p/>
  * <i>If you would like to know how to make requests and listen for responses using the SDK or integrating your
  * application with Permission Nanny, please proceed to {@link PermissionRequest}</i>.
  */
