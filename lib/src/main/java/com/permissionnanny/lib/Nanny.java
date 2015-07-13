@@ -10,13 +10,12 @@ import android.os.Looper;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.lib.request.simple.LocationRequest;
-import com.permissionnanny.lib.request.simple.SimpleRequest;
 import com.permissionnanny.lib.request.simple.WifiRequest;
 
 /**
  * <h1>Permission Nanny</h1>
  * <p/>
- * Permission Nanny is an application that can access resources that are protected by Android permissions on your
+ * Permission Nanny is an application that can access resources which are protected by Android permissions on your
  * behalf, so that your application does not need to declare permission usage in your AndroidManifest.xml. With
  * Permission Nanny, it is possible for your application to not require <b><i>any</i></b> permissions at all, yet still
  * be able to access permission-protected resources.
@@ -47,15 +46,15 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * that validates incoming Intents. The Intent <b>must</b> contain a {@link #PROTOCOL_VERSION} String and an {@link
  * #ENTITY_BODY} Bundle containing valid request metadata. Request metadata <b>must</b> contain a {@link
  * #SENDER_IDENTITY} so that Permission Nanny knows who sent the request, {@link #REQUEST_PARAMS} to know what resource
- * to access and {@link #TYPE} to distinguish between {@link SimpleRequest} and {@link ContentRequest}. Request metadata
- * <b>may</b> contain a {@link #REQUEST_REASON} String to explain to the user why the client needs access to the
- * resource. The request <b>may</b> also contain a {@link #CLIENT_ADDRESS} String to tell Permission Nanny where to
- * deliver the response. If {@link #CLIENT_ADDRESS} is empty, Permission Nanny will not send back a response and you
- * will not know the status of your request.
+ * to access and {@link #TYPE} to distinguish between {@link ContentRequest}s and non-{@link ContentRequest}s. Request
+ * metadata <b>may</b> contain a {@link #REQUEST_REASON} String to explain to the user why the client needs access to
+ * the resource. The request <b>may</b> also contain a {@link #CLIENT_ADDRESS} String to tell Permission Nanny where to
+ * deliver the response. If {@link #CLIENT_ADDRESS} is empty, Permission Nanny will not return a response and you will
+ * not know the status of your request.
  * <pre>
  *  {
  *      {@link #PROTOCOL_VERSION}*
- *      {@link #CLIENT_ADDRESS}*
+ *      {@link #CLIENT_ADDRESS}
  *      {@link #ENTITY_BODY}* = {
  *          {@link #SENDER_IDENTITY}*
  *          {@link #TYPE}*
@@ -64,7 +63,7 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  *      }
  *  }
  * </pre>
- * Permission Nanny will return one authorization response. The response Intent <b>must</b> contain a {@link
+ * Permission Nanny will return an authorization response. The response Intent <b>must</b> contain a {@link
  * #PROTOCOL_VERSION} String, a {@link #STATUS_CODE} integer similar to HTTP, a {@link #CONNECTION} String fixed to
  * {@link #CLOSE} and a {@link #SERVER} String fixed to {@link #AUTHORIZATION_SERVICE}. If {@link #STATUS_CODE}
  * indicates success, the response <b>must</b> contain an {@link #ENTITY_BODY} Bundle containing the requested resource;
@@ -84,9 +83,9 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * Because PPP is implemented using broadcast Intents, anyone with the correct IntentFilters could intercept the
  * communication between clients and Permission Nanny. To ensure no 3rd parties can intercept Permission Nanny's
  * responses, whenever the client makes a request, it uses SecureRandom to generate a nonce. The client's response
- * BroadcastReceiver will be listening for Intents whose action and nonce match. This nonce is known as the client
- * address that the client's response receiver is listening on and is packaged in the request so that Permission Nanny
- * knows where to send responses to.
+ * BroadcastReceiver will be listening for Intents whose action and nonce match. This nonce is known as the {@link
+ * #CLIENT_ADDRESS} that the client's response receiver is listening on and is packaged in the request so that
+ * Permission Nanny knows where to send responses to.
  * <p/>
  * <h2>Ongoing Request Handshake Flow</h2>
  * <p/>
@@ -117,7 +116,7 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * If the user authorizes the request, a series of resource responses will follow the authorization response. Resource
  * responses <b>must</b> contain {@link #PROTOCOL_VERSION}, {@link #STATUS_CODE}, {@link #SERVER} and {@link
  * #ENTITY_BODY}. {@link #SERVER} <b>must not</b> be set to {@link #AUTHORIZATION_SERVICE}. {@link #ENTITY_BODY}
- * <b>must</b> contain the requested resource and a {@link #ACK_SERVER_ADDRESS}, which is used by the client the send
+ * <b>must</b> contain the requested resource and an {@link #ACK_SERVER_ADDRESS}, which is used by the client the send
  * acknowledgements for resource responses.
  * <pre>
  *  {
