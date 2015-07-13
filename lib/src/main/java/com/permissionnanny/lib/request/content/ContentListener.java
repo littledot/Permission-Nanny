@@ -14,7 +14,7 @@ public interface ContentListener {
      * Callback when Permission Nanny returns a response.
      *
      * @param response    Response metadata
-     * @param data        Query results
+     * @param data        Query resource
      * @param inserted    Insert results
      * @param rowsUpdated Update results
      * @param rowsDeleted Delete results

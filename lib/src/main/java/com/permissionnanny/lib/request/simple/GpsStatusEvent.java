@@ -12,6 +12,7 @@ import com.permissionnanny.lib.request.BaseEvent;
  *
  */
 public class GpsStatusEvent extends BaseEvent {
+
     @PPP public static final String EVENT = "event";
 
     private Listener mListener;

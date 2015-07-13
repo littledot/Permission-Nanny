@@ -3,10 +3,89 @@ package com.permissionnanny.lib;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.LocationListener;
 import android.os.Bundle;
+import android.os.Looper;
+import com.permissionnanny.lib.request.PermissionRequest;
+import com.permissionnanny.lib.request.content.ContentRequest;
+import com.permissionnanny.lib.request.simple.LocationRequest;
+import com.permissionnanny.lib.request.simple.SimpleRequest;
+import com.permissionnanny.lib.request.simple.WifiRequest;
 
 /**
+ * <h1>Permission Nanny</h1>
+ * <p/>
+ * Permission Nanny is an application that can access resources that are protected by Android permissions on your
+ * behalf, so that your application does not need to declare permission usage in your AndroidManifest.xml. With
+ * Permission Nanny, it is possible for your application to not require <b><i>any</i></b> permissions at all, yet still
+ * be able to access permission-protected resources.
+ * <p/>
+ * From a high-level perspective, Permission Nanny acts as a proxy server between client applications and the Android
+ * operating system. When a client needs to access a resource that is protected by Android permissions, the client will
+ * send a request to Permission Nanny. Permission Nanny will then show a dialog to the user, asking the user for
+ * authorization to grant the client access to the resource. If the user allows the request, Permission Nanny will
+ * access the resource and return results to the client; if the user denies the request, Permission Nanny will simply
+ * return an error response.
+ * <p/>
+ * <h1>Permission Police Protocol</h1>
+ * <p/>
+ * Clients communicate with Permission Nanny using the Permission Police Protocol (PPP). PPP is heavily inspired by HTTP
+ * with a few minor tweaks, borrowing attributes such as status codes, headers and entity. PPP is implemented using
+ * Intent broadcasts. There are 3 handshake flows depending on the type of the request - One-shot, Ongoing and Content.
+ * <p/>
+ * <i>If you are not interested in low-level details of how the handshakes are implemented and would like to know how to
+ * integrate your application with Permission Nanny, feel free to skip the rest and proceed to {@link
+ * PermissionRequest}</i>.
+ * <p/>
+ * <h2>One-shot Request Handshake Flow</h2>
+ * <p/>
+ * A request that accesses a resource at a single point in time - such as {@link WifiRequest#getConnectionInfo()} - is
+ * considered a one-shot request.
+ * <p/>
+ * Clients start the flow by broadcasting an Intent to Permission Nanny's ClientRequestReceiver, a BroadcastReceiver
+ * that validates incoming Intents. The Intent <b>must</b> contain a {@link #PROTOCOL_VERSION} String and an {@link
+ * #ENTITY_BODY} Bundle containing valid request metadata. Request metadata <b>must</b> contain a {@link
+ * #SENDER_IDENTITY} so that Permission Nanny knows who sent the request, {@link #REQUEST_PARAMS} to know what resource
+ * to access and {@link #TYPE} to distinguish between {@link SimpleRequest} and {@link ContentRequest}. Request metadata
+ * <b>may</b> contain a {@link #REQUEST_REASON} String to explain to the user why the client needs access to the
+ * resource and a {@link #CLIENT_ADDRESS} String to tell Permission Nanny where to deliver the response. If {@link
+ * #CLIENT_ADDRESS} is empty, Permission Nanny will not send back a response and you will not know the status of your
+ * request.
+ * <p/>
+ * Permission Nanny's response Intent <b>must</b> contain a {@link #PROTOCOL_VERSION} String, a {@link #STATUS_CODE}
+ * integer similar to HTTP, a {@link #CONNECTION} String fixed to {@link #CLOSE} and a {@link #SERVER} String fixed to
+ * {@link #AUTHORIZATION_SERVICE}. If {@link #STATUS_CODE} indicates success, the response <b>must</b> contain an {@link
+ * #ENTITY_BODY} Bundle containing the requested resource; otherwise, the response <b>must</b> contain an {@link
+ * #ENTITY_ERROR}.
+ * <p/>
+ * <h4>Privacy and {@linkplain #CLIENT_ADDRESS}</h4>
+ * <p/>
+ * Because PPP is implemented using broadcast Intents, anyone with the correct IntentFilters could intercept the
+ * communication between clients and Permission Nanny. To ensure no 3rd parties can intercept Permission Nanny's
+ * responses, whenever the client makes a request, it uses SecureRandom to generate a nonce. The client's response
+ * BroadcastReceiver will be listening for Intents whose action and nonce match. This nonce is known as the client
+ * address that the client's response receiver is listening on and is packaged in the request so that Permission Nanny
+ * knows where to send responses to.
+ * <p/>
+ * <h2>Ongoing Request Handshake Flow</h2>
+ * <p/>
+ * A request that accesses a stream of resources over a period of time - such as {@link
+ * LocationRequest#requestLocationUpdates(long, float, Criteria, LocationListener, Looper)} is considered an ongoing
+ * request.
+ * <p/>
+ * The request Intent is validated exactly the same way as one-shot.
  *
+ *
+ * <p/>
+ * <h2>Content Request Handshake Flow</h2>
+ * <p/>
+ * <h1>Differences from HTTP</h1>
+ * <p/>
+ * The two major differences are (1) 'Server' header is reinterpreted to the service that handled the request. (2) A new
+ * 'Entity-Error' header used to return errors encountered when processing a request.
+ * <p/>
+ * <h1>Security</h1>
  */
 public class Nanny {
     /** Request/Response field: Protocol version of the request the client is using. Type: {@link String} */
@@ -47,7 +126,7 @@ public class Nanny {
     /** Response value: Service that delivers NMEA updates. */
     @PPP public static final String NMEA_SERVICE = "NmeaService";
 
-    /** Request/Response field: Data payload. Type: {@link Bundle}. */
+    /** Request/Response field: Resource payload. Type: {@link Bundle}. */
     @PPP public static final String ENTITY_BODY = "Entity-Body";
     /** Response field: Error payload. Type: {@link NannyException}. */
     @PPP public static final String ENTITY_ERROR = "Entity-Error";

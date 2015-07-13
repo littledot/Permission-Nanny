@@ -9,6 +9,7 @@ import android.net.Uri.Builder;
 import android.os.Bundle;
 import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
 import org.apache.http.HttpStatus;
 
@@ -16,8 +17,9 @@ import org.apache.http.HttpStatus;
  *
  */
 public class ContentEvent implements Event {
-    public static final Uri PROVIDER = new Builder().scheme("content").authority(Nanny.PROVIDER_AUTHORITY).build();
-    public static final String NONCE = "nonce";
+
+    @PPP public static final Uri PROVIDER = new Builder().scheme("content").authority(Nanny.PROVIDER_AUTHORITY).build();
+    @PPP public static final String NONCE = "nonce";
 
     private RequestParams mRequest;
     private ContentListener mListener;

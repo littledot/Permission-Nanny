@@ -13,7 +13,7 @@ import com.permissionnanny.db.AppDB;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.content.ContentRequest;
-import com.permissionnanny.operation.ProxyOperation;
+import com.permissionnanny.operation.SimpleOperation;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -113,8 +113,8 @@ public class PermissionConfigDataManager {
 
     @PermissionConfig.UserSetting
     public int getPermissionSetting(String appPackage, Operation operation, RequestParams params) {
-        if (operation instanceof ProxyOperation) {
-            return getPermissionSetting(appPackage, (ProxyOperation) operation, params);
+        if (operation instanceof SimpleOperation) {
+            return getPermissionSetting(appPackage, (SimpleOperation) operation, params);
         } else if (operation instanceof ContentOperation) {
             return getPermissionSetting(appPackage, (ContentOperation) operation, params);
         }
@@ -122,7 +122,7 @@ public class PermissionConfigDataManager {
     }
 
     @PermissionConfig.UserSetting
-    private int getPermissionSetting(String appPackage, ProxyOperation operation, RequestParams params) {
+    private int getPermissionSetting(String appPackage, SimpleOperation operation, RequestParams params) {
         return getUserConfig(appPackage, operation.mPermission);
     }
 

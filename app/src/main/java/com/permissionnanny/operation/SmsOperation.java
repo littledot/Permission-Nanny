@@ -14,8 +14,8 @@ import com.permissionnanny.lib.request.simple.SmsRequest;
  *
  */
 public class SmsOperation {
-    public static final ProxyOperation[] operations = new ProxyOperation[]{
-            new ProxyOperation(SmsRequest.SEND_DATA_MESSAGE,
+    public static final SimpleOperation[] operations = new SimpleOperation[]{
+            new SimpleOperation(SmsRequest.SEND_DATA_MESSAGE,
                     Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendDataMessage, 4, new ProxyFunction() {
                 @Override
@@ -25,7 +25,7 @@ public class SmsOperation {
                             request.pendingIntent0, request.pendingIntent1);
                 }
             }),
-            new ProxyOperation(SmsRequest.SEND_MULTIMEDIA_MESSAGE,
+            new SimpleOperation(SmsRequest.SEND_MULTIMEDIA_MESSAGE,
                     Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendMultimediaMessage, 21, new ProxyFunction() {
                 @Override
@@ -37,7 +37,7 @@ public class SmsOperation {
                     }
                 }
             }),
-            new ProxyOperation(SmsRequest.SEND_MULTIPART_TEXT_MESSAGE,
+            new SimpleOperation(SmsRequest.SEND_MULTIPART_TEXT_MESSAGE,
                     Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendMultipartTextMessage, 4, new ProxyFunction() {
                 @Override
@@ -47,7 +47,7 @@ public class SmsOperation {
                             request.arrayListOfPendingIntents0, request.arrayListOfPendingIntents1);
                 }
             }),
-            new ProxyOperation(SmsRequest.SEND_TEXT_MESSAGE,
+            new SimpleOperation(SmsRequest.SEND_TEXT_MESSAGE,
                     Manifest.permission.SEND_SMS,
                     R.string.dialogTitle_smsSendTextMessage, 4, new ProxyFunction() {
                 @Override
@@ -59,8 +59,8 @@ public class SmsOperation {
             }),
     };
 
-    public static ProxyOperation getOperation(String opCode) {
-        for (ProxyOperation operation : operations) {
+    public static SimpleOperation getOperation(String opCode) {
+        for (SimpleOperation operation : operations) {
             if (operation.mOpCode.equals(opCode)) {
                 return operation;
             }

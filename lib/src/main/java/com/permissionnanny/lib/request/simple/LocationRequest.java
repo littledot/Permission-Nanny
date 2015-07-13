@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
 
 /**
@@ -17,17 +18,17 @@ import com.permissionnanny.lib.request.RequestParams;
  */
 public class LocationRequest extends SimpleRequest {
 
-    public static final String ADD_GPS_STATUS_LISTENER = "addGpsStatusListener";
-    public static final String ADD_NMEA_LISTENER = "addNmeaListener";
-    public static final String ADD_PROXIMITY_ALERT = "addProximityAlert";
-    public static final String GET_LAST_KNOWN_LOCATION = "getLastKnownLocation";
-    public static final String REMOVE_GPS_STATUS_LISTENER = "removeGpsStatusListener";
-    public static final String REMOVE_NMEA_LISTENER = "removeNmeaListener";
-    public static final String REMOVE_PROXIMITY_ALERT = "removeProximityAlert";
-    public static final String REMOVE_UPDATES = "removeUpdates";
-    public static final String REMOVE_UPDATES1 = "removeUpdates1";
-    public static final String REQUEST_LOCATION_UPDATES = "requestLocationUpdates";
-    public static final String REQUEST_LOCATION_UPDATES1 = "requestLocationUpdates1";
+    @PPP public static final String ADD_GPS_STATUS_LISTENER = "addGpsStatusListener";
+    @PPP public static final String ADD_NMEA_LISTENER = "addNmeaListener";
+    @PPP public static final String ADD_PROXIMITY_ALERT = "addProximityAlert";
+    @PPP public static final String GET_LAST_KNOWN_LOCATION = "getLastKnownLocation";
+    @PPP public static final String REMOVE_GPS_STATUS_LISTENER = "removeGpsStatusListener";
+    @PPP public static final String REMOVE_NMEA_LISTENER = "removeNmeaListener";
+    @PPP public static final String REMOVE_PROXIMITY_ALERT = "removeProximityAlert";
+    @PPP public static final String REMOVE_UPDATES = "removeUpdates";
+    @PPP public static final String REMOVE_UPDATES1 = "removeUpdates1";
+    @PPP public static final String REQUEST_LOCATION_UPDATES = "requestLocationUpdates";
+    @PPP public static final String REQUEST_LOCATION_UPDATES1 = "requestLocationUpdates1";
     public static final String REQUEST_LOCATION_UPDATES2 = "requestLocationUpdates2";
     public static final String REQUEST_LOCATION_UPDATES3 = "requestLocationUpdates3";
     public static final String REQUEST_LOCATION_UPDATES4 = "requestLocationUpdates4";

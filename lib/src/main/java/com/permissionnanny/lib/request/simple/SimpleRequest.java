@@ -8,7 +8,8 @@ import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
 
 /**
- *
+ * A request to Permission Nanny to access manager resources - such as {@link android.telephony.TelephonyManager} and
+ * {@link android.location.LocationManager} - that are protected by Android permissions on your behalf.
  */
 public class SimpleRequest extends PermissionRequest {
 
@@ -30,8 +31,8 @@ public class SimpleRequest extends PermissionRequest {
      * Start the request.
      *
      * @param context  Activity, Service, etc.
-     * @param reason   Explain to the user why you need to access the feature. This is displayed to the user in a dialog
-     *                 when Permission Nanny needs to ask the user for authorization.
+     * @param reason   Explain to the user why you need to access the resource. This is displayed to the user in a
+     *                 dialog when Permission Nanny needs to ask the user for authorization.
      * @param listener Response receiver
      */
     public void startRequest(@NonNull Context context, @Nullable String reason, @NonNull SimpleListener listener) {

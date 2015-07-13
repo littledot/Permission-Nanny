@@ -13,19 +13,7 @@ import com.permissionnanny.lib.request.RequestParams;
  * A request to Permission Nanny to access {@link android.content.ContentProvider}s that are protected by Android
  * permissions on your behalf.
  * <p/>
- * <h1>How does the Protocol Work?</h1>
- * <p/>
- * <h1>How to Create a Request</h1>
- * <p/>
- * Use the {@link ContentRequest.Builder} to craft your query.
- * <p/>
- * <h1>How to Listen for a Response</h1>
- * <p/>
- * After creating a request, attach a listener to it via {@link #listener(ContentListener)}.
- * <p/>
- * <h1>How to Start a Request</h1>
- * <p/>
- * Send the request to Permission Nanny via {@link #startRequest(Context, String)}.
+ * See {@link PermissionRequest} for details on how to use this class.
  */
 public class ContentRequest extends PermissionRequest {
 
@@ -115,8 +103,8 @@ public class ContentRequest extends PermissionRequest {
      * /** Start the request.
      *
      * @param context  Activity, Service, etc.
-     * @param reason   Explain to the user why you need to access the feature. This is displayed to the user in a dialog
-     *                 when Permission Nanny needs to ask the user for authorization.
+     * @param reason   Explain to the user why you need to access the resource. This is displayed to the user in a
+     *                 dialog when Permission Nanny needs to ask the user for authorization.
      * @param listener Response receiver
      */
     public void startRequest(@NonNull Context context, @Nullable String reason, @NonNull ContentListener listener) {

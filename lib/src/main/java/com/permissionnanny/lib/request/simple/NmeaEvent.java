@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.location.GpsStatus.NmeaListener;
 import android.os.Bundle;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.BaseEvent;
 
 /**
  *
  */
 public class NmeaEvent extends BaseEvent {
-    public static final String TIMESTAMP = "timestamp";
-    public static final String NMEA = "nmea";
+    @PPP public static final String TIMESTAMP = "timestamp";
+    @PPP public static final String NMEA = "nmea";
 
     private NmeaListener mListener;
 

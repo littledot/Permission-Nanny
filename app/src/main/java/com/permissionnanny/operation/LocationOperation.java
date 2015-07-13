@@ -13,14 +13,14 @@ import com.permissionnanny.lib.request.simple.LocationRequest;
  *
  */
 public class LocationOperation {
-    public static ProxyOperation[] operations = new ProxyOperation[]{
-            new ProxyOperation(LocationRequest.ADD_GPS_STATUS_LISTENER,
+    public static SimpleOperation[] operations = new SimpleOperation[]{
+            new SimpleOperation(LocationRequest.ADD_GPS_STATUS_LISTENER,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     R.string.dialogTitle_locationAddGpsStatusListener, 3, null),
-            new ProxyOperation(LocationRequest.ADD_NMEA_LISTENER,
+            new SimpleOperation(LocationRequest.ADD_NMEA_LISTENER,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     R.string.dialogTitle_locationAddNmeaListener, 5, null),
-            new ProxyOperation(LocationRequest.ADD_PROXIMITY_ALERT,
+            new SimpleOperation(LocationRequest.ADD_PROXIMITY_ALERT,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     R.string.dialogTitle_locationAddProximityAlert, 1, new ProxyFunction() {
                 @Override
@@ -30,7 +30,7 @@ public class LocationOperation {
                             request.long0, request.pendingIntent0);
                 }
             }),
-            new ProxyOperation(LocationRequest.GET_LAST_KNOWN_LOCATION,
+            new SimpleOperation(LocationRequest.GET_LAST_KNOWN_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     R.string.dialogTitle_locationGetLastKnownLocation, 1, new ProxyFunction() {
                 @Override
@@ -39,11 +39,11 @@ public class LocationOperation {
                     response.putParcelable(request.opCode, mgr.getLastKnownLocation(request.string0));
                 }
             }),
-            new ProxyOperation(LocationRequest.REMOVE_GPS_STATUS_LISTENER,
+            new SimpleOperation(LocationRequest.REMOVE_GPS_STATUS_LISTENER,
                     null, R.string.dialogTitle_locationRemoveGpsStatusListener, 3, null),
-            new ProxyOperation(LocationRequest.REMOVE_NMEA_LISTENER,
+            new SimpleOperation(LocationRequest.REMOVE_NMEA_LISTENER,
                     null, R.string.dialogTitle_locationRemoveNmeaListener, 5, null),
-            new ProxyOperation(LocationRequest.REMOVE_PROXIMITY_ALERT,
+            new SimpleOperation(LocationRequest.REMOVE_PROXIMITY_ALERT,
                     null, R.string.dialogTitle_locationRemoveProximityAlert, 1, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -51,11 +51,11 @@ public class LocationOperation {
                     mgr.removeProximityAlert(request.pendingIntent0);
                 }
             }),
-            new ProxyOperation(LocationRequest.REMOVE_UPDATES,
+            new SimpleOperation(LocationRequest.REMOVE_UPDATES,
                     null, R.string.dialogTitle_locationRemoveUpdates, 3, null),
-            new ProxyOperation(LocationRequest.REMOVE_UPDATES1,
+            new SimpleOperation(LocationRequest.REMOVE_UPDATES1,
                     null, R.string.dialogTitle_locationRemoveUpdates1, 1, null),
-            new ProxyOperation(LocationRequest.REQUEST_LOCATION_UPDATES,
+            new SimpleOperation(LocationRequest.REQUEST_LOCATION_UPDATES,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     R.string.dialogTitle_locationRequestLocationUpdates, 9, new ProxyFunction() {
                 @Override
@@ -65,13 +65,13 @@ public class LocationOperation {
                             request.pendingIntent0);
                 }
             }),
-            new ProxyOperation(LocationRequest.REQUEST_LOCATION_UPDATES1,
+            new SimpleOperation(LocationRequest.REQUEST_LOCATION_UPDATES1,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     R.string.dialogTitle_locationRequestLocationUpdates1, 9, null),
     };
 
-    public static ProxyOperation getOperation(String opCode) {
-        for (ProxyOperation operation : operations) {
+    public static SimpleOperation getOperation(String opCode) {
+        for (SimpleOperation operation : operations) {
             if (operation.mOpCode.equals(opCode)) {
                 return operation;
             }

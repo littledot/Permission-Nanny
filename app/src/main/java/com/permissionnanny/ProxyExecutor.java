@@ -9,7 +9,7 @@ import com.permissionnanny.content.ProxyContentProvider;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.content.ContentEvent;
-import com.permissionnanny.operation.ProxyOperation;
+import com.permissionnanny.operation.SimpleOperation;
 import timber.log.Timber;
 
 import java.security.SecureRandom;
@@ -26,8 +26,8 @@ public class ProxyExecutor {
     }
 
     public void executeAllow(Operation operation, RequestParams request, String clientId) {
-        if (operation instanceof ProxyOperation) {
-            executeAllow((ProxyOperation) operation, request, clientId);
+        if (operation instanceof SimpleOperation) {
+            executeAllow((SimpleOperation) operation, request, clientId);
         } else if (operation instanceof ContentOperation) {
             executeAllow((ContentOperation) operation, request, clientId);
         }
@@ -57,7 +57,7 @@ public class ProxyExecutor {
                 .body(response);
     }
 
-    private void executeAllow(ProxyOperation operation, RequestParams request, String clientId) {
+    private void executeAllow(SimpleOperation operation, RequestParams request, String clientId) {
         Bundle response = execute(operation, request, clientId).build();
         if (response != null && clientId != null) {
             Timber.d("server broadcasting=" + BundleUtil.toString(response));
@@ -66,7 +66,7 @@ public class ProxyExecutor {
         }
     }
 
-    private ResponseBundle execute(ProxyOperation operation, RequestParams request, String clientId) {
+    private ResponseBundle execute(SimpleOperation operation, RequestParams request, String clientId) {
         if (operation.mFunction != null) { // one-shot request
             Bundle response = new Bundle();
             try {

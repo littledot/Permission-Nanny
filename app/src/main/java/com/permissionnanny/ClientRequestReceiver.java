@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.permissionnanny.common.IntentUtil;
 import com.permissionnanny.lib.InvalidRequestException;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.missioncontrol.PermissionConfig;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
@@ -16,8 +17,9 @@ import timber.log.Timber;
 import javax.inject.Inject;
 
 /**
- *
+ * This receiver is part of PPP. It's class name must never change.
  */
+@PPP
 public class ClientRequestReceiver extends BroadcastReceiver {
 
     private static final String NO_ENTITY = "ENTITY_BODY is missing.";

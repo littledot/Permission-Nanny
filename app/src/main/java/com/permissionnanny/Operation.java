@@ -4,7 +4,7 @@ import android.support.annotation.StringRes;
 import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.operation.ProxyOperation;
+import com.permissionnanny.operation.SimpleOperation;
 
 /**
  *
@@ -12,7 +12,7 @@ import com.permissionnanny.operation.ProxyOperation;
 public class Operation {
     public static Operation getOperation(RequestParams request, int type) {
         return type == PermissionRequest.CONTENT_REQUEST ?
-                ContentOperation.getOperation(request) : ProxyOperation.getOperation(request);
+                ContentOperation.getOperation(request) : SimpleOperation.getOperation(request);
     }
 
     @StringRes public final int mDialogTitle;

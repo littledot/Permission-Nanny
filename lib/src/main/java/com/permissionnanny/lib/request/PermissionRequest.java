@@ -25,8 +25,7 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
 import java.security.SecureRandom;
 
 /**
- * A request to Permission Nanny to access features and components that are protected by Android permissions on your
- * behalf.
+ * A request to Permission Nanny to access resources that are protected by Android permissions on your behalf.
  * <p/>
  * <h1>Request Types</h1>
  * <p/>
@@ -49,15 +48,14 @@ import java.security.SecureRandom;
  * After creating a request, attach a listener to it via {@link SimpleRequest#listener(SimpleListener)} to receive
  * results for a request. No matter if the user allows or denies your request, Permission Nanny will return the results
  * in a Bundle. The response Bundle consists of 2 components: metadata entries describing the response such as {@link
- * Nanny#PROTOCOL_VERSION} and {@link Nanny#STATUS_CODE}; and entity data which contains the result payload. Entity data
- * is structured as a nested Bundle within the response Bundle indexed at {@link Nanny#ENTITY_BODY}. If Permission Nanny
- * encountered a failure while executing your request, a nested {@link NannyException} indexed at {@link
+ * Nanny#PROTOCOL_VERSION} and {@link Nanny#STATUS_CODE}; and entity data which contains the requested resource. Entity
+ * data is structured as a nested Bundle within the response Bundle indexed at {@link Nanny#ENTITY_BODY}. If Permission
+ * Nanny encountered a failure while executing your request, a nested {@link NannyException} indexed at {@link
  * Nanny#ENTITY_ERROR} will provide you details of what went wrong.
  * <p/>
- * For one-shot requests, the result payload is indexed using the method name within the entity data Bundle. For
- * example, if you were to make a {@link WifiRequest#getConnectionInfo()} request, the result of that request would be
- * indexed at {@link WifiRequest#GET_CONNECTION_INFO} within a Bundle indexed at {@link Nanny#ENTITY_BODY} of the
- * response Bundle.
+ * For one-shot requests, the requested resource is indexed using the method name within the entity data Bundle. For
+ * example, if you were to make a {@link WifiRequest#getConnectionInfo()} request, the resource would be indexed at
+ * {@link WifiRequest#GET_CONNECTION_INFO} within a Bundle indexed at {@link Nanny#ENTITY_BODY} of the response Bundle.
  * <pre>
  * <code>
  *  WifiRequest request = WifiRequest.getConnectionInfo().listener(new BundleListener() {
@@ -74,7 +72,7 @@ import java.security.SecureRandom;
  * </pre>
  * For ongoing requests that require you to provide an Android listener - such as {@link
  * LocationRequest#requestLocationUpdates(long, float, Criteria, LocationListener, Looper)}, the response Bundle will
- * only contain metadata and no entity data because the result payload is delivered directly to the listener interface
+ * only contain metadata and no entity data because the resource is delivered directly to the listener interface
  * provided to the request.
  * <p/>
  * <h1>{@linkplain ContentRequest}s</h1>
@@ -85,14 +83,14 @@ import java.security.SecureRandom;
  * <h2>How to Create a {@linkplain ContentRequest}</h2>
  * <p/>
  * Use a {@link ContentRequest.Builder} to craft your query. The parameters the builder accepts closely resembles to
- * {@link android.content.ContentResolver} queries. As of now, only single queries such as .query(), .insert(),
- * .update() and .delete() are supported; .applyBatch() and .bulkInsert() are future work.
+ * {@link android.content.ContentResolver} queries. As of now, only simple queries such as .query(), .insert(),
+ * .update() and .delete() are supported; .applyBatch() and .bulkInsert() are not supported <i>yet</i>.
  * <p/>
  * <h2>How to Listen for a Response for a {@linkplain ContentRequest}</h2>
  * <p/>
- * Similar to {@link SimpleRequest}s, attach a listener via {@link ContentRequest#listener(ContentListener)} to receive
- * results for a request. Permission Nanny will return response metadata in a Bundle as described above. Depending on
- * the type of the content request, result payload will be delivered through the appropriate parameter.
+ * After creating a request, attach a listener via {@link ContentRequest#listener(ContentListener)} to receive results
+ * for a request. Similar to {@link SimpleRequest}s, Permission Nanny will return response metadata in a Bundle.
+ * Resources are delivered via the appropriate parameter depending on the type of the content request.
  * <pre>
  * <code>
  *  ContentRequest request = ContentRequest.newBuilder().select()
@@ -132,7 +130,7 @@ public abstract class PermissionRequest {
      * Start the request.
      *
      * @param context Activity, Service, etc.
-     * @param reason  Explain to the user why you need to access the feature. This is displayed to the user in a dialog
+     * @param reason  Explain to the user why you need to access the resource. This is displayed to the user in a dialog
      *                when Permission Nanny needs to ask the user for authorization.
      */
     public void startRequest(@NonNull Context context, @Nullable String reason) {
