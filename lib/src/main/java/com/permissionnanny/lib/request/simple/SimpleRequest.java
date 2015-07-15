@@ -39,9 +39,4 @@ public class SimpleRequest extends PermissionRequest {
         listener(listener);
         startRequest(context, reason);
     }
-
-    @Override
-    public int getRequestType() {
-        return SIMPLE_REQUEST;
-    }
 }

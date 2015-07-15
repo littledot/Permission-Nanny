@@ -52,12 +52,7 @@ public class ClientRequestReceiver extends BroadcastReceiver {
             badRequest(context, clientAddr, new InvalidRequestException(NO_REQUEST_BODY));
             return;
         }
-        int type = entity.getInt(Nanny.TYPE, -1);
-        if (type == -1) {
-            badRequest(context, clientAddr, new InvalidRequestException(NO_TYPE));
-            return;
-        }
-        Operation operation = Operation.getOperation(request, type);
+        Operation operation = Operation.getOperation(request);
         if (operation == null) {
             badRequest(context, clientAddr, new InvalidRequestException(UNSUPPORTED_OPCODE, request.opCode));
             return;

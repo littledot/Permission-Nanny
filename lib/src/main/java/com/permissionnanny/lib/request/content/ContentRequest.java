@@ -111,9 +111,4 @@ public class ContentRequest extends PermissionRequest {
         listener(listener);
         startRequest(context, reason);
     }
-
-    @Override
-    public int getRequestType() {
-        return CONTENT_REQUEST;
-    }
 }

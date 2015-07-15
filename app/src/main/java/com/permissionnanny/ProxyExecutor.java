@@ -2,12 +2,14 @@ package com.permissionnanny;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.content.ProxyContentProvider;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
+import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.operation.SimpleOperation;
 import timber.log.Timber;
 
@@ -42,18 +44,37 @@ public class ProxyExecutor {
     }
 
     private ResponseBundle executeContentOperation(RequestParams request) {
-        long nonce = new SecureRandom().nextLong();
-        Timber.wtf("nonce=" + nonce);
+        Bundle entity = new Bundle();
+        switch (request.opCode) {
+        case ContentRequest.SELECT:
+            long nonce = new SecureRandom().nextLong();
+            Timber.wtf("nonce=" + nonce);
 
-        // cache request params
-        ProxyContentProvider.approvedRequests.put(nonce, request);
+            // cache request params
+            ProxyContentProvider.approvedRequests.put(nonce, request);
 
-        // return nonce to client
-        Bundle response = new Bundle();
-        response.putLong(Nanny.URI_PATH, nonce);
+            // return nonce to client
+            entity.putLong(request.opCode, nonce);
+            break;
+        case ContentRequest.INSERT:
+            Uri uri = mContext.getContentResolver()
+                    .insert(request.uri0, request.contentValues0);
+            entity.putParcelable(request.opCode, uri);
+            break;
+        case ContentRequest.UPDATE:
+            int updated = mContext.getContentResolver()
+                    .update(request.uri0, request.contentValues0, request.string0, request.stringArray1);
+            entity.putInt(request.opCode, updated);
+            break;
+        case ContentRequest.DELETE:
+            int deleted = mContext.getContentResolver()
+                    .delete(request.uri0, request.string0, request.stringArray1);
+            entity.putInt(request.opCode, deleted);
+            break;
+        }
         return ResponseFactory.newAllowResponse()
                 .connection(Nanny.CLOSE)
-                .body(response);
+                .body(entity);
     }
 
     private void executeAllow(SimpleOperation operation, RequestParams request, String clientId) {

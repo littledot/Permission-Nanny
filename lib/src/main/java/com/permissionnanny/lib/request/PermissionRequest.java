@@ -10,15 +10,14 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.C;
 import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyException;
-import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.content.ContentListener;
 import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.lib.request.simple.LocationRequest;
+import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
 import com.permissionnanny.lib.request.simple.WifiRequest;
 
@@ -116,9 +115,6 @@ import java.security.SecureRandom;
  */
 public abstract class PermissionRequest {
 
-    @PPP public static final int SIMPLE_REQUEST = 1;
-    @PPP public static final int CONTENT_REQUEST = 2;
-
     protected PermissionReceiver mReceiver;
     protected RequestParams mParams;
 
@@ -141,8 +137,6 @@ public abstract class PermissionRequest {
         }
         context.sendBroadcast(newBroadcastIntent(context, reason, clientId));
     }
-
-    protected abstract int getRequestType();
 
     protected PermissionRequest addFilter(Event event) {
         if (mReceiver == null) {
@@ -167,7 +161,6 @@ public abstract class PermissionRequest {
     private Intent decorateIntent(Intent intent, Context context, String reason, @Nullable String clientFilter) {
         Bundle entity = new Bundle();
         entity.putParcelable(Nanny.SENDER_IDENTITY, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
-        entity.putInt(Nanny.TYPE, getRequestType());
         entity.putParcelable(Nanny.REQUEST_PARAMS, mParams);
         entity.putString(Nanny.REQUEST_REASON, reason);
 
