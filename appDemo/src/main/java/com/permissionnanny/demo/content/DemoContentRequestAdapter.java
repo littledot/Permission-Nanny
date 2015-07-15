@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.demo.ContentRequestFactory;
 import com.permissionnanny.demo.DemoViewHolder;
 import com.permissionnanny.demo.R;
@@ -45,6 +46,7 @@ public class DemoContentRequestAdapter extends RecyclerView.Adapter<DemoViewHold
 
     @Override
     public void onBindViewHolder(DemoViewHolder holder, final int position) {
+        holder.tvRequest.setText(mFactory.getLabel(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +66,7 @@ public class DemoContentRequestAdapter extends RecyclerView.Adapter<DemoViewHold
             holder.tvResponse.setText(null);
             holder.itemView.setBackgroundColor(0);
         } else if (HttpStatus.SC_OK == results.getInt(Nanny.STATUS_CODE)) {
-            holder.tvResponse.setText("Allowed\n" + mContent[position]);
+            holder.tvResponse.setText("Allowed\n" + BundleUtil.toString(results) + '\n' + mContent[position]);
             holder.itemView.setBackgroundColor(0xFF00FF00);
         } else {
             holder.tvResponse.setText("Denied");

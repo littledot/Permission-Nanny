@@ -16,17 +16,12 @@
         android:id="@+id/tvResponse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvRequest"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/btnExtras"
-        android:layout_toStartOf="@id/btnExtras"/>
+        android:layout_below="@+id/tvRequest"/>
 
     <Button
         android:id="@+id/btnExtras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:text="params"/>
+        android:layout_alignParentEnd="true"/>
 </RelativeLayout>

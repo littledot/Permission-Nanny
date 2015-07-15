@@ -27,6 +27,7 @@ public class MainActivity extends BaseActivity {
             "WifiRequestDemo",
     };
     public static SimpleRequestFactory[] mFactories = new SimpleRequestFactory[]{
+            null,
             new LocationRequestFactory(),
             new TelephonyRequestFactory(),
             new WifiRequestFactory(),
