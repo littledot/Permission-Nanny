@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">appDemo</string>
+    <string name="app_name">3rd Party App</string>
     <string name="hello_world">Hello world!</string>
     <string name="opt_serverCheck">Check server</string>
 
