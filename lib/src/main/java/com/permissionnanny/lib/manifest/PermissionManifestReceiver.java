@@ -28,7 +28,7 @@ public class PermissionManifestReceiver extends BroadcastReceiver {
             return;
         }
         String senderPackage = sender.getIntentSender().getTargetPackage();
-        if (!Nanny.SERVER_APP_ID.equals(senderPackage)) {
+        if (!Nanny.getServerAppId().equals(senderPackage)) {
             return;
         }
 
@@ -39,7 +39,7 @@ public class PermissionManifestReceiver extends BroadcastReceiver {
         entity.putStringArrayList(Nanny.PERMISSION_MANIFEST, mPermissions);
 
         Intent usage = new Intent()
-                .setClassName(Nanny.SERVER_APP_ID, Nanny.CLIENT_PERMISSION_MANIFEST_RECEIVER)
+                .setClassName(Nanny.getServerAppId(), Nanny.CLIENT_PERMISSION_MANIFEST_RECEIVER)
                 .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
                 .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
                 .putExtra(Nanny.ENTITY_BODY, entity);

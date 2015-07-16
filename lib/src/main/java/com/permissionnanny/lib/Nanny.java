@@ -5,8 +5,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.LocationListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.VisibleForTesting;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.lib.request.simple.LocationRequest;
@@ -237,25 +239,56 @@ public class Nanny {
     @PPP public static final String URI_PATH = "UriPath";
 
     // experimental
-    /** Permission Nanny release build package name. */
-    @PPP public static final String SERVER_PACKAGE = "com.permissionnanny";
-    /** Permission Nanny debug build package name. */
-    public static final String SERVER_DEBUG_PACKAGE = "com.permissionnanny.debug";
-    /** Permission Nanny's app ID changes depending on the build type to avoid conflict with each other. */
-    public static final String SERVER_APP_ID = BuildConfig.DEBUG ? SERVER_DEBUG_PACKAGE : SERVER_PACKAGE;
+    /** Permission Nanny's root package name. */
+    @PPP public static final String SERVER_PACKAGE_NAME = "com.permissionnanny";
+    /** Permission Nanny's Release build application ID. */
+    @PPP public static final String SERVER_APP_ID = SERVER_PACKAGE_NAME;
+    /** Permission Nanny's Debug build application ID. */
+    public static final String SERVER_DEBUG_APP_ID = SERVER_PACKAGE_NAME + ".debug";
 
     /** Server Component that handles client requests. */
-    @PPP public static final String CLIENT_REQUEST_RECEIVER = SERVER_PACKAGE + ".ClientRequestReceiver";
+    @PPP public static final String CLIENT_REQUEST_RECEIVER = SERVER_PACKAGE_NAME + ".ClientRequestReceiver";
 
     /** Server Component that listens for client permission usages. */
-    @PPP public static final String CLIENT_PERMISSION_MANIFEST_RECEIVER = SERVER_PACKAGE +
+    @PPP public static final String CLIENT_PERMISSION_MANIFEST_RECEIVER = SERVER_PACKAGE_NAME +
             ".ClientPermissionManifestReceiver";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
-    @PPP public static final String ACTION_GET_PERMISSION_MANIFEST = SERVER_PACKAGE + ".GET_PERMISSION_MANIFEST";
+    @PPP public static final String ACTION_GET_PERMISSION_MANIFEST = SERVER_PACKAGE_NAME + ".GET_PERMISSION_MANIFEST";
 
     /** Authority that resolves to Permission Nanny's proxy content provider. */
-    @PPP public static final String PROVIDER_AUTHORITY = SERVER_APP_ID + ".proxy_content_provider";
+    @PPP public static final String PROVIDER_AUTHORITY = ".proxy_content_provider";
+    @PPP public static final Uri PROVIDER = Uri.parse("content://" + SERVER_APP_ID + PROVIDER_AUTHORITY);
+    @PPP public static final Uri DEBUG_PROVIDER = Uri.parse("content://" + SERVER_DEBUG_APP_ID + PROVIDER_AUTHORITY);
+
+    private static boolean debugBuild;
+
+    /**
+     * Configure the SDK to communicate with Permission Nanny's Debug or Release build variant. The Release build is
+     * published to app stores, while Debug build is used for development.
+     *
+     * @param targetDebugBuild {@code true} to issue requests to a Debug build, {@code false} to target a Release build
+     */
+    @VisibleForTesting
+    public static void configureServer(boolean targetDebugBuild) {
+        debugBuild = targetDebugBuild;
+    }
+
+    /**
+     * Return Permission Nanny's app ID, which changes depending on the build variant to avoid conflict with each
+     * other.
+     */
+    public static String getServerAppId() {
+        return debugBuild ? SERVER_DEBUG_APP_ID : SERVER_APP_ID;
+    }
+
+    /**
+     * Return Permission Nanny's proxy content provider's URI, which changes depending on the build variant to avoid
+     * conflict with each other.
+     */
+    public static Uri getProxyContentProvider() {
+        return debugBuild ? DEBUG_PROVIDER : PROVIDER;
+    }
 
     /**
      * Checks if Permission Nanny is installed.
@@ -267,7 +300,7 @@ public class Nanny {
         PackageManager pm = context.getPackageManager();
         ApplicationInfo server = null;
         try {
-            server = pm.getApplicationInfo(SERVER_APP_ID, 0);
+            server = pm.getApplicationInfo(getServerAppId(), 0);
         } catch (PackageManager.NameNotFoundException e) {/* Nothing to see here. */}
         return server != null;
     }

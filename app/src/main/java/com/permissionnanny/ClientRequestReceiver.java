@@ -25,7 +25,6 @@ public class ClientRequestReceiver extends BroadcastReceiver {
     private static final String NO_ENTITY = "ENTITY_BODY is missing.";
     private static final String NO_SENDER_IDENTITY = "SENDER_IDENTITY is missing.";
     private static final String NO_REQUEST_BODY = "REQUEST_PARAMS is missing";
-    private static final String NO_TYPE = "TYPE is missing";
     private static final String UNSUPPORTED_OPCODE = "Requested operation [%s] is unsupported.";
 
     @Inject PermissionConfigDataManager mConfigManager;

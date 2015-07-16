@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.PPP;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
 import timber.log.Timber;
 
@@ -14,8 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- *
+ * This receiver is part of PPP. It's class name must never change.
  */
+@PPP
 public class ClientPermissionManifestReceiver extends BroadcastReceiver {
 
     @Inject PermissionConfigDataManager mConfigManager;

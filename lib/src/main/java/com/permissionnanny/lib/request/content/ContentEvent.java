@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.net.Uri.Builder;
 import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
 import org.apache.http.HttpStatus;
 
@@ -16,8 +14,6 @@ import org.apache.http.HttpStatus;
  *
  */
 public class ContentEvent implements Event {
-
-    @PPP public static final Uri PROVIDER = new Builder().scheme("content").authority(Nanny.PROVIDER_AUTHORITY).build();
 
     private RequestParams mRequest;
     private ContentListener mListener;
@@ -40,7 +36,7 @@ public class ContentEvent implements Event {
             Uri authorized = null;
             if (HttpStatus.SC_OK == intent.getIntExtra(Nanny.STATUS_CODE, 0)) {
                 long uriPath = intent.getBundleExtra(Nanny.ENTITY_BODY).getLong(mRequest.opCode, 0);
-                authorized = PROVIDER.buildUpon().appendPath(Long.toString(uriPath)).build();
+                authorized = Nanny.getProxyContentProvider().buildUpon().appendPath(Long.toString(uriPath)).build();
             }
 
             ContentResolver cr = context.getContentResolver();

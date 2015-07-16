@@ -31,7 +31,7 @@ dependencies {
     compile project.recyclerviewV7
 
     compile project(':common')
-    compile project(path: ':lib', configuration: 'debug')
+    compile project(':lib')
     compile project.butterknife
     compile project.eventbus
     compile project.lorem

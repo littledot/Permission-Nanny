@@ -53,8 +53,7 @@ dependencies {
     compile project.recyclerviewV7
 
     compile project(':common')
-    debugCompile project(path: ':lib', configuration: 'debug')
-    releaseCompile project(path: ':lib', configuration: 'release')
+    compile project(':lib')
     compile project.dagger
     compile project.butterknife
     compile project.javaxAnnotation
