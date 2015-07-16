@@ -1,4 +1,11 @@
-# Permission Nanny?
+# Permission Nanny
+
+Permission Nanny is an application that can access resources which are protected by permissions on your behalf, so
+that your application does not need to declare permission usage in your AndroidManifest.xml. With Permission Nanny,
+it is possible for your application to not require ***any*** permissions at all, yet still be able to access
+permission-protected resources.
+
+# Why?
 
 Android M introduces a new permission model - Runtime Permissions - where 3rd party applications are no longer 
 granted permissions at install time. Instead, a dialog is displayed to the user, requesting authorization to access 
@@ -7,11 +14,6 @@ Runtime Permissions model is built into the operating system and is only availab
 users will have to wait for system updates, which unfortunately could take quite a while.
 
 Permission Nanny is an attempt to backport Runtime Permissions to pre-M devices, all the way to Gingerbread 2.3
-
-Permission Nanny is an application that can access resources which are protected by permissions on your behalf, so
-that your application does not need to declare permission usage in your AndroidManifest.xml. With Permission Nanny,
-it is possible for your application to not require ***any*** permissions at all, yet still be able to access
-permission-protected resources.
 
 # How does it work?
 
@@ -25,13 +27,15 @@ return an error response.
 # Will my existing code work with Permission Nanny?
 
 Unfortunately, no; code changes is required to integrate your app with Permission Nanny. Fortunately, the Permission 
-Nanny SDK is designed to mimic the Android SDK. Hence the amount of work required should be minimal.
+Nanny SDK is designed to mimic the Android SDK, hence the amount of work required should be minimal. But you are 
+going to make code changes to make your app work with M's Runtime Permissions anyways; why not try something that is 
+supported on Gingerbread 2.3 as well?
 
 # How do 3rd party apps communicate with Permission Nanny?
 
 Clients communicate with Permission Nanny using broadcast Intents following the Permission Police Protocol (PPP). PPP
 is heavily inspired by HTTP with a few minor tweaks, borrowing attributes such as status codes, headers and entity. 
-See (lib/src/main/java/com/permissionnanny/lib/Nanny.java) for the full PPP specification.
+See [Nanny.java](lib/src/main/java/com/permissionnanny/lib/Nanny.java) for the full PPP specification.
 
 # How do I integrate my apps with Permission Nanny?
 
@@ -46,8 +50,8 @@ dependencies {
 ## How do I make a request?
 
 Use one of the static factory methods to create a request; attach a listener to receive results; finally send the 
-request to Permission Nanny with `.startRequest()`. See 
-(lib/src/main/java/com/permissionnanny/lib/request/PermissionRequest.java) for detailed documentation.
+request to Permission Nanny with `.startRequest()`. See [PermissionRequest.java]
+(lib/src/main/java/com/permissionnanny/lib/request/PermissionRequest.java) for more documentation - such as creating
 
 ```java
 WifiRequest request = WifiRequest.getConnectionInfo().listener(new SimpleListener() {
@@ -61,3 +65,12 @@ WifiRequest request = WifiRequest.getConnectionInfo().listener(new SimpleListene
     }
 }).startRequest(context, "Trust me");
 ```
+
+# Are there any examples?
+
+Check out the [/appDemo](appDemo/src/main/java/com/permissionnanny/demo/MainActivity.java) directory or the demo app 
+Permission Nanny Demo on Google Play.
+
+# License
+
+See [LICENSE](LICENSE) for details.
