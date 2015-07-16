@@ -5,6 +5,10 @@ project.archivesBaseName = PROJ_ARTIFACTID
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
+task jar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+}
+
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
@@ -26,7 +30,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 javadoc {
-    options{
+    options {
         encoding "UTF-8"
         charSet 'UTF-8'
         author true
@@ -37,6 +41,7 @@ javadoc {
 }
 
 artifacts {
+    archives jar
     archives javadocJar
     archives sourcesJar
 }
@@ -63,7 +68,7 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId PROJ_ARTIFACTID
 
-            pom{
+            pom {
                 packaging 'aar'
             }
             pom.withXml {
