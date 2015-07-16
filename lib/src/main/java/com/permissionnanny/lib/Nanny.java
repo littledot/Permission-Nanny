@@ -31,10 +31,9 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * <p/>
  * <h1>Permission Police Protocol</h1>
  * <p/>
- * Clients communicate with Permission Nanny using the Permission Police Protocol (PPP). PPP is heavily inspired by HTTP
- * with a few minor tweaks, borrowing attributes such as status codes, headers and entity. PPP is implemented using
- * Intent broadcasts. There are 3 handshake flows depending on the type of the request - One-shot, Ongoing and Content
- * Query.
+ * Clients communicate with Permission Nanny using broadcast Intents following the Permission Police Protocol (PPP). PPP
+ * is heavily inspired by HTTP with a few minor tweaks, borrowing attributes such as status codes, headers and entity.
+ * There are 3 handshake flows depending on the type of the request - One-shot, Ongoing and Content Query.
  * <p/>
  * <i>If you are not interested in low-level details of how the handshakes are implemented and would like to know how to
  * make requests and listen for responses using the SDK or integrating your application with Permission Nanny, please

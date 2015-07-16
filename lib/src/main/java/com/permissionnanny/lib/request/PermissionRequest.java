@@ -57,7 +57,7 @@ import java.security.SecureRandom;
  * {@link WifiRequest#GET_CONNECTION_INFO} within a Bundle indexed at {@link Nanny#ENTITY_BODY} of the response Bundle.
  * <pre>
  * <code>
- *  WifiRequest request = WifiRequest.getConnectionInfo().listener(new BundleListener() {
+ *  WifiRequest request = WifiRequest.getConnectionInfo().listener(new SimpleListener() {
  *      public void onResponse(Bundle response) {
  *          Bundle entity = response.getBundle(Nanny.ENTITY_BODY);
  *          if (Nanny.SC_OK != response.getInt(Nanny.STATUS_CODE)) {
