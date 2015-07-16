@@ -10,7 +10,7 @@ android {
         applicationId "com.permissionnanny"
         minSdkVersion project.minSdk
         targetSdkVersion project.targetSdk
-        versionCode 1
+        versionCode 2
         versionName "0.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -19,7 +19,7 @@ android {
             Properties properties = new Properties()
             properties.load(project.rootProject.file('permission-nanny-android.properties').newDataInputStream())
 
-            storeFile file('../permission-nanny-android.jks')
+            storeFile project.rootProject.file('permission-nanny-android.jks')
             storePassword properties.getProperty("STORE_PASSWORD")
             keyAlias properties.getProperty("KEY_ALIAS")
             keyPassword properties.getProperty("KEY_PASSWORD")

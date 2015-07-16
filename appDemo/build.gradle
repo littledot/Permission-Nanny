@@ -6,14 +6,26 @@ android {
     buildToolsVersion project.buildTools
 
     defaultConfig {
-        applicationId "com.sdchang.permissionpolice.demo"
+        applicationId "com.permissionnanny.demo"
         minSdkVersion project.minSdk
         targetSdkVersion project.targetSdk
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
+    }
+    signingConfigs {
+        release {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('permission-nanny-android.properties').newDataInputStream())
+
+            storeFile project.rootProject.file('permission-nanny-android.jks')
+            storePassword properties.getProperty("STORE_PASSWORD")
+            keyAlias properties.getProperty("KEY_ALIAS")
+            keyPassword properties.getProperty("KEY_PASSWORD")
+        }
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

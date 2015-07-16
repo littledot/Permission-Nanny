@@ -12,7 +12,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Nanny.configureServer(true);
+        Nanny.configureServer(BuildConfig.DEBUG);
         Timber.plant(new StackTraceDebugTree());
     }
 }
