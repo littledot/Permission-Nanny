@@ -17,10 +17,10 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
 /**
  * <h1>Permission Nanny</h1>
  * <p/>
- * Permission Nanny is an application that can access resources which are protected by Android permissions on your
- * behalf, so that your application does not need to declare permission usage in your AndroidManifest.xml. With
- * Permission Nanny, it is possible for your application to not require <b><i>any</i></b> permissions at all, yet still
- * be able to access permission-protected resources.
+ * Permission Nanny is an application that can access resources which are protected by permissions on your behalf, so
+ * that your application does not need to declare permission usage in your AndroidManifest.xml. With Permission Nanny,
+ * it is possible for your application to not require <b><i>any</i></b> permissions at all, yet still be able to access
+ * permission-protected resources.
  * <p/>
  * From a high-level perspective, Permission Nanny acts as a proxy server between client applications and the Android
  * operating system. When a client needs to access a resource that is protected by Android permissions, the client will
@@ -33,7 +33,8 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * <p/>
  * Clients communicate with Permission Nanny using the Permission Police Protocol (PPP). PPP is heavily inspired by HTTP
  * with a few minor tweaks, borrowing attributes such as status codes, headers and entity. PPP is implemented using
- * Intent broadcasts. There are 3 handshake flows depending on the type of the request - One-shot, Ongoing and Content.
+ * Intent broadcasts. There are 3 handshake flows depending on the type of the request - One-shot, Ongoing and Content
+ * Query.
  * <p/>
  * <i>If you are not interested in low-level details of how the handshakes are implemented and would like to know how to
  * make requests and listen for responses using the SDK or integrating your application with Permission Nanny, please
@@ -48,18 +49,16 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * that validates incoming Intents. The Intent <b>must</b> contain a {@link #PROTOCOL_VERSION} String and an {@link
  * #ENTITY_BODY} Bundle containing valid request metadata. Request metadata <b>must</b> contain a {@link
  * #SENDER_IDENTITY} so that Permission Nanny knows who sent the request, {@link #REQUEST_PARAMS} to know what resource
- * to access and {@link #TYPE} to distinguish between {@link ContentRequest}s and non-{@link ContentRequest}s. Request
- * metadata <b>may</b> contain a {@link #REQUEST_REASON} String to explain to the user why the client needs access to
- * the resource. The request <b>may</b> also contain a {@link #CLIENT_ADDRESS} String to tell Permission Nanny where to
- * deliver the response. If {@link #CLIENT_ADDRESS} is empty, Permission Nanny will not return a response and you will
- * not know the status of your request.
+ * to access. Request metadata <b>may</b> contain a {@link #REQUEST_REASON} String to explain to the user why the client
+ * needs access to the resource. The request <b>may</b> also contain a {@link #CLIENT_ADDRESS} String to tell Permission
+ * Nanny where to deliver the response. If {@link #CLIENT_ADDRESS} is empty, Permission Nanny will not return a response
+ * and you will not know the status of your request, nor be able to retrieve the requested resources.
  * <pre>
  *  {
  *      {@link #PROTOCOL_VERSION}*
  *      {@link #CLIENT_ADDRESS}
  *      {@link #ENTITY_BODY}* = {
  *          {@link #SENDER_IDENTITY}*
- *          {@link #TYPE}*
  *          {@link #REQUEST_PARAMS}*
  *          {@link #REQUEST_REASON}
  *      }
@@ -145,17 +144,18 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  *      {@link #CLIENT_ADDRESS}*
  *  }
  * </pre>
- * <h2>Content Request Handshake Flow</h2>
+ * <h2>Content Query Handshake Flow</h2>
  * <p/>
- * A request that accesses resources stored in {@link android.content.ContentProvider}s is considered a content
- * request.
+ * A request that queries resources stored in {@link android.content.ContentProvider}s is considered a content query.
+ * <b>Requests that insert, update and delete resources in {@link android.content.ContentProvider}s are one-shot
+ * requests, not content queries.</b>
  * <p/>
- * The requirements for a content request is exactly the same as one-shot requests. Clients start the flow by sending a
- * content request to Permission Nanny. If the user authorizes the request, Permission Nanny will return a content
- * response. The content response <b>must</b> contain an {@link #ENTITY_BODY} Bundle, which <b>must</b> only contain a
- * {@link #URI_PATH} String. The client <b>must</b> then make a 2nd request to Permission Nanny's content provider with
- * the {@link #URI_PATH} appended to the {@link #PROVIDER_AUTHORITY} as the Uri. The 2nd request will be handled by
- * Permission Nanny's ProxyContentProvider which will execute the content request and return results.
+ * The requirements for a content query is exactly the same as one-shot requests. Clients start the flow by sending a
+ * content query to Permission Nanny. If the user authorizes the query, Permission Nanny will return a content response.
+ * The content response <b>must</b> contain an {@link #ENTITY_BODY} Bundle, which <b>must</b> only contain a {@link
+ * ContentRequest#SELECT} URI. The client <b>must</b> then make a 2nd request to Permission Nanny's content provider
+ * with the URI appended to {@link #PROVIDER_AUTHORITY}. The 2nd request will be handled by Permission Nanny's
+ * ProxyContentProvider which will execute the content query and return results.
  * <pre>
  *  {
  *      {@link #PROTOCOL_VERSION}*
@@ -163,18 +163,18 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  *      {@link #CONNECTION}* = {@link #CLOSE}
  *      {@link #SERVER}* = {@link #AUTHORIZATION_SERVICE}
  *      {@link #ENTITY_BODY} = {
- *          {@link #URI_PATH}*
+ *          {@link ContentRequest#SELECT}*
  *      }
  *      {@link #ENTITY_ERROR}
  *  }
  * </pre>
- * <h4>{@linkplain #URI_PATH} and {@linkplain android.database.CrossProcessCursorWrapper}</h4>
+ * <h4>Query URI and {@linkplain android.database.CrossProcessCursorWrapper}</h4>
  * <p/>
  * Android 15 introduced the {@link android.database.CrossProcessCursorWrapper}, which facilitated sending Cursor data
- * between processes. This is the same mechanism Permission Nanny uses to deliver content resources to the client. After
- * the 1st handshake, Permission Nanny uses SecureRandom to generate a key to cache the query parameters; the key is
- * returned to the client as the {@link #URI_PATH}. The client then appends the key to the {@link #PROVIDER_AUTHORITY}
- * and starts the 2nd handshake with ProxyContentProvider.
+ * between processes. Permission Nanny uses this mechanism to deliver content resources to the client. After the 1st
+ * handshake, Permission Nanny uses SecureRandom to generate a key to cache the query parameters; the key is returned to
+ * the client as the {@link ContentRequest#SELECT} URI. The client then appends the key to the {@link
+ * #PROVIDER_AUTHORITY} and starts the 2nd handshake with ProxyContentProvider.
  * <p/>
  * <i>If you would like to know how to make requests and listen for responses using the SDK or integrating your
  * application with Permission Nanny, please proceed to {@link PermissionRequest}</i>.
@@ -235,8 +235,6 @@ public class Nanny {
     @PPP public static final String PERMISSION_MANIFEST = "PermissionManifest";
     /** Entity field: */
     @PPP public static final String ACK_SERVER_ADDRESS = "AckServerAddress";
-    /** Entity field: */
-    @PPP public static final String URI_PATH = "UriPath";
 
     // experimental
     /** Permission Nanny's root package name. */
