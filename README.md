@@ -1,7 +1,7 @@
-# Permission Nanny
+# [Permission Nanny][app]
 
-Permission Nanny is an application that can access resources which are protected by permissions on your behalf, so
-that your application does not need to declare permission usage in your AndroidManifest.xml. With Permission Nanny,
+Permission Nanny is an application that can access resources which are protected by permissions on your behalf, 
+so that your application does not need to declare permission usage in your AndroidManifest.xml. With Permission Nanny,
 it is possible for your application to not require ***any*** permissions at all, yet still be able to access
 permission-protected resources.
 
@@ -78,12 +78,20 @@ otherwise, it will contain an error message.
 
 Currently, LocationManager (partial), SmsManager, TelephonyManager, WifiManager and all Content Providers are 
 supported. See [request factories][simple-pkg] for a detailed list of all available requests.
-  
 
 # Are there any examples?
 
 Check out the [/appDemo][appdemo-main-activity-java] directory or the demo app [Permission Nanny Demo][demo-app]
 on Google Play.
+
+# Where can I find complete documentation?
+
+[Documentation][docs] is available but still a work-in-progress. [Nanny.java][nanny-java] & [PermissionRequest.java]
+[permission-request-java] are the most extensive documentation and should cover most areas of Permission Nanny.
+
+# Where can I ask questions?
+
+Please direct your questions to the [Permission Nanny mailing list][mailing-list]; I will try my best to answer them.
 
 # License
 
@@ -93,6 +101,8 @@ See [LICENSE](LICENSE.md) for details.
 [permission-request-java]: http://littledot.github.io/Permission-Nanny/com/permissionnanny/lib/request/PermissionRequest.html
 [simple-pkg]: http://littledot.github.io/Permission-Nanny/com/permissionnanny/lib/request/simple/package-summary.html
 [appdemo-main-activity-java]: appDemo/src/main/java/com/permissionnanny/demo/MainActivity.java
-
+[app]: https://play.google.com/store/apps/details?id=com.permissionnanny
 [runtime-permissions]: https://developer.android.com/preview/features/runtime-permissions.html
 [demo-app]: https://play.google.com/store/apps/details?id=com.permissionnanny
+[docs]: http://littledot.github.io/Permission-Nanny/
+[mailing-list]: https://groups.google.com/forum/#!forum/permission-nanny/
