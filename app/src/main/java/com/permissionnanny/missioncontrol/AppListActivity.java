@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +20,7 @@ import net.engio.mbassy.listener.Handler;
 import javax.inject.Inject;
 
 public class AppListActivity extends BaseActivity {
-
+    @Bind(R.id.toolbar) Toolbar tBar;
     @Bind(R.id.list) RecyclerView rvAppList;
     @Bind(R.id.empty) ViewGroup vgEmpty;
 
@@ -32,6 +33,7 @@ public class AppListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_app_list);
         ButterKnife.bind(this);
+        setSupportActionBar(tBar);
         getActivityComponent().inject(this);
 
         mAdapter = new AppListAdapter(this, mConfigManager);
