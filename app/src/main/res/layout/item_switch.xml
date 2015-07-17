@@ -29,6 +29,7 @@
         android:id="@+id/permissionDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Subhead"/>
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:visibility="gone"/>
 
 </LinearLayout>

@@ -30,6 +30,7 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private SparseArray<String> mAppsPositions = new SparseArray<>();
     private SparseArray<PermissionConfig> mPermissionPositions = new SparseArray<>();
+    private SparseArray<Boolean> mDisplayDescription = new SparseArray<>();
 
     public AppListAdapter(Context context, PermissionConfigDataManager manager) {
         mContext = context;
@@ -93,7 +94,7 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.tvAppName.setText(appName);
     }
 
-    private void bindPermissionSwitchViewHolder(PermissionSwitchViewHolder holder, int position) {
+    private void bindPermissionSwitchViewHolder(PermissionSwitchViewHolder holder, final int position) {
         final PermissionConfig config = mPermissionPositions.get(position);
 
         String permName = config.permissionName;
@@ -109,7 +110,16 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         holder.tvPermissionName.setText(permName);
+        holder.tvPermissionName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDisplayDescription.put(position, !displayDescription(position));
+                notifyItemChanged(position);
+            }
+        });
+
         holder.tvPermissionDesc.setText(permDesc);
+        holder.tvPermissionDesc.setVisibility(displayDescription(position) ? View.VISIBLE : View.GONE);
 
         holder.sPermissionAccess.setAdapter(ArrayAdapter.createFromResource(mContext, R.array.access_configurations,
                 android.R.layout.simple_spinner_dropdown_item));
@@ -124,5 +134,9 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private String capitalize(String line) {
         return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+    }
+
+    private boolean displayDescription(int position) {
+        return mDisplayDescription.get(position) == Boolean.TRUE;
     }
 }
