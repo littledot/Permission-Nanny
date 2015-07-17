@@ -102,7 +102,7 @@ See [LICENSE](LICENSE.md) for details.
 [simple-pkg]: http://littledot.github.io/Permission-Nanny/com/permissionnanny/lib/request/simple/package-summary.html
 [appdemo-main-activity-java]: appDemo/src/main/java/com/permissionnanny/demo/MainActivity.java
 [app]: https://play.google.com/store/apps/details?id=com.permissionnanny
+[demo-app]: https://play.google.com/store/apps/details?id=com.permissionnanny.demo
 [runtime-permissions]: https://developer.android.com/preview/features/runtime-permissions.html
-[demo-app]: https://play.google.com/store/apps/details?id=com.permissionnanny
 [docs]: http://littledot.github.io/Permission-Nanny/
 [mailing-list]: https://groups.google.com/forum/#!forum/permission-nanny/
