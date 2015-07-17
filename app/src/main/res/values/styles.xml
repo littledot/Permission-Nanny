@@ -1,11 +1,9 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary3</item>
         <item name="colorPrimaryDark">@color/colorPrimary4</item>
         <item name="colorAccent">@color/colorPrimary2</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="Theme.AppCompat.Transparent" parent="Theme.AppCompat.NoActionBar">
