@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.permissionnanny.BaseActivity;
@@ -18,7 +20,8 @@ import javax.inject.Inject;
 
 public class AppListActivity extends BaseActivity {
 
-    @Bind(R.id.rv) RecyclerView rvAppList;
+    @Bind(R.id.list) RecyclerView rvAppList;
+    @Bind(R.id.empty) ViewGroup vgEmpty;
 
     @Inject PermissionConfigDataManager mConfigManager;
     @Inject AppModule.Bus mBus;
@@ -60,6 +63,7 @@ public class AppListActivity extends BaseActivity {
         mConfigManager.refreshData();
         mAdapter.setData(mConfigManager.getConfig());
         mAdapter.notifyDataSetChanged();
+        setViewVisibility();
     }
 
     @Override
@@ -72,5 +76,12 @@ public class AppListActivity extends BaseActivity {
     public void onConfigData(SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> configs) {
         mAdapter.setData(configs);
         mAdapter.notifyDataSetChanged();
+        setViewVisibility();
+    }
+
+    private void setViewVisibility() {
+        boolean hasData = mAdapter.getItemCount() > 0;
+        rvAppList.setVisibility(hasData ? View.VISIBLE : View.GONE);
+        vgEmpty.setVisibility(hasData ? View.GONE : View.VISIBLE);
     }
 }

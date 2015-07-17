@@ -5,4 +5,6 @@
         <item>Always Allow</item>
         <item>Always Deny</item>
     </array>
+
+    <string name="empty_app_list">No apps are integrated with Permission Nanny</string>
 </resources>
