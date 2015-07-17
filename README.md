@@ -28,10 +28,10 @@ return an error response.
 
 # Will my existing code work with Permission Nanny?
 
-Unfortunately, code changes is required to integrate your app with Permission Nanny. Fortunately, the Permission 
+Unfortunately, code changes are required to integrate your app with Permission Nanny. Fortunately, the Permission 
 Nanny SDK is designed to mimic the Android SDK, hence the amount of work required should be minimal. Since you are 
 going to make code changes to make your app work with M's Runtime Permissions anyways; why not try something that is 
-supported on Gingerbread 2.3?
+supported all the way back to Gingerbread 2.3?
 
 # How do 3rd party apps communicate with Permission Nanny?
 
@@ -53,7 +53,7 @@ dependencies {
 
 Use one of the static factory methods to create a request; attach a listener to receive results; finally send the 
 request to Permission Nanny with `.startRequest()`. See [PermissionRequest.java][permission-request-java] for more 
-documentation - such as creating
+documentation. For example, to issue a `WifiManager.getConnectionInfo()` request:
 
 ```java
 WifiRequest request = WifiRequest.getConnectionInfo().listener(new SimpleListener() {
@@ -72,7 +72,7 @@ WifiRequest request = WifiRequest.getConnectionInfo().listener(new SimpleListene
 
 Permission Nanny will return a response in the form of a Bundle. The response will contain a status code which will 
 tell you the user's decision. If the user authorizes the request, the response will contain the requested resources; 
-otherwise it will contain an error message.
+otherwise, it will contain an error message.
 
 # What resources are supported?
 
