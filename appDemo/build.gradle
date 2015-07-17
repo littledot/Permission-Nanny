@@ -9,8 +9,8 @@ android {
         applicationId "com.permissionnanny.demo"
         minSdkVersion project.minSdk
         targetSdkVersion project.targetSdk
-        versionCode 1
-        versionName "0.0.1"
+        versionCode project.versionCode
+        versionName project.versionName
     }
     signingConfigs {
         release {

@@ -27,7 +27,7 @@ return an error response.
 # Will my existing code work with Permission Nanny?
 
 Unfortunately, no; code changes is required to integrate your app with Permission Nanny. Fortunately, the Permission 
-Nanny SDK is designed to mimic the Android SDK, hence the amount of work required should be minimal. But you are 
+Nanny SDK is designed to mimic the Android SDK, hence the amount of work required should be minimal. Since you are 
 going to make code changes to make your app work with M's Runtime Permissions anyways; why not try something that is 
 supported on Gingerbread 2.3 as well?
 

@@ -10,8 +10,8 @@ android {
         applicationId "com.permissionnanny"
         minSdkVersion project.minSdk
         targetSdkVersion project.targetSdk
-        versionCode 2
-        versionName "0.0.1"
+        versionCode project.versionCode
+        versionName project.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
