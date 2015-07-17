@@ -87,7 +87,7 @@ Check out the [/appDemo](appDemo/src/main/java/com/permissionnanny/demo/MainActi
 
 # License
 
-See [LICENSE](LICENSE) for details.
+See [LICENSE](LICENSE.md) for details.
 
 [nanny-java]: lib/src/main/java/com/permissionnanny/lib/Nanny.java
 [permission-request-java]: lib/src/main/java/com/permissionnanny/lib/request/PermissionRequest.java
