@@ -82,16 +82,17 @@ supported. See [request factories][simple-pkg] for a detailed list of all availa
 
 # Are there any examples?
 
-Check out the [/appDemo](appDemo/src/main/java/com/permissionnanny/demo/MainActivity.java) directory or the demo app 
-[Permission Nanny Demo][demo-app] on Google Play.
+Check out the [/appDemo][appdemo-main-activity-java] directory or the demo app [Permission Nanny Demo][demo-app]
+on Google Play.
 
 # License
 
 See [LICENSE](LICENSE.md) for details.
 
-[nanny-java]: lib/src/main/java/com/permissionnanny/lib/Nanny.java
-[permission-request-java]: lib/src/main/java/com/permissionnanny/lib/request/PermissionRequest.java
-[simple-pkg]: lib/src/main/java/com/permissionnanny/lib/request/simple 
+[nanny-java]: http://littledot.github.io/Permission-Nanny/com/permissionnanny/lib/Nanny.html
+[permission-request-java]: http://littledot.github.io/Permission-Nanny/com/permissionnanny/lib/request/PermissionRequest.html
+[simple-pkg]: http://littledot.github.io/Permission-Nanny/com/permissionnanny/lib/request/simple/package-summary.html
+[appdemo-main-activity-java]: appDemo/src/main/java/com/permissionnanny/demo/MainActivity.java
 
 [runtime-permissions]: https://developer.android.com/preview/features/runtime-permissions.html
 [demo-app]: https://play.google.com/store/apps/details?id=com.permissionnanny
