@@ -18,6 +18,11 @@ task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += configurations.compile
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
+    // Turn off doclint because JDK 8 is too strict
+    // http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
+    options.addStringOption('Xdoclint:none', '-quiet')
+
     // TODO #43: Figure out how to build with AAR dependencies
     // Gradle: error: package android.support.v4.util does not exist
     // Gradle: error: cannot find symbol class SimpleArrayMap
