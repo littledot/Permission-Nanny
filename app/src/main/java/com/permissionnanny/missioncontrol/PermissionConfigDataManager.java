@@ -99,6 +99,12 @@ public class PermissionConfigDataManager {
         mBus.publish(mConfigs);
     }
 
+    public void removeApp(String appPackage) {
+        mDB.delApp(appPackage);
+        mConfigs.remove(appPackage);
+        mBus.publish(mConfigs);
+    }
+
     public SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> getConfig() {
         return mConfigs;
     }

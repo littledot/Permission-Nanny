@@ -35,6 +35,12 @@ public class AppDB {
         mDB.del(key(appPackage, permission));
     }
 
+    public void delApp(String appPackage) {
+        for (String key : mDB.findKeys(CONFIG + appPackage)) {
+            mDB.del(key);
+        }
+    }
+
     public void delConfig(PermissionConfig config) {
         mDB.del(key(config));
     }

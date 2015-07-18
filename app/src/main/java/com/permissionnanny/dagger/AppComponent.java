@@ -3,6 +3,7 @@ package com.permissionnanny.dagger;
 import android.content.Context;
 import com.permissionnanny.ClientPermissionManifestReceiver;
 import com.permissionnanny.ClientRequestReceiver;
+import com.permissionnanny.UninstallReceiver;
 import com.permissionnanny.db.AppDB;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
 import dagger.Component;
@@ -29,4 +30,6 @@ public interface AppComponent {
     void inject(ClientPermissionManifestReceiver victim);
 
     void inject(ClientRequestReceiver victim);
+
+    void inject(UninstallReceiver victim);
 }

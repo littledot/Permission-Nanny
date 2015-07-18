@@ -53,6 +53,14 @@
             android:name=".ClientRequestReceiver"
             android:exported="true"/>
 
+        <receiver
+            android:name=".UninstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name=".content.ProxyContentProvider"
             android:authorities="${applicationId}.proxy_content_provider"
