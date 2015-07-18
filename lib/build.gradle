@@ -29,6 +29,7 @@ android {
 dependencies {
     compile project.supportV4
     compile project.appcompatV7
+    compile project.javaxInject
 
     testCompile project.junit
     testCompile project.mockitoCore
