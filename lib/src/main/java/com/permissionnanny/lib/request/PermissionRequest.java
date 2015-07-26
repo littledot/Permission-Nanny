@@ -130,6 +130,16 @@ public abstract class PermissionRequest {
      *                when Permission Nanny needs to ask the user for authorization.
      */
     public void startRequest(@NonNull Context context, @Nullable String reason) {
+        if (!Nanny.isPermissionNannyInstalled(context)) {
+            if (mReceiver != null) {
+                mReceiver.onReceive(context, new Intent()
+                        .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
+                        .putExtra(Nanny.STATUS_CODE, Nanny.SC_NOT_FOUND)
+                        .putExtra(Nanny.SERVER, Nanny.AUTHORIZATION_SERVICE));
+            }
+            return;
+        }
+
         String clientId = null;
         if (mReceiver != null) {
             clientId = Long.toString(new SecureRandom().nextLong());

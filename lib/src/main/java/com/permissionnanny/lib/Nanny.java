@@ -194,6 +194,8 @@ public class Nanny {
     @PPP public static final int SC_UNAUTHORIZED = 401;
     /** Response value: User denied your request. */
     @PPP public static final int SC_FORBIDDEN = 403;
+    /** Response value: User does not have Permission Nanny installed. */
+    @PPP public static final int SC_NOT_FOUND = 404;
 
     /** Request field: Address client is listening on. */
     @PPP public static final String CLIENT_ADDRESS = "Client-Address";
