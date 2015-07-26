@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import com.permissionnanny.lib.request.PermissionRequest;
 import com.permissionnanny.lib.request.content.ContentRequest;
@@ -295,7 +296,7 @@ public class Nanny {
      * @param context Activity, Service, etc.
      * @return {@code true} if Permission Nanny is installed
      */
-    public static boolean isPermissionNannyInstalled(Context context) {
+    public static boolean isPermissionNannyInstalled(@NonNull Context context) {
         PackageManager pm = context.getPackageManager();
         ApplicationInfo server = null;
         try {

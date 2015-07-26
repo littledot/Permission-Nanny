@@ -132,10 +132,7 @@ public abstract class PermissionRequest {
     public void startRequest(@NonNull Context context, @Nullable String reason) {
         if (!Nanny.isPermissionNannyInstalled(context)) {
             if (mReceiver != null) {
-                mReceiver.onReceive(context, new Intent()
-                        .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                        .putExtra(Nanny.STATUS_CODE, Nanny.SC_NOT_FOUND)
-                        .putExtra(Nanny.SERVER, Nanny.AUTHORIZATION_SERVICE));
+                mReceiver.onReceive(context, newNotFoundIntent());
             }
             return;
         }
@@ -156,28 +153,29 @@ public abstract class PermissionRequest {
         return this;
     }
 
-    private Intent newBroadcastIntent(Context context, String reason, @Nullable String clientFilter) {
-        Intent intent = new Intent()
-                .setClassName(Nanny.getServerAppId(), Nanny.CLIENT_REQUEST_RECEIVER)
-                .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        return decorateIntent(intent, context, reason, clientFilter);
-    }
-
-    private Intent newBindServiceIntent() {
-        return new Intent().setClassName("com.sdchang.permissionpolice",
-                "com.sdchang.permissionpolice.ExternalRequestService");
-    }
-
-    private Intent decorateIntent(Intent intent, Context context, String reason, @Nullable String clientFilter) {
+    private Intent newBroadcastIntent(Context context, @Nullable String reason, @Nullable String clientId) {
         Bundle entity = new Bundle();
         entity.putParcelable(Nanny.SENDER_IDENTITY, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
         entity.putParcelable(Nanny.REQUEST_PARAMS, mParams);
         entity.putString(Nanny.REQUEST_REASON, reason);
 
-        if (clientFilter != null) {
-            intent.putExtra(Nanny.CLIENT_ADDRESS, clientFilter);
+        Intent intent = new Intent()
+                .setClassName(Nanny.getServerAppId(), Nanny.CLIENT_REQUEST_RECEIVER)
+                .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        if (clientId != null) {
+            intent.putExtra(Nanny.CLIENT_ADDRESS, clientId);
         }
         return intent.putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
+                .putExtra(Nanny.ENTITY_BODY, entity);
+    }
+
+    private Intent newNotFoundIntent() {
+        Bundle entity = new Bundle();
+        entity.putSerializable(Nanny.ENTITY_ERROR, new NannyException("Permission Nanny is not installed."));
+        return new Intent()
+                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
+                .putExtra(Nanny.STATUS_CODE, Nanny.SC_NOT_FOUND)
+                .putExtra(Nanny.SERVER, Nanny.AUTHORIZATION_SERVICE)
                 .putExtra(Nanny.ENTITY_BODY, entity);
     }
 }
