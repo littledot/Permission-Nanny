@@ -1,25 +1,15 @@
 package com.permissionnanny.demo;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.permissionnanny.lib.NannyClient;
+import com.permissionnanny.lib.Nanny;
 import timber.log.Timber;
 
 /**
  *
  */
 public class BaseActivity extends AppCompatActivity {
-
-    private NannyClient mClient;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mClient = new NannyClient(this);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -35,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
             item.setChecked(Config.longReason);
             return true;
         case R.id.opt_serverCheck:
-            Timber.wtf("server installed=" + mClient.isPermissionNannyInstalled());
+            Timber.wtf("server installed=" + Nanny.isPermissionNannyInstalled(this));
             return true;
         }
         return super.onOptionsItemSelected(item);

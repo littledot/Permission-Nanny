@@ -1,5 +1,8 @@
 package com.permissionnanny.lib;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.LocationListener;
 import android.net.Uri;
@@ -282,5 +285,20 @@ public class Nanny {
      */
     public static Uri getProxyContentProvider() {
         return debugBuild ? DEBUG_PROVIDER : PROVIDER;
+    }
+
+    /**
+     * Checks if Permission Nanny is installed.
+     *
+     * @param context Activity, Service, etc.
+     * @return {@code true} if Permission Nanny is installed
+     */
+    public static boolean isPermissionNannyInstalled(Context context) {
+        PackageManager pm = context.getPackageManager();
+        ApplicationInfo server = null;
+        try {
+            server = pm.getApplicationInfo(getServerAppId(), 0);
+        } catch (PackageManager.NameNotFoundException e) {/* Nothing to see here. */}
+        return server != null;
     }
 }
