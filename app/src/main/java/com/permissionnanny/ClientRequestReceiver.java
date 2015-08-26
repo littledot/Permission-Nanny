@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.IntentUtil;
-import com.permissionnanny.lib.InvalidRequestException;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.missioncontrol.PermissionConfig;
@@ -38,22 +38,22 @@ public class ClientRequestReceiver extends BroadcastReceiver {
         String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
         Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
         if (entity == null) {
-            badRequest(context, clientAddr, new InvalidRequestException(NO_ENTITY));
+            badRequest(context, clientAddr, new NannyException(NO_ENTITY));
             return;
         }
         PendingIntent client = entity.getParcelable(Nanny.SENDER_IDENTITY);
         if (client == null) {
-            badRequest(context, clientAddr, new InvalidRequestException(NO_SENDER_IDENTITY));
+            badRequest(context, clientAddr, new NannyException(NO_SENDER_IDENTITY));
             return;
         }
         RequestParams request = entity.getParcelable(Nanny.REQUEST_PARAMS);
         if (request == null) {
-            badRequest(context, clientAddr, new InvalidRequestException(NO_REQUEST_BODY));
+            badRequest(context, clientAddr, new NannyException(NO_REQUEST_BODY));
             return;
         }
         Operation operation = Operation.getOperation(request);
         if (operation == null) {
-            badRequest(context, clientAddr, new InvalidRequestException(UNSUPPORTED_OPCODE, request.opCode));
+            badRequest(context, clientAddr, new NannyException(UNSUPPORTED_OPCODE, request.opCode));
             return;
         }
 
