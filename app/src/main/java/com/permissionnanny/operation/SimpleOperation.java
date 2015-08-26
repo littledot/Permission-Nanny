@@ -32,16 +32,19 @@ public class SimpleOperation extends Operation {
 
     public final String mOpCode;
     public final String mPermission;
+    public final int mProtectionLevel;
     public final ProxyFunction mFunction;
 
     public SimpleOperation(String opCode,
                            String permission,
+                           int protectionLevel,
                            int dialogTitle,
                            int minSdk,
                            ProxyFunction function) {
         super(dialogTitle, minSdk);
         mOpCode = opCode;
         mPermission = permission;
+        mProtectionLevel = protectionLevel;
         mFunction = function;
     }
 }
