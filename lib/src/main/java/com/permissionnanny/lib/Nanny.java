@@ -1,6 +1,8 @@
 package com.permissionnanny.lib;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -213,6 +215,8 @@ public class Nanny {
     @PPP public static final String SERVER = "Server";
     /** Response value: Service that authorizes requests. */
     @PPP public static final String AUTHORIZATION_SERVICE = "AuthorizationService";
+    /** Response value: Service that manages the permission manifest. */
+    @PPP public static final String PERMISSION_MANIFEST_SERVICE = "PermissionManifestService";
     /** Response value: Service that delivers location updates. */
     @PPP public static final String LOCATION_SERVICE = "LocationService";
     /** Response value: Service that delivers GPS status updates. */
@@ -303,5 +307,27 @@ public class Nanny {
             server = pm.getApplicationInfo(getServerAppId(), 0);
         } catch (PackageManager.NameNotFoundException e) {/* Nothing to see here. */}
         return server != null;
+    }
+
+    /**
+     * Validates if the sender of an Intent is Permission Nanny.
+     *
+     * @param intent Unvalidated Intent
+     * @return {@code false} if someone is trying to impersonate Permission Nanny; {@code true} otherwise.
+     */
+    public static boolean isIntentFromPermissionNanny(Intent intent) throws NannyException {
+        Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
+        if (entity == null) {
+            throw new NannyException("ENTITY_BODY is missing.");
+        }
+        PendingIntent sender = entity.getParcelable(Nanny.SENDER_IDENTITY);
+        if (sender == null) {
+            throw new NannyException("SENDER_IDENTITY is missing.");
+        }
+        String senderPackage = sender.getIntentSender().getTargetPackage();
+        if (!Nanny.getServerAppId().equals(senderPackage)) {
+            throw new NannyException(senderPackage + " is attempting to impersonate Permission Nanny.");
+        }
+        return true;
     }
 }

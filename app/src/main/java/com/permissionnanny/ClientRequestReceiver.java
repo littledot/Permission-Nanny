@@ -22,11 +22,6 @@ import javax.inject.Inject;
 @PPP
 public class ClientRequestReceiver extends BroadcastReceiver {
 
-    private static final String NO_ENTITY = "ENTITY_BODY is missing.";
-    private static final String NO_SENDER_IDENTITY = "SENDER_IDENTITY is missing.";
-    private static final String NO_REQUEST_BODY = "REQUEST_PARAMS is missing";
-    private static final String UNSUPPORTED_OPCODE = "Requested operation [%s] is unsupported.";
-
     @Inject PermissionConfigDataManager mConfigManager;
 
     @Override
@@ -38,22 +33,22 @@ public class ClientRequestReceiver extends BroadcastReceiver {
         String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
         Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
         if (entity == null) {
-            badRequest(context, clientAddr, new NannyException(NO_ENTITY));
+            badRequest(context, clientAddr, new NannyException(Err.NO_ENTITY));
             return;
         }
         PendingIntent client = entity.getParcelable(Nanny.SENDER_IDENTITY);
         if (client == null) {
-            badRequest(context, clientAddr, new NannyException(NO_SENDER_IDENTITY));
+            badRequest(context, clientAddr, new NannyException(Err.NO_SENDER_IDENTITY));
             return;
         }
         RequestParams request = entity.getParcelable(Nanny.REQUEST_PARAMS);
         if (request == null) {
-            badRequest(context, clientAddr, new NannyException(NO_REQUEST_BODY));
+            badRequest(context, clientAddr, new NannyException(Err.NO_REQUEST_BODY));
             return;
         }
         Operation operation = Operation.getOperation(request);
         if (operation == null) {
-            badRequest(context, clientAddr, new NannyException(UNSUPPORTED_OPCODE, request.opCode));
+            badRequest(context, clientAddr, new NannyException(Err.UNSUPPORTED_OPCODE, request.opCode));
             return;
         }
 
@@ -75,11 +70,11 @@ public class ClientRequestReceiver extends BroadcastReceiver {
         }
     }
 
-    private void badRequest(Context context, String clientId, Throwable error) {
+    private void badRequest(Context context, String clientAddr, Throwable error) {
         Timber.wtf("err=" + error.getMessage());
-        if (clientId != null && !clientId.isEmpty()) {
+        if (clientAddr != null && !clientAddr.isEmpty()) {
             Bundle args = ResponseFactory.newBadRequestResponse(error).build();
-            Intent response = new Intent(clientId).putExtras(args);
+            Intent response = new Intent(clientAddr).putExtras(args);
             context.sendBroadcast(response);
         }
     }

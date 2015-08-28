@@ -7,34 +7,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.lib.C;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyException;
 
 import java.util.ArrayList;
 
 /**
- *
+ * @deprecated Use {@link PermissionManifestService} and {@link PermissionManifestServiceLauncherReceiver} instead.
  */
+@Deprecated
 public class PermissionManifestReceiver extends BroadcastReceiver {
 
     private ArrayList<String> mPermissions = new ArrayList<>();
 
     @Override
     public final void onReceive(Context context, Intent intent) {
-        Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
-        if (entity == null) {
-            return;
-        }
-        PendingIntent sender = entity.getParcelable(Nanny.SENDER_IDENTITY);
-        if (sender == null) {
-            return;
-        }
-        String senderPackage = sender.getIntentSender().getTargetPackage();
-        if (!Nanny.getServerAppId().equals(senderPackage)) {
-            return;
+        // Validate Intent is from Permission Nanny
+        try {
+            if (!validateIntent(intent)) {
+                return;
+            }
+        } catch (NannyException e) {
+            // TODO #72: Think of a good error reporting strategy
+            e.printStackTrace();
         }
 
         setupPermissionUsage(context);
 
-        entity = new Bundle();
+        Bundle entity = new Bundle();
         entity.putParcelable(Nanny.SENDER_IDENTITY, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
         entity.putStringArrayList(Nanny.PERMISSION_MANIFEST, mPermissions);
 
@@ -44,6 +43,15 @@ public class PermissionManifestReceiver extends BroadcastReceiver {
                 .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
                 .putExtra(Nanny.ENTITY_BODY, entity);
         context.sendBroadcast(usage);
+    }
+
+    /**
+     * @param intent
+     * @return
+     * @throws NannyException
+     */
+    protected boolean validateIntent(Intent intent) throws NannyException {
+        return Nanny.isIntentFromPermissionNanny(intent);
     }
 
     /**

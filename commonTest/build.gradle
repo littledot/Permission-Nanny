@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion project.compileSdk
+    buildToolsVersion project.buildTools
+
+    defaultConfig {
+        // TODO #31: Report to Google - Setting minSdk to 1 causes ManifestMerger to fail
+        minSdkVersion 9
+        targetSdkVersion project.targetSdk
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        lintConfig project.rootProject.file('lint.xml')
+    }
+}
+
+dependencies {
+    compile project.supportAnnotations
+    compile project.junit
+    compile project.hamcrestLibrary
+    compile project.mockitoCore
+    compile project.robolectric
+    compile project.asm
+    compile project.objenesis
+}

@@ -24,13 +24,20 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+    sourceSets {
+        test {
+            java.srcDirs = [java.srcDirs[0], 'src/commonTest/java']
+        }
+    }
 }
 
 dependencies {
     compile project.supportV4
     compile project.appcompatV7
 
+    testCompile project(':commonTest')
     testCompile project.junit
+    testCompile project.hamcrestLibrary
     testCompile project.mockitoCore
     testCompile project.robolectric
     testCompile project.asm

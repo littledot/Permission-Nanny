@@ -38,6 +38,11 @@ android {
     lintOptions {
         lintConfig project.rootProject.file('lint.xml')
     }
+    sourceSets {
+        test {
+            java.srcDirs = [java.srcDirs[0], 'src/commonTest/java']
+        }
+    }
     packagingOptions {
         exclude 'LICENSE.txt'
     }
@@ -62,7 +67,9 @@ dependencies {
     compile project.snapdb
     compile project.timber
 
+    testCompile project(':commonTest')
     testCompile project.junit
+    testCompile project.hamcrestLibrary
     testCompile project.mockitoCore
     testCompile project.robolectric
     testCompile project.asm
