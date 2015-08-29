@@ -16,9 +16,6 @@ import static com.permissionnanny.common.test.Mockingbird.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-/**
- *
- */
 @RunWith(NannyLibTestRunner.class)
 public class NannyTest {
 
@@ -36,7 +33,7 @@ public class NannyTest {
     }
 
     @Test
-    public void isIntentFromPermissionNannyShouldReturnTrue() throws Exception {
+    public void isIntentFromPermissionNannyShouldReturnTrueWhenIntentIsValid() throws Exception {
         intent.putExtra(Nanny.ENTITY_BODY, entity);
         entity.putParcelable(Nanny.SENDER_IDENTITY, sender);
         mockPendingIntent(sender, Nanny.SERVER_APP_ID);
@@ -47,7 +44,7 @@ public class NannyTest {
     }
 
     @Test(expected = NannyException.class)
-    public void isIntentFromPermissionNannyShouldThrowWhenAppIdIsForged() throws Exception {
+    public void isIntentFromPermissionNannyShouldThrowWhenSenderIdentityIsWrong() throws Exception {
         intent.putExtra(Nanny.ENTITY_BODY, entity);
         entity.putParcelable(Nanny.SENDER_IDENTITY, sender);
         mockPendingIntent(sender, "3rd.party.app");

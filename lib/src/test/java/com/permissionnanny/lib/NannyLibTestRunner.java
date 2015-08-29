@@ -6,7 +6,7 @@ import org.junit.runners.model.InitializationError;
 import java.util.Properties;
 
 /**
- *
+ * Test runner for the 'lib' module.
  */
 public class NannyLibTestRunner extends NannyTestRunner {
 

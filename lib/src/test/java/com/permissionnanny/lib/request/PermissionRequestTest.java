@@ -7,24 +7,31 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import com.permissionnanny.common.test.NannyTestRunner;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyLibTestRunner;
 import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.robolectric.RobolectricTestRunner;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(NannyLibTestRunner.class)
 public class PermissionRequestTest {
+
+    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
+    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
 
     SimpleRequest target;
     @Mock SimpleListener listener;
@@ -33,11 +40,10 @@ public class PermissionRequestTest {
     @Mock ApplicationInfo appInfo;
     @Captor ArgumentCaptor<Intent> intentCaptor;
     @Captor ArgumentCaptor<Bundle> bundleCaptor;
-    @Captor ArgumentCaptor<IntentFilter> filter;
+    @Captor ArgumentCaptor<IntentFilter> filterCaptor;
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
         target = new SimpleRequest(null);
     }
 
@@ -49,11 +55,11 @@ public class PermissionRequestTest {
 
         target.startRequest(ctx, null);
 
-        verify(ctx).registerReceiver((BroadcastReceiver) notNull(), filter.capture());
+        verify(ctx).registerReceiver((BroadcastReceiver) notNull(), filterCaptor.capture());
         verify(ctx).sendBroadcast(intentCaptor.capture());
         Intent request = intentCaptor.getValue();
         assertThat(request.getComponent().getPackageName(), is(Nanny.SERVER_APP_ID));
-        assertThat(request.getStringExtra(Nanny.CLIENT_ADDRESS), is(filter.getValue().getAction(0)));
+        assertThat(request.getStringExtra(Nanny.CLIENT_ADDRESS), is(filterCaptor.getValue().getAction(0)));
         assertThat(request.hasExtra(Nanny.PROTOCOL_VERSION), is(true));
         Bundle entity = request.getBundleExtra(Nanny.ENTITY_BODY);
         assertThat(entity.containsKey(Nanny.SENDER_IDENTITY), is(true));
