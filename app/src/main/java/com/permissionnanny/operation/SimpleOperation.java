@@ -32,7 +32,6 @@ public class SimpleOperation extends Operation {
 
     public final String mOpCode;
     public final String mPermission;
-    public final int mProtectionLevel;
     public final ProxyFunction mFunction;
 
     public SimpleOperation(String opCode,
@@ -41,10 +40,9 @@ public class SimpleOperation extends Operation {
                            int dialogTitle,
                            int minSdk,
                            ProxyFunction function) {
-        super(dialogTitle, minSdk);
+        super(dialogTitle, minSdk, protectionLevel);
         mOpCode = opCode;
         mPermission = permission;
-        mProtectionLevel = protectionLevel;
         mFunction = function;
     }
 }

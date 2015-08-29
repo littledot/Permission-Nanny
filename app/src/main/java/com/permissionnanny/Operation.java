@@ -24,9 +24,11 @@ public class Operation {
 
     @StringRes public final int mDialogTitle;
     public final int mMinSdk;
+    public final int mProtectionLevel;
 
-    public Operation(int dialogTitle, int minSdk) {
+    public Operation(int dialogTitle, int minSdk, int protectionLevel) {
         mDialogTitle = dialogTitle;
         mMinSdk = minSdk;
+        mProtectionLevel = protectionLevel;
     }
 }

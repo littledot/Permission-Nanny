@@ -1,6 +1,7 @@
 package com.permissionnanny.content;
 
 import android.annotation.TargetApi;
+import android.content.pm.PermissionInfo;
 import android.net.Uri;
 import android.os.Build.VERSION_CODES;
 import android.provider.CalendarContract;
@@ -75,7 +76,7 @@ public class ContentOperation extends Operation {
     public final int mContentType;
 
     public ContentOperation(Uri uri, int contentType, int dialogTitle, int minSdk) {
-        super(dialogTitle, minSdk);
+        super(dialogTitle, minSdk, PermissionInfo.PROTECTION_DANGEROUS);
         mUri = uri;
         mContentType = contentType;
     }
