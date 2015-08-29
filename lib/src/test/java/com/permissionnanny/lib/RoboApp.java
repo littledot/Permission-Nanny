@@ -4,7 +4,7 @@ import android.app.Application;
 import org.mockito.MockitoAnnotations;
 
 /**
- *
+ * A no-op application.
  */
 public class RoboApp extends Application {
     public RoboApp() {

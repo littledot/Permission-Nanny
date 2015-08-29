@@ -313,7 +313,8 @@ public class Nanny {
      * Validates if the sender of an Intent is Permission Nanny.
      *
      * @param intent Unvalidated Intent
-     * @return {@code false} if someone is trying to impersonate Permission Nanny; {@code true} otherwise.
+     * @return {@code true} if Intent is from Permission Nanny.
+     * @throws NannyException if someone is trying to impersonate Permission Nanny
      */
     public static boolean isIntentFromPermissionNanny(Intent intent) throws NannyException {
         Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
