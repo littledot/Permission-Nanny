@@ -8,6 +8,7 @@ import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.content.ProxyContentProvider;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.simple.SimpleOperation;
@@ -45,7 +46,7 @@ public class ProxyExecutor {
         }
     }
 
-    private ResponseBundle executeContentOperation(RequestParams request) {
+    private NannyBundle.Builder executeContentOperation(RequestParams request) {
         Bundle entity = new Bundle();
         switch (request.opCode) {
         case ContentRequest.SELECT:
@@ -74,9 +75,11 @@ public class ProxyExecutor {
             entity.putInt(request.opCode, deleted);
             break;
         }
-        return ResponseFactory.newAllowResponse()
-                .connection(Nanny.CLOSE)
-                .body(entity);
+
+        NannyBundle.Builder response = ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE);
+        response.mConnection = Nanny.CLOSE;
+        response.mBody = entity;
+        return response;
     }
 
     private void executeAllow(SimpleOperation operation, RequestParams request, String clientId) {
@@ -88,17 +91,20 @@ public class ProxyExecutor {
         }
     }
 
-    private ResponseBundle executeSimpleOperation(SimpleOperation operation, RequestParams request, String clientId) {
+    private NannyBundle.Builder executeSimpleOperation(SimpleOperation operation,
+                                                       RequestParams request,
+                                                       String clientId) {
         if (operation.mFunction != null) { // one-shot request
             Bundle response = new Bundle();
             try {
                 operation.mFunction.execute(mContext, request, response);
             } catch (Throwable error) {
-                return ResponseFactory.newBadRequestResponse(error);
+                return ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error);
             }
-            return ResponseFactory.newAllowResponse()
-                    .connection(Nanny.CLOSE)
-                    .body(response);
+            NannyBundle.Builder builder = ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE);
+            builder.mConnection = Nanny.CLOSE;
+            builder.mBody = response;
+            return builder;
         }
 
         // ongoing request
@@ -107,12 +113,12 @@ public class ProxyExecutor {
         server.putExtra(ProxyService.REQUEST_PARAMS, request);
         Timber.wtf("Operation.function is null, starting service with args: " + BundleUtil.toString(server));
         mContext.startService(server);
-        return ResponseFactory.newAllowResponse();
+        return ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE);
     }
 
     public void executeDeny(Operation operation, RequestParams request, String clientId) {
         if (clientId != null) {
-            Bundle response = ResponseFactory.newDenyResponse().build();
+            Bundle response = ResponseFactory.newDenyResponse(Nanny.AUTHORIZATION_SERVICE).build();
             if (response != null) {
                 Timber.d("server broadcasting=" + BundleUtil.toString(response));
                 Intent intent = new Intent(clientId).putExtras(response);

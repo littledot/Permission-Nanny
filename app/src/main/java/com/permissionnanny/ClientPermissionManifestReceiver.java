@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.PPP;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
@@ -55,25 +56,17 @@ public class ClientPermissionManifestReceiver extends BroadcastReceiver {
     private void badRequest(Context context, String clientAddr, Throwable error) {
         Timber.wtf("err=" + error.getMessage());
         if (clientAddr != null && !clientAddr.isEmpty()) {
-            Bundle args = new ResponseBundle()
-                    .server(Nanny.PERMISSION_MANIFEST_SERVICE)
-                    .status(Nanny.SC_BAD_REQUEST)
-                    .connection(Nanny.CLOSE)
-                    .error(error)
-                    .build();
-            Intent response = new Intent(clientAddr).putExtras(args);
+            Bundle payload = ResponseFactory.newBadRequestResponse(Nanny.PERMISSION_MANIFEST_SERVICE, error).build();
+            Intent response = new Intent(clientAddr).putExtras(payload);
             context.sendBroadcast(response);
         }
     }
 
     private void okRequest(Context context, String clientAddr) {
         if (clientAddr != null && !clientAddr.isEmpty()) {
-            Bundle args = new ResponseBundle()
-                    .server(Nanny.PERMISSION_MANIFEST_SERVICE)
-                    .status(Nanny.SC_OK)
-                    .connection(Nanny.CLOSE)
-                    .build();
-            Intent response = new Intent(clientAddr).putExtras(args);
+            NannyBundle.Builder payload = ResponseFactory.newAllowResponse(Nanny.PERMISSION_MANIFEST_SERVICE);
+            payload.mConnection = Nanny.CLOSE;
+            Intent response = new Intent(clientAddr).putExtras(payload.build());
             context.sendBroadcast(response);
         }
     }

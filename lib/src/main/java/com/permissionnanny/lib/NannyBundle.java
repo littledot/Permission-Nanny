@@ -69,20 +69,23 @@ public class NannyBundle {
         public String mServer;
         public Throwable mError;
 
+        public Bundle mBody;
         public PendingIntent mSender;
         public RequestParams mParams;
         public String mReason;
 
         public Bundle build() {
-            Bundle body = new Bundle();
+            if (mBody == null) {
+                mBody = new Bundle();
+            }
             if (mSender != null) {
-                body.putParcelable(Nanny.SENDER_IDENTITY, mSender);
+                mBody.putParcelable(Nanny.SENDER_IDENTITY, mSender);
             }
             if (mParams != null) {
-                body.putParcelable(Nanny.REQUEST_PARAMS, mParams);
+                mBody.putParcelable(Nanny.REQUEST_PARAMS, mParams);
             }
             if (mReason != null) {
-                body.putString(Nanny.REQUEST_REASON, mReason);
+                mBody.putString(Nanny.REQUEST_REASON, mReason);
             }
 
             Bundle ppp = new Bundle();
@@ -102,8 +105,8 @@ public class NannyBundle {
             if (mError != null) {
                 ppp.putSerializable(Nanny.ENTITY_ERROR, mError);
             }
-            if (!body.isEmpty()) {
-                ppp.putBundle(Nanny.ENTITY_BODY, body);
+            if (!mBody.isEmpty()) {
+                ppp.putBundle(Nanny.ENTITY_BODY, mBody);
             }
             return ppp;
         }
