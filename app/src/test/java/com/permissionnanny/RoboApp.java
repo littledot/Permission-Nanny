@@ -1,6 +1,8 @@
 package com.permissionnanny;
 
+import android.content.Context;
 import com.permissionnanny.dagger.AppComponent;
+import com.permissionnanny.dagger.ContextComponent;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -9,6 +11,7 @@ import org.mockito.MockitoAnnotations;
  */
 public class RoboApp extends App {
     @Mock AppComponent appComponent;
+    @Mock ContextComponent mContextComponent;
 
     public RoboApp() {
         MockitoAnnotations.initMocks(this);
@@ -22,5 +25,10 @@ public class RoboApp extends App {
     @Override
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    @Override
+    public ContextComponent getContextComponent(Context context) {
+        return mContextComponent;
     }
 }

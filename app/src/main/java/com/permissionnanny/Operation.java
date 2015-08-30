@@ -4,7 +4,7 @@ import android.support.annotation.StringRes;
 import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.content.ContentRequest;
-import com.permissionnanny.operation.SimpleOperation;
+import com.permissionnanny.simple.SimpleOperation;
 
 /**
  *

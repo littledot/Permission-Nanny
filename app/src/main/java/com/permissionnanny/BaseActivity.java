@@ -2,16 +2,15 @@ package com.permissionnanny;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import com.permissionnanny.dagger.ActivityComponent;
-import com.permissionnanny.dagger.DaggerActivityComponent;
-import com.permissionnanny.dagger.DaggerActivityComponent.Builder;
+import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.dagger.DaggerContextComponent;
 
 /**
  *
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private ActivityComponent mActivityComponent;
+    private ContextComponent mComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +21,21 @@ public class BaseActivity extends AppCompatActivity {
      * @param builder
      * @return
      */
-    protected Builder buildActivityComponent(Builder builder) {
+    protected DaggerContextComponent.Builder buildContextComponent(DaggerContextComponent.Builder builder) {
         return builder.appComponent(((App) getApplication()).getAppComponent());
     }
 
     /**
      * @return
      */
-    public ActivityComponent getActivityComponent() {
-        if (mActivityComponent == null) {
-            mActivityComponent = buildActivityComponent(DaggerActivityComponent.builder()).build();
+    public ContextComponent getContextComponent() {
+        if (mComponent == null) {
+            mComponent = buildContextComponent(DaggerContextComponent.builder()).build();
         }
-        return mActivityComponent;
+        return mComponent;
+    }
+
+    public ContextComponent getComponent() {
+        return ((App) getApplicationContext()).getContextComponent(this);
     }
 }

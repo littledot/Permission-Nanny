@@ -1,4 +1,4 @@
-package com.permissionnanny.operation;
+package com.permissionnanny.simple;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,6 +11,7 @@ import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.TelephonyRequest;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 
 /**
@@ -132,4 +133,7 @@ public class TelephonyOperation {
         }
         return null;
     }
+
+    @Inject
+    public TelephonyOperation() {}
 }

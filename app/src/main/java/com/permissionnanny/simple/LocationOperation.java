@@ -1,4 +1,4 @@
-package com.permissionnanny.operation;
+package com.permissionnanny.simple;
 
 import android.Manifest;
 import android.content.Context;
@@ -10,11 +10,13 @@ import com.permissionnanny.R;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationRequest;
 
+import javax.inject.Inject;
+
 /**
  *
  */
 public class LocationOperation {
-    public static SimpleOperation[] operations = new SimpleOperation[]{
+    public static final SimpleOperation[] operations = new SimpleOperation[]{
             new SimpleOperation(LocationRequest.ADD_GPS_STATUS_LISTENER,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     PermissionInfo.PROTECTION_DANGEROUS,
@@ -93,4 +95,7 @@ public class LocationOperation {
         }
         return null;
     }
+
+    @Inject
+    public LocationOperation() {}
 }

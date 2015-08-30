@@ -34,7 +34,7 @@ public class AppListActivity extends BaseActivity {
         setContentView(R.layout.page_app_list);
         ButterKnife.bind(this);
         setSupportActionBar(tBar);
-        getActivityComponent().inject(this);
+        getComponent().inject(this);
 
         mAdapter = new AppListAdapter(this, mConfigManager);
         rvAppList.setLayoutManager(new LinearLayoutManager(this));

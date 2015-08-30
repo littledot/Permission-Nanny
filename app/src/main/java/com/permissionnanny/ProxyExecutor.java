@@ -10,9 +10,10 @@ import com.permissionnanny.content.ProxyContentProvider;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.content.ContentRequest;
-import com.permissionnanny.operation.SimpleOperation;
+import com.permissionnanny.simple.SimpleOperation;
 import timber.log.Timber;
 
+import javax.inject.Inject;
 import java.security.SecureRandom;
 
 /**
@@ -22,6 +23,7 @@ public class ProxyExecutor {
 
     private Context mContext;
 
+    @Inject
     public ProxyExecutor(Context context) {
         mContext = context;
     }

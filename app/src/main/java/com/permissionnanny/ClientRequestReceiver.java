@@ -1,12 +1,13 @@
 package com.permissionnanny;
 
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PermissionInfo;
 import android.os.Bundle;
 import com.permissionnanny.common.IntentUtil;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
@@ -20,30 +21,29 @@ import javax.inject.Inject;
  * This receiver is part of PPP. It's class name must never change.
  */
 @PPP
-public class ClientRequestReceiver extends BroadcastReceiver {
+public class ClientRequestReceiver extends BaseReceiver {
 
     @Inject PermissionConfigDataManager mConfigManager;
+    @Inject ProxyExecutor mExecutor;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Timber.wtf("got intent: " + IntentUtil.toString(intent));
-        ((App) context.getApplicationContext()).getAppComponent().inject(this);
+        super.onReceive(context, intent);
+        getComponent(context).inject(this);
 
-        // Validate requests and ensure required parameters are present
-        String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
-        Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
-        if (entity == null) {
-            badRequest(context, clientAddr, new NannyException(Err.NO_ENTITY));
-            return;
-        }
-        PendingIntent client = entity.getParcelable(Nanny.SENDER_IDENTITY);
+        NannyBundle bundle = new NannyBundle(intent.getExtras());
+
+        // Validate feral request and ensure required parameters are present
+        String clientAddr = bundle.getClientAddress();
+        PendingIntent client = bundle.getSenderIdentity();
         if (client == null) {
             badRequest(context, clientAddr, new NannyException(Err.NO_SENDER_IDENTITY));
             return;
         }
-        RequestParams request = entity.getParcelable(Nanny.REQUEST_PARAMS);
+        RequestParams request = bundle.getRequest();
         if (request == null) {
-            badRequest(context, clientAddr, new NannyException(Err.NO_REQUEST_BODY));
+            badRequest(context, clientAddr, new NannyException(Err.NO_REQUEST_PARAMS));
             return;
         }
         Operation operation = Operation.getOperation(request);
@@ -52,9 +52,15 @@ public class ClientRequestReceiver extends BroadcastReceiver {
             return;
         }
 
+        // NORMAL operation? Automatically allow
+        if (operation.mProtectionLevel == PermissionInfo.PROTECTION_NORMAL) {
+            mExecutor.executeAllow(operation, request, clientAddr);
+            return;
+        }
+
+        // DANGEROUS operation? Check user's config first
         String clientPackage = client.getIntentSender().getTargetPackage();
         int userConfig = mConfigManager.getPermissionSetting(clientPackage, operation, request);
-        ProxyExecutor executor = new ProxyExecutor(context);
         switch (userConfig) {
         case PermissionConfig.ALWAYS_ASK:
             context.startActivity(new Intent(context, ConfirmRequestActivity.class)
@@ -62,10 +68,10 @@ public class ClientRequestReceiver extends BroadcastReceiver {
                     .putExtras(intent));
             break;
         case PermissionConfig.ALWAYS_ALLOW:
-            executor.executeAllow(operation, request, clientAddr);
+            mExecutor.executeAllow(operation, request, clientAddr);
             break;
         case PermissionConfig.ALWAYS_DENY:
-            executor.executeDeny(operation, request, clientAddr);
+            mExecutor.executeDeny(operation, request, clientAddr);
             break;
         }
     }
@@ -73,7 +79,7 @@ public class ClientRequestReceiver extends BroadcastReceiver {
     private void badRequest(Context context, String clientAddr, Throwable error) {
         Timber.wtf("err=" + error.getMessage());
         if (clientAddr != null && !clientAddr.isEmpty()) {
-            Bundle args = ResponseFactory.newBadRequestResponse(error).build();
+            Bundle args = ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
             Intent response = new Intent(clientAddr).putExtras(args);
             context.sendBroadcast(response);
         }

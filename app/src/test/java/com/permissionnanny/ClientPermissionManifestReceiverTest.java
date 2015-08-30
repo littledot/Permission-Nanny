@@ -61,32 +61,32 @@ public class ClientPermissionManifestReceiverTest {
 
         verify(target.mConfigManager).registerApp("com.3rd.party.app", manifest);
         verify(context).sendBroadcast(responseCaptor.capture());
-        assertThat(responseCaptor.getValue(), equalToIntent(newOkResponse("123")));
+        assertThat(responseCaptor.getValue(), equalToIntent(AppTestUtil.new200Response("123")));
     }
 
     @Test
-    public void onReceiveShouldReturnBadRequestWhenEntityBodyIsMissing() throws Exception {
+    public void onReceiveShouldReturn400WhenEntityBodyIsMissing() throws Exception {
         intent.putExtra(Nanny.CLIENT_ADDRESS, "123");
 
         target.onReceive(context, intent);
 
         verify(context).sendBroadcast(responseCaptor.capture());
-        assertThat(responseCaptor.getValue(), equalToIntent(newBadRequestResponse("123", Err.NO_ENTITY)));
+        assertThat(responseCaptor.getValue(), equalToIntent(new400Response("123", Err.NO_ENTITY)));
     }
 
     @Test
-    public void onReceiveShouldReturnBadRequestWhenSenderIdentityIsMissing() throws Exception {
+    public void onReceiveShouldReturn400WhenSenderIdentityIsMissing() throws Exception {
         intent.putExtra(Nanny.CLIENT_ADDRESS, "123");
         intent.putExtra(Nanny.ENTITY_BODY, bundle);
 
         target.onReceive(context, intent);
 
         verify(context).sendBroadcast(responseCaptor.capture());
-        assertThat(responseCaptor.getValue(), equalToIntent(newBadRequestResponse("123", Err.NO_SENDER_IDENTITY)));
+        assertThat(responseCaptor.getValue(), equalToIntent(new400Response("123", Err.NO_SENDER_IDENTITY)));
     }
 
     @Test
-    public void onReceiveShouldReturnBadRequestWhenPermissionManifestIsMissing() throws Exception {
+    public void onReceiveShouldReturn400WhenPermissionManifestIsMissing() throws Exception {
         intent.putExtra(Nanny.CLIENT_ADDRESS, "123");
         intent.putExtra(Nanny.ENTITY_BODY, bundle);
         bundle.putParcelable(Nanny.SENDER_IDENTITY, sender);
@@ -95,23 +95,10 @@ public class ClientPermissionManifestReceiverTest {
         target.onReceive(context, intent);
 
         verify(context).sendBroadcast(responseCaptor.capture());
-        assertThat(responseCaptor.getValue(), equalToIntent(newBadRequestResponse("123", Err.NO_PERMISSION_MANIFEST)));
+        assertThat(responseCaptor.getValue(), equalToIntent(new400Response("123", Err.NO_PERMISSION_MANIFEST)));
     }
 
-    private Intent newBadRequestResponse(String clientAddr, String error) {
-        return new Intent(clientAddr)
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                .putExtra(Nanny.SERVER, Nanny.PERMISSION_MANIFEST_SERVICE)
-                .putExtra(Nanny.STATUS_CODE, Nanny.SC_BAD_REQUEST)
-                .putExtra(Nanny.CONNECTION, Nanny.CLOSE)
-                .putExtra(Nanny.ENTITY_ERROR, new NannyException(error));
-    }
-
-    private Intent newOkResponse(String clientAddr) {
-        return new Intent(clientAddr)
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                .putExtra(Nanny.SERVER, Nanny.PERMISSION_MANIFEST_SERVICE)
-                .putExtra(Nanny.STATUS_CODE, Nanny.SC_OK)
-                .putExtra(Nanny.CONNECTION, Nanny.CLOSE);
+    private Intent new400Response(String clientAddr, String error) {
+        return AppTestUtil.new400Response(clientAddr, Nanny.PERMISSION_MANIFEST_SERVICE, new NannyException(error));
     }
 }

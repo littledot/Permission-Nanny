@@ -1,8 +1,10 @@
 package com.permissionnanny.dagger;
 
+import android.content.Context;
+import com.permissionnanny.ClientRequestReceiver;
 import com.permissionnanny.ConfirmRequestActivity;
 import com.permissionnanny.ProxyService;
-import com.permissionnanny.dagger.ActivityComponent.ActivityScope;
+import com.permissionnanny.dagger.ContextComponent.ContextScope;
 import com.permissionnanny.missioncontrol.AppListActivity;
 import dagger.Component;
 
@@ -11,16 +13,20 @@ import javax.inject.Scope;
 /**
  *
  */
-@ActivityScope
-@Component(modules = {}, dependencies = AppComponent.class)
-public interface ActivityComponent {
+@ContextScope
+@Component(modules = {ContextModule.class}, dependencies = AppComponent.class)
+public interface ContextComponent {
 
     @Scope
-    @interface ActivityScope {}
+    @interface ContextScope {}
+
+    Context context();
 
     void inject(ConfirmRequestActivity victim);
 
     void inject(AppListActivity victim);
 
     void inject(ProxyService victim);
+
+    void inject(ClientRequestReceiver victom);
 }

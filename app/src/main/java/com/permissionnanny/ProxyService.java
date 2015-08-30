@@ -10,9 +10,9 @@ import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationRequest;
-import com.permissionnanny.operation.ProxyGpsStatusListener;
-import com.permissionnanny.operation.ProxyLocationListener;
-import com.permissionnanny.operation.ProxyNmeaListener;
+import com.permissionnanny.simple.ProxyGpsStatusListener;
+import com.permissionnanny.simple.ProxyLocationListener;
+import com.permissionnanny.simple.ProxyNmeaListener;
 import io.snapdb.CryIterator;
 import io.snapdb.SnapDB;
 import timber.log.Timber;
@@ -38,7 +38,6 @@ public class ProxyService extends BaseService {
     @Override
     public void onCreate() {
         super.onCreate();
-        getActivityComponent().inject(this);
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mAckServerAddr = Long.toString(new SecureRandom().nextLong());
         registerReceiver(mAckReceiver, new IntentFilter(mAckServerAddr));

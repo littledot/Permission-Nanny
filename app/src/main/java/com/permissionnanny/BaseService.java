@@ -3,8 +3,8 @@ package com.permissionnanny;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import com.permissionnanny.dagger.ActivityComponent;
-import com.permissionnanny.dagger.DaggerActivityComponent;
+import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.dagger.DaggerContextComponent;
 import timber.log.Timber;
 
 /**
@@ -12,7 +12,7 @@ import timber.log.Timber;
  */
 public class BaseService extends Service {
 
-    private ActivityComponent mActivityComponent;
+    private ContextComponent mComponent;
 
     @Override
     public void onCreate() {
@@ -42,17 +42,17 @@ public class BaseService extends Service {
      * @param builder
      * @return
      */
-    protected DaggerActivityComponent.Builder buildActivityComponent(DaggerActivityComponent.Builder builder) {
+    protected DaggerContextComponent.Builder buildActivityComponent(DaggerContextComponent.Builder builder) {
         return builder.appComponent(((App) getApplication()).getAppComponent());
     }
 
     /**
      * @return
      */
-    public ActivityComponent getActivityComponent() {
-        if (mActivityComponent == null) {
-            mActivityComponent = buildActivityComponent(DaggerActivityComponent.builder()).build();
+    public ContextComponent getActivityComponent() {
+        if (mComponent == null) {
+            mComponent = buildActivityComponent(DaggerContextComponent.builder()).build();
         }
-        return mActivityComponent;
+        return mComponent;
     }
 }

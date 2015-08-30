@@ -1,4 +1,4 @@
-package com.permissionnanny.operation;
+package com.permissionnanny.simple;
 
 import android.support.v4.util.SimpleArrayMap;
 import com.permissionnanny.Operation;

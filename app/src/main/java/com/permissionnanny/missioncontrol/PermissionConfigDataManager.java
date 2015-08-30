@@ -1,7 +1,7 @@
 package com.permissionnanny.missioncontrol;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.SimpleArrayMap;
@@ -13,7 +13,7 @@ import com.permissionnanny.db.AppDB;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.content.ContentRequest;
-import com.permissionnanny.operation.SimpleOperation;
+import com.permissionnanny.simple.SimpleOperation;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -27,14 +27,14 @@ import java.util.Arrays;
 @Singleton
 public class PermissionConfigDataManager {
 
-    private Context mContext;
+    private Application mContext;
     private AppDB mDB;
     private AppModule.Bus mBus;
 
     SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> mConfigs = new SimpleArrayMap<>();
 
     @Inject
-    public PermissionConfigDataManager(Context context, AppDB db, AppModule.Bus bus) {
+    public PermissionConfigDataManager(Application context, AppDB db, AppModule.Bus bus) {
         mContext = context;
         mDB = db;
         mBus = bus;

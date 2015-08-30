@@ -1,6 +1,7 @@
 package com.permissionnanny;
 
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyBundle;
 
 /**
  *
@@ -25,5 +26,14 @@ public class ResponseFactory {
                 .status(Nanny.SC_BAD_REQUEST)
                 .connection(Nanny.CLOSE)
                 .error(error);
+    }
+
+    public static NannyBundle.Builder newBadRequestResponse(String service, Throwable error) {
+        NannyBundle.Builder builder = new NannyBundle.Builder();
+        builder.mStatusCode = Nanny.SC_BAD_REQUEST;
+        builder.mServer = service;
+        builder.mConnection = Nanny.CLOSE;
+        builder.mError = error;
+        return builder;
     }
 }

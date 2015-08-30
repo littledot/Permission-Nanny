@@ -1,6 +1,6 @@
 package com.permissionnanny.dagger;
 
-import android.content.Context;
+import android.app.Application;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 import com.litl.leveldb.DB;
@@ -27,7 +27,7 @@ public class AppModule {
     }
 
     @Provides
-    Context provideContext() {
+    Application provideApplication() {
         return mApp;
     }
 
@@ -49,16 +49,16 @@ public class AppModule {
 
     @Provides
     @Singleton
-    SnapDB provideMySnappy(Context context, Kryo kryo) {
-        SnapDB db = new SnapDB(new DB(new File(context.getFilesDir(), "ongoingRequests")), kryo);
+    SnapDB provideMySnappy(Application app, Kryo kryo) {
+        SnapDB db = new SnapDB(new DB(new File(app.getFilesDir(), "ongoingRequests")), kryo);
         db.open();
         return db;
     }
 
     @Provides
     @Singleton
-    AppDB providePermissionUsageDatabase(Context context, Kryo kryo) {
-        DB leveldb = new DB(new File(context.getFilesDir(), "clientPermissionUsage"));
+    AppDB providePermissionUsageDatabase(Application app, Kryo kryo) {
+        DB leveldb = new DB(new File(app.getFilesDir(), "clientPermissionUsage"));
         SnapDB snapdb = new SnapDB(leveldb, kryo);
         AppDB db = new AppDB(snapdb);
         db.open();

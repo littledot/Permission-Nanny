@@ -27,7 +27,7 @@ public class ClientPermissionManifestReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         ((App) context.getApplicationContext()).getAppComponent().inject(this);
 
-        // Validate feral intent
+        // Validate feral request and ensure required parameters are present
         String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
         Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
         if (entity == null) {

@@ -2,12 +2,16 @@ package com.permissionnanny;
 
 import android.app.Application;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import com.permissionnanny.common.StackTraceDebugTree;
 import com.permissionnanny.dagger.AppComponent;
 import com.permissionnanny.dagger.AppModule;
+import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.dagger.ContextModule;
 import com.permissionnanny.dagger.DaggerAppComponent;
 import com.permissionnanny.dagger.DaggerAppComponent.Builder;
+import com.permissionnanny.dagger.DaggerContextComponent;
 import timber.log.Timber;
 
 /**
@@ -41,5 +45,12 @@ public class App extends Application {
             mAppComponent = buildAppComponent(DaggerAppComponent.builder()).build();
         }
         return mAppComponent;
+    }
+
+    public ContextComponent getContextComponent(Context context) {
+        return DaggerContextComponent.builder()
+                .appComponent(((App) context.getApplicationContext()).getAppComponent())
+                .contextModule(new ContextModule(context))
+                .build();
     }
 }

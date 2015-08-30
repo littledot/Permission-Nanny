@@ -1,8 +1,7 @@
 package com.permissionnanny.dagger;
 
-import android.content.Context;
+import android.app.Application;
 import com.permissionnanny.ClientPermissionManifestReceiver;
-import com.permissionnanny.ClientRequestReceiver;
 import com.permissionnanny.UninstallReceiver;
 import com.permissionnanny.db.AppDB;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
@@ -17,7 +16,7 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
-    Context appContext();
+    Application app();
 
     SnapDB db();
 
@@ -28,8 +27,6 @@ public interface AppComponent {
     PermissionConfigDataManager pcdm();
 
     void inject(ClientPermissionManifestReceiver victim);
-
-    void inject(ClientRequestReceiver victim);
 
     void inject(UninstallReceiver victim);
 }
