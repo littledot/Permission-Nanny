@@ -1,7 +1,6 @@
 package com.permissionnanny.missioncontrol;
 
 import android.os.Bundle;
-import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +17,7 @@ import com.permissionnanny.dagger.AppModule;
 import net.engio.mbassy.listener.Handler;
 
 import javax.inject.Inject;
+import java.util.Map;
 
 public class AppListActivity extends BaseActivity {
     @Bind(R.id.toolbar) Toolbar tBar;
@@ -75,7 +75,7 @@ public class AppListActivity extends BaseActivity {
     }
 
     @Handler
-    public void onConfigData(SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> configs) {
+    public void onConfigData(Map<String, Map<String, PermissionConfig>> configs) {
         mAdapter.setData(configs);
         mAdapter.notifyDataSetChanged();
         setViewVisibility();

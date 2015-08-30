@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.support.v4.util.SimpleArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -15,6 +14,8 @@ import android.widget.ArrayAdapter;
 import com.permissionnanny.R;
 import com.permissionnanny.SimpleOnItemSelectedListener;
 import com.permissionnanny.Util;
+
+import java.util.Map;
 
 /**
  *
@@ -38,15 +39,16 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         mConfigManager = manager;
     }
 
-    public void setData(SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> usage) {
+    public void setData(Map<String, Map<String, PermissionConfig>> usage) {
         mAppsPositions.clear();
         mPermissionPositions.clear();
         int index = 0;
-        for (int i = 0, l = usage.size(); i < l; i++) {
-            mAppsPositions.put(index++, usage.keyAt(i));
-            SimpleArrayMap<String, PermissionConfig> permissions = usage.valueAt(i);
-            for (int j = 0, m = permissions.size(); j < m; j++) {
-                mPermissionPositions.put(index++, permissions.valueAt(j));
+
+        for (String appName : usage.keySet()) {
+            mAppsPositions.put(index++, appName);
+            Map<String, PermissionConfig> appConfigs = usage.get(appName);
+            for (String permissionName : appConfigs.keySet()) {
+                mPermissionPositions.put(index++, appConfigs.get(permissionName));
             }
         }
     }

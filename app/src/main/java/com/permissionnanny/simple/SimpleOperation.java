@@ -1,15 +1,17 @@
 package com.permissionnanny.simple;
 
-import android.support.v4.util.SimpleArrayMap;
+import android.support.v4.util.ArrayMap;
 import com.permissionnanny.Operation;
 import com.permissionnanny.ProxyFunction;
 import com.permissionnanny.lib.request.RequestParams;
+
+import java.util.Map;
 
 /**
  *
  */
 public class SimpleOperation extends Operation {
-    public static final SimpleArrayMap<String, SimpleOperation> operations = new SimpleArrayMap<>();
+    public static final Map<String, SimpleOperation> operations = new ArrayMap<>();
 
     static {
         for (SimpleOperation operation : LocationOperation.operations) {

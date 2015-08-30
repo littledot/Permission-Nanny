@@ -1,12 +1,14 @@
 package com.permissionnanny.demo;
 
-import android.support.v4.util.SimpleArrayMap;
+import android.support.v4.util.ArrayMap;
+
+import java.util.Map;
 
 /**
  *
  */
 public class EzMap {
-    private SimpleArrayMap<String, Object> mMap = new SimpleArrayMap<>();
+    private Map<String, Object> mMap = new ArrayMap<>();
 
     public EzMap put(String k, Object v) {
         mMap.put(k, v);

@@ -4,7 +4,7 @@ import android.Manifest;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.util.SimpleArrayMap;
+import android.support.v4.util.ArrayMap;
 import com.permissionnanny.App;
 import com.permissionnanny.Operation;
 import com.permissionnanny.content.ContentOperation;
@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  *
@@ -31,7 +32,7 @@ public class PermissionConfigDataManager {
     private AppDB mDB;
     private AppModule.Bus mBus;
 
-    SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> mConfigs = new SimpleArrayMap<>();
+    Map<String, Map<String, PermissionConfig>> mConfigs = new ArrayMap<>();
 
     @Inject
     public PermissionConfigDataManager(Application context, AppDB db, AppModule.Bus bus) {
@@ -57,9 +58,9 @@ public class PermissionConfigDataManager {
         Timber.wtf("Read " + Arrays.toString(configs));
 
         for (PermissionConfig config : configs) {
-            SimpleArrayMap<String, PermissionConfig> configMap = mConfigs.get(config.appPackageName);
+            Map<String, PermissionConfig> configMap = mConfigs.get(config.appPackageName);
             if (configMap == null) {
-                configMap = new SimpleArrayMap<>();
+                configMap = new ArrayMap<>();
                 mConfigs.put(config.appPackageName, configMap);
             }
 
@@ -68,8 +69,8 @@ public class PermissionConfigDataManager {
     }
 
     public void registerApp(String appPackage, ArrayList<String> permissions) {
-        SimpleArrayMap<String, PermissionConfig> oldConfigs = mConfigs.get(appPackage);
-        SimpleArrayMap<String, PermissionConfig> newConfigs = new SimpleArrayMap<>();
+        Map<String, PermissionConfig> oldConfigs = mConfigs.get(appPackage);
+        Map<String, PermissionConfig> newConfigs = new ArrayMap<>();
 
         for (String permission : permissions) {
             if (oldConfigs != null) { // Existing app? Look for existing configs
@@ -89,9 +90,9 @@ public class PermissionConfigDataManager {
         }
 
         if (oldConfigs != null) { // Delete permission configs that are no longer in use
-            for (int i = 0, l = oldConfigs.size(); i < l; i++) {
-                mDB.delConfig(oldConfigs.valueAt(i));
-                Timber.wtf("Delete config=" + oldConfigs.valueAt(i));
+            for (PermissionConfig oldConfig : oldConfigs.values()) {
+                mDB.delConfig(oldConfig);
+                Timber.wtf("Delete config=" + oldConfig);
             }
         }
 
@@ -105,7 +106,7 @@ public class PermissionConfigDataManager {
         mBus.publish(mConfigs);
     }
 
-    public SimpleArrayMap<String, SimpleArrayMap<String, PermissionConfig>> getConfig() {
+    public Map<String, Map<String, PermissionConfig>> getConfig() {
         return mConfigs;
     }
 
@@ -146,7 +147,7 @@ public class PermissionConfigDataManager {
             return PermissionConfig.ALWAYS_ALLOW;
         }
 
-        SimpleArrayMap<String, PermissionConfig> permissions = mConfigs.get(appPackage);
+        Map<String, PermissionConfig> permissions = mConfigs.get(appPackage);
         if (permissions == null) { // App not registered yet? Default to ALWAYS_ASK
             return PermissionConfig.ALWAYS_ASK;
         }

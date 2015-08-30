@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
-import android.support.v4.util.SimpleArrayMap;
+import android.support.v4.util.ArrayMap;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
@@ -19,6 +19,7 @@ import timber.log.Timber;
 
 import javax.inject.Inject;
 import java.security.SecureRandom;
+import java.util.Map;
 
 /**
  *
@@ -28,7 +29,7 @@ public class ProxyService extends BaseService {
     public static final String CLIENT_ADDR = "clientAddr";
     public static final String REQUEST_PARAMS = "requestParams";
 
-    private SimpleArrayMap<String, ProxyClient> mClients = new SimpleArrayMap<>();
+    private Map<String, ProxyClient> mClients = new ArrayMap<>();
     private AckReceiver mAckReceiver = new AckReceiver();
     private LocationManager mLocationManager;
     private String mAckServerAddr;

@@ -1,7 +1,9 @@
 package com.permissionnanny.missioncontrol;
 
 import android.os.Build;
-import android.support.v4.util.SimpleArrayMap;
+import android.support.v4.util.ArrayMap;
+
+import java.util.Map;
 
 import static android.Manifest.permission.*;
 import static com.permissionnanny.R.string.*;
@@ -10,7 +12,7 @@ import static com.permissionnanny.R.string.*;
  *
  */
 public class PermRes {
-    private static SimpleArrayMap<String, PermRes> resMap = new SimpleArrayMap<>();
+    private static Map<String, PermRes> resMap = new ArrayMap<>();
 
     static {
         resMap.put(ACCESS_COARSE_LOCATION, new PermRes(permlab_accessCoarseLocation, permdesc_accessCoarseLocation));
