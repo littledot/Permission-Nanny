@@ -39,6 +39,7 @@ public class ProxyService extends BaseService {
     @Override
     public void onCreate() {
         super.onCreate();
+        getComponent(this).inject(this);
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mAckServerAddr = Long.toString(new SecureRandom().nextLong());
         registerReceiver(mAckReceiver, new IntentFilter(mAckServerAddr));

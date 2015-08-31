@@ -1,8 +1,6 @@
 package com.permissionnanny.dagger;
 
 import android.app.Application;
-import com.permissionnanny.ClientPermissionManifestReceiver;
-import com.permissionnanny.UninstallReceiver;
 import com.permissionnanny.db.AppDB;
 import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
 import dagger.Component;
@@ -25,8 +23,4 @@ public interface AppComponent {
     AppModule.Bus bus();
 
     PermissionConfigDataManager pcdm();
-
-    void inject(ClientPermissionManifestReceiver victim);
-
-    void inject(UninstallReceiver victim);
 }

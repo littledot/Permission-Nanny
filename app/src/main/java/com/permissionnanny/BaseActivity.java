@@ -17,7 +17,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public ContextComponent getComponent() {
-        if (mComponent != null) {
+        if (mComponent == null) {
             mComponent = ((App) getApplicationContext()).getContextComponent(this);
         }
         return mComponent;

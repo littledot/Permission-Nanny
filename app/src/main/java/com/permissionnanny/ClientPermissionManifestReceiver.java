@@ -1,7 +1,6 @@
 package com.permissionnanny;
 
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +19,14 @@ import java.util.Arrays;
  * This receiver is part of PPP. It's class name must never change.
  */
 @PPP
-public class ClientPermissionManifestReceiver extends BroadcastReceiver {
+public class ClientPermissionManifestReceiver extends BaseReceiver {
 
     @Inject PermissionConfigDataManager mConfigManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ((App) context.getApplicationContext()).getAppComponent().inject(this);
+        super.onReceive(context, intent);
+        getComponent(context).inject(this);
 
         // Validate feral request and ensure required parameters are present
         String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
