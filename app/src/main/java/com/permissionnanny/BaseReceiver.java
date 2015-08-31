@@ -16,6 +16,9 @@ public class BaseReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {}
 
     public ContextComponent getComponent(Context context) {
-        return ((App) context.getApplicationContext()).getContextComponent(context);
+        if (mComponent == null) {
+            mComponent = ((App) context.getApplicationContext()).getContextComponent(context);
+        }
+        return mComponent;
     }
 }

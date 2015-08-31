@@ -1,10 +1,10 @@
 package com.permissionnanny;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import com.permissionnanny.dagger.ContextComponent;
-import com.permissionnanny.dagger.DaggerContextComponent;
 import timber.log.Timber;
 
 /**
@@ -38,20 +38,9 @@ public class BaseService extends Service {
         super.onDestroy();
     }
 
-    /**
-     * @param builder
-     * @return
-     */
-    protected DaggerContextComponent.Builder buildActivityComponent(DaggerContextComponent.Builder builder) {
-        return builder.appComponent(((App) getApplication()).getAppComponent());
-    }
-
-    /**
-     * @return
-     */
-    public ContextComponent getActivityComponent() {
+    public ContextComponent getComponent(Context context) {
         if (mComponent == null) {
-            mComponent = buildActivityComponent(DaggerContextComponent.builder()).build();
+            mComponent = ((App) context.getApplicationContext()).getContextComponent(context);
         }
         return mComponent;
     }

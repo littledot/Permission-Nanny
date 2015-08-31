@@ -235,6 +235,7 @@ public class Nanny {
     @PPP public static final String REQUEST_PARAMS = "RequestParams";
     /** @deprecated Use {@link #REQUEST_RATIONALE} instead. */
     @PPP @Deprecated public static final String REQUEST_REASON = "RequestReason";
+    /** Entity field: */
     @PPP public static final String REQUEST_RATIONALE = "RequestRationale";
     /** Entity field: */
     @PPP public static final String SENDER_IDENTITY = "SenderIdentity";
