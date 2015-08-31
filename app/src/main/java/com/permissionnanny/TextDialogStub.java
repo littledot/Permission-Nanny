@@ -16,11 +16,14 @@ public class TextDialogStub {
     @Bind(R.id.tvReason) TextView tvReason;
 
     public void inflateViewStub(ViewStub stub, Bundle args) {
-        String reason = args.getString(Nanny.REQUEST_REASON);
+        String rationale = args.getString(Nanny.REQUEST_RATIONALE);
+        if (rationale == null) {
+            rationale = args.getString(Nanny.REQUEST_REASON);
+        }
 
         stub.setLayoutResource(R.layout.dialog_text);
         View view = stub.inflate();
         ButterKnife.bind(this, view);
-        tvReason.setText(reason);
+        tvReason.setText(rationale);
     }
 }

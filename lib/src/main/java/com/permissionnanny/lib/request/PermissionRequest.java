@@ -157,7 +157,7 @@ public abstract class PermissionRequest {
         Bundle entity = new Bundle();
         entity.putParcelable(Nanny.SENDER_IDENTITY, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
         entity.putParcelable(Nanny.REQUEST_PARAMS, mParams);
-        entity.putString(Nanny.REQUEST_REASON, reason);
+        entity.putString(Nanny.REQUEST_RATIONALE, reason);
 
         Intent intent = new Intent()
                 .setClassName(Nanny.getServerAppId(), Nanny.CLIENT_REQUEST_RECEIVER)

@@ -64,7 +64,7 @@ public class PermissionRequestTest {
         Bundle entity = request.getBundleExtra(Nanny.ENTITY_BODY);
         assertThat(entity.containsKey(Nanny.SENDER_IDENTITY), is(true));
         assertThat(entity.containsKey(Nanny.REQUEST_PARAMS), is(true));
-        assertThat(entity.containsKey(Nanny.REQUEST_REASON), is(true));
+        assertThat(entity.containsKey(Nanny.REQUEST_RATIONALE), is(true));
     }
 
     @Test

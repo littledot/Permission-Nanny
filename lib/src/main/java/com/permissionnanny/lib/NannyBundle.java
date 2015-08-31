@@ -56,9 +56,16 @@ public class NannyBundle {
     }
 
     @Nullable
-    public String getRequestReason() {
+    public String getRequestRationale() {
+        String value = null;
         Bundle entity = getEntityBody();
-        return entity != null ? entity.getString(Nanny.REQUEST_REASON) : null;
+        if (entity != null) {
+            value = entity.getString(Nanny.REQUEST_RATIONALE);
+            if (value == null) {
+                value = entity.getString(Nanny.REQUEST_REASON);
+            }
+        }
+        return value;
     }
 
     public static class Builder {
@@ -72,7 +79,7 @@ public class NannyBundle {
         public Bundle mBody;
         public PendingIntent mSender;
         public RequestParams mParams;
-        public String mReason;
+        public String mRationale;
 
         public Bundle build() {
             if (mBody == null) {
@@ -84,8 +91,9 @@ public class NannyBundle {
             if (mParams != null) {
                 mBody.putParcelable(Nanny.REQUEST_PARAMS, mParams);
             }
-            if (mReason != null) {
-                mBody.putString(Nanny.REQUEST_REASON, mReason);
+            if (mRationale != null) {
+                mBody.putString(Nanny.REQUEST_REASON, mRationale);
+                mBody.putString(Nanny.REQUEST_RATIONALE, mRationale);
             }
 
             Bundle ppp = new Bundle();
