@@ -44,9 +44,15 @@ public class NannyBundle {
     }
 
     @Nullable
-    public PendingIntent getSenderIdentity() {
+    public String getSenderIdentity() {
         Bundle entity = getEntityBody();
-        return entity != null ? (PendingIntent) entity.getParcelable(Nanny.SENDER_IDENTITY) : null;
+        if (entity != null) {
+            PendingIntent sender = entity.getParcelable(Nanny.SENDER_IDENTITY);
+            if (sender != null) {
+                return sender.getIntentSender().getTargetPackage();
+            }
+        }
+        return null;
     }
 
     @Nullable
@@ -80,6 +86,51 @@ public class NannyBundle {
         public PendingIntent mSender;
         public RequestParams mParams;
         public String mRationale;
+
+        public Builder statusCode(int statusCode) {
+            mStatusCode = statusCode;
+            return this;
+        }
+
+        public Builder clientAddress(String clientAddress) {
+            mClientAddress = clientAddress;
+            return this;
+        }
+
+        public Builder connection(String connection) {
+            mConnection = connection;
+            return this;
+        }
+
+        public Builder server(String server) {
+            mServer = server;
+            return this;
+        }
+
+        public Builder error(Throwable error) {
+            mError = error;
+            return this;
+        }
+
+        public Builder body(Bundle body) {
+            mBody = body;
+            return this;
+        }
+
+        public Builder sender(PendingIntent sender) {
+            mSender = sender;
+            return this;
+        }
+
+        public Builder params(RequestParams params) {
+            mParams = params;
+            return this;
+        }
+
+        public Builder rationale(String rationale) {
+            mRationale = rationale;
+            return this;
+        }
 
         public Bundle build() {
             if (mBody == null) {

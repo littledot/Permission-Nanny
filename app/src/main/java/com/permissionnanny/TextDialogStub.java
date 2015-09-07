@@ -1,29 +1,29 @@
 package com.permissionnanny;
 
-import android.os.Bundle;
-import android.view.View;
 import android.view.ViewStub;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.permissionnanny.lib.Nanny;
 
 /**
  *
  */
 public class TextDialogStub {
 
+    private final ConfirmRequestBinder mBinder;
+
     @Bind(R.id.tvReason) TextView tvReason;
 
-    public void inflateViewStub(ViewStub stub, Bundle args) {
-        String rationale = args.getString(Nanny.REQUEST_RATIONALE);
-        if (rationale == null) {
-            rationale = args.getString(Nanny.REQUEST_REASON);
-        }
+    public TextDialogStub(ConfirmRequestBinder binder) {
+        mBinder = binder;
+    }
 
+    public void inflateViewStub(ViewStub stub) {
         stub.setLayoutResource(R.layout.dialog_text);
-        View view = stub.inflate();
-        ButterKnife.bind(this, view);
-        tvReason.setText(rationale);
+        ButterKnife.bind(this, stub.inflate());
+    }
+
+    public void bindViews() {
+        tvReason.setText(mBinder.getDialogBody());
     }
 }

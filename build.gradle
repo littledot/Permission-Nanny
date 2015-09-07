@@ -58,6 +58,7 @@ buildscript {
         runner = 'com.android.support.test:runner:0.3'
         rules = 'com.android.support.test:rules:0.3'
         espressoCore = 'com.android.support.test.espresso:espresso-core:2.2'
+        shadowsSupportV4 = 'org.robolectric:shadows-support-v4'
         uiautomator = 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
         lorem = 'com.thedeanda:lorem:1.2'
     }

@@ -20,6 +20,7 @@ public class NannyAppTestRunner extends NannyTestRunner {
         properties.put("sdk", "21");
         properties.put("constants", BuildConfig.class.getCanonicalName());
         properties.put("application", RoboApp.class.getCanonicalName());
+        properties.put("packageName", "com.permissionnanny");
         return properties;
     }
 }

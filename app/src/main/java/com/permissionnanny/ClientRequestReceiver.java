@@ -1,6 +1,5 @@
 package com.permissionnanny;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PermissionInfo;
@@ -36,8 +35,8 @@ public class ClientRequestReceiver extends BaseReceiver {
 
         // Validate feral request and ensure required parameters are present
         String clientAddr = bundle.getClientAddress();
-        PendingIntent client = bundle.getSenderIdentity();
-        if (client == null) {
+        String clientPackage = bundle.getSenderIdentity();
+        if (clientPackage == null) {
             badRequest(context, clientAddr, new NannyException(Err.NO_SENDER_IDENTITY));
             return;
         }
@@ -59,7 +58,6 @@ public class ClientRequestReceiver extends BaseReceiver {
         }
 
         // DANGEROUS operation? Check user's config first
-        String clientPackage = client.getIntentSender().getTargetPackage();
         int userConfig = mConfigManager.getPermissionSetting(clientPackage, operation, request);
         switch (userConfig) {
         case PermissionConfig.ALWAYS_ASK:

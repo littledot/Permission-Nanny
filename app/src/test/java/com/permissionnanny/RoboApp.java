@@ -4,7 +4,10 @@ import android.content.Context;
 import com.permissionnanny.dagger.AppComponent;
 import com.permissionnanny.dagger.ContextComponent;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import static org.mockito.Mockito.*;
 
 /**
  * A no-op application.
@@ -30,5 +33,11 @@ public class RoboApp extends App {
     @Override
     public ContextComponent getContextComponent(Context context) {
         return mContextComponent;
+    }
+
+    public static Context newMockContext() {
+        Context mock = Mockito.mock(Context.class);
+        when(mock.getApplicationContext()).thenReturn(new RoboApp());
+        return mock;
     }
 }

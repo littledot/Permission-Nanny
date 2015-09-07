@@ -22,7 +22,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Spy;
 
 import static com.permissionnanny.common.test.AndroidMatchers.*;
 import static org.hamcrest.Matchers.*;
@@ -35,7 +34,7 @@ public class ClientRequestReceiverTest {
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
 
-    @Spy ClientRequestReceiver target;
+    ClientRequestReceiver target;
     Intent intent;
     Bundle entity;
     RequestParams request;

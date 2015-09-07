@@ -10,7 +10,6 @@ import com.permissionnanny.dagger.AppModule;
 import com.permissionnanny.dagger.ContextComponent;
 import com.permissionnanny.dagger.ContextModule;
 import com.permissionnanny.dagger.DaggerAppComponent;
-import com.permissionnanny.dagger.DaggerAppComponent.Builder;
 import com.permissionnanny.dagger.DaggerContextComponent;
 import timber.log.Timber;
 
@@ -29,28 +28,23 @@ public class App extends Application {
         IDENTITY = PendingIntent.getBroadcast(this, 0, new Intent(), 0);
     }
 
-    /**
-     * @param builder
-     * @return
-     */
-    protected Builder buildAppComponent(Builder builder) {
-        return builder.appModule(new AppModule(this));
-    }
-
-    /**
-     * @return
-     */
     public AppComponent getAppComponent() {
         if (mAppComponent == null) {
-            mAppComponent = buildAppComponent(DaggerAppComponent.builder()).build();
+            mAppComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(this))
+                    .build();
         }
         return mAppComponent;
     }
 
     public ContextComponent getContextComponent(Context context) {
         return DaggerContextComponent.builder()
-                .appComponent(((App) context.getApplicationContext()).getAppComponent())
+                .appComponent(getAppComponent())
                 .contextModule(new ContextModule(context))
                 .build();
+    }
+
+    public static ContextComponent newContextComponent(Context context) {
+        return ((App) context.getApplicationContext()).getContextComponent(context);
     }
 }
