@@ -8,20 +8,20 @@ import com.permissionnanny.lib.NannyBundle;
  */
 public class ConfirmRequestActivity extends BaseActivity {
 
-    private ConfirmRequestView mView;
+    private ConfirmRequestBinder mBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ConfirmRequestBinder binder = new ConfirmRequestBinder(this, new NannyBundle(getIntent().getExtras()));
-        mView = new ConfirmRequestView(this, binder, new TextDialogStub(binder));
-        mView.preOnCreate(savedInstanceState);
+        mBinder = new ConfirmRequestBinder(this, new NannyBundle(getIntent().getExtras()));
+
+        mBinder.preOnCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
-        mView.onCreate(savedInstanceState);
+        mBinder.onCreate(savedInstanceState);
     }
 
     @Override
     public void onBackPressed() {
-        mView.preOnBackPressed();
         super.onBackPressed();
+        mBinder.onBackPressed();
     }
 }

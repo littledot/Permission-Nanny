@@ -1,15 +1,19 @@
 package com.permissionnanny;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.request.RequestParams;
+import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
 
 import javax.inject.Inject;
 
@@ -17,6 +21,9 @@ import javax.inject.Inject;
  *
  */
 public class ConfirmRequestBinder extends BaseBinder {
+
+    @VisibleForTesting ConfirmRequestView mView;
+
     private Context mContext;
     private PackageManager mPackageMgr;
     private NannyBundle mBundle;
@@ -26,10 +33,14 @@ public class ConfirmRequestBinder extends BaseBinder {
     private RequestParams mRequest;
     private Operation mOperation;
 
-    @Inject ProxyExecutor mExecutor;
+    private boolean mRemember;
 
-    public ConfirmRequestBinder(Context context, NannyBundle bundle) {
+    @Inject ProxyExecutor mExecutor;
+    @Inject PermissionConfigDataManager mConfig;
+
+    public ConfirmRequestBinder(Activity context, NannyBundle bundle) {
         getComponent(context).inject(this);
+        mView = new ConfirmRequestView(context, this, new TextDialogStubView(this));
         mContext = context;
         mPackageMgr = mContext.getPackageManager();
         mBundle = bundle;
@@ -54,6 +65,28 @@ public class ConfirmRequestBinder extends BaseBinder {
 
     public CharSequence getDialogBody() {
         return mBundle.getRequestRationale();
+    }
+
+    public boolean getRememberPreference() {
+        return mRemember;
+    }
+
+    public void preOnCreate(Bundle state) {
+        mView.preOnCreate(state);
+    }
+
+    public void onCreate(Bundle state) {
+        mView.onCreate(state);
+        mView.bindViews();
+    }
+
+    public void onBackPressed() {
+        executeDeny();
+    }
+
+    public void changeRememberPreference(boolean remember) {
+        mRemember = remember;
+        mView.bindViews();
     }
 
     public void executeAllow() {

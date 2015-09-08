@@ -1,6 +1,6 @@
 package com.permissionnanny;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -30,7 +30,7 @@ public class ConfirmRequestBinderTest {
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
 
     ConfirmRequestBinder target;
-    @Mock Context context;
+    @Mock Activity activity;
     @Mock NannyBundle bundle;
     @Mock PackageManager pm;
     @Mock ApplicationInfo appInfo;
@@ -39,8 +39,8 @@ public class ConfirmRequestBinderTest {
 
     @Before
     public void setUp() throws Exception {
-        context = RoboApp.newMockContext();
-        when(context.getPackageManager()).thenReturn(pm);
+        activity = RoboApp.newMockActivity();
+        when(activity.getPackageManager()).thenReturn(pm);
         params = new RequestParams();
     }
 
@@ -51,9 +51,9 @@ public class ConfirmRequestBinderTest {
         when(pm.getApplicationLabel(appInfo)).thenReturn("3rd Party App");
         params.opCode = WifiRequest.GET_CONNECTION_INFO;
         when(bundle.getRequest()).thenReturn(params);
-        when(context.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        when(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        target = new ConfirmRequestBinder(context, bundle);
+        target = new ConfirmRequestBinder(activity, bundle);
 
         Spanned ans = target.getDialogTitle();
 
@@ -70,9 +70,9 @@ public class ConfirmRequestBinderTest {
         when(pm.getApplicationLabel(appInfo)).thenReturn(null);
         params.opCode = WifiRequest.GET_CONNECTION_INFO;
         when(bundle.getRequest()).thenReturn(params);
-        when(context.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        when(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        target = new ConfirmRequestBinder(context, bundle);
+        target = new ConfirmRequestBinder(activity, bundle);
 
         Spanned ans = target.getDialogTitle();
 
@@ -89,9 +89,9 @@ public class ConfirmRequestBinderTest {
         when(pm.getApplicationLabel(appInfo)).thenReturn(null);
         params.opCode = WifiRequest.GET_CONNECTION_INFO;
         when(bundle.getRequest()).thenReturn(params);
-        when(context.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        when(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        target = new ConfirmRequestBinder(context, bundle);
+        target = new ConfirmRequestBinder(activity, bundle);
 
         Spanned ans = target.getDialogTitle();
 
@@ -108,7 +108,7 @@ public class ConfirmRequestBinderTest {
         when(pm.getApplicationIcon(appInfo)).thenReturn(icon);
         params.opCode = WifiRequest.GET_CONNECTION_INFO;
         when(bundle.getRequest()).thenReturn(params);
-        target = new ConfirmRequestBinder(context, bundle);
+        target = new ConfirmRequestBinder(activity, bundle);
 
         Drawable ans = target.getDialogIcon();
 
@@ -122,7 +122,7 @@ public class ConfirmRequestBinderTest {
         when(pm.getApplicationIcon(appInfo)).thenReturn(null);
         params.opCode = WifiRequest.GET_CONNECTION_INFO;
         when(bundle.getRequest()).thenReturn(params);
-        target = new ConfirmRequestBinder(context, bundle);
+        target = new ConfirmRequestBinder(activity, bundle);
 
         Drawable ans = target.getDialogIcon();
 

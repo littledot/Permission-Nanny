@@ -1,5 +1,6 @@
 package com.permissionnanny;
 
+import android.app.Activity;
 import android.content.Context;
 import com.permissionnanny.dagger.AppComponent;
 import com.permissionnanny.dagger.ContextComponent;
@@ -37,6 +38,12 @@ public class RoboApp extends App {
 
     public static Context newMockContext() {
         Context mock = Mockito.mock(Context.class);
+        when(mock.getApplicationContext()).thenReturn(new RoboApp());
+        return mock;
+    }
+
+    public static Activity newMockActivity() {
+        Activity mock = Mockito.mock(Activity.class);
         when(mock.getApplicationContext()).thenReturn(new RoboApp());
         return mock;
     }

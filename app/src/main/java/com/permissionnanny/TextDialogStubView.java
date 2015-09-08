@@ -8,13 +8,13 @@ import butterknife.ButterKnife;
 /**
  *
  */
-public class TextDialogStub {
+public class TextDialogStubView {
 
     private final ConfirmRequestBinder mBinder;
 
     @Bind(R.id.tvReason) TextView tvReason;
 
-    public TextDialogStub(ConfirmRequestBinder binder) {
+    public TextDialogStubView(ConfirmRequestBinder binder) {
         mBinder = binder;
     }
 

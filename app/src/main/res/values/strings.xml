@@ -6,6 +6,9 @@
 
     <string name="dialog_allow">Allow</string>
     <string name="dialog_deny">Deny</string>
+    <string name="dialog_always_allow">Always Allow</string>
+    <string name="dialog_always_deny">Always Deny</string>
+    <string name="dialog_remember">Remember my preference</string>
 
     <string name="dialogTitle_contentCalendar">would like to access your calendar.</string>
     <string name="dialogTitle_contentContacts">would like to access your contacts.</string>
