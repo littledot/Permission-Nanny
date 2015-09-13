@@ -8,12 +8,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.permissionnanny.R;
 
-public class PermissionSwitchViewHolder extends RecyclerView.ViewHolder {
+public class PermissionInfoViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.permissionName) TextView tvPermissionName;
     @Bind(R.id.permissionDesc) TextView tvPermissionDesc;
     @Bind(R.id.permissionAccess) Spinner sPermissionAccess;
 
-    public PermissionSwitchViewHolder(View itemView) {
+    public PermissionInfoViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

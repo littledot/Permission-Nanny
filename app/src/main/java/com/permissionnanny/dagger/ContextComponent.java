@@ -3,12 +3,11 @@ package com.permissionnanny.dagger;
 import android.content.Context;
 import com.permissionnanny.ClientPermissionManifestReceiver;
 import com.permissionnanny.ClientRequestReceiver;
-import com.permissionnanny.ConfirmRequestActivity;
 import com.permissionnanny.ConfirmRequestBinder;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.UninstallReceiver;
 import com.permissionnanny.dagger.ContextComponent.ContextScope;
-import com.permissionnanny.missioncontrol.AppListActivity;
+import com.permissionnanny.missioncontrol.AppControlBinder;
 import dagger.Component;
 
 import javax.inject.Scope;
@@ -25,10 +24,6 @@ public interface ContextComponent {
 
     Context context();
 
-    void inject(ConfirmRequestActivity victim);
-
-    void inject(AppListActivity victim);
-
     void inject(ProxyService victim);
 
     void inject(ClientRequestReceiver victom);
@@ -38,4 +33,6 @@ public interface ContextComponent {
     void inject(UninstallReceiver victim);
 
     void inject(ConfirmRequestBinder victim);
+
+    void inject(AppControlBinder victim);
 }

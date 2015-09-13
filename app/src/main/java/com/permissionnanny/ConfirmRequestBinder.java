@@ -38,10 +38,10 @@ public class ConfirmRequestBinder extends BaseBinder {
     @Inject ProxyExecutor mExecutor;
     @Inject PermissionConfigDataManager mConfig;
 
-    public ConfirmRequestBinder(Activity context, NannyBundle bundle) {
-        getComponent(context).inject(this);
-        mView = new ConfirmRequestView(context, this, new TextDialogStubView(this));
-        mContext = context;
+    public ConfirmRequestBinder(Activity activity, NannyBundle bundle) {
+        getComponent(activity).inject(this);
+        mView = new ConfirmRequestView(activity, this, new TextDialogStubView(this));
+        mContext = activity;
         mPackageMgr = mContext.getPackageManager();
         mBundle = bundle;
         mClientAddr = mBundle.getClientAddress();

@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  *
  */
-public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AppControlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static int[] settingsToSelection = new int[]{0, 1, 2};
     private static int[] selectionToSettings = new int[]{PermissionConfig.ALWAYS_ASK, PermissionConfig.ALWAYS_ALLOW,
             PermissionConfig.ALWAYS_DENY};
@@ -33,7 +33,7 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private SparseArray<PermissionConfig> mPermissionPositions = new SparseArray<>();
     private SparseArray<Boolean> mDisplayDescription = new SparseArray<>();
 
-    public AppListAdapter(Context context, PermissionConfigDataManager manager) {
+    public AppControlAdapter(Context context, PermissionConfigDataManager manager) {
         mContext = context;
         mPM = mContext.getPackageManager();
         mConfigManager = manager;
@@ -66,19 +66,19 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return viewType == R.layout.item_app ? new AppListViewHolder(view) : new PermissionSwitchViewHolder(view);
+        return viewType == R.layout.item_app ? new AppInfoViewHolder(view) : new PermissionInfoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof AppListViewHolder) {
-            bindAppViewHolder((AppListViewHolder) holder, position);
-        } else if (holder instanceof PermissionSwitchViewHolder) {
-            bindPermissionSwitchViewHolder((PermissionSwitchViewHolder) holder, position);
+        if (holder instanceof AppInfoViewHolder) {
+            bindAppViewHolder((AppInfoViewHolder) holder, position);
+        } else if (holder instanceof PermissionInfoViewHolder) {
+            bindPermissionSwitchViewHolder((PermissionInfoViewHolder) holder, position);
         }
     }
 
-    private void bindAppViewHolder(AppListViewHolder holder, int position) {
+    private void bindAppViewHolder(AppInfoViewHolder holder, int position) {
         String appPackage = mAppsPositions.get(position);
         String appName = appPackage;
         Drawable appIcon = null;
@@ -96,7 +96,7 @@ public class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         holder.tvAppName.setText(appName);
     }
 
-    private void bindPermissionSwitchViewHolder(PermissionSwitchViewHolder holder, final int position) {
+    private void bindPermissionSwitchViewHolder(PermissionInfoViewHolder holder, final int position) {
         final PermissionConfig config = mPermissionPositions.get(position);
 
         String permName = config.permissionName;
