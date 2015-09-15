@@ -1,8 +1,8 @@
 package com.permissionnanny.dagger;
 
 import android.app.Application;
-import com.permissionnanny.db.AppDB;
-import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
+import com.permissionnanny.data.AppDB;
+import com.permissionnanny.data.AppPermissionManager;
 import dagger.Component;
 import io.snapdb.SnapDB;
 
@@ -22,5 +22,5 @@ public interface AppComponent {
 
     AppModule.Bus bus();
 
-    PermissionConfigDataManager pcdm();
+    AppPermissionManager appPermissionManager();
 }

@@ -13,7 +13,6 @@ public class ConfirmRequestActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mBinder = new ConfirmRequestBinder(this, new NannyBundle(getIntent().getExtras()));
-
         mBinder.preOnCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         mBinder.onCreate(savedInstanceState);

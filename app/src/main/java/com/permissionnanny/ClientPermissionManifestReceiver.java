@@ -4,11 +4,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.PPP;
-import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 @PPP
 public class ClientPermissionManifestReceiver extends BaseReceiver {
 
-    @Inject PermissionConfigDataManager mConfigManager;
+    @Inject AppPermissionManager mAppManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -48,7 +48,7 @@ public class ClientPermissionManifestReceiver extends BaseReceiver {
 
         String clientPackage = client.getIntentSender().getTargetPackage();
         Timber.wtf("client=" + clientPackage + " usage=" + Arrays.toString(permissionUsage.toArray()));
-        mConfigManager.registerApp(clientPackage, permissionUsage);
+        mAppManager.registerApp(clientPackage, permissionUsage);
 
         okRequest(context, clientAddr);
     }

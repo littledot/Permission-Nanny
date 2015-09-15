@@ -4,9 +4,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyException;
-import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -35,14 +35,14 @@ public class ClientPermissionManifestReceiverTest {
     Bundle bundle;
     ArrayList<String> manifest;
     @Mock Context context;
-    @Mock PermissionConfigDataManager mgr;
+    @Mock AppPermissionManager mgr;
     @Mock PendingIntent sender;
     @Captor ArgumentCaptor<Intent> responseCaptor;
 
     @Before
     public void setUp() throws Exception {
         target = new ClientPermissionManifestReceiver();
-        target.mConfigManager = mgr;
+        target.mAppManager = mgr;
         intent = new Intent();
         bundle = new Bundle();
         manifest = new ArrayList<>();
@@ -59,7 +59,7 @@ public class ClientPermissionManifestReceiverTest {
 
         target.onReceive(context, intent);
 
-        verify(target.mConfigManager).registerApp("com.3rd.party.app", manifest);
+        verify(target.mAppManager).registerApp("com.3rd.party.app", manifest);
         verify(context).sendBroadcast(responseCaptor.capture());
         assertThat(responseCaptor.getValue(), equalToIntent(AppTestUtil.new200Response("123")));
     }

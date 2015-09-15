@@ -10,8 +10,8 @@ import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.missioncontrol.PermissionConfig;
-import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
+import com.permissionnanny.data.AppPermission;
+import com.permissionnanny.data.AppPermissionManager;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -22,7 +22,7 @@ import javax.inject.Inject;
 @PPP
 public class ClientRequestReceiver extends BaseReceiver {
 
-    @Inject PermissionConfigDataManager mConfigManager;
+    @Inject AppPermissionManager mAppManager;
     @Inject ProxyExecutor mExecutor;
 
     @Override
@@ -58,17 +58,17 @@ public class ClientRequestReceiver extends BaseReceiver {
         }
 
         // DANGEROUS operation? Check user's config first
-        int userConfig = mConfigManager.getPermissionSetting(clientPackage, operation, request);
+        int userConfig = mAppManager.getPermissionPrivilege(clientPackage, operation, request);
         switch (userConfig) {
-        case PermissionConfig.ALWAYS_ASK:
+        case AppPermission.ALWAYS_ASK:
             context.startActivity(new Intent(context, ConfirmRequestActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .putExtras(intent));
             break;
-        case PermissionConfig.ALWAYS_ALLOW:
+        case AppPermission.ALWAYS_ALLOW:
             mExecutor.executeAllow(operation, request, clientAddr);
             break;
-        case PermissionConfig.ALWAYS_DENY:
+        case AppPermission.ALWAYS_DENY:
             mExecutor.executeDeny(operation, request, clientAddr);
             break;
         }

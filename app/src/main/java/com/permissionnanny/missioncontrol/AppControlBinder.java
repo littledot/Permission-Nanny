@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import com.permissionnanny.BaseBinder;
 import com.permissionnanny.R;
 import com.permissionnanny.dagger.AppModule;
+import com.permissionnanny.data.AppPermission;
+import com.permissionnanny.data.AppPermissionManager;
 import net.engio.mbassy.listener.Handler;
 
 import javax.inject.Inject;
@@ -18,7 +20,7 @@ public class AppControlBinder extends BaseBinder {
     AppControlView mView;
 
     private Context mContext;
-    @Inject PermissionConfigDataManager mConfigManager;
+    @Inject AppPermissionManager mAppManager;
     @Inject AppModule.Bus mBus;
     AppControlAdapter mAdapter;
 
@@ -29,7 +31,7 @@ public class AppControlBinder extends BaseBinder {
     }
 
     public void onCreate(Bundle state) {
-        mAdapter = new AppControlAdapter(mContext, mConfigManager);
+        mAdapter = new AppControlAdapter(mContext, mAppManager);
         mView.onCreate(state, mAdapter);
     }
 
@@ -40,7 +42,7 @@ public class AppControlBinder extends BaseBinder {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                mConfigManager.refreshData();
+                mAppManager.refreshData();
                 return true;
         }
         return false;
@@ -48,8 +50,8 @@ public class AppControlBinder extends BaseBinder {
 
     public void onResume() {
         mBus.subscribe(this);
-        mConfigManager.refreshData();
-        mAdapter.setData(mConfigManager.getConfig());
+        mAppManager.refreshData();
+        mAdapter.setData(mAppManager.getConfig());
         mAdapter.notifyDataSetChanged();
         mView.setViewVisibility(mAdapter);
     }
@@ -59,7 +61,7 @@ public class AppControlBinder extends BaseBinder {
     }
 
     @Handler
-    public void onConfigData(Map<String, Map<String, PermissionConfig>> configs) {
+    public void onConfigData(Map<String, Map<String, AppPermission>> configs) {
         mAdapter.setData(configs);
         mAdapter.notifyDataSetChanged();
         mView.setViewVisibility(mAdapter);

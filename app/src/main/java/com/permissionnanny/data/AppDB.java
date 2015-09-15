@@ -1,6 +1,5 @@
-package com.permissionnanny.db;
+package com.permissionnanny.data;
 
-import com.permissionnanny.missioncontrol.PermissionConfig;
 import io.snapdb.SnapDB;
 
 import javax.inject.Inject;
@@ -23,11 +22,11 @@ public class AppDB {
         mDB.open();
     }
 
-    public PermissionConfig[] getAllConfigs() {
-        return mDB.findVals(CONFIG, PermissionConfig.class);
+    public AppPermission[] getAllConfigs() {
+        return mDB.findVals(CONFIG, AppPermission.class);
     }
 
-    public void putConfig(PermissionConfig config) {
+    public void putConfig(AppPermission config) {
         mDB.put(key(config), config);
     }
 
@@ -41,12 +40,12 @@ public class AppDB {
         }
     }
 
-    public void delConfig(PermissionConfig config) {
+    public void delConfig(AppPermission config) {
         mDB.del(key(config));
     }
 
-    private String key(PermissionConfig config) {
-        return key(config.appPackageName, config.permissionName);
+    private String key(AppPermission config) {
+        return key(config.mAppPackageName, config.mPermissionName);
     }
 
     private String key(String appPackage, String permission) {

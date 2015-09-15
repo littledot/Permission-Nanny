@@ -2,7 +2,7 @@ package com.permissionnanny;
 
 import android.content.Context;
 import android.content.Intent;
-import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
+import com.permissionnanny.data.AppPermissionManager;
 
 import javax.inject.Inject;
 
@@ -11,7 +11,7 @@ import javax.inject.Inject;
  */
 public class UninstallReceiver extends BaseReceiver {
 
-    @Inject PermissionConfigDataManager manager;
+    @Inject AppPermissionManager mAppManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -23,6 +23,6 @@ public class UninstallReceiver extends BaseReceiver {
         }
 
         String appPackage = intent.getData().getSchemeSpecificPart();
-        manager.removeApp(appPackage);
+        mAppManager.removeApp(appPackage);
     }
 }

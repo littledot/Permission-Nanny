@@ -14,6 +14,9 @@ import android.widget.ArrayAdapter;
 import com.permissionnanny.R;
 import com.permissionnanny.SimpleOnItemSelectedListener;
 import com.permissionnanny.Util;
+import com.permissionnanny.data.AppPermissionManager;
+import com.permissionnanny.data.AppPermission;
+import com.permissionnanny.data.PermissionDetail;
 
 import java.util.Map;
 
@@ -22,31 +25,31 @@ import java.util.Map;
  */
 public class AppControlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static int[] settingsToSelection = new int[]{0, 1, 2};
-    private static int[] selectionToSettings = new int[]{PermissionConfig.ALWAYS_ASK, PermissionConfig.ALWAYS_ALLOW,
-            PermissionConfig.ALWAYS_DENY};
+    private static int[] selectionToSettings = new int[]{AppPermission.ALWAYS_ASK, AppPermission.ALWAYS_ALLOW,
+            AppPermission.ALWAYS_DENY};
 
     private Context mContext;
     private PackageManager mPM;
-    private PermissionConfigDataManager mConfigManager;
+    private AppPermissionManager mConfigManager;
 
     private SparseArray<String> mAppsPositions = new SparseArray<>();
-    private SparseArray<PermissionConfig> mPermissionPositions = new SparseArray<>();
+    private SparseArray<AppPermission> mPermissionPositions = new SparseArray<>();
     private SparseArray<Boolean> mDisplayDescription = new SparseArray<>();
 
-    public AppControlAdapter(Context context, PermissionConfigDataManager manager) {
+    public AppControlAdapter(Context context, AppPermissionManager manager) {
         mContext = context;
         mPM = mContext.getPackageManager();
         mConfigManager = manager;
     }
 
-    public void setData(Map<String, Map<String, PermissionConfig>> usage) {
+    public void setData(Map<String, Map<String, AppPermission>> configs) {
         mAppsPositions.clear();
         mPermissionPositions.clear();
         int index = 0;
 
-        for (String appName : usage.keySet()) {
+        for (String appName : configs.keySet()) {
             mAppsPositions.put(index++, appName);
-            Map<String, PermissionConfig> appConfigs = usage.get(appName);
+            Map<String, AppPermission> appConfigs = configs.get(appName);
             for (String permissionName : appConfigs.keySet()) {
                 mPermissionPositions.put(index++, appConfigs.get(permissionName));
             }
@@ -97,16 +100,16 @@ public class AppControlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void bindPermissionSwitchViewHolder(PermissionInfoViewHolder holder, final int position) {
-        final PermissionConfig config = mPermissionPositions.get(position);
+        final AppPermission config = mPermissionPositions.get(position);
 
-        String permName = config.permissionName;
+        String permName = config.mPermissionName;
         String permDesc = null;
 
-        int permNameRes = PermRes.getLabel(config.permissionName);
+        int permNameRes = PermissionDetail.getLabel(config.mPermissionName);
         if (permNameRes > 0) {
             permName = capitalize(mContext.getString(permNameRes));
         }
-        int permDescRes = PermRes.getDescription(config.permissionName);
+        int permDescRes = PermissionDetail.getDescription(config.mPermissionName);
         if (permDescRes > 0) {
             permDesc = mContext.getString(permDescRes);
         }
@@ -125,11 +128,11 @@ public class AppControlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         holder.sPermissionAccess.setAdapter(ArrayAdapter.createFromResource(mContext, R.array.access_configurations,
                 android.R.layout.simple_spinner_dropdown_item));
-        holder.sPermissionAccess.setSelection(settingsToSelection[config.setting]);
+        holder.sPermissionAccess.setSelection(settingsToSelection[config.mPrivilege]);
         holder.sPermissionAccess.setOnItemSelectedListener(new SimpleOnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mConfigManager.changeConfig(config, selectionToSettings[position]);
+                mConfigManager.changePrivilege(config, selectionToSettings[position]);
             }
         });
     }

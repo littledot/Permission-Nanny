@@ -5,11 +5,12 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 import com.litl.leveldb.DB;
 import com.permissionnanny.App;
-import com.permissionnanny.db.AppDB;
+import com.permissionnanny.data.AppDB;
 import dagger.Module;
 import dagger.Provides;
 import io.snapdb.SnapDB;
 import net.engio.mbassy.bus.MBassador;
+import org.objenesis.strategy.StdInstantiatorStrategy;
 
 import javax.inject.Singleton;
 import java.io.File;
@@ -44,6 +45,7 @@ public class AppModule {
     Kryo providesKryo() {
         Kryo kryo = new Kryo();
         kryo.setDefaultSerializer(CompatibleFieldSerializer.class);
+        kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
         return kryo;
     }
 

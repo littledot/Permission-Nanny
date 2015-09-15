@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.test.Mockingbird;
 import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.TelephonyRequest;
 import com.permissionnanny.lib.request.simple.WifiRequest;
-import com.permissionnanny.missioncontrol.PermissionConfig;
-import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
+import com.permissionnanny.data.AppPermission;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -39,7 +39,7 @@ public class ClientRequestReceiverTest {
     Bundle entity;
     RequestParams request;
     @Mock ContextComponent component;
-    @Mock PermissionConfigDataManager configManager;
+    @Mock AppPermissionManager appManager;
     @Mock ProxyExecutor executor;
     @Mock Context context;
     @Mock PendingIntent sender;
@@ -48,7 +48,7 @@ public class ClientRequestReceiverTest {
     @Before
     public void setUp() throws Exception {
         target = new ClientRequestReceiver();
-        target.mConfigManager = configManager;
+        target.mAppManager = appManager;
         target.mExecutor = executor;
         intent = new Intent();
         entity = new Bundle();
@@ -77,8 +77,8 @@ public class ClientRequestReceiverTest {
         entity.putParcelable(Nanny.SENDER_IDENTITY, sender);
         request.opCode = TelephonyRequest.GET_DEVICE_ID;
         entity.putParcelable(Nanny.REQUEST_PARAMS, request);
-        when(target.mConfigManager.getPermissionSetting(eq("3rd.party.app"), (Operation) notNull(), same(request)))
-                .thenReturn(PermissionConfig.ALWAYS_ASK);
+        when(target.mAppManager.getPermissionPrivilege(eq("3rd.party.app"), (Operation) notNull(), same(request)))
+                .thenReturn(AppPermission.ALWAYS_ASK);
 
         target.onReceive(context, intent);
 
@@ -95,8 +95,8 @@ public class ClientRequestReceiverTest {
         entity.putParcelable(Nanny.SENDER_IDENTITY, sender);
         request.opCode = TelephonyRequest.GET_DEVICE_ID;
         entity.putParcelable(Nanny.REQUEST_PARAMS, request);
-        when(target.mConfigManager.getPermissionSetting(eq("3rd.party.app"), (Operation) notNull(), same(request)))
-                .thenReturn(PermissionConfig.ALWAYS_ALLOW);
+        when(target.mAppManager.getPermissionPrivilege(eq("3rd.party.app"), (Operation) notNull(), same(request)))
+                .thenReturn(AppPermission.ALWAYS_ALLOW);
 
         target.onReceive(context, intent);
 
@@ -110,8 +110,8 @@ public class ClientRequestReceiverTest {
         entity.putParcelable(Nanny.SENDER_IDENTITY, sender);
         request.opCode = TelephonyRequest.GET_DEVICE_ID;
         entity.putParcelable(Nanny.REQUEST_PARAMS, request);
-        when(target.mConfigManager.getPermissionSetting(eq("3rd.party.app"), (Operation) notNull(), same(request)))
-                .thenReturn(PermissionConfig.ALWAYS_DENY);
+        when(target.mAppManager.getPermissionPrivilege(eq("3rd.party.app"), (Operation) notNull(), same(request)))
+                .thenReturn(AppPermission.ALWAYS_DENY);
 
         target.onReceive(context, intent);
 

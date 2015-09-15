@@ -11,9 +11,9 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.request.RequestParams;
-import com.permissionnanny.missioncontrol.PermissionConfigDataManager;
 
 import javax.inject.Inject;
 
@@ -25,7 +25,7 @@ public class ConfirmRequestBinder extends BaseBinder {
     @VisibleForTesting ConfirmRequestView mView;
 
     private Context mContext;
-    private PackageManager mPackageMgr;
+    private PackageManager mPackageManager;
     private NannyBundle mBundle;
     private String mClientAddr;
     private String mAppPackage;
@@ -36,13 +36,13 @@ public class ConfirmRequestBinder extends BaseBinder {
     private boolean mRemember;
 
     @Inject ProxyExecutor mExecutor;
-    @Inject PermissionConfigDataManager mConfig;
+    @Inject AppPermissionManager mAppManager;
 
     public ConfirmRequestBinder(Activity activity, NannyBundle bundle) {
         getComponent(activity).inject(this);
         mView = new ConfirmRequestView(activity, this, new TextDialogStubView(this));
         mContext = activity;
-        mPackageMgr = mContext.getPackageManager();
+        mPackageManager = mContext.getPackageManager();
         mBundle = bundle;
         mClientAddr = mBundle.getClientAddress();
         mAppPackage = mBundle.getSenderIdentity();
@@ -52,7 +52,7 @@ public class ConfirmRequestBinder extends BaseBinder {
     }
 
     public Spanned getDialogTitle() {
-        CharSequence label = mAppInfo != null && (label = mPackageMgr.getApplicationLabel(mAppInfo)) != null ?
+        CharSequence label = mAppInfo != null && (label = mPackageManager.getApplicationLabel(mAppInfo)) != null ?
                 label : mAppPackage;
         SpannableStringBuilder boldAppLabel = new SpannableStringBuilder(label);
         boldAppLabel.setSpan(new StyleSpan(Typeface.BOLD), 0, label.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -60,7 +60,7 @@ public class ConfirmRequestBinder extends BaseBinder {
     }
 
     public Drawable getDialogIcon() {
-        return mAppInfo != null ? mPackageMgr.getApplicationIcon(mAppInfo) : null;
+        return mAppInfo != null ? mPackageManager.getApplicationIcon(mAppInfo) : null;
     }
 
     public CharSequence getDialogBody() {
