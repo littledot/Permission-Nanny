@@ -2,19 +2,16 @@ package com.permissionnanny.data;
 
 import io.snapdb.SnapDB;
 
-import javax.inject.Inject;
-
 /**
  *
  */
-public class AppDB {
+public class AppPermissionDB {
 
     private static final String _ = "\u0378\u0379";
     private static final String CONFIG = "config" + _;
     private SnapDB mDB;
 
-    @Inject
-    public AppDB(SnapDB db) {
+    public AppPermissionDB(SnapDB db) {
         mDB = db;
     }
 

@@ -29,14 +29,14 @@ import java.util.Map;
 public class AppPermissionManager {
 
     private Application mContext;
-    private AppDB mDB;
+    private AppPermissionDB mDB;
     private AppModule.Bus mBus;
 
     /** Index definition: {App Name: {Permission Name: Privilege}} */
     Map<String, Map<String, AppPermission>> mConfigs = new ArrayMap<>();
 
     @Inject
-    public AppPermissionManager(Application context, AppDB db, AppModule.Bus bus) {
+    public AppPermissionManager(Application context, AppPermissionDB db, AppModule.Bus bus) {
         mContext = context;
         mDB = db;
         mBus = bus;

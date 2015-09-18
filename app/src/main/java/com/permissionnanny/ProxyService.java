@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.support.v4.util.ArrayMap;
 import com.permissionnanny.common.BundleUtil;
+import com.permissionnanny.data.RecurringRequestDB;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationRequest;
@@ -14,7 +15,6 @@ import com.permissionnanny.simple.ProxyGpsStatusListener;
 import com.permissionnanny.simple.ProxyLocationListener;
 import com.permissionnanny.simple.ProxyNmeaListener;
 import io.snapdb.CryIterator;
-import io.snapdb.SnapDB;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -34,7 +34,7 @@ public class ProxyService extends BaseService {
     private LocationManager mLocationManager;
     private String mAckServerAddr;
 
-    @Inject SnapDB mDB;
+    @Inject RecurringRequestDB mDB;
 
     @Override
     public void onCreate() {
@@ -50,11 +50,12 @@ public class ProxyService extends BaseService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null) { // Service killed by OS? Restore client state
             restoreState();
-            return super.onStartCommand(intent, flags, startId);
+            return super.onStartCommand(null, flags, startId);
         }
         Timber.wtf("Server started with args: " + BundleUtil.toString(intent));
         String clientId = intent.getStringExtra(CLIENT_ADDR);
         RequestParams requestParams = intent.getParcelableExtra(REQUEST_PARAMS);
+        save(clientId, requestParams);
         handleRequest(clientId, requestParams);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -66,12 +67,12 @@ public class ProxyService extends BaseService {
     }
 
     private void save(String clientId, RequestParams request) {
-        mDB.put(clientId, request);
+        mDB.putRecurringRequest(clientId, request);
     }
 
     private void restoreState() {
         int count = 0;
-        CryIterator<? extends RequestParams> iterator = mDB.iterator(RequestParams.class);
+        CryIterator<? extends RequestParams> iterator = mDB.getRecurringRequests();
         while (iterator.moveToNext()) {
             count++;
             String client = iterator.key();
@@ -84,7 +85,6 @@ public class ProxyService extends BaseService {
 
     private void handleRequest(String clientId, RequestParams requestParams) {
         Timber.wtf("handling client=" + clientId + " req=" + requestParams);
-        save(clientId, requestParams);
         switch (requestParams.opCode) {
         case LocationRequest.ADD_GPS_STATUS_LISTENER:
             handleAddGpsStatusListenerRequest(requestParams, clientId);
@@ -119,7 +119,7 @@ public class ProxyService extends BaseService {
 
     public void removeProxyClient(String clientId) {
         mClients.remove(clientId);
-        mDB.del(clientId);
+        mDB.delRecurringRequest(clientId);
         if (mClients.isEmpty()) { // no more clients? kill service
             stopSelf();
         }

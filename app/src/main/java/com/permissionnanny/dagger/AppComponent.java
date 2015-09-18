@@ -1,10 +1,9 @@
 package com.permissionnanny.dagger;
 
 import android.app.Application;
-import com.permissionnanny.data.AppDB;
 import com.permissionnanny.data.AppPermissionManager;
+import com.permissionnanny.data.RecurringRequestDB;
 import dagger.Component;
-import io.snapdb.SnapDB;
 
 import javax.inject.Singleton;
 
@@ -16,11 +15,9 @@ import javax.inject.Singleton;
 public interface AppComponent {
     Application app();
 
-    SnapDB db();
-
-    AppDB db2();
-
     AppModule.Bus bus();
 
     AppPermissionManager appPermissionManager();
+
+    RecurringRequestDB recurringRequestDB();
 }

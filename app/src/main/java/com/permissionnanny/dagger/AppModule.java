@@ -5,7 +5,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 import com.litl.leveldb.DB;
 import com.permissionnanny.App;
-import com.permissionnanny.data.AppDB;
+import com.permissionnanny.data.AppPermissionDB;
+import com.permissionnanny.data.RecurringRequestDB;
 import dagger.Module;
 import dagger.Provides;
 import io.snapdb.SnapDB;
@@ -41,8 +42,7 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
-    Kryo providesKryo() {
+    Kryo provideKryo() {
         Kryo kryo = new Kryo();
         kryo.setDefaultSerializer(CompatibleFieldSerializer.class);
         kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
@@ -51,18 +51,20 @@ public class AppModule {
 
     @Provides
     @Singleton
-    SnapDB provideMySnappy(Application app, Kryo kryo) {
-        SnapDB db = new SnapDB(new DB(new File(app.getFilesDir(), "ongoingRequests")), kryo);
+    AppPermissionDB providePermissionUsageDatabase(Application app, Kryo kryo) {
+        DB leveldb = new DB(new File(app.getFilesDir(), "clientPermissionUsage"));
+        SnapDB snapdb = new SnapDB(leveldb, kryo);
+        AppPermissionDB db = new AppPermissionDB(snapdb);
         db.open();
         return db;
     }
 
     @Provides
     @Singleton
-    AppDB providePermissionUsageDatabase(Application app, Kryo kryo) {
-        DB leveldb = new DB(new File(app.getFilesDir(), "clientPermissionUsage"));
+    RecurringRequestDB provideOngoingRequestsDatabase(Application app, Kryo kryo) {
+        DB leveldb = new DB(new File(app.getFilesDir(), "ongoingRequests"));
         SnapDB snapdb = new SnapDB(leveldb, kryo);
-        AppDB db = new AppDB(snapdb);
+        RecurringRequestDB db = new RecurringRequestDB(snapdb);
         db.open();
         return db;
     }
