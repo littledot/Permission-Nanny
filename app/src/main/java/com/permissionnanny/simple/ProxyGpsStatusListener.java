@@ -16,7 +16,7 @@ import com.permissionnanny.lib.request.simple.GpsStatusEvent;
 public class ProxyGpsStatusListener extends ProxyListener implements Listener {
 
     public ProxyGpsStatusListener(ProxyService service, String clientAddr) {
-        super(service, clientAddr);
+        super(service, clientAddr, Nanny.GPS_STATUS_SERVICE);
     }
 
     @Override
@@ -36,6 +36,6 @@ public class ProxyGpsStatusListener extends ProxyListener implements Listener {
         Bundle entity = new Bundle();
         entity.putInt(GpsStatusEvent.EVENT, event);
 
-        sendBroadcast(okResponse(Nanny.GPS_STATUS_SERVICE, entity));
+        sendBroadcast(okResponse(entity));
     }
 }

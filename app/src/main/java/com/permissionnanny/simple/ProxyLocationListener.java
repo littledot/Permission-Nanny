@@ -14,7 +14,7 @@ import com.permissionnanny.lib.request.simple.LocationEvent;
 public class ProxyLocationListener extends ProxyListener implements LocationListener {
 
     public ProxyLocationListener(ProxyService service, String clientAddr) {
-        super(service, clientAddr);
+        super(service, clientAddr, Nanny.LOCATION_SERVICE);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putString(Nanny.TYPE, LocationEvent.ON_LOCATION_CHANGED);
         entity.putParcelable(LocationEvent.LOCATION, location);
 
-        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(entity));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putString(Nanny.TYPE, LocationEvent.ON_PROVIDER_DISABLED);
         entity.putString(LocationEvent.PROVIDER, provider);
 
-        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(entity));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putString(Nanny.TYPE, LocationEvent.ON_PROVIDER_ENABLED);
         entity.putString(LocationEvent.PROVIDER, provider);
 
-        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(entity));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putInt(LocationEvent.STATUS, status);
         entity.putBundle(LocationEvent.EXTRAS, extras);
 
-        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(entity));
     }
 
     public static class Api1 extends ProxyLocationListener {
@@ -77,7 +77,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
             try {
                 lm.requestLocationUpdates(request.long0, request.float0, request.criteria0, this, null);
             } catch (Throwable e) {
-                sendBroadcast(badRequest(Nanny.LOCATION_SERVICE, e));
+                sendBroadcast(badRequestResponse(e));
             }
         }
     }

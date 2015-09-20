@@ -16,7 +16,7 @@ import com.permissionnanny.lib.request.simple.NmeaEvent;
 public class ProxyNmeaListener extends ProxyListener implements NmeaListener {
 
     public ProxyNmeaListener(ProxyService service, String clientAddr) {
-        super(service, clientAddr);
+        super(service, clientAddr, Nanny.NMEA_SERVICE);
     }
 
     @Override
@@ -37,6 +37,6 @@ public class ProxyNmeaListener extends ProxyListener implements NmeaListener {
         entity.putLong(NmeaEvent.TIMESTAMP, timestamp);
         entity.putString(NmeaEvent.NMEA, nmea);
 
-        sendBroadcast(okResponse(Nanny.NMEA_SERVICE, entity));
+        sendBroadcast(okResponse(entity));
     }
 }
