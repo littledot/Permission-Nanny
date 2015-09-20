@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.BundleUtil;
-import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import timber.log.Timber;
 
@@ -29,7 +28,7 @@ public class ProxyListener {
         mLastAck = time;
     }
 
-    protected void sendBroadcast(Intent intent) {
+    protected void sendBroadcast(Bundle response) {
         if (mLastAck - mLastBroadcast > 5000) { // no recent ack? assume client died
             Timber.wtf("Dead client. Removing " + mClientAddr);
             unregister(mService);
@@ -37,22 +36,23 @@ public class ProxyListener {
             return;
         }
         mLastBroadcast = System.currentTimeMillis();
-        mService.sendBroadcast(intent);
+        mService.sendBroadcast(new Intent(mClientAddr).putExtras(response));
+        Timber.wtf(BundleUtil.toString(response));
     }
 
     public void register(Context context, RequestParams request) {}
 
     public void unregister(Context context) {}
 
-    protected Intent newResponseIntent(String server, Bundle entity) {
-        entity.putString(Nanny.ACK_SERVER_ADDRESS, mService.getAckAddress());
+    protected Bundle newResponseIntent(String server, Bundle entity) {
+        return ResponseFactory.newAllowResponse(server)
+                .body(entity)
+                .ackAddress(mService.getAckAddress())
+                .build();
+    }
 
-        Intent response = new Intent(mClientAddr)
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                .putExtra(Nanny.SERVER, server)
-                .putExtra(Nanny.STATUS_CODE, Nanny.SC_OK)
-                .putExtra(Nanny.ENTITY_BODY, entity);
-        Timber.wtf(BundleUtil.toString(response));
-        return response;
+    protected Bundle badRequest(String server, Throwable error) {
+        return ResponseFactory.newBadRequestResponse(server, error)
+                .build();
     }
 }

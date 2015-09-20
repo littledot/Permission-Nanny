@@ -19,8 +19,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
 
     @Override
     public void register(Context context, RequestParams request) {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(request.long0, request.float0, request.criteria0, this, null);
+        throw new UnsupportedOperationException("Must override.");
     }
 
     @Override
@@ -65,5 +64,21 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putBundle(LocationEvent.EXTRAS, extras);
 
         sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
+    }
+
+    public static class Api1 extends ProxyLocationListener {
+        public Api1(ProxyService service, String clientAddr) {
+            super(service, clientAddr);
+        }
+
+        @Override
+        public void register(Context context, RequestParams request) {
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            try {
+                lm.requestLocationUpdates(request.long0, request.float0, request.criteria0, this, null);
+            } catch (Throwable e) {
+                sendBroadcast(badRequest(Nanny.LOCATION_SERVICE, e));
+            }
+        }
     }
 }

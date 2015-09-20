@@ -83,37 +83,25 @@ public class ProxyService extends BaseService {
         Timber.wtf("restored " + count + " clients");
     }
 
-    private void handleRequest(String clientId, RequestParams requestParams) {
-        Timber.wtf("handling client=" + clientId + " req=" + requestParams);
+    private void handleRequest(String clientAddr, RequestParams requestParams) {
+        Timber.wtf("handling client=" + clientAddr + " req=" + requestParams);
+        ProxyListener listener;
         switch (requestParams.opCode) {
         case LocationRequest.ADD_GPS_STATUS_LISTENER:
-            handleAddGpsStatusListenerRequest(requestParams, clientId);
+            listener = new ProxyGpsStatusListener(this, clientAddr);
             break;
         case LocationRequest.ADD_NMEA_LISTENER:
-            handleAddNmeaListener(requestParams, clientId);
+            listener = new ProxyNmeaListener(this, clientAddr);
             break;
         case LocationRequest.REQUEST_LOCATION_UPDATES1:
-            handleRequestLocationUpdates1(requestParams, clientId);
+            listener = new ProxyLocationListener.Api1(this, clientAddr);
             break;
+        default:
+            throw new UnsupportedOperationException("Unsupported opcode " + requestParams.opCode);
         }
-    }
 
-    private void handleAddGpsStatusListenerRequest(RequestParams request, String clientAddr) {
-        ProxyGpsStatusListener gpsStatusListener = new ProxyGpsStatusListener(this, clientAddr);
-        mClients.put(clientAddr, new ProxyClient(clientAddr, request, gpsStatusListener));
-        gpsStatusListener.register(this, request);
-    }
-
-    private void handleAddNmeaListener(RequestParams request, String clientAddr) {
-        ProxyNmeaListener nmeaListener = new ProxyNmeaListener(this, clientAddr);
-        mClients.put(clientAddr, new ProxyClient(clientAddr, request, nmeaListener));
-        nmeaListener.register(this, request);
-    }
-
-    private void handleRequestLocationUpdates1(RequestParams request, String clientAddr) {
-        ProxyLocationListener locationListener = new ProxyLocationListener(this, clientAddr);
-        mClients.put(clientAddr, new ProxyClient(clientAddr, request, locationListener));
-        locationListener.register(this, request);
+        mClients.put(clientAddr, new ProxyClient(clientAddr, requestParams, listener));
+        listener.register(this, requestParams);
     }
 
     public void removeProxyClient(String clientId) {

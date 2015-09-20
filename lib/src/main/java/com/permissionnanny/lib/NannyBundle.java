@@ -74,6 +74,11 @@ public class NannyBundle {
         return value;
     }
 
+    public String getAckAddress() {
+        Bundle entity = getEntityBody();
+        return entity != null ? entity.getString(Nanny.ACK_SERVER_ADDRESS) : null;
+    }
+
     public static class Builder {
         public String mProtocolVersion = Nanny.PPP_0_1;
         public int mStatusCode;
@@ -86,6 +91,7 @@ public class NannyBundle {
         public PendingIntent mSender;
         public RequestParams mParams;
         public String mRationale;
+        public String mAckAddress;
 
         public Builder statusCode(int statusCode) {
             mStatusCode = statusCode;
@@ -132,6 +138,11 @@ public class NannyBundle {
             return this;
         }
 
+        public Builder ackAddress(String ackAddress) {
+            mAckAddress = ackAddress;
+            return this;
+        }
+
         public Bundle build() {
             if (mBody == null) {
                 mBody = new Bundle();
@@ -145,6 +156,9 @@ public class NannyBundle {
             if (mRationale != null) {
                 mBody.putString(Nanny.REQUEST_REASON, mRationale);
                 mBody.putString(Nanny.REQUEST_RATIONALE, mRationale);
+            }
+            if (mAckAddress != null) {
+                mBody.putString(Nanny.ACK_SERVER_ADDRESS, mAckAddress);
             }
 
             Bundle ppp = new Bundle();
