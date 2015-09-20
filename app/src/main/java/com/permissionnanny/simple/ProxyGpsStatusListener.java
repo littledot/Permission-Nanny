@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.permissionnanny.ProxyListener;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.GpsStatusEvent;
 
 /**
@@ -19,7 +20,13 @@ public class ProxyGpsStatusListener extends ProxyListener implements Listener {
     }
 
     @Override
-    protected void unregister(Context context) {
+    public void register(Context context, RequestParams request) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        lm.addGpsStatusListener(this);
+    }
+
+    @Override
+    public void unregister(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         lm.removeGpsStatusListener(this);
     }

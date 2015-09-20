@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.permissionnanny.ProxyListener;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationEvent;
 
 public class ProxyLocationListener extends ProxyListener implements LocationListener {
@@ -17,7 +18,13 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
     }
 
     @Override
-    protected void unregister(Context context) {
+    public void register(Context context, RequestParams request) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        lm.requestLocationUpdates(request.long0, request.float0, request.criteria0, this, null);
+    }
+
+    @Override
+    public void unregister(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         lm.removeUpdates(this);
     }

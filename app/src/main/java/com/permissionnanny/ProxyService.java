@@ -55,7 +55,7 @@ public class ProxyService extends BaseService {
         Timber.wtf("Server started with args: " + BundleUtil.toString(intent));
         String clientId = intent.getStringExtra(CLIENT_ADDR);
         RequestParams requestParams = intent.getParcelableExtra(REQUEST_PARAMS);
-        save(clientId, requestParams);
+        cacheRequest(clientId, requestParams);
         handleRequest(clientId, requestParams);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -66,7 +66,7 @@ public class ProxyService extends BaseService {
         unregisterReceiver(mAckReceiver);
     }
 
-    private void save(String clientId, RequestParams request) {
+    private void cacheRequest(String clientId, RequestParams request) {
         mDB.putRecurringRequest(clientId, request);
     }
 
@@ -101,20 +101,19 @@ public class ProxyService extends BaseService {
     private void handleAddGpsStatusListenerRequest(RequestParams request, String clientAddr) {
         ProxyGpsStatusListener gpsStatusListener = new ProxyGpsStatusListener(this, clientAddr);
         mClients.put(clientAddr, new ProxyClient(clientAddr, request, gpsStatusListener));
-        mLocationManager.addGpsStatusListener(gpsStatusListener);
+        gpsStatusListener.register(this, request);
     }
 
     private void handleAddNmeaListener(RequestParams request, String clientAddr) {
         ProxyNmeaListener nmeaListener = new ProxyNmeaListener(this, clientAddr);
         mClients.put(clientAddr, new ProxyClient(clientAddr, request, nmeaListener));
-        mLocationManager.addNmeaListener(nmeaListener);
+        nmeaListener.register(this, request);
     }
 
     private void handleRequestLocationUpdates1(RequestParams request, String clientAddr) {
         ProxyLocationListener locationListener = new ProxyLocationListener(this, clientAddr);
         mClients.put(clientAddr, new ProxyClient(clientAddr, request, locationListener));
-        mLocationManager.requestLocationUpdates(request.long0, request.float0, request.criteria0, locationListener,
-                null);
+        locationListener.register(this, request);
     }
 
     public void removeProxyClient(String clientId) {

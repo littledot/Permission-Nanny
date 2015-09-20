@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.request.RequestParams;
 import timber.log.Timber;
 
 /**
@@ -39,7 +40,9 @@ public class ProxyListener {
         mService.sendBroadcast(intent);
     }
 
-    protected void unregister(Context context) {}
+    public void register(Context context, RequestParams request) {}
+
+    public void unregister(Context context) {}
 
     protected Intent newResponseIntent(String server, Bundle entity) {
         entity.putString(Nanny.ACK_SERVER_ADDRESS, mService.getAckAddress());
