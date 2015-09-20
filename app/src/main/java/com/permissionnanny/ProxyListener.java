@@ -44,7 +44,7 @@ public class ProxyListener {
 
     public void unregister(Context context) {}
 
-    protected Bundle newResponseIntent(String server, Bundle entity) {
+    protected Bundle okResponse(String server, Bundle entity) {
         return ResponseFactory.newAllowResponse(server)
                 .body(entity)
                 .ackAddress(mService.getAckAddress())

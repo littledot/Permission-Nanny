@@ -37,6 +37,6 @@ public class ProxyNmeaListener extends ProxyListener implements NmeaListener {
         entity.putLong(NmeaEvent.TIMESTAMP, timestamp);
         entity.putString(NmeaEvent.NMEA, nmea);
 
-        sendBroadcast(newResponseIntent(Nanny.NMEA_SERVICE, entity));
+        sendBroadcast(okResponse(Nanny.NMEA_SERVICE, entity));
     }
 }

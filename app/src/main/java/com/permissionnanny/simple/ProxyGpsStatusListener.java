@@ -36,6 +36,6 @@ public class ProxyGpsStatusListener extends ProxyListener implements Listener {
         Bundle entity = new Bundle();
         entity.putInt(GpsStatusEvent.EVENT, event);
 
-        sendBroadcast(newResponseIntent(Nanny.GPS_STATUS_SERVICE, entity));
+        sendBroadcast(okResponse(Nanny.GPS_STATUS_SERVICE, entity));
     }
 }

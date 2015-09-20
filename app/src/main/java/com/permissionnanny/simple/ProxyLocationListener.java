@@ -34,7 +34,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putString(Nanny.TYPE, LocationEvent.ON_LOCATION_CHANGED);
         entity.putParcelable(LocationEvent.LOCATION, location);
 
-        sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putString(Nanny.TYPE, LocationEvent.ON_PROVIDER_DISABLED);
         entity.putString(LocationEvent.PROVIDER, provider);
 
-        sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putString(Nanny.TYPE, LocationEvent.ON_PROVIDER_ENABLED);
         entity.putString(LocationEvent.PROVIDER, provider);
 
-        sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         entity.putInt(LocationEvent.STATUS, status);
         entity.putBundle(LocationEvent.EXTRAS, extras);
 
-        sendBroadcast(newResponseIntent(Nanny.LOCATION_SERVICE, entity));
+        sendBroadcast(okResponse(Nanny.LOCATION_SERVICE, entity));
     }
 
     public static class Api1 extends ProxyLocationListener {
