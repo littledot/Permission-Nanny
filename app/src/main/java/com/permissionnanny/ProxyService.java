@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.LocationManager;
+import android.os.SystemClock;
 import android.support.v4.util.ArrayMap;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.data.RecurringRequestDB;
@@ -123,7 +124,7 @@ public class ProxyService extends BaseService {
             String clientAddr = intent.getStringExtra(Nanny.CLIENT_ADDRESS);
             ProxyClient client = mClients.get(clientAddr);
             if (client != null) {
-                client.mListener.updateAck(System.currentTimeMillis());
+                client.mListener.updateAck(SystemClock.elapsedRealtime());
             }
         }
     }

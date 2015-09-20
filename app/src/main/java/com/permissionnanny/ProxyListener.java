@@ -3,6 +3,7 @@ package com.permissionnanny;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyBundle;
@@ -27,6 +28,7 @@ public class ProxyListener {
         mService = service;
         mClientAddr = clientAddr;
         mServer = server;
+        mLastBroadcast = mLastAck = SystemClock.elapsedRealtime();
     }
 
     public void updateAck(long time) {
@@ -34,7 +36,7 @@ public class ProxyListener {
     }
 
     protected void sendBroadcast(Bundle response) {
-        if (mLastAck - mLastBroadcast > 5000) { // no recent ack? assume client died
+        if (mLastBroadcast - mLastAck > 5000) { // no recent ack? assume client died
             Timber.wtf("Dead client. Removing " + mClientAddr);
             unregister(mService);
             mService.removeProxyClient(mClientAddr);
@@ -47,7 +49,7 @@ public class ProxyListener {
             mService.sendBroadcast(new Intent(mClientAddr).putExtras(timeoutResponse));
             return;
         }
-        mLastBroadcast = System.currentTimeMillis();
+        mLastBroadcast = SystemClock.elapsedRealtime();
         mService.sendBroadcast(new Intent(mClientAddr).putExtras(response));
         Timber.wtf(BundleUtil.toString(response));
     }
