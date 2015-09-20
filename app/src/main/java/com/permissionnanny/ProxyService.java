@@ -4,11 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.LocationManager;
 import android.os.SystemClock;
 import android.support.v4.util.ArrayMap;
 import com.permissionnanny.common.BundleUtil;
-import com.permissionnanny.data.RecurringRequestDB;
+import com.permissionnanny.data.OngoingRequestDB;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationRequest;
@@ -32,16 +31,14 @@ public class ProxyService extends BaseService {
 
     private Map<String, ProxyClient> mClients = new ArrayMap<>();
     private AckReceiver mAckReceiver = new AckReceiver();
-    private LocationManager mLocationManager;
     private String mAckServerAddr;
 
-    @Inject RecurringRequestDB mDB;
+    @Inject OngoingRequestDB mDB;
 
     @Override
     public void onCreate() {
         super.onCreate();
         getComponent(this).inject(this);
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mAckServerAddr = Long.toString(new SecureRandom().nextLong());
         registerReceiver(mAckReceiver, new IntentFilter(mAckServerAddr));
         Timber.wtf("init service");
@@ -68,12 +65,12 @@ public class ProxyService extends BaseService {
     }
 
     private void cacheRequest(String clientId, RequestParams request) {
-        mDB.putRecurringRequest(clientId, request);
+        mDB.putOngoingRequest(clientId, request);
     }
 
     private void restoreState() {
         int count = 0;
-        CryIterator<? extends RequestParams> iterator = mDB.getRecurringRequests();
+        CryIterator<? extends RequestParams> iterator = mDB.getOngoingRequests();
         while (iterator.moveToNext()) {
             count++;
             String client = iterator.key();
@@ -107,7 +104,7 @@ public class ProxyService extends BaseService {
 
     public void removeProxyClient(String clientId) {
         mClients.remove(clientId);
-        mDB.delRecurringRequest(clientId);
+        mDB.delOngoingRequest(clientId);
         if (mClients.isEmpty()) { // no more clients? kill service
             stopSelf();
         }

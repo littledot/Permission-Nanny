@@ -6,11 +6,11 @@ import io.snapdb.SnapDB;
 
 /**
  */
-public class RecurringRequestDB {
+public class OngoingRequestDB {
 
     private SnapDB mDB;
 
-    public RecurringRequestDB(SnapDB db) {
+    public OngoingRequestDB(SnapDB db) {
         mDB = db;
     }
 
@@ -18,15 +18,15 @@ public class RecurringRequestDB {
         mDB.open();
     }
 
-    public void putRecurringRequest(String clientId, RequestParams request) {
+    public void putOngoingRequest(String clientId, RequestParams request) {
         mDB.put(clientId, request);
     }
 
-    public CryIterator<? extends RequestParams> getRecurringRequests() {
+    public CryIterator<? extends RequestParams> getOngoingRequests() {
         return mDB.iterator(RequestParams.class);
     }
 
-    public void delRecurringRequest(String clientId) {
+    public void delOngoingRequest(String clientId) {
         mDB.del(clientId);
     }
 }

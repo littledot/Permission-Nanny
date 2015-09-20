@@ -6,7 +6,7 @@ import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 import com.litl.leveldb.DB;
 import com.permissionnanny.App;
 import com.permissionnanny.data.AppPermissionDB;
-import com.permissionnanny.data.RecurringRequestDB;
+import com.permissionnanny.data.OngoingRequestDB;
 import dagger.Module;
 import dagger.Provides;
 import io.snapdb.SnapDB;
@@ -61,10 +61,10 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RecurringRequestDB provideOngoingRequestsDatabase(Application app, Kryo kryo) {
+    OngoingRequestDB provideOngoingRequestsDatabase(Application app, Kryo kryo) {
         DB leveldb = new DB(new File(app.getFilesDir(), "ongoingRequests"));
         SnapDB snapdb = new SnapDB(leveldb, kryo);
-        RecurringRequestDB db = new RecurringRequestDB(snapdb);
+        OngoingRequestDB db = new OngoingRequestDB(snapdb);
         db.open();
         return db;
     }
