@@ -21,12 +21,14 @@ public class MainActivity extends BaseActivity {
     public static String FACTORY_ID = "factoryId";
 
     public static String[] mLabels = new String[]{
+            "Permission Manifest Demo",
             "ContentRequestDemo",
             "LocationRequestDemo",
             "TelephonyRequestDemo",
             "WifiRequestDemo",
     };
     public static SimpleRequestFactory[] mFactories = new SimpleRequestFactory[]{
+            null,
             null,
             new LocationRequestFactory(),
             new TelephonyRequestFactory(),
@@ -64,8 +66,14 @@ public class MainActivity extends BaseActivity {
             holder.itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, DemoActivity.class)
-                            .putExtra(FACTORY_ID, position));
+                    switch (position) {
+                    case 0:
+                        startActivity(new Intent(MainActivity.this, DemoPermissionManifestActivity.class));
+                        break;
+                    default:
+                        startActivity(new Intent(MainActivity.this, DemoActivity.class)
+                                .putExtra(FACTORY_ID, position));
+                    }
                 }
             });
         }

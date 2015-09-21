@@ -71,29 +71,15 @@ public class AppPermissionManager {
 
     public void registerApp(String appPackage, ArrayList<String> permissions) {
         Map<String, AppPermission> oldConfigs = mConfigs.get(appPackage);
-        Map<String, AppPermission> newConfigs = new ArrayMap<>();
+        Map<String, AppPermission> newConfigs = oldConfigs == null ? new ArrayMap<String, AppPermission>() : oldConfigs;
 
         for (String permission : permissions) {
-            if (oldConfigs != null) { // Existing app? Look for existing configs
-                AppPermission oldConfig = oldConfigs.get(permission);
-                if (oldConfig != null) { // Permission config exists? Retain it
-                    Timber.wtf("Existing config=" + oldConfig);
-                    newConfigs.put(permission, oldConfig);
-                    oldConfigs.remove(permission);
-                    continue;
-                }
-            }
-            // New permission config? Create new entry
-            AppPermission newConfig = new AppPermission(appPackage, permission, AppPermission.ALWAYS_ASK);
-            newConfigs.put(permission, newConfig);
-            mDB.putConfig(newConfig);
-            Timber.wtf("New config=" + newConfig);
-        }
-
-        if (oldConfigs != null) { // Delete permission configs that are no longer in use
-            for (AppPermission oldConfig : oldConfigs.values()) {
-                mDB.delConfig(oldConfig);
-                Timber.wtf("Delete config=" + oldConfig);
+            AppPermission config = newConfigs.get(permission);
+            if (config == null) { // New permission config? Create new entry
+                AppPermission newConfig = new AppPermission(appPackage, permission, AppPermission.ALWAYS_ASK);
+                newConfigs.put(permission, newConfig);
+                mDB.putConfig(newConfig);
+                Timber.wtf("New config=" + newConfig);
             }
         }
 
@@ -164,32 +150,32 @@ public class AppPermissionManager {
 
     private String contentPermissionMap(ContentOperation operation, RequestParams request) {
         switch (request.opCode) {
-            case ContentRequest.SELECT:
-                switch (operation.mContentType) {
-                    case ContentOperation.CONTENT_CALENDAR:
-                        return Manifest.permission.READ_CALENDAR;
-                    case ContentOperation.CONTENT_CONTACTS:
-                        return Manifest.permission.READ_CONTACTS;
-                    case ContentOperation.CONTENT_EXTERNAL_STORAGE:
-                        return Manifest.permission.READ_EXTERNAL_STORAGE;
-                    case ContentOperation.CONTENT_SMS:
-                        return Manifest.permission.READ_SMS;
-                }
-                break;
-            case ContentRequest.INSERT:
-            case ContentRequest.UPDATE:
-            case ContentRequest.DELETE:
-                switch (operation.mContentType) {
-                    case ContentOperation.CONTENT_CALENDAR:
-                        return Manifest.permission.WRITE_CALENDAR;
-                    case ContentOperation.CONTENT_CONTACTS:
-                        return Manifest.permission.WRITE_CONTACTS;
-                    case ContentOperation.CONTENT_EXTERNAL_STORAGE:
-                        return Manifest.permission.WRITE_EXTERNAL_STORAGE;
-                    case ContentOperation.CONTENT_SMS:
-                        return Manifest.permission.WRITE_SMS;
-                }
-                break;
+        case ContentRequest.SELECT:
+            switch (operation.mContentType) {
+            case ContentOperation.CONTENT_CALENDAR:
+                return Manifest.permission.READ_CALENDAR;
+            case ContentOperation.CONTENT_CONTACTS:
+                return Manifest.permission.READ_CONTACTS;
+            case ContentOperation.CONTENT_EXTERNAL_STORAGE:
+                return Manifest.permission.READ_EXTERNAL_STORAGE;
+            case ContentOperation.CONTENT_SMS:
+                return Manifest.permission.READ_SMS;
+            }
+            break;
+        case ContentRequest.INSERT:
+        case ContentRequest.UPDATE:
+        case ContentRequest.DELETE:
+            switch (operation.mContentType) {
+            case ContentOperation.CONTENT_CALENDAR:
+                return Manifest.permission.WRITE_CALENDAR;
+            case ContentOperation.CONTENT_CONTACTS:
+                return Manifest.permission.WRITE_CONTACTS;
+            case ContentOperation.CONTENT_EXTERNAL_STORAGE:
+                return Manifest.permission.WRITE_EXTERNAL_STORAGE;
+            case ContentOperation.CONTENT_SMS:
+                return Manifest.permission.WRITE_SMS;
+            }
+            break;
         }
         return null;
     }

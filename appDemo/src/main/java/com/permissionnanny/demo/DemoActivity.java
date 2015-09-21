@@ -27,10 +27,10 @@ public class DemoActivity extends BaseActivity {
         Intent src = getIntent();
         int factoryId = src.getIntExtra(MainActivity.FACTORY_ID, -1);
         switch (factoryId) {
-        case 0:
+        case 1:
             mAdapter = new DemoContentRequestAdapter(new DemoContentRequestFactory());
             break;
-        case 1:
+        case 2:
             mAdapter = new LocationDemoAdapter();
             break;
         default:

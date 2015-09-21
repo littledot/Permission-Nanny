@@ -19,6 +19,8 @@
 
         <activity android:name=".DemoActivity"/>
 
+        <activity android:name=".DemoPermissionManifestActivity"/>
+
         <receiver android:name=".DemoPermissionManifestReceiver">
             <intent-filter>
                 <action android:name="com.permissionnanny.GET_PERMISSION_MANIFEST"/>

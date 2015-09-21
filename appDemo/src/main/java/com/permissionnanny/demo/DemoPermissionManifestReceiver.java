@@ -1,22 +1,25 @@
 package com.permissionnanny.demo;
 
-import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.manifest.PermissionManifestReceiver;
 
 /**
  *
  */
 public class DemoPermissionManifestReceiver extends PermissionManifestReceiver {
+    @Override
+    protected boolean validateIntent(Intent intent) throws NannyException {
+        return true;
+    }
 
     @Override
     protected void setupPermissionUsage(Context context) {
-        usesPermission(Manifest.permission.ACCESS_FINE_LOCATION);
-        usesPermission(Manifest.permission.READ_CONTACTS);
-        usesPermission(Manifest.permission.READ_PHONE_STATE);
-        usesPermission(Manifest.permission.READ_CALENDAR);
-        usesPermission(Manifest.permission.READ_SMS);
-        usesPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
-        usesPermission(Manifest.permission.WRITE_CALENDAR);
+        for (DemoPermissionManifestActivity.Value value : DemoPermissionManifestActivity.data) {
+            if (value.send) {
+                usesPermission(value.permissionName);
+            }
+        }
     }
 }
