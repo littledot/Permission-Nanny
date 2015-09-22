@@ -69,7 +69,7 @@ public class AppPermissionManager {
         }
     }
 
-    public void registerApp(String appPackage, ArrayList<String> permissions) {
+    public void readPermissionManifest(String appPackage, ArrayList<String> permissions) {
         Map<String, AppPermission> oldConfigs = mConfigs.get(appPackage);
         Map<String, AppPermission> newConfigs = oldConfigs == null ? new ArrayMap<String, AppPermission>() : oldConfigs;
 

@@ -59,7 +59,7 @@ public class ClientPermissionManifestReceiverTest {
 
         target.onReceive(context, intent);
 
-        verify(target.mAppManager).registerApp("com.3rd.party.app", manifest);
+        verify(target.mAppManager).readPermissionManifest("com.3rd.party.app", manifest);
         verify(context).sendBroadcast(responseCaptor.capture());
         assertThat(responseCaptor.getValue(), equalToIntent(AppTestUtil.new200Response("123")));
     }

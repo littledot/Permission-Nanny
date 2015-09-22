@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.getkeepsafe.dexcount'
 
@@ -13,6 +15,10 @@ android {
         versionCode project.versionCode
         versionName project.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(file('fabric.properties').newDataInputStream())
+        manifestPlaceholders = [ fabricApiKey: properties.getProperty("apiKey")]
     }
     signingConfigs {
         release {
@@ -59,6 +65,7 @@ dependencies {
 
     compile project(':common')
     compile project(':lib')
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.2@aar') { transitive = true; }
     compile project.dagger
     compile project.butterknife
     compile project.javaxAnnotation
@@ -78,7 +85,6 @@ dependencies {
     androidTestCompile project.junit
     androidTestCompile project.mockitoCore
     androidTestCompile project.dexmakerMockito
-//    androidTestCompile project.robolectric
     androidTestCompile project.runner
     androidTestCompile project.rules
     androidTestCompile project.espressoCore

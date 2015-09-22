@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import com.crashlytics.android.Crashlytics;
 import com.permissionnanny.common.StackTraceDebugTree;
 import com.permissionnanny.dagger.AppComponent;
 import com.permissionnanny.dagger.AppModule;
@@ -11,6 +12,7 @@ import com.permissionnanny.dagger.ContextComponent;
 import com.permissionnanny.dagger.ContextModule;
 import com.permissionnanny.dagger.DaggerAppComponent;
 import com.permissionnanny.dagger.DaggerContextComponent;
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
@@ -23,6 +25,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         PRNGFixes.apply();
         Timber.plant(new StackTraceDebugTree());
         IDENTITY = PendingIntent.getBroadcast(this, 0, new Intent(), 0);

@@ -48,7 +48,7 @@ public class ClientPermissionManifestReceiver extends BaseReceiver {
 
         String clientPackage = client.getIntentSender().getTargetPackage();
         Timber.wtf("client=" + clientPackage + " usage=" + Arrays.toString(permissionUsage.toArray()));
-        mAppManager.registerApp(clientPackage, permissionUsage);
+        mAppManager.readPermissionManifest(clientPackage, permissionUsage);
 
         okRequest(context, clientAddr);
     }
