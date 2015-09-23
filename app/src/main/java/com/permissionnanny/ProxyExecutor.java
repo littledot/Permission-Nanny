@@ -78,7 +78,7 @@ public class ProxyExecutor {
 
         NannyBundle.Builder response = ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE);
         response.mConnection = Nanny.CLOSE;
-        response.mBody = entity;
+        response.mEntity = entity;
         return response;
     }
 
@@ -95,15 +95,15 @@ public class ProxyExecutor {
                                                        RequestParams request,
                                                        String clientId) {
         if (operation.mFunction != null) { // one-shot request
-            Bundle response = new Bundle();
+            Bundle entity = new Bundle();
             try {
-                operation.mFunction.execute(mContext, request, response);
+                operation.mFunction.execute(mContext, request, entity);
             } catch (Throwable error) {
                 return ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error);
             }
             NannyBundle.Builder builder = ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE);
             builder.mConnection = Nanny.CLOSE;
-            builder.mBody = response;
+            builder.mEntity = entity;
             return builder;
         }
 

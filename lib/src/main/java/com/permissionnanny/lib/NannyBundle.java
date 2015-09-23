@@ -87,7 +87,7 @@ public class NannyBundle {
         public String mServer;
         public Throwable mError;
 
-        public Bundle mBody;
+        public Bundle mEntity;
         public PendingIntent mSender;
         public RequestParams mParams;
         public String mRationale;
@@ -118,8 +118,8 @@ public class NannyBundle {
             return this;
         }
 
-        public Builder body(Bundle body) {
-            mBody = body;
+        public Builder entity(Bundle body) {
+            mEntity = body;
             return this;
         }
 
@@ -144,21 +144,21 @@ public class NannyBundle {
         }
 
         public Bundle build() {
-            if (mBody == null) {
-                mBody = new Bundle();
+            if (mEntity == null) {
+                mEntity = new Bundle();
             }
             if (mSender != null) {
-                mBody.putParcelable(Nanny.SENDER_IDENTITY, mSender);
+                mEntity.putParcelable(Nanny.SENDER_IDENTITY, mSender);
             }
             if (mParams != null) {
-                mBody.putParcelable(Nanny.REQUEST_PARAMS, mParams);
+                mEntity.putParcelable(Nanny.REQUEST_PARAMS, mParams);
             }
             if (mRationale != null) {
-                mBody.putString(Nanny.REQUEST_REASON, mRationale);
-                mBody.putString(Nanny.REQUEST_RATIONALE, mRationale);
+                mEntity.putString(Nanny.REQUEST_REASON, mRationale);
+                mEntity.putString(Nanny.REQUEST_RATIONALE, mRationale);
             }
             if (mAckAddress != null) {
-                mBody.putString(Nanny.ACK_SERVER_ADDRESS, mAckAddress);
+                mEntity.putString(Nanny.ACK_SERVER_ADDRESS, mAckAddress);
             }
 
             Bundle ppp = new Bundle();
@@ -178,8 +178,8 @@ public class NannyBundle {
             if (mError != null) {
                 ppp.putSerializable(Nanny.ENTITY_ERROR, mError);
             }
-            if (!mBody.isEmpty()) {
-                ppp.putBundle(Nanny.ENTITY_BODY, mBody);
+            if (!mEntity.isEmpty()) {
+                ppp.putBundle(Nanny.ENTITY_BODY, mEntity);
             }
             return ppp;
         }

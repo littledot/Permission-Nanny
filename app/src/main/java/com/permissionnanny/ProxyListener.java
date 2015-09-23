@@ -60,7 +60,7 @@ public class ProxyListener {
 
     protected Bundle okResponse(Bundle entity) {
         return ResponseFactory.newAllowResponse(mServer)
-                .body(entity)
+                .entity(entity)
                 .ackAddress(mService.getAckAddress())
                 .build();
     }
