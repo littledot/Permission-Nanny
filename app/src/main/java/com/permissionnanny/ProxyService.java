@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.util.ArrayMap;
 import com.permissionnanny.common.BundleUtil;
@@ -53,8 +54,7 @@ public class ProxyService extends BaseService {
         Timber.wtf("Server started with args: " + BundleUtil.toString(intent));
         String clientId = intent.getStringExtra(CLIENT_ADDR);
         RequestParams requestParams = intent.getParcelableExtra(REQUEST_PARAMS);
-        cacheRequest(clientId, requestParams);
-        handleRequest(clientId, requestParams);
+        handleRequest(clientId, requestParams, true);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -64,10 +64,6 @@ public class ProxyService extends BaseService {
         unregisterReceiver(mAckReceiver);
     }
 
-    private void cacheRequest(String clientId, RequestParams request) {
-        mDB.putOngoingRequest(clientId, request);
-    }
-
     private void restoreState() {
         int count = 0;
         CryIterator<? extends RequestParams> iterator = mDB.getOngoingRequests();
@@ -75,13 +71,18 @@ public class ProxyService extends BaseService {
             count++;
             String client = iterator.key();
             RequestParams params = iterator.val();
-            handleRequest(client, params);
+            handleRequest(client, params, false);
         }
         iterator.close();
         Timber.wtf("restored " + count + " clients");
     }
 
-    private void handleRequest(String clientAddr, RequestParams requestParams) {
+    /**
+     * @param clientAddr    Client address
+     * @param requestParams Client request
+     * @param cacheRequest  Flag that controls caching request to disk
+     */
+    private void handleRequest(String clientAddr, RequestParams requestParams, boolean cacheRequest) {
         Timber.wtf("handling client=" + clientAddr + " req=" + requestParams);
         ProxyListener listener;
         switch (requestParams.opCode) {
@@ -98,8 +99,31 @@ public class ProxyService extends BaseService {
             throw new UnsupportedOperationException("Unsupported opcode " + requestParams.opCode);
         }
 
+        Bundle response = startRequest(clientAddr, requestParams, listener, cacheRequest);
+        Intent intent = new Intent(clientAddr).putExtras(response);
+        sendBroadcast(intent);
+    }
+
+    /**
+     * @param clientAddr    Client address
+     * @param requestParams Client request
+     * @param listener
+     * @param cacheRequest  {@code true} to cache request to disk after registration succeeds
+     * @return Response bundle to return to the client
+     */
+    private Bundle startRequest(String clientAddr, RequestParams requestParams, ProxyListener listener, boolean cacheRequest) {
+        try {
+            listener.register(this, requestParams);
+        } catch (Throwable error) {
+            return ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
+        }
+
+        // Good request? Cache request to memory and disk
         mClients.put(clientAddr, new ProxyClient(clientAddr, requestParams, listener));
-        listener.register(this, requestParams);
+        if (cacheRequest) {
+            mDB.putOngoingRequest(clientAddr, requestParams);
+        }
+        return ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).build();
     }
 
     public void removeProxyClient(String clientId) {
