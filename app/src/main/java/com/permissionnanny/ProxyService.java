@@ -13,8 +13,9 @@ import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationRequest;
 import com.permissionnanny.simple.ProxyGpsStatusListener;
-import com.permissionnanny.simple.ProxyLocationListener;
+import com.permissionnanny.simple.RequestLocationUpdatesListener;
 import com.permissionnanny.simple.ProxyNmeaListener;
+import com.permissionnanny.simple.RequestSingleUpdateListener;
 import io.snapdb.CryIterator;
 import timber.log.Timber;
 
@@ -93,7 +94,16 @@ public class ProxyService extends BaseService {
             listener = new ProxyNmeaListener(this, clientAddr);
             break;
         case LocationRequest.REQUEST_LOCATION_UPDATES1:
-            listener = new ProxyLocationListener.Api1(this, clientAddr);
+            listener = new RequestLocationUpdatesListener.Api1(this, clientAddr);
+            break;
+        case LocationRequest.REQUEST_LOCATION_UPDATES2:
+            listener = new RequestLocationUpdatesListener.Api2(this, clientAddr);
+            break;
+        case LocationRequest.REQUEST_SINGLE_UPDATE:
+            listener = new RequestSingleUpdateListener.Api(this, clientAddr);
+            break;
+        case LocationRequest.REQUEST_SINGLE_UPDATE1:
+            listener = new RequestSingleUpdateListener.Api1(this, clientAddr);
             break;
         default:
             throw new UnsupportedOperationException("Unsupported opcode " + requestParams.opCode);
@@ -126,9 +136,9 @@ public class ProxyService extends BaseService {
         return ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).build();
     }
 
-    public void removeProxyClient(String clientId) {
-        mClients.remove(clientId);
-        mDB.delOngoingRequest(clientId);
+    public void removeProxyClient(String clientAddr) {
+        mClients.remove(clientAddr);
+        mDB.delOngoingRequest(clientAddr);
         if (mClients.isEmpty()) { // no more clients? kill service
             stopSelf();
         }

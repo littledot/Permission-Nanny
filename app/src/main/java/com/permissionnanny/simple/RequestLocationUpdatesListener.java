@@ -1,19 +1,22 @@
 package com.permissionnanny.simple;
 
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import com.permissionnanny.ProxyListener;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationEvent;
+import com.permissionnanny.lib.request.simple.LocationRequest;
 
-public class ProxyLocationListener extends ProxyListener implements LocationListener {
+public class RequestLocationUpdatesListener extends ProxyListener implements LocationListener {
 
-    public ProxyLocationListener(ProxyService service, String clientAddr) {
+    public RequestLocationUpdatesListener(ProxyService service, String clientAddr) {
         super(service, clientAddr, Nanny.LOCATION_SERVICE);
     }
 
@@ -66,7 +69,10 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         sendBroadcast(okResponse(entity));
     }
 
-    public static class Api1 extends ProxyLocationListener {
+    /**
+     * {@link LocationRequest#requestLocationUpdates(long, float, Criteria, LocationListener, Looper)}
+     */
+    public static class Api1 extends RequestLocationUpdatesListener {
         public Api1(ProxyService service, String clientAddr) {
             super(service, clientAddr);
         }
@@ -74,11 +80,23 @@ public class ProxyLocationListener extends ProxyListener implements LocationList
         @Override
         public void register(Context context, RequestParams request) {
             LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            try {
-                lm.requestLocationUpdates(request.long0, request.float0, request.criteria0, this, null);
-            } catch (Throwable e) {
-                sendBroadcast(badRequestResponse(e));
-            }
+            lm.requestLocationUpdates(request.long0, request.float0, request.criteria0, this, null);
+        }
+    }
+
+    /**
+     * {@link LocationRequest#requestLocationUpdates(String, long, float, LocationListener)} and {@link
+     * LocationRequest#requestLocationUpdates(String, long, float, LocationListener, Looper)}
+     */
+    public static class Api2 extends RequestLocationUpdatesListener {
+        public Api2(ProxyService service, String clientAddr) {
+            super(service, clientAddr);
+        }
+
+        @Override
+        public void register(Context context, RequestParams request) {
+            LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            lm.requestLocationUpdates(request.string0, request.long0, request.float0, this, null);
         }
     }
 }

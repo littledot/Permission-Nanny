@@ -63,6 +63,10 @@ public class LocationDemoAdapter extends RecyclerView.Adapter<DemoViewHolder> {
                     @Override
                     public void onResponse(@NonNull Bundle results) {
                         mResults[position] = results;
+                        Throwable error = (Throwable) results.getSerializable(Nanny.ENTITY_ERROR);
+                        if (error != null) {
+                            mData[position] = error.getMessage();
+                        }
                         Bundle response = results.getBundle(Nanny.ENTITY_BODY);
                         if (response != null) {
                             mData[position] = BundleUtil.toString(response);
@@ -87,7 +91,7 @@ public class LocationDemoAdapter extends RecyclerView.Adapter<DemoViewHolder> {
             holder.tvResponse.setText(newData);
             holder.itemView.setBackgroundColor(0xFF00FF00);
         } else {
-            holder.tvResponse.setText("Denied");
+            holder.tvResponse.setText("Denied\n" + mData[position]);
             holder.itemView.setBackgroundColor(0xFFFF0000);
         }
     }

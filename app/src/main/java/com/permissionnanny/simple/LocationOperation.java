@@ -46,14 +46,6 @@ public class LocationOperation {
                     response.putParcelable(request.opCode, mgr.getLastKnownLocation(request.string0));
                 }
             }),
-            new SimpleOperation(LocationRequest.REMOVE_GPS_STATUS_LISTENER,
-                    null,
-                    PermissionInfo.PROTECTION_NORMAL,
-                    R.string.dialogTitle_locationRemoveGpsStatusListener, 3, null),
-            new SimpleOperation(LocationRequest.REMOVE_NMEA_LISTENER,
-                    null,
-                    PermissionInfo.PROTECTION_NORMAL,
-                    R.string.dialogTitle_locationRemoveNmeaListener, 5, null),
             new SimpleOperation(LocationRequest.REMOVE_PROXIMITY_ALERT,
                     null,
                     PermissionInfo.PROTECTION_NORMAL,
@@ -68,12 +60,9 @@ public class LocationOperation {
                     null,
                     PermissionInfo.PROTECTION_NORMAL,
                     R.string.dialogTitle_locationRemoveUpdates, 3, null),
-            new SimpleOperation(LocationRequest.REMOVE_UPDATES1,
-                    null,
-                    PermissionInfo.PROTECTION_NORMAL,
-                    R.string.dialogTitle_locationRemoveUpdates1, 1, null),
             new SimpleOperation(LocationRequest.REQUEST_LOCATION_UPDATES,
-                    Manifest.permission.ACCESS_COARSE_LOCATION, PermissionInfo.PROTECTION_DANGEROUS,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
                     R.string.dialogTitle_locationRequestLocationUpdates, 9, new ProxyFunction() {
                 @Override
                 public void execute(Context context, RequestParams request, Bundle response) {
@@ -83,8 +72,45 @@ public class LocationOperation {
                 }
             }),
             new SimpleOperation(LocationRequest.REQUEST_LOCATION_UPDATES1,
-                    Manifest.permission.ACCESS_COARSE_LOCATION, PermissionInfo.PROTECTION_DANGEROUS,
-                    R.string.dialogTitle_locationRequestLocationUpdates1, 9, null),
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
+                    R.string.dialogTitle_locationRequestLocationUpdates, 9, null),
+            new SimpleOperation(LocationRequest.REQUEST_LOCATION_UPDATES2,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
+                    R.string.dialogTitle_locationRequestLocationUpdates, 9, null),
+            new SimpleOperation(LocationRequest.REQUEST_LOCATION_UPDATES3,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
+                    R.string.dialogTitle_locationRequestLocationUpdates, 9, null),
+            new SimpleOperation(LocationRequest.REQUEST_SINGLE_UPDATE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
+                    R.string.dialogTitle_locationRequestLocationUpdates, 9, null),
+            new SimpleOperation(LocationRequest.REQUEST_SINGLE_UPDATE1,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
+                    R.string.dialogTitle_locationRequestLocationUpdates, 9, null),
+            new SimpleOperation(LocationRequest.REQUEST_SINGLE_UPDATE2,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
+                    R.string.dialogTitle_locationRequestLocationUpdates, 9, new ProxyFunction() {
+                @Override
+                public void execute(Context context, RequestParams request, Bundle response) {
+                    LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                    mgr.requestSingleUpdate(request.string0, request.pendingIntent0);
+                }
+            }),
+            new SimpleOperation(LocationRequest.REQUEST_SINGLE_UPDATE3,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    PermissionInfo.PROTECTION_DANGEROUS,
+                    R.string.dialogTitle_locationRequestLocationUpdates, 9, new ProxyFunction() {
+                @Override
+                public void execute(Context context, RequestParams request, Bundle response) {
+                    LocationManager mgr = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                    mgr.requestSingleUpdate(request.criteria0, request.pendingIntent0);
+                }
+            }),
     };
 
     public static SimpleOperation getOperation(String opCode) {

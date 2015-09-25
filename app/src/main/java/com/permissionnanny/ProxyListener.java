@@ -31,15 +31,14 @@ public class ProxyListener {
         mLastBroadcast = mLastAck = SystemClock.elapsedRealtime();
     }
 
-    public void updateAck(long time) {
-        mLastAck = time;
-    }
+    public void register(Context context, RequestParams request) {}
+
+    public void unregister(Context context) {}
 
     protected void sendBroadcast(Bundle response) {
         if (mLastBroadcast - mLastAck > 5000) { // no recent ack? assume client died
             Timber.wtf("Dead client. Removing " + mClientAddr);
-            unregister(mService);
-            mService.removeProxyClient(mClientAddr);
+            stop();
 
             Bundle timeoutResponse = new NannyBundle.Builder()
                     .statusCode(Nanny.SC_TIMEOUT)
@@ -54,19 +53,19 @@ public class ProxyListener {
         Timber.wtf(BundleUtil.toString(response));
     }
 
-    public void register(Context context, RequestParams request) {}
+    public void updateAck(long time) {
+        mLastAck = time;
+    }
 
-    public void unregister(Context context) {}
+    public void stop() {
+        unregister(mService);
+        mService.removeProxyClient(mClientAddr);
+    }
 
     protected Bundle okResponse(Bundle entity) {
         return ResponseFactory.newAllowResponse(mServer)
                 .entity(entity)
                 .ackAddress(mService.getAckAddress())
-                .build();
-    }
-
-    protected Bundle badRequestResponse(Throwable error) {
-        return ResponseFactory.newBadRequestResponse(mServer, error)
                 .build();
     }
 }

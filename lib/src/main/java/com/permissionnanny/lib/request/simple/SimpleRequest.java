@@ -1,6 +1,8 @@
 package com.permissionnanny.lib.request.simple;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.permissionnanny.lib.request.PermissionEvent;
@@ -38,5 +40,9 @@ public class SimpleRequest extends PermissionRequest {
     public void startRequest(@NonNull Context context, @Nullable String reason, @NonNull SimpleListener listener) {
         listener(listener);
         startRequest(context, reason);
+    }
+
+    protected static Handler newHandler(@Nullable Looper looper) {
+        return looper != null ? new Handler(looper) : new Handler();
     }
 }

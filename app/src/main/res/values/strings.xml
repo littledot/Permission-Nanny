@@ -73,9 +73,6 @@
     <string name="dialogTitle_locationRemoveNmeaListener">would like to stop receiving NMEA updates.</string>
     <string name="dialogTitle_locationRemoveProximityAlert">would like to remove an existing proximity alert.</string>
     <string name="dialogTitle_locationRemoveUpdates">would like to stop receiving updates about your location.</string>
-    <string name="dialogTitle_locationRemoveUpdates1">would like to stop receiving updates about your location.</string>
-    <string name="dialogTitle_locationRequestLocationUpdates">would like to receives updates about your
-        location.</string>
-    <string name="dialogTitle_locationRequestLocationUpdates1">would like to receives updates about your
+    <string name="dialogTitle_locationRequestLocationUpdates">would like to receive updates about your
         location.</string>
 </resources>

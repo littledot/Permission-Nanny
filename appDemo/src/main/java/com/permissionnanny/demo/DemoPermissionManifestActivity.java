@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DemoPermissionManifestActivity extends BaseActivity {
 
-    public static List<Value> data;
+    public static List<Value> data = new ArrayList<>();
 
     @Bind(R.id.rv) RecyclerView rv;
     RecyclerView.Adapter mAdapter;
@@ -42,7 +42,6 @@ public class DemoPermissionManifestActivity extends BaseActivity {
     public static class ManifestAdapter extends RecyclerView.Adapter<ManifestViewHolder> {
 
         public ManifestAdapter() {
-            data = new ArrayList<>();
             data.add(new Value(Manifest.permission.ACCESS_FINE_LOCATION));
             data.add(new Value(Manifest.permission.ACCESS_COARSE_LOCATION));
             data.add(new Value(Manifest.permission.READ_CONTACTS));

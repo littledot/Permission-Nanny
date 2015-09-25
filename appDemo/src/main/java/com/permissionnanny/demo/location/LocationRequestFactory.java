@@ -17,6 +17,7 @@ import com.permissionnanny.demo.extra.Extra;
 import com.permissionnanny.demo.extra.ExtrasDialogBuilder;
 import com.permissionnanny.demo.extra.FloatExtra;
 import com.permissionnanny.demo.extra.LongExtra;
+import com.permissionnanny.demo.extra.StringExtra;
 import com.permissionnanny.lib.request.simple.LocationRequest;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
 import de.greenrobot.event.EventBus;
@@ -34,13 +35,21 @@ public class LocationRequestFactory implements SimpleRequestFactory {
             LocationRequest.ADD_NMEA_LISTENER,
             LocationRequest.GET_LAST_KNOWN_LOCATION,
             LocationRequest.REQUEST_LOCATION_UPDATES1,
+            LocationRequest.REQUEST_LOCATION_UPDATES2,
+            LocationRequest.REQUEST_SINGLE_UPDATE,
+            LocationRequest.REQUEST_SINGLE_UPDATE1,
     };
     private SparseArray<Extra[]> mExtras = new SparseArray<Extra[]>() {{
-//        put(1, new Extra[]{new LongExtra(), new FloatExtra(), new CriteriaExtra()});
         put(3, new Extra[]{new LongExtra(), new FloatExtra(), new CriteriaExtra()});
+        put(4, new Extra[]{new StringExtra("gps"), new LongExtra(), new FloatExtra()});
+        put(5, new Extra[]{new StringExtra("gps")});
+        put(6, new Extra[]{new CriteriaExtra()});
     }};
     private SparseArray<String[]> mExtrasLabels = new SparseArray<String[]>() {{
         put(3, new String[]{"minTime", "minDistance", "criteria"});
+        put(4, new String[]{"provider", "minTime", "minDistance"});
+        put(5, new String[]{"provider"});
+        put(6, new String[]{"criteria"});
     }};
     private ExtrasDialogBuilder mBuilder = new ExtrasDialogBuilder();
 
@@ -70,37 +79,14 @@ public class LocationRequestFactory implements SimpleRequestFactory {
             return LocationRequest.getLastKnownLocation("gps");
         case 3:
             return LocationRequest.requestLocationUpdates(((long) extras[0].getValue()), ((float) extras[1].getValue()),
-                    ((Criteria) extras[2].getValue()), new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            Timber.wtf("" + location);
-                            bus.post(new EzMap()
-                                    .put(C.POS, position)
-                                    .put(C.DATA, "onLocationChanged: " + location));
-                        }
-
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-                            bus.post(new EzMap()
-                                    .put(C.POS, position)
-                                    .put(C.DATA, "onStatusChanged: provider=" + provider + " status=" + status +
-                                            " extras=" + BundleUtil.toString(extras)));
-                        }
-
-                        @Override
-                        public void onProviderEnabled(String provider) {
-                            bus.post(new EzMap()
-                                    .put(C.POS, position)
-                                    .put(C.DATA, "onProviderEnabled: " + provider));
-                        }
-
-                        @Override
-                        public void onProviderDisabled(String provider) {
-                            bus.post(new EzMap()
-                                    .put(C.POS, position)
-                                    .put(C.DATA, "onProviderDisabled: " + provider));
-                        }
-                    }, null);
+                    ((Criteria) extras[2].getValue()), new DemoLocationListener(position), null);
+        case 4:
+            return LocationRequest.requestLocationUpdates((String) extras[0].getValue(), (long) extras[1].getValue(),
+                    (float) extras[2].getValue(), new DemoLocationListener(position), null);
+        case 5:
+            return LocationRequest.requestSingleUpdate((String) extras[0].getValue(), new DemoLocationListener(position), null);
+        case 6:
+            return LocationRequest.requestSingleUpdate((Criteria) extras[0].getValue(), new DemoLocationListener(position), null);
         }
         return null;
     }
@@ -123,5 +109,44 @@ public class LocationRequestFactory implements SimpleRequestFactory {
     @Override
     public Dialog buildDialog(Context context, int position) {
         return mBuilder.build(context, mExtras.get(position), mExtrasLabels.get(position));
+    }
+
+    private class DemoLocationListener implements LocationListener {
+
+        private int mPosition;
+
+        public DemoLocationListener(int position) {
+            mPosition = position;
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            Timber.wtf("" + location);
+            bus.post(new EzMap()
+                    .put(C.POS, mPosition)
+                    .put(C.DATA, "onLocationChanged: " + location));
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            bus.post(new EzMap()
+                    .put(C.POS, mPosition)
+                    .put(C.DATA, "onStatusChanged: provider=" + provider + " status=" + status +
+                            " extras=" + BundleUtil.toString(extras)));
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            bus.post(new EzMap()
+                    .put(C.POS, mPosition)
+                    .put(C.DATA, "onProviderEnabled: " + provider));
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            bus.post(new EzMap()
+                    .put(C.POS, mPosition)
+                    .put(C.DATA, "onProviderDisabled: " + provider));
+        }
     }
 }

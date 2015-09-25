@@ -6,7 +6,6 @@ import android.location.Criteria;
 import android.location.GpsStatus.Listener;
 import android.location.GpsStatus.NmeaListener;
 import android.location.LocationListener;
-import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,13 +28,13 @@ public class LocationRequest extends SimpleRequest {
     @PPP public static final String REMOVE_UPDATES1 = "removeUpdates1";
     @PPP public static final String REQUEST_LOCATION_UPDATES = "requestLocationUpdates";
     @PPP public static final String REQUEST_LOCATION_UPDATES1 = "requestLocationUpdates1";
-    public static final String REQUEST_LOCATION_UPDATES2 = "requestLocationUpdates2";
-    public static final String REQUEST_LOCATION_UPDATES3 = "requestLocationUpdates3";
-    public static final String REQUEST_LOCATION_UPDATES4 = "requestLocationUpdates4";
-    public static final String requestSingleUpdate = "requestSingleUpdate";
-    public static final String requestSingleUpdate1 = "requestSingleUpdate1";
-    public static final String requestSingleUpdate2 = "requestSingleUpdate2";
-    public static final String requestSingleUpdate3 = "requestSingleUpdate3";
+    @PPP public static final String REQUEST_LOCATION_UPDATES2 = "requestLocationUpdates2";
+    @PPP public static final String REQUEST_LOCATION_UPDATES3 = "requestLocationUpdates3";
+    @PPP public static final String REQUEST_LOCATION_UPDATES4 = "requestLocationUpdates4";
+    @PPP public static final String REQUEST_SINGLE_UPDATE = "requestSingleUpdate";
+    @PPP public static final String REQUEST_SINGLE_UPDATE1 = "requestSingleUpdate1";
+    @PPP public static final String REQUEST_SINGLE_UPDATE2 = "requestSingleUpdate2";
+    @PPP public static final String REQUEST_SINGLE_UPDATE3 = "requestSingleUpdate3";
 
     public static LocationRequest addGpsStatusListener(Listener listener) {
         RequestParams p = new RequestParams();
@@ -72,14 +71,6 @@ public class LocationRequest extends SimpleRequest {
         return new LocationRequest(p);
     }
 
-//    public static LocationRequest removeGpsStatusListener(Listener listener) {
-//        return newBuilder().opCode(REMOVE_GPS_STATUS_LISTENER).build();
-//    }
-
-//    public static LocationRequest removeNmeaListener(NmeaListener listener) {
-//        return newBuilder().opCode(REMOVE_NMEA_LISTENER).build();
-//    }
-
     public static LocationRequest removeProximityAlert(PendingIntent intent) {
         RequestParams p = new RequestParams();
         p.opCode = REMOVE_PROXIMITY_ALERT;
@@ -93,10 +84,6 @@ public class LocationRequest extends SimpleRequest {
         p.pendingIntent0 = intent;
         return new LocationRequest(p);
     }
-
-//    public static LocationRequest removeUpdates(LocationListener listener) {
-//        return newBuilder().opCode(REMOVE_UPDATES1).build();
-//    }
 
     public static LocationRequest requestLocationUpdates(long minTime,
                                                          float minDistance,
@@ -122,8 +109,77 @@ public class LocationRequest extends SimpleRequest {
         p.float0 = minDistance;
         p.criteria0 = criteria;
         LocationRequest request = new LocationRequest(p);
-        request.addFilter(new LocationEvent(listener, looper != null ? new Handler(looper) : new Handler()));
+        request.addFilter(new LocationEvent(listener, newHandler(looper)));
         return request;
+    }
+
+    public static LocationRequest requestLocationUpdates(String provider,
+                                                         long minTime,
+                                                         float minDistance,
+                                                         LocationListener listener) {
+        return requestLocationUpdates(provider, minTime, minDistance, listener, null);
+    }
+
+    public static LocationRequest requestLocationUpdates(String provider,
+                                                         long minTime,
+                                                         float minDistance,
+                                                         LocationListener listener,
+                                                         @Nullable Looper looper) {
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_LOCATION_UPDATES2;
+        p.string0 = provider;
+        p.long0 = minTime;
+        p.float0 = minDistance;
+        LocationRequest request = new LocationRequest(p);
+        request.addFilter(new LocationEvent(listener, newHandler(looper)));
+        return request;
+    }
+
+    public static LocationRequest requestLocationUpdates(String provider,
+                                                         long minTime,
+                                                         float minDistance,
+                                                         PendingIntent intent) {
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_LOCATION_UPDATES3;
+        p.string0 = provider;
+        p.long0 = minTime;
+        p.float0 = minDistance;
+        p.pendingIntent0 = intent;
+        return new LocationRequest(p);
+    }
+
+    public static LocationRequest requestSingleUpdate(String provider, LocationListener listener, Looper looper) {
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_SINGLE_UPDATE;
+        p.string0 = provider;
+        LocationRequest request = new LocationRequest(p);
+        request.addFilter(new LocationEvent(listener, newHandler(looper)));
+        return request;
+    }
+
+    public static LocationRequest requestSingleUpdate(Criteria criteria, LocationListener listener, Looper looper) {
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_SINGLE_UPDATE1;
+        p.criteria0 = criteria;
+        LocationRequest request = new LocationRequest(p);
+        request.addFilter(new LocationEvent(listener, newHandler(looper)));
+        return request;
+    }
+
+    public static LocationRequest requestSingleUpdate(String provider, PendingIntent intent) {
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_SINGLE_UPDATE2;
+        p.string0 = provider;
+        p.pendingIntent0 = intent;
+        return new LocationRequest(p);
+    }
+
+    public static LocationRequest requestSingleUpdate(Criteria criteria, PendingIntent intent) {
+        RequestParams p = new RequestParams();
+        p.opCode = REQUEST_SINGLE_UPDATE3;
+        p.criteria0 = criteria;
+        p.pendingIntent0 = intent;
+        return new LocationRequest(p);
     }
 
     private Context mContext;
