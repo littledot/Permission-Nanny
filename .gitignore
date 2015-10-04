@@ -8,6 +8,5 @@
 /.idea
 *.iml
 
-*.jks
-bintray.properties
-permission-nanny-android.properties
+# Hide keys
+# git update-index --assume-unchanged bintray.properties permission-nanny-android.jks permission-nanny-android.properties app/fabric.properties
