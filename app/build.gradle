@@ -46,7 +46,7 @@ android {
     }
     sourceSets {
         test {
-            java.srcDirs = [java.srcDirs[0], 'src/commonTest/java']
+            java.srcDirs += 'src/commonTest/java'
         }
     }
     packagingOptions {

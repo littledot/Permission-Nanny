@@ -26,7 +26,7 @@ android {
     }
     sourceSets {
         test {
-            java.srcDirs = [java.srcDirs[0], 'src/commonTest/java']
+            java.srcDirs += 'src/commonTest/java'
         }
     }
 }
@@ -46,7 +46,6 @@ dependencies {
     androidTestCompile project.junit
     androidTestCompile project.mockitoCore
     androidTestCompile project.dexmakerMockito
-//    androidTestCompile project.robolectric
     androidTestCompile project.runner
     androidTestCompile project.rules
     androidTestCompile project.espressoCore
