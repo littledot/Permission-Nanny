@@ -13,16 +13,26 @@ import timber.log.Timber;
 /**
  *
  */
-public class ProxyListener {
+public class ProxyListener<Listener> {
     protected final ProxyService mService;
     private final String mClientAddr;
 
-    /** Time of last broadcast. */
+    /**
+     * Time of last broadcast.
+     */
     private long mLastBroadcast;
-    /** Time of last ACK received. */
+    /**
+     * Time of last ACK received.
+     */
     private long mLastAck;
-    /** Proxy service name. */
-    private String mServer;
+    /**
+     * Proxy service name.
+     */
+    protected final String mServer;
+
+    public Listener mListener;
+
+    public void register(Context c, RequestParams r, Listener l) {}
 
     public ProxyListener(ProxyService service, String clientAddr, String server) {
         mService = service;
@@ -66,6 +76,13 @@ public class ProxyListener {
         return ResponseFactory.newAllowResponse(mServer)
                 .entity(entity)
                 .ackAddress(mService.getAckAddress())
+                .build();
+    }
+
+    protected Bundle errorResponse(Throwable error) {
+        return ResponseFactory.newDenyResponse(mServer)
+                .error(error)
+                .connection(Nanny.CLOSE)
                 .build();
     }
 }

@@ -11,8 +11,11 @@ import com.permissionnanny.common.BundleUtil;
 import com.permissionnanny.data.OngoingRequestDB;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
+import com.permissionnanny.lib.request.simple.AccountRequest;
 import com.permissionnanny.lib.request.simple.LocationRequest;
+import com.permissionnanny.simple.ProxyAccountManagerListener;
 import com.permissionnanny.simple.ProxyGpsStatusListener;
+import com.permissionnanny.simple.ProxyOnAccountsUpdateListener;
 import com.permissionnanny.simple.RequestLocationUpdatesListener;
 import com.permissionnanny.simple.ProxyNmeaListener;
 import com.permissionnanny.simple.RequestSingleUpdateListener;
@@ -87,6 +90,27 @@ public class ProxyService extends BaseService {
         Timber.wtf("handling client=" + clientAddr + " req=" + requestParams);
         ProxyListener listener;
         switch (requestParams.opCode) {
+        case AccountRequest.ADD_ON_ACCOUNTS_UPDATED_LISTENER:
+            listener = new ProxyOnAccountsUpdateListener(this, clientAddr);
+            break;
+        case AccountRequest.GET_ACCOUNTS_BY_TYPE_AND_FEATURES:
+            listener = new ProxyAccountManagerListener.GetAccountsByTypeAndFeatures(this, clientAddr);
+            break;
+        case AccountRequest.GET_AUTH_TOKEN1:
+            listener = new ProxyAccountManagerListener.GetAuthToken1(this, clientAddr);
+            break;
+        case AccountRequest.GET_AUTH_TOKEN2:
+            listener = new ProxyAccountManagerListener.GetAuthToken2(this, clientAddr);
+            break;
+        case AccountRequest.HAS_FEATURES:
+            listener = new ProxyAccountManagerListener.HasFeatures(this, clientAddr);
+            break;
+        case AccountRequest.REMOVE_ACCOUNT:
+            listener = new ProxyAccountManagerListener.RemoveAccount(this, clientAddr);
+            break;
+        case AccountRequest.RENAME_ACCOUNT:
+            listener = new ProxyAccountManagerListener.RenameAccount(this, clientAddr);
+            break;
         case LocationRequest.ADD_GPS_STATUS_LISTENER:
             listener = new ProxyGpsStatusListener(this, clientAddr);
             break;
@@ -115,23 +139,23 @@ public class ProxyService extends BaseService {
     }
 
     /**
-     * @param clientAddr    Client address
-     * @param requestParams Client request
+     * @param clientAddr   Client address
+     * @param params       Client request
      * @param listener
-     * @param cacheRequest  {@code true} to cache request to disk after registration succeeds
+     * @param cacheRequest {@code true} to cache request to disk after registration succeeds
      * @return Response bundle to return to the client
      */
-    private Bundle startRequest(String clientAddr, RequestParams requestParams, ProxyListener listener, boolean cacheRequest) {
+    private Bundle startRequest(String clientAddr, RequestParams params, ProxyListener listener, boolean cacheRequest) {
         try {
-            listener.register(this, requestParams);
+            listener.register(this, params);
         } catch (Throwable error) {
             return ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
         }
 
         // Good request? Cache request to memory and disk
-        mClients.put(clientAddr, new ProxyClient(clientAddr, requestParams, listener));
+        mClients.put(clientAddr, new ProxyClient(clientAddr, params, listener));
         if (cacheRequest) {
-            mDB.putOngoingRequest(clientAddr, requestParams);
+            mDB.putOngoingRequest(clientAddr, params);
         }
         return ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).build();
     }

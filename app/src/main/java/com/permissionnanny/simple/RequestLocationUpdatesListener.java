@@ -14,7 +14,7 @@ import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.LocationEvent;
 import com.permissionnanny.lib.request.simple.LocationRequest;
 
-public class RequestLocationUpdatesListener extends ProxyListener implements LocationListener {
+public class RequestLocationUpdatesListener extends ProxyListener<LocationListener> implements LocationListener {
 
     public RequestLocationUpdatesListener(ProxyService service, String clientAddr) {
         super(service, clientAddr, Nanny.LOCATION_SERVICE);

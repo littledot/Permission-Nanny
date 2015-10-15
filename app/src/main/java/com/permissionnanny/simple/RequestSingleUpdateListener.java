@@ -13,6 +13,7 @@ import com.permissionnanny.lib.request.simple.LocationRequest;
 /**
  */
 public class RequestSingleUpdateListener extends RequestLocationUpdatesListener {
+
     public RequestSingleUpdateListener(ProxyService service, String clientAddr) {
         super(service, clientAddr);
     }
