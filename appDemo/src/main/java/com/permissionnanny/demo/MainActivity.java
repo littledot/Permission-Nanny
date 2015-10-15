@@ -26,6 +26,7 @@ public class MainActivity extends BaseActivity {
             "LocationRequestDemo",
             "TelephonyRequestDemo",
             "WifiRequestDemo",
+            "AccountRequestDemo"
     };
     public static SimpleRequestFactory[] mFactories = new SimpleRequestFactory[]{
             null,
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity {
             new LocationRequestFactory(),
             new TelephonyRequestFactory(),
             new WifiRequestFactory(),
+            null,
     };
 
     @Bind(R.id.rv) RecyclerView rv;

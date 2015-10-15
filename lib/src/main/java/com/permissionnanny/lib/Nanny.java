@@ -225,6 +225,7 @@ public class Nanny {
     @PPP public static final String GPS_STATUS_SERVICE = "GpsStatusService";
     /** Response value: Service that delivers NMEA updates. */
     @PPP public static final String NMEA_SERVICE = "NmeaService";
+    @PPP public static final String ACCOUNTS_UPDATE_SERVICE = "AccountsUpdateService";
 
     /** Request/Response field: Resource payload. Type: {@link Bundle}. */
     @PPP public static final String ENTITY_BODY = "Entity-Body";

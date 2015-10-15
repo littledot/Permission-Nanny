@@ -1,7 +1,6 @@
 package com.permissionnanny.lib.request.simple;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -40,10 +39,7 @@ public class LocationEvent extends BaseEvent implements Event {
     }
 
     @Override
-    public void process(Context context, Intent intent) {
-        sendAck(context, intent);
-
-        final Bundle entity = intent.getBundleExtra(Nanny.ENTITY_BODY);
+    public void processEntity(Context context, final Bundle entity) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {

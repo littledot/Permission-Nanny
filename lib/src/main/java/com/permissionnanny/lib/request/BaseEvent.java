@@ -21,4 +21,12 @@ public abstract class BaseEvent implements Event {
                 .putExtra(Nanny.CLIENT_ADDRESS, clientAddr);
         context.sendBroadcast(ackIntent);
     }
+
+    @Override
+    public void process(Context context, Intent intent) {
+        sendAck(context, intent);
+        processEntity(context, intent.getBundleExtra(Nanny.ENTITY_BODY));
+    }
+
+    public abstract void processEntity(Context context, Bundle entity);
 }

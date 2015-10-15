@@ -1,5 +1,6 @@
 package com.permissionnanny.lib.request;
 
+import android.accounts.Account;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.location.Criteria;
@@ -8,7 +9,6 @@ import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,10 +27,12 @@ public class RequestParams implements Parcelable {
     public float float0;
     public int int0;
     public long long0;
+    public Account account0;
     public ArrayList<PendingIntent> arrayListOfPendingIntents0;
     public ArrayList<PendingIntent> arrayListOfPendingIntents1;
     public ArrayList<String> arrayListOfStrings0;
     public Bundle bundle0;
+    public Bundle bundle1;
     public ContentValues contentValues0;
     public Criteria criteria0;
     public InetAddress inetAddress0;
@@ -63,6 +65,7 @@ public class RequestParams implements Parcelable {
         if (long0 != that.long0) return false;
         if (opCode != null ? !opCode.equals(that.opCode) : that.opCode != null) return false;
         if (!Arrays.equals(byteArray0, that.byteArray0)) return false;
+        if (account0 != null ? !account0.equals(that.account0) : that.account0 != null) return false;
         if (arrayListOfPendingIntents0 != null ? !arrayListOfPendingIntents0.equals(that.arrayListOfPendingIntents0)
                 : that.arrayListOfPendingIntents0 != null)
             return false;
@@ -73,6 +76,7 @@ public class RequestParams implements Parcelable {
                 .arrayListOfStrings0 != null)
             return false;
         if (bundle0 != null ? !bundle0.equals(that.bundle0) : that.bundle0 != null) return false;
+        if (bundle1 != null ? !bundle1.equals(that.bundle1) : that.bundle1 != null) return false;
         if (contentValues0 != null ? !contentValues0.equals(that.contentValues0) : that.contentValues0 != null)
             return false;
         if (criteria0 != null ? !criteria0.equals(that.criteria0) : that.criteria0 != null) return false;
@@ -111,10 +115,12 @@ public class RequestParams implements Parcelable {
         result = 31 * result + (float0 != +0.0f ? Float.floatToIntBits(float0) : 0);
         result = 31 * result + int0;
         result = 31 * result + (int) (long0 ^ (long0 >>> 32));
+        result = 31 * result + (account0 != null ? account0.hashCode() : 0);
         result = 31 * result + (arrayListOfPendingIntents0 != null ? arrayListOfPendingIntents0.hashCode() : 0);
         result = 31 * result + (arrayListOfPendingIntents1 != null ? arrayListOfPendingIntents1.hashCode() : 0);
         result = 31 * result + (arrayListOfStrings0 != null ? arrayListOfStrings0.hashCode() : 0);
         result = 31 * result + (bundle0 != null ? bundle0.hashCode() : 0);
+        result = 31 * result + (bundle1 != null ? bundle1.hashCode() : 0);
         result = 31 * result + (contentValues0 != null ? contentValues0.hashCode() : 0);
         result = 31 * result + (criteria0 != null ? criteria0.hashCode() : 0);
         result = 31 * result + (inetAddress0 != null ? inetAddress0.hashCode() : 0);
@@ -133,6 +139,7 @@ public class RequestParams implements Parcelable {
     }
 
     @Override
+
     public int describeContents() { return 0; }
 
     @Override
@@ -145,10 +152,12 @@ public class RequestParams implements Parcelable {
         dest.writeFloat(this.float0);
         dest.writeInt(this.int0);
         dest.writeLong(this.long0);
+        dest.writeParcelable(this.account0, 0);
         dest.writeTypedList(arrayListOfPendingIntents0);
         dest.writeTypedList(arrayListOfPendingIntents1);
         dest.writeStringList(this.arrayListOfStrings0);
         dest.writeBundle(bundle0);
+        dest.writeBundle(bundle1);
         dest.writeParcelable(this.contentValues0, 0);
         dest.writeParcelable(this.criteria0, 0);
         dest.writeSerializable(this.inetAddress0);
@@ -174,10 +183,12 @@ public class RequestParams implements Parcelable {
         this.float0 = in.readFloat();
         this.int0 = in.readInt();
         this.long0 = in.readLong();
+        this.account0 = in.readParcelable(Account.class.getClassLoader());
         this.arrayListOfPendingIntents0 = in.createTypedArrayList(PendingIntent.CREATOR);
         this.arrayListOfPendingIntents1 = in.createTypedArrayList(PendingIntent.CREATOR);
         this.arrayListOfStrings0 = in.createStringArrayList();
         bundle0 = in.readBundle();
+        bundle1 = in.readBundle();
         this.contentValues0 = in.readParcelable(ContentValues.class.getClassLoader());
         this.criteria0 = in.readParcelable(Criteria.class.getClassLoader());
         this.inetAddress0 = (InetAddress) in.readSerializable();

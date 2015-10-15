@@ -14,6 +14,9 @@ public class SimpleOperation extends Operation {
     public static final Map<String, SimpleOperation> operations = new ArrayMap<>();
 
     static {
+        for (SimpleOperation operation : AccountOperation.operations) {
+            operations.put(operation.mOpCode, operation);
+        }
         for (SimpleOperation operation : LocationOperation.operations) {
             operations.put(operation.mOpCode, operation);
         }

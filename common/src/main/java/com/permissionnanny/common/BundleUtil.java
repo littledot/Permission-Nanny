@@ -3,6 +3,7 @@ package com.permissionnanny.common;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import java.util.Arrays;
 import org.json.JSONException;
 import org.json.JSONObject;
 import timber.log.Timber;
@@ -20,7 +21,12 @@ public class BundleUtil {
         try {
             for (String key : bundle.keySet()) {
                 Object val = bundle.get(key);
-                Object str = val instanceof Bundle ? BundleUtil.toString((Bundle) val) : val;
+                Object str = val;
+                if (val.getClass().isArray()) {
+                    str = Arrays.deepToString((Object[]) val);
+                } else if (val instanceof Bundle) {
+                    str = BundleUtil.toString((Bundle) val);
+                }
                 json.put(key, str);
             }
             return json.toString(4);

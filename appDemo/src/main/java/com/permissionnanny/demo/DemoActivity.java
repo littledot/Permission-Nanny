@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.permissionnanny.demo.account.AccountDemoAdapter;
 import com.permissionnanny.demo.content.DemoContentRequestAdapter;
 import com.permissionnanny.demo.content.DemoContentRequestFactory;
 import com.permissionnanny.demo.location.LocationDemoAdapter;
@@ -32,6 +33,9 @@ public class DemoActivity extends BaseActivity {
             break;
         case 2:
             mAdapter = new LocationDemoAdapter();
+            break;
+        case 5:
+            mAdapter = new AccountDemoAdapter();
             break;
         default:
             mAdapter = new DemoSimpleRequestAdapter(MainActivity.mFactories[factoryId]);

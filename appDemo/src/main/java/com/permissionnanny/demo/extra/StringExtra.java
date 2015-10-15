@@ -17,7 +17,7 @@ public class StringExtra implements Extra<String> {
     public StringExtra() {}
 
     public StringExtra(String value) {
-        mValue = value;
+        mValue = value != null ? value : "";
     }
 
     @Override
@@ -26,7 +26,7 @@ public class StringExtra implements Extra<String> {
         ButterKnife.bind(this, view);
         ((TextView) view.findViewById(R.id.tvLabel)).setText(label);
         EditText etValue = (EditText) view.findViewById(R.id.etValue);
-        etValue.setText("" + mValue);
+        etValue.setText(mValue);
         etValue.setSelection(etValue.getText().length());
         return view;
     }

@@ -45,4 +45,8 @@ public class SimpleRequest extends PermissionRequest {
     protected static Handler newHandler(@Nullable Looper looper) {
         return looper != null ? new Handler(looper) : new Handler();
     }
+
+    protected static Handler newHandler(@Nullable Handler handler) {
+        return handler != null ? handler : new Handler(Looper.getMainLooper());
+    }
 }
