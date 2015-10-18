@@ -1,10 +1,10 @@
 package com.permissionnanny.demo;
 
-import com.permissionnanny.lib.request.simple.SimpleRequest;
+import com.permissionnanny.lib.request.PermissionRequest;
 
 /**
  *
  */
 public interface SimpleRequestFactory extends RequestFactory {
-    SimpleRequest getRequest(int position, DataAdapter adapter);
+    PermissionRequest getRequest(int position, DataAdapter adapter);
 }

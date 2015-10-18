@@ -18,6 +18,14 @@ public class BooleanExtra implements Extra<Boolean> {
 
     boolean mValue;
 
+    public BooleanExtra() {
+        this(false);
+    }
+
+    public BooleanExtra(boolean value) {
+        mValue = value;
+    }
+
     @Override
     public View getView(Context context, ViewGroup parent, String label) {
         View view = LayoutInflater.from(context).inflate(R.layout.extras_boolean, parent, false);
