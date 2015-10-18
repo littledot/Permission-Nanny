@@ -82,8 +82,10 @@ public abstract class ProxyAccountManagerListener<T> extends ProxyListener imple
 
         @Override
         public void register(Context context, RequestParams request) {
-            AccountManager.get(context).getAuthToken(request.account0, request.string0, request.bundle0, request
-                    .boolean0, this, null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                AccountManager.get(context).getAuthToken(request.account0, request.string0, request.bundle0, request
+                        .boolean0, this, null);
+            }
         }
 
         @Override

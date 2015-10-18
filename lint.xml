@@ -5,5 +5,9 @@
         <ignore regexp="okio"/>
         <ignore regexp="mbassador"/>
         <ignore regexp="icepick-processor"/>
+        <ignore regexp="bcprov"/>
+        <ignore regexp="junit"/>
+        <ignore regexp="robolectric"/>
+        <ignore regexp="shadows-core"/>
     </issue>
 </lint>
