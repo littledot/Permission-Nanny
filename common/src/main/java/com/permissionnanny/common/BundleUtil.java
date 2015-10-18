@@ -22,7 +22,7 @@ public class BundleUtil {
             for (String key : bundle.keySet()) {
                 Object val = bundle.get(key);
                 Object str = val;
-                if (val.getClass().isArray()) {
+                if (val != null && val.getClass().isArray()) {
                     str = Arrays.deepToString((Object[]) val);
                 } else if (val instanceof Bundle) {
                     str = BundleUtil.toString((Bundle) val);
