@@ -45,7 +45,7 @@ A Permission Nanny SDK is provided to facilitate issuing requests to and handlin
 
 ```groovy
 dependencies {
-    compile 'com.permission-nanny:permission-nanny-sdk:0.0.1'
+    compile 'com.permission-nanny:permission-nanny-sdk:0.0.6'
 }
 ```
 
@@ -76,7 +76,7 @@ otherwise, it will contain an error message.
 
 # What resources are supported?
 
-Currently, LocationManager (partial), SmsManager, TelephonyManager, WifiManager and all Content Providers are 
+Currently, AccountManager, LocationManager, SmsManager, TelephonyManager, WifiManager and all Content Providers are
 supported. See [request factories][simple-pkg] for a detailed list of all available requests.
 
 # Are there any examples?

@@ -17,8 +17,8 @@ buildscript {
         buildTools = '22.0.1'
         minSdk = 9
         targetSdk = 22
-        versionCode = 5
-        versionName = '0.0.5'
+        versionCode = 6
+        versionName = '0.0.6'
 
         design = 'com.android.support:design:22.2.0'
         supportV4 = 'com.android.support:support-v4:22.2.0'
