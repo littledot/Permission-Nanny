@@ -3,11 +3,14 @@ package com.permissionnanny.demo.wifi;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.SparseArray;
+import com.permissionnanny.demo.DataAdapter;
+import com.permissionnanny.demo.ResponseDisplayListener;
 import com.permissionnanny.demo.SimpleRequestFactory;
 import com.permissionnanny.demo.extra.BooleanExtra;
 import com.permissionnanny.demo.extra.Extra;
 import com.permissionnanny.demo.extra.ExtrasDialogBuilder;
 import com.permissionnanny.demo.extra.IntegerExtra;
+import com.permissionnanny.lib.request.simple.SimpleRequest;
 import com.permissionnanny.lib.request.simple.WifiRequest;
 
 /**
@@ -52,6 +55,10 @@ public class WifiRequestFactory implements SimpleRequestFactory {
     private ExtrasDialogBuilder mBuilder = new ExtrasDialogBuilder();
 
     @Override
+    public SimpleRequest getRequest(int position, DataAdapter adapter) {
+        return getRequest(position).listener(new ResponseDisplayListener(position, adapter));
+    }
+
     public WifiRequest getRequest(int position) {
         Extra[] extras = mExtras.get(position);
         switch (position) {

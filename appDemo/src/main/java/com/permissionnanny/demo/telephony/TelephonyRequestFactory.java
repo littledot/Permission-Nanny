@@ -2,6 +2,8 @@ package com.permissionnanny.demo.telephony;
 
 import android.app.Dialog;
 import android.content.Context;
+import com.permissionnanny.demo.DataAdapter;
+import com.permissionnanny.demo.ResponseDisplayListener;
 import com.permissionnanny.demo.SimpleRequestFactory;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
 import com.permissionnanny.lib.request.simple.TelephonyRequest;
@@ -24,6 +26,10 @@ public class TelephonyRequestFactory implements SimpleRequestFactory {
     };
 
     @Override
+    public SimpleRequest getRequest(int position, DataAdapter adapter) {
+        return getRequest(position).listener(new ResponseDisplayListener(position, adapter));
+    }
+
     public SimpleRequest getRequest(int position) {
         switch (position) {
         case 0:

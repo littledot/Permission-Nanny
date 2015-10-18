@@ -20,6 +20,6 @@ public class ResponseDisplayListener implements SimpleListener {
     @Override
     public void onResponse(@NonNull Bundle response) {
         mAdapter.onResponse(mPosition, response);
-        mAdapter.onDisplay(mPosition, BundleUtil.toString(response));
+        mAdapter.onData(mPosition, BundleUtil.toString(response));
     }
 }

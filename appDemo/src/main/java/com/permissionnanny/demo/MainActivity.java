@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.permissionnanny.demo.account.AccountRequestFactory;
 import com.permissionnanny.demo.location.LocationRequestFactory;
 import com.permissionnanny.demo.telephony.TelephonyRequestFactory;
 import com.permissionnanny.demo.wifi.WifiRequestFactory;
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity {
             new LocationRequestFactory(),
             new TelephonyRequestFactory(),
             new WifiRequestFactory(),
-            null,
+            new AccountRequestFactory(),
     };
 
     @Bind(R.id.rv) RecyclerView rv;

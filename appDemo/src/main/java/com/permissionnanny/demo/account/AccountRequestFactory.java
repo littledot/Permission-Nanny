@@ -20,7 +20,6 @@ import com.permissionnanny.demo.extra.ExtrasDialogBuilder;
 import com.permissionnanny.demo.extra.StringExtra;
 import com.permissionnanny.lib.request.simple.AccountRequest;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
-import de.greenrobot.event.EventBus;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -28,7 +27,6 @@ import java.util.Arrays;
  *
  */
 public class AccountRequestFactory implements SimpleRequestFactory {
-    EventBus bus = EventBus.getDefault();
     private String[] mLabels = new String[]{
             AccountRequest.ADD_ACCOUNT_EXPLICITLY,
             AccountRequest.ADD_ON_ACCOUNTS_UPDATED_LISTENER,
@@ -59,12 +57,13 @@ public class AccountRequestFactory implements SimpleRequestFactory {
         switch (position) {
         case 0:
             return AccountRequest.addAccountExplicitly((Account) extras[0].getValue(), (String) extras[1].getValue(),
-                    null).listener(new ResponseDisplayListener(position, adapter));
+                    null)
+                    .listener(new ResponseDisplayListener(position, adapter));
         case 1:
             return AccountRequest.addOnAccountsUpdatedListener(new OnAccountsUpdateListener() {
                 @Override
                 public void onAccountsUpdated(Account[] accounts) {
-                    adapter.onDisplay(position, Arrays.toString(accounts));
+                    adapter.onData(position, Arrays.toString(accounts));
                 }
             }, null, true)
                     .listener(new ResponseListener(position, adapter));
@@ -87,7 +86,7 @@ public class AccountRequestFactory implements SimpleRequestFactory {
                         @Override
                         public void run(AccountManagerFuture<Account[]> future) {
                             try {
-                                adapter.onDisplay(position, Arrays.toString(future.getResult()));
+                                adapter.onData(position, Arrays.toString(future.getResult()));
                             } catch (OperationCanceledException | IOException | AuthenticatorException e) {
                                 e.printStackTrace();
                             }
@@ -116,10 +115,5 @@ public class AccountRequestFactory implements SimpleRequestFactory {
     @Override
     public Dialog buildDialog(Context context, int position) {
         return mBuilder.build(context, mExtras.get(position), mExtrasLabels.get(position));
-    }
-
-    @Override
-    public SimpleRequest getRequest(int position) {
-        return null;
     }
 }

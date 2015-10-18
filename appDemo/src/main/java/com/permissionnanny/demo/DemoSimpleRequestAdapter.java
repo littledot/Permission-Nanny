@@ -1,29 +1,29 @@
 package com.permissionnanny.demo;
 
+import android.animation.ObjectAnimator;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView.Adapter;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import com.permissionnanny.common.BundleUtil;
-import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.Nanny;
 import com.thedeanda.lorem.Lorem;
-import org.apache.http.HttpStatus;
+import java.net.HttpURLConnection;
 
 /**
  *
  */
-public class DemoSimpleRequestAdapter extends Adapter<DemoViewHolder> {
-
-    private SimpleRequestFactory mFactory;
-    private Bundle[] mResults;
+public class DemoSimpleRequestAdapter<VH extends DemoViewHolder> extends RecyclerView.Adapter<VH> implements DataAdapter {
+    private final SimpleRequestFactory mFactory;
+    private final Bundle[] mResponse;
+    private final String[] mData;
 
     public DemoSimpleRequestAdapter(SimpleRequestFactory factory) {
         mFactory = factory;
-        mResults = new Bundle[mFactory.getCount()];
+        mResponse = new Bundle[mFactory.getCount()];
+        mData = new String[mFactory.getCount()];
     }
 
     @Override
@@ -32,44 +32,60 @@ public class DemoSimpleRequestAdapter extends Adapter<DemoViewHolder> {
     }
 
     @Override
-    public DemoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DemoViewHolder(LayoutInflater.from(parent.getContext())
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+        return (VH) new DemoViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.wifi_listitem, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final DemoViewHolder holder, final int position) {
+    public void onBindViewHolder(DemoViewHolder holder, final int position) {
         holder.tvRequest.setText(mFactory.getLabel(position));
         holder.btnExtras.setVisibility(mFactory.hasExtras(position) ? View.VISIBLE : View.GONE);
-        holder.btnExtras.setOnClickListener(new OnClickListener() {
+        holder.btnExtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mFactory.buildDialog(v.getContext(), position).show();
             }
         });
-        holder.itemView.setOnClickListener(new OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mFactory.getRequest(position).listener(new SimpleListener() {
-                    @Override
-                    public void onResponse(@NonNull Bundle response) {
-                        mResults[position] = response;
-                        notifyItemChanged(position);
-                    }
-                }).startRequest(v.getContext(), Config.longReason ? Lorem.getParagraphs(10, 10) : "demo reason");
+                mFactory.getRequest(position, DemoSimpleRequestAdapter.this)
+                        .startRequest(v.getContext(), Config.longReason ? Lorem.getParagraphs(10, 10) : "demo reason");
             }
         });
 
-        Bundle results = mResults[position];
+        Bundle results = mResponse[position];
         if (results == null) {
             holder.tvResponse.setText(null);
             holder.itemView.setBackgroundColor(0);
-        } else if (HttpStatus.SC_OK == results.getInt(Nanny.STATUS_CODE)) {
-            holder.tvResponse.setText("Allowed\n" + BundleUtil.toString(results));
-            holder.itemView.setBackgroundColor(0xFF00FF00);
         } else {
-            holder.tvResponse.setText("Denied\n" + BundleUtil.toString(results));
-            holder.itemView.setBackgroundColor(0xFFFF0000);
+            int sc = results.getInt(Nanny.STATUS_CODE);
+            String newData = sc + "\n" + mData[position];
+            holder.tvResponse.setText(newData);
+
+            if (HttpURLConnection.HTTP_OK == sc) {
+                if (!holder.tvResponse.getText().equals(newData)) {
+                    if (Build.VERSION.SDK_INT >= 11) {
+                        ObjectAnimator.ofFloat(holder.itemView, "alpha", 1, 0, 1, 0, 1).setDuration(2000).start();
+                    }
+                }
+                holder.itemView.setBackgroundColor(Color.GREEN);
+            } else {
+                holder.itemView.setBackgroundColor(Color.RED);
+            }
         }
+    }
+
+    @Override
+    public void onResponse(int position, Bundle response) {
+        mResponse[position] = response;
+        notifyItemChanged(position);
+    }
+
+    @Override
+    public void onData(int position, String data) {
+        mData[position] = data;
+        notifyItemChanged(position);
     }
 }

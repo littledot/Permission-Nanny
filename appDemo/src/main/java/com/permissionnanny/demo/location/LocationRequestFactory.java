@@ -9,9 +9,10 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.SparseArray;
 import com.permissionnanny.common.BundleUtil;
-import com.permissionnanny.demo.C;
+import com.permissionnanny.demo.DataAdapter;
+import com.permissionnanny.demo.ResponseDisplayListener;
+import com.permissionnanny.demo.ResponseListener;
 import com.permissionnanny.demo.SimpleRequestFactory;
-import com.permissionnanny.demo.EzMap;
 import com.permissionnanny.demo.extra.CriteriaExtra;
 import com.permissionnanny.demo.extra.Extra;
 import com.permissionnanny.demo.extra.ExtrasDialogBuilder;
@@ -20,16 +21,11 @@ import com.permissionnanny.demo.extra.LongExtra;
 import com.permissionnanny.demo.extra.StringExtra;
 import com.permissionnanny.lib.request.simple.LocationRequest;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
-import de.greenrobot.event.EventBus;
-import timber.log.Timber;
 
 /**
  *
  */
 public class LocationRequestFactory implements SimpleRequestFactory {
-
-    EventBus bus = EventBus.getDefault();
-
     private String[] mLabels = new String[]{
             LocationRequest.ADD_GPS_STATUS_LISTENER,
             LocationRequest.ADD_NMEA_LISTENER,
@@ -54,44 +50,6 @@ public class LocationRequestFactory implements SimpleRequestFactory {
     private ExtrasDialogBuilder mBuilder = new ExtrasDialogBuilder();
 
     @Override
-    public SimpleRequest getRequest(final int position) {
-        Extra[] extras = mExtras.get(position);
-        switch (position) {
-        case 0:
-            return LocationRequest.addGpsStatusListener(new GpsStatus.Listener() {
-                @Override
-                public void onGpsStatusChanged(int event) {
-                    bus.post(new EzMap()
-                            .put(C.POS, position)
-                            .put(C.DATA, "onGpsStatusChanged: " + event));
-                }
-            });
-        case 1:
-            return LocationRequest.addNmeaListener(new GpsStatus.NmeaListener() {
-                @Override
-                public void onNmeaReceived(long timestamp, String nmea) {
-                    bus.post(new EzMap()
-                            .put(C.POS, position)
-                            .put(C.DATA, "onGpsStatusChanged: ts=" + timestamp + " nmea=" + nmea));
-                }
-            });
-        case 2:
-            return LocationRequest.getLastKnownLocation("gps");
-        case 3:
-            return LocationRequest.requestLocationUpdates(((long) extras[0].getValue()), ((float) extras[1].getValue()),
-                    ((Criteria) extras[2].getValue()), new DemoLocationListener(position), null);
-        case 4:
-            return LocationRequest.requestLocationUpdates((String) extras[0].getValue(), (long) extras[1].getValue(),
-                    (float) extras[2].getValue(), new DemoLocationListener(position), null);
-        case 5:
-            return LocationRequest.requestSingleUpdate((String) extras[0].getValue(), new DemoLocationListener(position), null);
-        case 6:
-            return LocationRequest.requestSingleUpdate((Criteria) extras[0].getValue(), new DemoLocationListener(position), null);
-        }
-        return null;
-    }
-
-    @Override
     public int getCount() {
         return mLabels.length;
     }
@@ -111,42 +69,79 @@ public class LocationRequestFactory implements SimpleRequestFactory {
         return mBuilder.build(context, mExtras.get(position), mExtrasLabels.get(position));
     }
 
-    private class DemoLocationListener implements LocationListener {
+    @Override
+    public SimpleRequest getRequest(final int position, final DataAdapter adapter) {
+        Extra[] extras = mExtras.get(position);
+        switch (position) {
+        case 0:
+            return LocationRequest.addGpsStatusListener(new GpsStatus.Listener() {
+                @Override
+                public void onGpsStatusChanged(int event) {
+                    adapter.onData(position, "onGpsStatusChanged: " + event);
+                }
+            }).listener(new ResponseListener(position, adapter));
+        case 1:
+            return LocationRequest.addNmeaListener(new GpsStatus.NmeaListener() {
+                @Override
+                public void onNmeaReceived(long timestamp, String nmea) {
+                    adapter.onData(position, "onGpsStatusChanged: ts=" + timestamp + " nmea=" + nmea);
+                }
+            }).listener(new ResponseListener(position, adapter));
+        case 2:
+            return LocationRequest.getLastKnownLocation("gps")
+                    .listener(new ResponseDisplayListener(position, adapter));
+        case 3:
+            return LocationRequest.requestLocationUpdates(((long) extras[0].getValue()), ((float) extras[1].getValue()),
+                    ((Criteria) extras[2].getValue()), new DemoLocationListener(position, adapter), null)
+                    .listener(new ResponseListener(position, adapter));
+        case 4:
+            return LocationRequest.requestLocationUpdates((String) extras[0].getValue(), (long) extras[1].getValue(),
+                    (float) extras[2].getValue(), new DemoLocationListener(position, adapter), null)
+                    .listener(new ResponseListener(position, adapter));
+        case 5:
+            return LocationRequest.requestSingleUpdate((String) extras[0].getValue(),
+                    new DemoLocationListener(position, adapter), null)
+                    .listener(new ResponseListener(position, adapter));
+        case 6:
+            return LocationRequest.requestSingleUpdate((Criteria) extras[0].getValue(),
+                    new DemoLocationListener(position, adapter), null)
+                    .listener(new ResponseListener(position, adapter));
+        }
+        return null;
+    }
 
+    private static class DemoLocationListener implements LocationListener {
         private int mPosition;
+        private DataAdapter mAdapter;
 
-        public DemoLocationListener(int position) {
+        public DemoLocationListener(int position, DataAdapter adapter) {
             mPosition = position;
+            mAdapter = adapter;
         }
 
         @Override
         public void onLocationChanged(Location location) {
-            Timber.wtf("" + location);
-            bus.post(new EzMap()
-                    .put(C.POS, mPosition)
-                    .put(C.DATA, "onLocationChanged: " + location));
+            String data = "onLocationChanged: " + location;
+            mAdapter.onData(mPosition, data);
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            bus.post(new EzMap()
-                    .put(C.POS, mPosition)
-                    .put(C.DATA, "onStatusChanged: provider=" + provider + " status=" + status +
-                            " extras=" + BundleUtil.toString(extras)));
+            String data = "onStatusChanged: provider=" + provider + " status=" + status +
+                    " extras=" + BundleUtil.toString(extras);
+            mAdapter.onData(mPosition, data);
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-            bus.post(new EzMap()
-                    .put(C.POS, mPosition)
-                    .put(C.DATA, "onProviderEnabled: " + provider));
+            String data = "onProviderEnabled: " + provider;
+            mAdapter.onData(mPosition, data);
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-            bus.post(new EzMap()
-                    .put(C.POS, mPosition)
-                    .put(C.DATA, "onProviderDisabled: " + provider));
+            String data = "onProviderDisabled: " + provider;
+            mAdapter.onData(mPosition, data);
         }
     }
 }
