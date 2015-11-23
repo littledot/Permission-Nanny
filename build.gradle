@@ -4,46 +4,50 @@ buildscript {
         maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha1'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.3.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
         classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.10.1'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.1.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1'
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'io.fabric.tools:gradle:1.20.1'
     }
     project.ext {
         compileSdk = 22
-        buildTools = '22.0.1'
+        buildTools = '23.0.2'
         minSdk = 9
         targetSdk = 22
         versionCode = 6
         versionName = '0.0.6'
 
-        design = 'com.android.support:design:22.2.0'
-        supportV4 = 'com.android.support:support-v4:22.2.0'
-        appcompatV7 = 'com.android.support:appcompat-v7:22.2.0'
-        cardviewV7 = 'com.android.support:cardview-v7:22.2.0'
-        gridlayoutV7 = 'com.android.support:gridlayout-v7:22.2.0'
-        paletteV7 = 'com.android.support:palette-v7:22.2.0'
-        recyclerviewV7 = 'com.android.support:recyclerview-v7:22.2.0'
-        supportAnnotations = 'com.android.support:support-annotations:22.2.0'
+        v = '22.2.0'
+        design = "com.android.support:design:${v}"
+        supportV4 = "com.android.support:support-v4:${v}"
+        appcompatV7 = "com.android.support:appcompat-v7:${v}"
+        cardviewV7 = "com.android.support:cardview-v7:${v}"
+        gridlayoutV7 = "com.android.support:gridlayout-v7:${v}"
+        paletteV7 = "com.android.support:palette-v7:${v}"
+        recyclerviewV7 = "com.android.support:recyclerview-v7:${v}"
+        supportAnnotations = "com.android.support:support-annotations:${v}"
         playServices = 'com.google.android.gms:play-services:7.5.0'
 
-        autoParcelProcessor = 'com.github.frankiesardo:auto-parcel-processor:0.3'
+        autoParcelProcessor = 'com.github.frankiesardo:auto-parcel-processor:0.3.1'
         butterknife = 'com.jakewharton:butterknife:7.0.1'
-        dagger = 'com.google.dagger:dagger:2.0.1'
-        daggerCompiler = 'com.google.dagger:dagger-compiler:2.0.1'
-        eventbus = 'de.greenrobot:eventbus:3.0.0-beta1'
-        eventbusAnnotationProcessor = 'de.greenrobot:eventbus-annotation-processor:3.0.0-beta1'
-        hamcrestLibrary = 'org.hamcrest:hamcrest-library:1.3'
+        v = '2.0.2'
+        dagger = "com.google.dagger:dagger:${v}"
+        daggerCompiler = "com.google.dagger:dagger-compiler:${v}"
+        v = '3.0.0-beta1'
+        eventbus = "de.greenrobot:eventbus:${v}"
+        eventbusAnnotationProcessor = "de.greenrobot:eventbus-annotation-processor:${v}"
         javaxAnnotation = 'javax.annotation:javax.annotation-api:1.2'
         javaxInject = 'javax.inject:javax.inject:1'
         kryo = 'com.esotericsoftware:kryo:3.0.2'
         kryoSerializers = 'de.javakaffee:kryo-serializers:0.33'
-        logansquare = 'com.bluelinelabs:logansquare:1.1.0'
-        logansquareCompiler = 'com.bluelinelabs:logansquare-compiler:1.1.0'
-        mbassador = 'net.engio:mbassador:1.2.1'
+        v = '1.1.0'
+        logansquare = "com.bluelinelabs:logansquare:${v}"
+        logansquareCompiler = "com.bluelinelabs:logansquare-compiler:${v}"
+        lorem = 'com.thedeanda:lorem:1.2'
+        mbassador = 'net.engio:mbassador:1.2.4'
         okhttp = 'com.squareup.okhttp:okhttp:2.4.0'
         rxandroid = 'io.reactivex:rxandroid:0.24.0'
         snappydbLib = 'com.snappydb:snappydb-lib:0.5.2'
@@ -58,8 +62,8 @@ buildscript {
 
         asm = 'org.ow2.asm:asm:5.0.3' // Resolved versions for app (5.0.3) and test app (5.0.1) differ.
         dexmakerMockito = 'com.google.dexmaker:dexmaker-mockito:1.2'
+        hamcrestLibrary = 'org.hamcrest:hamcrest-library:1.3'
         junit = 'junit:junit:4.12'
-        lorem = 'com.thedeanda:lorem:1.2'
         mockitoCore = 'org.mockito:mockito-core:1.9.5'
         objenesis = 'org.objenesis:objenesis:2.1' // Resolved versions for app (2.1) and test app (1.0) differ.
         robolectric = 'org.robolectric:robolectric:3.0'
