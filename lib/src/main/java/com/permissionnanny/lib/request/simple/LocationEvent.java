@@ -5,7 +5,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
-import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.PPP;
 import com.permissionnanny.lib.request.BaseEvent;
@@ -13,7 +12,7 @@ import com.permissionnanny.lib.request.BaseEvent;
 /**
  *
  */
-public class LocationEvent extends BaseEvent implements Event {
+public class LocationEvent extends BaseEvent {
 
     @PPP public static final String LOCATION = "location";
     @PPP public static final String PROVIDER = "provider";

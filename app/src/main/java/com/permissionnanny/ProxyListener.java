@@ -80,7 +80,7 @@ public class ProxyListener<Listener> {
     }
 
     protected Bundle errorResponse(Throwable error) {
-        return ResponseFactory.newDenyResponse(mServer)
+        return ResponseFactory.newDenyResponse(Nanny.AUTHORIZATION_SERVICE)
                 .error(error)
                 .connection(Nanny.CLOSE)
                 .build();
