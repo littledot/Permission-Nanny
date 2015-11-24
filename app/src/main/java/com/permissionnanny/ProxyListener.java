@@ -78,11 +78,4 @@ public class ProxyListener<Listener> {
                 .ackAddress(mService.getAckAddress())
                 .build();
     }
-
-    protected Bundle errorResponse(Throwable error) {
-        return ResponseFactory.newDenyResponse(Nanny.AUTHORIZATION_SERVICE)
-                .error(error)
-                .connection(Nanny.CLOSE)
-                .build();
-    }
 }

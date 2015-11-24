@@ -22,6 +22,10 @@ public class ResponseFactory {
         return builder;
     }
 
+    public static NannyBundle.Builder newBadRequestResponse(Throwable error) {
+        return newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error);
+    }
+
     public static NannyBundle.Builder newBadRequestResponse(String server, Throwable error) {
         NannyBundle.Builder builder = new NannyBundle.Builder();
         builder.mStatusCode = Nanny.SC_BAD_REQUEST;

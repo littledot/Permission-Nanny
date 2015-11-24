@@ -37,7 +37,7 @@ public abstract class ProxyAccountManagerListener<T> extends ProxyListener imple
                     .build());
         } catch (OperationCanceledException | IOException | AuthenticatorException e) {
             // TODO #75: Handle OCE & IOE as 500s?
-            sendBroadcast(errorResponse(e));
+            sendBroadcast(ResponseFactory.newBadRequestResponse(e).build());
         }
     }
 
