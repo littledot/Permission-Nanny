@@ -43,6 +43,7 @@ buildscript {
         javaxInject = 'javax.inject:javax.inject:1'
         kryo = 'com.esotericsoftware:kryo:3.0.2'
         kryoSerializers = 'de.javakaffee:kryo-serializers:0.33'
+        leveldb = 'org.iq80.leveldb:leveldb:0.7'
         v = '1.1.0'
         logansquare = "com.bluelinelabs:logansquare:${v}"
         logansquareCompiler = "com.bluelinelabs:logansquare-compiler:${v}"

@@ -1,16 +1,15 @@
 package com.permissionnanny.data;
 
+import android.support.v4.util.ArrayMap;
 import com.permissionnanny.lib.request.RequestParams;
-import io.snapdb.CryIterator;
-import io.snapdb.SnapDB;
 
 /**
  */
 public class OngoingRequestDB {
 
-    private SnapDB mDB;
+    private final NannyDB mDB;
 
-    public OngoingRequestDB(SnapDB db) {
+    public OngoingRequestDB(NannyDB db) {
         mDB = db;
     }
 
@@ -22,8 +21,8 @@ public class OngoingRequestDB {
         mDB.put(clientId, request);
     }
 
-    public CryIterator<? extends RequestParams> getOngoingRequests() {
-        return mDB.iterator(RequestParams.class);
+    public ArrayMap<String, RequestParams> getOngoingRequests() {
+        return mDB.findVal(null, RequestParams.class);
     }
 
     public void delOngoingRequest(String clientId) {

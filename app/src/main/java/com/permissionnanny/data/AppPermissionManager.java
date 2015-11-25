@@ -13,14 +13,14 @@ import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.simple.SimpleOperation;
-import timber.log.Timber;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import timber.log.Timber;
 
 /**
  * Manager that handles applications' permissions data.
@@ -55,10 +55,11 @@ public class AppPermissionManager {
     }
 
     private void readDB() {
-        AppPermission[] configs = mDB.getAllConfigs();
-        Timber.wtf("Read " + Arrays.toString(configs));
+        List<AppPermission> configs = mDB.getAllConfigs();
+        Timber.wtf("Read " + Arrays.toString(configs.toArray()));
 
-        for (AppPermission config : configs) {
+        for (int i = 0, len = configs.size(); i < len; i++) {
+            AppPermission config = configs.get(i);
             Map<String, AppPermission> configMap = mConfigs.get(config.mAppPackageName);
             if (configMap == null) {
                 configMap = new ArrayMap<>();

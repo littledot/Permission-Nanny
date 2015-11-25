@@ -25,9 +25,15 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // Crashlytics must always be first
         Fabric.with(this, new Crashlytics());
         PRNGFixes.apply();
         Timber.plant(new StackTraceDebugTree());
+
+        // https://github.com/dain/leveldb/issues/43
+        System.setProperty("sun.arch.data.model", "32");
+        System.setProperty("leveldb.mmap", "false");
+
         IDENTITY = PendingIntent.getBroadcast(this, 0, new Intent(), 0);
     }
 

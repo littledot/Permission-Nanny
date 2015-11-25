@@ -1,6 +1,6 @@
 package com.permissionnanny.data;
 
-import io.snapdb.SnapDB;
+import java.util.ArrayList;
 
 /**
  *
@@ -8,10 +8,10 @@ import io.snapdb.SnapDB;
 public class AppPermissionDB {
 
     private static final String _ = "\u0378\u0379";
-    private static final String CONFIG = "config" + _;
-    private SnapDB mDB;
 
-    public AppPermissionDB(SnapDB db) {
+    private final NannyDB mDB;
+
+    public AppPermissionDB(NannyDB db) {
         mDB = db;
     }
 
@@ -19,8 +19,8 @@ public class AppPermissionDB {
         mDB.open();
     }
 
-    public AppPermission[] getAllConfigs() {
-        return mDB.findVals(CONFIG, AppPermission.class);
+    public ArrayList<AppPermission> getAllConfigs() {
+        return mDB.findVals(null, AppPermission.class);
     }
 
     public void putConfig(AppPermission config) {
@@ -32,7 +32,7 @@ public class AppPermissionDB {
     }
 
     public void delApp(String appPackage) {
-        for (String key : mDB.findKeys(CONFIG + appPackage)) {
+        for (String key : mDB.findKeys(appPackage)) {
             mDB.del(key);
         }
     }
@@ -46,6 +46,6 @@ public class AppPermissionDB {
     }
 
     private String key(String appPackage, String permission) {
-        return CONFIG + appPackage + _ + permission;
+        return appPackage + _ + permission;
     }
 }

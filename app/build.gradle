@@ -18,7 +18,7 @@ android {
 
         Properties properties = new Properties()
         properties.load(file('fabric.properties').newDataInputStream())
-        manifestPlaceholders = [ fabricApiKey: properties.getProperty("apiKey")]
+        manifestPlaceholders = [fabricApiKey: properties.getProperty("apiKey")]
     }
     signingConfigs {
         release {
@@ -70,8 +70,9 @@ dependencies {
     compile project.butterknife
     compile project.javaxAnnotation
     compile project.javaxInject
+    compile project.kryo
+    compile project.leveldb
     compile project.mbassador
-    compile project.snapdb
     compile project.timber
 
     testCompile project(':commonTest')

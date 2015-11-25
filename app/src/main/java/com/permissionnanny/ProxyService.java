@@ -15,16 +15,14 @@ import com.permissionnanny.lib.request.simple.AccountRequest;
 import com.permissionnanny.lib.request.simple.LocationRequest;
 import com.permissionnanny.simple.ProxyAccountManagerListener;
 import com.permissionnanny.simple.ProxyGpsStatusListener;
+import com.permissionnanny.simple.ProxyNmeaListener;
 import com.permissionnanny.simple.ProxyOnAccountsUpdateListener;
 import com.permissionnanny.simple.RequestLocationUpdatesListener;
-import com.permissionnanny.simple.ProxyNmeaListener;
 import com.permissionnanny.simple.RequestSingleUpdateListener;
-import io.snapdb.CryIterator;
-import timber.log.Timber;
-
-import javax.inject.Inject;
 import java.security.SecureRandom;
 import java.util.Map;
+import javax.inject.Inject;
+import timber.log.Timber;
 
 /**
  *
@@ -70,14 +68,10 @@ public class ProxyService extends BaseService {
 
     private void restoreState() {
         int count = 0;
-        CryIterator<? extends RequestParams> iterator = mDB.getOngoingRequests();
-        while (iterator.moveToNext()) {
-            count++;
-            String client = iterator.key();
-            RequestParams params = iterator.val();
-            handleRequest(client, params, false);
+        ArrayMap<String, RequestParams> requests = mDB.getOngoingRequests();
+        for (int i = 0, len = requests.size(); i < len; i++) {
+            handleRequest(requests.keyAt(i), requests.valueAt(i), false);
         }
-        iterator.close();
         Timber.wtf("restored " + count + " clients");
     }
 
