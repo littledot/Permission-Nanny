@@ -31,6 +31,10 @@ public abstract class NannyRequest {
         return this;
     }
 
+    protected boolean hasReceiver() {
+        return mReceiver != null;
+    }
+
     protected void setPayload(Intent payload) {
         mPaylaod = payload;
     }

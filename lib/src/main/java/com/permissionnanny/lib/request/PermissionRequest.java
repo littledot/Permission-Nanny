@@ -132,7 +132,7 @@ public abstract class PermissionRequest extends NannyRequest {
     protected Intent newBroadcastIntent(Context context, @Nullable String rationale) {
         NannyBundle.Builder builder = new NannyBundle.Builder()
                 .sender(PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0))
-                .clientAddress(mClientAddr)
+                .clientAddress(hasReceiver() ? mClientAddr : null)
                 .params(mParams)
                 .rationale(rationale);
         return new Intent()

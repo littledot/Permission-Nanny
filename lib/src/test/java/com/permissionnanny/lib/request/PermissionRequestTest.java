@@ -34,6 +34,7 @@ public class PermissionRequestTest {
     @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
 
     SimpleRequest target;
+    RequestParams requestParams;
     @Mock SimpleListener listener;
     @Mock Context ctx;
     @Mock PackageManager pm;
@@ -44,16 +45,17 @@ public class PermissionRequestTest {
 
     @Before
     public void setUp() throws Exception {
-        target = new SimpleRequest(null);
+        requestParams = new RequestParams();
+        target = new SimpleRequest(requestParams);
     }
 
     @Test
-    public void startRequestShouldSendBroadcastWithExpectedParameters() throws Exception {
+    public void startRequest_ShouldSendBroadcastWithExpectedParameters() throws Exception {
         when(ctx.getPackageManager()).thenReturn(pm);
         when(pm.getApplicationInfo(anyString(), anyInt())).thenReturn(appInfo);
         target.listener(listener);
 
-        target.startRequest(ctx, null);
+        target.startRequest(ctx, "rationale");
 
         verify(ctx).registerReceiver((BroadcastReceiver) notNull(), filterCaptor.capture());
         verify(ctx).sendBroadcast(intentCaptor.capture());
@@ -68,7 +70,7 @@ public class PermissionRequestTest {
     }
 
     @Test
-    public void startRequestShouldNotSendClientAddressWhenNoListenerIsAttached() throws Exception {
+    public void startRequest_ShouldNotSendClientAddress_WhenNoListenerIsAttached() throws Exception {
         when(ctx.getPackageManager()).thenReturn(pm);
         when(pm.getApplicationInfo(anyString(), anyInt())).thenReturn(appInfo);
 
@@ -80,7 +82,7 @@ public class PermissionRequestTest {
     }
 
     @Test
-    public void startRequestShouldReturn404AndNotSendBroadcastWhenServerIsNotInstalled() throws Exception {
+    public void startRequest_ShouldReturn404AndNotSendBroadcast_WhenServerIsNotInstalled() throws Exception {
         when(ctx.getPackageManager()).thenReturn(pm);
         target.listener(listener);
 
