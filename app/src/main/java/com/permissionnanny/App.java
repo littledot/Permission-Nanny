@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.permissionnanny.common.StackTraceDebugTree;
 import com.permissionnanny.dagger.AppComponent;
 import com.permissionnanny.dagger.AppModule;
@@ -26,7 +27,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         // Crashlytics must always be first
-        Fabric.with(this, new Crashlytics());
+        CrashlyticsCore crashlytics = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+        Fabric.with(this, new Crashlytics.Builder().core(crashlytics).build());
         PRNGFixes.apply();
         Timber.plant(new StackTraceDebugTree());
 
