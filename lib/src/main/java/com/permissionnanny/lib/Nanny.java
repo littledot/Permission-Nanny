@@ -246,6 +246,10 @@ public class Nanny {
     @PPP public static final String PERMISSION_MANIFEST = "PermissionManifest";
     /** Entity field: */
     @PPP public static final String ACK_SERVER_ADDRESS = "AckServerAddress";
+    /** Entity field: Target Permission Nanny Activity to deep link into. Type: {@link String} */
+    @PPP public static final String DEEP_LINK_TARGET = "DeepLinkTarget";
+    /** Entity value: App-Permission Switchboard deep link target. Users can configure permission settings for apps. */
+    @PPP public static final String MANAGE_APPLICATIONS_SETTINGS = "ManageApplicationsSettings";
 
     // experimental
     /** Permission Nanny's root package name. */
@@ -261,6 +265,9 @@ public class Nanny {
     /** Server Component that listens for client permission usages. */
     @PPP public static final String CLIENT_PERMISSION_MANIFEST_RECEIVER = SERVER_PACKAGE_NAME +
             ".ClientPermissionManifestReceiver";
+
+    /** Server Component that handles deep link requests. */
+    @PPP public static final String CLIENT_DEEP_LINK_RECEIVER = SERVER_PACKAGE_NAME + ".ClientDeepLinkReceiver";
 
     /** Broadcast Action: Sent when Permission Nanny wants to know which permissions clients are using. */
     @PPP public static final String ACTION_GET_PERMISSION_MANIFEST = SERVER_PACKAGE_NAME + ".GET_PERMISSION_MANIFEST";

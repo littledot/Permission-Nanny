@@ -31,7 +31,7 @@ public class DemoActivity extends BaseActivity {
 
     private Adapter getAdapter(int factoryId) {
         switch (factoryId) {
-        case 1:
+        case 2:
             return new DemoContentRequestAdapter(new DemoContentRequestFactory());
         default:
             return new DemoSimpleRequestAdapter(MainActivity.mFactories[factoryId]);

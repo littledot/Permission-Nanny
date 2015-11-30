@@ -189,13 +189,13 @@ public class LocationRequest extends SimpleRequest {
     }
 
     @Override
-    public void startRequest(@NonNull Context context, @Nullable String reason) {
+    public void startRequest(@NonNull Context context, @Nullable String rationale) {
         mContext = context;
-        super.startRequest(context, reason);
+        super.startRequest(context, rationale);
     }
 
     public void stop() {
-        mContext.unregisterReceiver(mReceiver);
+        stop(mContext);
     }
 }
 

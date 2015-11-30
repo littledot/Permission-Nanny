@@ -13,6 +13,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.permissionnanny.demo.account.AccountRequestFactory;
+import com.permissionnanny.demo.deeplink.DemoDeepLinkActivity;
 import com.permissionnanny.demo.location.LocationRequestFactory;
 import com.permissionnanny.demo.telephony.TelephonyRequestFactory;
 import com.permissionnanny.demo.wifi.WifiRequestFactory;
@@ -23,6 +24,7 @@ public class MainActivity extends BaseActivity {
 
     public static String[] mLabels = new String[]{
             "Permission Manifest Demo",
+            "DeepLink Demo",
             "ContentRequestDemo",
             "LocationRequestDemo",
             "TelephonyRequestDemo",
@@ -30,6 +32,7 @@ public class MainActivity extends BaseActivity {
             "AccountRequestDemo"
     };
     public static SimpleRequestFactory[] mFactories = new SimpleRequestFactory[]{
+            null,
             null,
             null,
             new LocationRequestFactory(),
@@ -72,6 +75,9 @@ public class MainActivity extends BaseActivity {
                     switch (position) {
                     case 0:
                         startActivity(new Intent(MainActivity.this, DemoPermissionManifestActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(MainActivity.this, DemoDeepLinkActivity.class));
                         break;
                     default:
                         startActivity(new Intent(MainActivity.this, DemoActivity.class)

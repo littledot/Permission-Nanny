@@ -3,17 +3,15 @@ package com.permissionnanny.lib.request;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.location.Criteria;
 import android.location.LocationListener;
-import android.os.Bundle;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.permissionnanny.lib.C;
-import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyException;
+import com.permissionnanny.lib.NannyRequest;
 import com.permissionnanny.lib.request.content.ContentListener;
 import com.permissionnanny.lib.request.content.ContentRequest;
 import com.permissionnanny.lib.request.simple.LocationRequest;
@@ -21,29 +19,27 @@ import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
 import com.permissionnanny.lib.request.simple.WifiRequest;
 
-import java.security.SecureRandom;
-
 /**
  * A request to Permission Nanny to access resources that are protected by Android permissions on your behalf.
- * <p/>
+ * <p>
  * <h1>Request Types</h1>
- * <p/>
+ * <p>
  * Requests can be classified into 2 categories - {@link SimpleRequest} and {@link ContentRequest}.
- * <p/>
+ * <p>
  * <h1>{@linkplain SimpleRequest}s</h1>
- * <p/>
+ * <p>
  * Requests handled by dedicated Android managers - such as {@link android.telephony.TelephonyManager} and {@link
  * android.telephony.SmsManager} - are considered simple requests.
- * <p/>
+ * <p>
  * <h2>How to Create a {@linkplain SimpleRequest}</h2>
- * <p/>
+ * <p>
  * Use one of the subclass factories - such as {@link ContentRequest} and {@link LocationRequest} - to create requests.
  * To minimize confusion, each request factory closely mimics Android's managers. eg: {@link LocationRequest} mimics
  * {@link android.location.LocationManager}, {@link WifiRequest} mimics {@link android.net.wifi.WifiManager}. The
  * creator methods exposed in request factories also mirror those in Android managers.
- * <p/>
+ * <p>
  * <h2>How to Listen for a Response for a {@linkplain SimpleRequest}</h2>
- * <p/>
+ * <p>
  * After creating a request, attach a listener to it via {@link SimpleRequest#listener(SimpleListener)} to receive
  * results for a request. No matter if the user allows or denies your request, Permission Nanny will return the results
  * in a Bundle. The response Bundle consists of 2 components: metadata entries describing the response such as {@link
@@ -51,7 +47,7 @@ import java.security.SecureRandom;
  * data is structured as a nested Bundle within the response Bundle indexed at {@link Nanny#ENTITY_BODY}. If Permission
  * Nanny encountered a failure while executing your request, a nested {@link NannyException} indexed at {@link
  * Nanny#ENTITY_ERROR} will provide you details of what went wrong.
- * <p/>
+ * <p>
  * For one-shot requests, the requested resource is indexed using the method name within the entity data Bundle. For
  * example, if you were to make a {@link WifiRequest#getConnectionInfo()} request, the resource would be indexed at
  * {@link WifiRequest#GET_CONNECTION_INFO} within a Bundle indexed at {@link Nanny#ENTITY_BODY} of the response Bundle.
@@ -73,20 +69,20 @@ import java.security.SecureRandom;
  * LocationRequest#requestLocationUpdates(long, float, Criteria, LocationListener, Looper)}, the response Bundle will
  * only contain metadata and no entity data because the resource is delivered directly to the listener interface
  * provided to the request.
- * <p/>
+ * <p>
  * <h1>{@linkplain ContentRequest}s</h1>
- * <p/>
+ * <p>
  * Requests handled by {@link android.content.ContentProvider}s and {@link android.content.ContentResolver}s are
  * considered content requests.
- * <p/>
+ * <p>
  * <h2>How to Create a {@linkplain ContentRequest}</h2>
- * <p/>
+ * <p>
  * Use a {@link ContentRequest.Builder} to craft your query. The parameters the builder accepts closely resembles to
  * {@link android.content.ContentResolver} queries. As of now, only simple queries such as .query(), .insert(),
  * .update() and .delete() are supported; .applyBatch() and .bulkInsert() are not supported <i>yet</i>.
- * <p/>
+ * <p>
  * <h2>How to Listen for a Response for a {@linkplain ContentRequest}</h2>
- * <p/>
+ * <p>
  * After creating a request, attach a listener via {@link ContentRequest#listener(ContentListener)} to receive results
  * for a request. Similar to {@link SimpleRequest}s, Permission Nanny will return response metadata in a Bundle.
  * Resources are delivered via the appropriate parameter depending on the type of the content request.
@@ -108,15 +104,14 @@ import java.security.SecureRandom;
  *  }).startRequest(context, "Trust me");
  * </code>
  * </pre>
- * <p/>
+ * <p>
  * <h1>How to Start a Request</h1>
- * <p/>
+ * <p>
  * Send the request to Permission Nanny via {@link #startRequest(Context, String)}.
  */
-public abstract class PermissionRequest {
+public abstract class PermissionRequest extends NannyRequest {
 
-    protected PermissionReceiver mReceiver;
-    protected RequestParams mParams;
+    protected final RequestParams mParams;
 
     public PermissionRequest(RequestParams params) {
         mParams = params;
@@ -125,57 +120,24 @@ public abstract class PermissionRequest {
     /**
      * Start the request.
      *
-     * @param context Activity, Service, etc.
-     * @param reason  Explain to the user why you need to access the resource. This is displayed to the user in a dialog
-     *                when Permission Nanny needs to ask the user for authorization.
+     * @param context   Activity, Service, etc.
+     * @param rationale Explain to the user why you need to access the resource. This is displayed to the user in a
+     *                  dialog when Permission Nanny needs to ask the user for authorization.
      */
-    public void startRequest(@NonNull Context context, @Nullable String reason) {
-        if (!Nanny.isPermissionNannyInstalled(context)) {
-            if (mReceiver != null) {
-                mReceiver.onReceive(context, newNotFoundIntent());
-            }
-            return;
-        }
-
-        String clientId = null;
-        if (mReceiver != null) {
-            clientId = Long.toString(new SecureRandom().nextLong());
-            context.registerReceiver(mReceiver, new IntentFilter(clientId));
-        }
-        context.sendBroadcast(newBroadcastIntent(context, reason, clientId));
+    public void startRequest(Context context, @Nullable String rationale) {
+        setPayload(newBroadcastIntent(context, rationale));
+        super.startRequest(context);
     }
 
-    protected PermissionRequest addFilter(Event event) {
-        if (mReceiver == null) {
-            mReceiver = new PermissionReceiver();
-        }
-        mReceiver.addFilter(event);
-        return this;
-    }
-
-    private Intent newBroadcastIntent(Context context, @Nullable String reason, @Nullable String clientId) {
-        Bundle entity = new Bundle();
-        entity.putParcelable(Nanny.SENDER_IDENTITY, PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0));
-        entity.putParcelable(Nanny.REQUEST_PARAMS, mParams);
-        entity.putString(Nanny.REQUEST_RATIONALE, reason);
-
-        Intent intent = new Intent()
-                .setClassName(Nanny.getServerAppId(), Nanny.CLIENT_REQUEST_RECEIVER)
-                .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        if (clientId != null) {
-            intent.putExtra(Nanny.CLIENT_ADDRESS, clientId);
-        }
-        return intent.putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                .putExtra(Nanny.ENTITY_BODY, entity);
-    }
-
-    private Intent newNotFoundIntent() {
-        Bundle entity = new Bundle();
-        entity.putSerializable(Nanny.ENTITY_ERROR, new NannyException("Permission Nanny is not installed."));
+    protected Intent newBroadcastIntent(Context context, @Nullable String rationale) {
+        NannyBundle.Builder builder = new NannyBundle.Builder()
+                .sender(PendingIntent.getBroadcast(context, 0, C.EMPTY_INTENT, 0))
+                .clientAddress(mClientAddr)
+                .params(mParams)
+                .rationale(rationale);
         return new Intent()
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                .putExtra(Nanny.STATUS_CODE, Nanny.SC_NOT_FOUND)
-                .putExtra(Nanny.SERVER, Nanny.AUTHORIZATION_SERVICE)
-                .putExtra(Nanny.ENTITY_BODY, entity);
+                .setClassName(Nanny.getServerAppId(), Nanny.CLIENT_REQUEST_RECEIVER)
+                .setFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+                .putExtras(builder.build());
     }
 }

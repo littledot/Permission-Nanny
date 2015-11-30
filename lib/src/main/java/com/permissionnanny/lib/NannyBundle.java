@@ -74,6 +74,11 @@ public class NannyBundle {
         return value;
     }
 
+    public String getDeepLinkTarget() {
+        Bundle entity = getEntityBody();
+        return entity != null ? entity.getString(Nanny.DEEP_LINK_TARGET) : null;
+    }
+
     public String getAckAddress() {
         Bundle entity = getEntityBody();
         return entity != null ? entity.getString(Nanny.ACK_SERVER_ADDRESS) : null;
@@ -91,6 +96,7 @@ public class NannyBundle {
         public PendingIntent mSender;
         public RequestParams mParams;
         public String mRationale;
+        public String mDeepLinkTarget;
         public String mAckAddress;
 
         public Builder statusCode(int statusCode) {
@@ -138,6 +144,11 @@ public class NannyBundle {
             return this;
         }
 
+        public Builder deepLinkTarget(String deepLinkTarget) {
+            mDeepLinkTarget = deepLinkTarget;
+            return this;
+        }
+
         public Builder ackAddress(String ackAddress) {
             mAckAddress = ackAddress;
             return this;
@@ -156,6 +167,9 @@ public class NannyBundle {
             if (mRationale != null) {
                 mEntity.putString(Nanny.REQUEST_REASON, mRationale);
                 mEntity.putString(Nanny.REQUEST_RATIONALE, mRationale);
+            }
+            if (mDeepLinkTarget != null) {
+                mEntity.putString(Nanny.DEEP_LINK_TARGET, mDeepLinkTarget);
             }
             if (mAckAddress != null) {
                 mEntity.putString(Nanny.ACK_SERVER_ADDRESS, mAckAddress);
