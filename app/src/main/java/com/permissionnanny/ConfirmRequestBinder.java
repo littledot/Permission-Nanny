@@ -11,10 +11,10 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import com.permissionnanny.data.AppPermission;
 import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.request.RequestParams;
-
 import javax.inject.Inject;
 
 /**
@@ -90,10 +90,16 @@ public class ConfirmRequestBinder extends BaseBinder {
     }
 
     public void executeAllow() {
+        if (mRemember) {
+            mAppManager.changePrivilege(mAppPackage, mOperation, mRequest, AppPermission.ALWAYS_ALLOW);
+        }
         mExecutor.executeAllow(mOperation, mRequest, mClientAddr);
     }
 
     public void executeDeny() {
+        if (mRemember) {
+            mAppManager.changePrivilege(mAppPackage, mOperation, mRequest, AppPermission.ALWAYS_DENY);
+        }
         mExecutor.executeDeny(mOperation, mRequest, mClientAddr);
     }
 }

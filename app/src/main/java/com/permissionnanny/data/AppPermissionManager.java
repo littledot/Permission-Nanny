@@ -107,6 +107,31 @@ public class AppPermissionManager {
         }
     }
 
+    public void changePrivilege(String appPackage, Operation operation, RequestParams params, int newPrivilege) {
+        if (operation instanceof SimpleOperation) {
+            changePrivilege(appPackage, ((SimpleOperation) operation).mPermission, newPrivilege);
+        } else if (operation instanceof ContentOperation) {
+            changePrivilege(appPackage, contentPermissionMap((ContentOperation) operation, params), newPrivilege);
+        }
+    }
+
+    private void changePrivilege(String appPackage, String permission, int newPrivilege) {
+        Map<String, AppPermission> permissions = mConfigs.get(appPackage);
+        if (permissions == null) {
+            permissions = new ArrayMap<>();
+            mConfigs.put(appPackage, permissions);
+        }
+        AppPermission config = permissions.get(permission);
+        if (config == null) {
+            config = new AppPermission(appPackage, permission, newPrivilege);
+        } else {
+            config = config.setPrivilege(newPrivilege);
+        }
+        permissions.put(permission, config);
+        mDB.putConfig(config);
+        mBus.publish(mConfigs);
+    }
+
     @AppPermission.Res
     public int getPermissionPrivilege(String appPackage, Operation operation, RequestParams params) {
         if (operation instanceof SimpleOperation) {
