@@ -4,6 +4,8 @@ apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.getkeepsafe.dexcount'
 
+initFabricProperties()
+
 android {
     compileSdkVersion project.compileSdk
     buildToolsVersion project.buildTools
@@ -93,10 +95,6 @@ dependencies {
     androidTestCompile project.espressoCore
     androidTestCompile project.asm
     androidTestCompile project.objenesis
-}
-
-afterEvaluate {
-    initFabricProperties()
 }
 
 def initFabricProperties() {
