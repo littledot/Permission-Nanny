@@ -23,9 +23,9 @@ android {
     signingConfigs {
         release {
             Properties properties = new Properties()
-            properties.load(project.rootProject.file('permission-nanny-android.properties').newDataInputStream())
+            properties.load(project.rootProject.file('google-play.properties').newDataInputStream())
 
-            storeFile project.rootProject.file('permission-nanny-android.jks')
+            storeFile project.rootProject.file('google-play.jks')
             storePassword properties.getProperty("STORE_PASSWORD")
             keyAlias properties.getProperty("KEY_ALIAS")
             keyPassword properties.getProperty("KEY_PASSWORD")
