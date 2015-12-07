@@ -23,11 +23,12 @@ android {
 }
 
 dependencies {
-    compile project.supportAnnotations
-    compile project.junit
-    compile project.hamcrestLibrary
-    compile project.mockitoCore
-    compile project.robolectric
     compile project.asm
-    compile project.objenesis
+    compile project.hamcrestLibrary
+    compile project.powermockModuleJunit4
+    compile project.powermockModuleJunit4Rule
+    compile project.powermockApiMockito
+    compile project.powermockClassloadingXstream
+    compile project.robolectric
+    compile project.supportAnnotations
 }

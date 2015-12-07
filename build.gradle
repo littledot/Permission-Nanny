@@ -67,6 +67,11 @@ buildscript {
         junit = 'junit:junit:4.12'
         mockitoCore = 'org.mockito:mockito-core:1.9.5'
         objenesis = 'org.objenesis:objenesis:2.1' // Resolved versions for app (2.1) and test app (1.0) differ.
+        v = '1.6.2'
+        powermockApiMockito = "org.powermock:powermock-api-mockito:${v}"
+        powermockClassloadingXstream = "org.powermock:powermock-classloading-xstream:${v}"
+        powermockModuleJunit4 = "org.powermock:powermock-module-junit4:${v}"
+        powermockModuleJunit4Rule = "org.powermock:powermock-module-junit4-rule:${v}"
         robolectric = 'org.robolectric:robolectric:3.0'
         shadowsSupportV4 = 'org.robolectric:shadows-support-v4'
     }

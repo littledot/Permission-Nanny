@@ -80,12 +80,6 @@ dependencies {
     compile project.timber
 
     testCompile project(':commonTest')
-    testCompile project.junit
-    testCompile project.hamcrestLibrary
-    testCompile project.mockitoCore
-    testCompile project.robolectric
-    testCompile project.asm
-    testCompile project.objenesis
 
     androidTestCompile project.junit
     androidTestCompile project.mockitoCore

@@ -14,10 +14,12 @@ public class NannyTestRunner extends RobolectricGradleTestRunner {
     }
 
     public static RuleChain newTestRules(Object target) {
-        return RuleChain.outerRule(new InitMocksRule(target));
+        return RuleChain.emptyRuleChain()
+                .around(new PowerMockTestRule(target))
+                .around(new InitMocksRule(target));
     }
 
-    public NannyTestRunner(Class<?> klass) throws InitializationError {
-        super(klass);
+    public NannyTestRunner(Class<?> type) throws InitializationError {
+        super(type);
     }
 }

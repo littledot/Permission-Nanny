@@ -4,9 +4,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyException;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -17,15 +19,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
-import java.util.ArrayList;
-
 import static com.permissionnanny.common.test.AndroidMatchers.*;
 import static com.permissionnanny.common.test.Mockingbird.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(NannyAppTestRunner.class)
-public class ClientPermissionManifestReceiverTest {
+public class ClientPermissionManifestReceiverTest extends NannyTestCase {
 
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);

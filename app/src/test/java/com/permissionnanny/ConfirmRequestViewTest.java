@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.permissionnanny.common.test.NannyTestCase;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -18,7 +19,7 @@ import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 
 @RunWith(NannyAppTestRunner.class)
-public class ConfirmRequestViewTest {
+public class ConfirmRequestViewTest extends NannyTestCase {
 
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);

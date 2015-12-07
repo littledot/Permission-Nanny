@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.common.test.NannyTestRunner;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyLibTestRunner;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(NannyLibTestRunner.class)
-public class PermissionRequestTest {
+public class PermissionRequestTest extends NannyTestCase {
 
     @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);

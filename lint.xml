@@ -9,5 +9,7 @@
         <ignore regexp="junit"/>
         <ignore regexp="robolectric"/>
         <ignore regexp="shadows-core"/>
+        <ignore regexp="javassist"/>
+        <ignore regexp="xstream"/>
     </issue>
 </lint>

@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.WifiRequest;
@@ -24,7 +25,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(NannyAppTestRunner.class)
-public class ConfirmRequestBinderTest {
+public class ConfirmRequestBinderTest extends NannyTestCase {
 
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);

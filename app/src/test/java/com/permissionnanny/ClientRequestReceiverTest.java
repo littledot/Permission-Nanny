@@ -5,14 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.test.Mockingbird;
+import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.data.AppPermission;
 import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.TelephonyRequest;
 import com.permissionnanny.lib.request.simple.WifiRequest;
-import com.permissionnanny.data.AppPermission;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -29,7 +30,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(NannyAppTestRunner.class)
-public class ClientRequestReceiverTest {
+public class ClientRequestReceiverTest extends NannyTestCase {
 
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);

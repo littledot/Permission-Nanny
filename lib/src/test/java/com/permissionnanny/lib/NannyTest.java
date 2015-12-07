@@ -3,6 +3,7 @@ package com.permissionnanny.lib;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.common.test.NannyTestRunner;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -17,7 +18,7 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 @RunWith(NannyLibTestRunner.class)
-public class NannyTest {
+public class NannyTest extends NannyTestCase {
 
     @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
