@@ -28,9 +28,9 @@ import timber.log.Timber;
 @Singleton
 public class AppPermissionManager {
 
-    private Application mContext;
-    private AppPermissionDB mDB;
-    private AppModule.Bus mBus;
+    private final Application mContext;
+    private final AppPermissionDB mDB;
+    private final AppModule.Bus mBus;
 
     /** Index definition: {App Name: {Permission Name: Privilege}} */
     Map<String, Map<String, AppPermission>> mConfigs = new ArrayMap<>();

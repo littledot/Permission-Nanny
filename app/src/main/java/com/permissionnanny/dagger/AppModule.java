@@ -28,7 +28,7 @@ public class AppModule {
     private static final String APP_PERMISSION_DB_LEVELDB_PATH = "dain.leveldb.appPermission.db";
     private static final String ONGOING_REQUESTS_DB_LEVELDB_PATH = "dain.leveldb.ongoingRequests.db";
 
-    App mApp;
+    private final App mApp;
 
     public AppModule(App app) {
         mApp = app;

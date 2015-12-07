@@ -139,7 +139,6 @@ public class RequestParams implements Parcelable {
     }
 
     @Override
-
     public int describeContents() { return 0; }
 
     @Override

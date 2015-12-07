@@ -14,9 +14,9 @@ public class Cryo {
     public static final int BUF_MAX_SIZE = -1;
     private static final byte[] EMPTY_BUF = new byte[0];
 
-    private Kryo mKryo;
-    private Pools.Pool<Output> mOutputPool;
-    private Pools.Pool<Input> mInputPool;
+    private final Kryo mKryo;
+    private final Pools.Pool<Output> mOutputPool;
+    private final Pools.Pool<Input> mInputPool;
 
     @Inject
     public Cryo(Kryo kryo) {

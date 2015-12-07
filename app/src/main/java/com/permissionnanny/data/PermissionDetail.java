@@ -12,7 +12,7 @@ import static com.permissionnanny.R.string.*;
  *
  */
 public class PermissionDetail {
-    private static Map<String, PermissionDetail> resMap = new ArrayMap<>();
+    private final static Map<String, PermissionDetail> resMap = new ArrayMap<>();
 
     static {
         resMap.put(ACCESS_COARSE_LOCATION, new PermissionDetail(permlab_accessCoarseLocation, permdesc_accessCoarseLocation));
