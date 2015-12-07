@@ -75,16 +75,11 @@ buildscript {
         robolectric = 'org.robolectric:robolectric:3.0'
         shadowsSupportV4 = 'org.robolectric:shadows-support-v4'
 
-        loadProp = { Properties map, String[] keys ->
-            keys.each { key ->
-                set(key, map.containsKey(key) ? map.get(key) : System.env.get(key))
-            }
-        }
         Properties p = new Properties()
         p.load(file('secret.properties').newDataInputStream())
-        loadProp(p,
-                "BINTRAY_USER", "BINTRAY_KEY",
-                "GOOGLE_PLAY_STORE_PASSWORD", "GOOGLE_PLAY_KEY_ALIAS", "GOOGLE_PLAY_KEY_PASSWORD")
+        p.each { key, val ->
+            set(key, val ? val : System.env.get(key))
+        }
     }
 }
 

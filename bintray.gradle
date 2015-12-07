@@ -1,6 +1,6 @@
-group = PROJ_GROUP
-version = PROJ_VERSION
-project.archivesBaseName = PROJ_ARTIFACTID
+group = BINTRAY_GROUP
+version = project.versionName
+project.archivesBaseName = BINTRAY_ARTIFACTID
 
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
@@ -41,7 +41,7 @@ javadoc {
         author true
         version true
         links "http://docs.oracle.com/javase/7/docs/api"
-        title PROJ_ARTIFACTID
+        title BINTRAY_ARTIFACTID
     }
 }
 
@@ -61,9 +61,9 @@ def pomConfig = {
     }
     developers {
         developer {
-            id DEVELOPER_ID
-            name DEVELOPER_NAME
-            email DEVELOPER_EMAIL
+            id BINTRAY_DEVELOPER_ID
+            name BINTRAY_DEVELOPER_NAME
+            email BINTRAY_DEVELOPER_EMAIL
         }
     }
 }
@@ -71,14 +71,14 @@ def pomConfig = {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId PROJ_ARTIFACTID
+            artifactId BINTRAY_ARTIFACTID
 
             pom {
                 packaging 'aar'
             }
             pom.withXml {
                 def root = asNode()
-                root.appendNode('description', PROJ_DESCRIPTION)
+                root.appendNode('description', BINTRAY_DESCRIPTION)
                 root.children().last() + pomConfig
             }
         }
@@ -95,11 +95,11 @@ bintray {
 
     pkg {
         repo = 'maven'
-        name = PROJ_NAME
-        desc = PROJ_DESCRIPTION
-        websiteUrl = PROJ_WEBSITEURL
-        issueTrackerUrl = PROJ_ISSUETRACKERURL
-        vcsUrl = PROJ_VCSURL
+        name = BINTRAY_NAME
+        desc = BINTRAY_DESCRIPTION
+        websiteUrl = BINTRAY_WEBSITEURL
+        issueTrackerUrl = BINTRAY_ISSUETRACKERURL
+        vcsUrl = BINTRAY_VCSURL
         licenses = ['Apache-2.0']
         publicDownloadNumbers = false
     }
