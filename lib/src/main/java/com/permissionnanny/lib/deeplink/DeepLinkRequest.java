@@ -10,11 +10,14 @@ import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyRequest;
 import com.permissionnanny.lib.request.PermissionEvent;
 import com.permissionnanny.lib.request.simple.SimpleListener;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  *
  */
 public class DeepLinkRequest extends NannyRequest {
+    @Retention(RetentionPolicy.SOURCE)
     @StringDef(Nanny.MANAGE_APPLICATIONS_SETTINGS)
     public @interface Res {}
 

@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.support.v4.util.ArrayMap;
 import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
-import org.apache.http.protocol.HTTP;
-
 import java.util.Map;
 
 /**
@@ -24,7 +22,7 @@ public class PermissionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (HTTP.CONN_CLOSE.equals(intent.getStringExtra(HTTP.CONN_DIRECTIVE))) {
+        if (Nanny.CLOSE.equals(intent.getStringExtra(Nanny.CONNECTION))) {
             context.unregisterReceiver(this);
         }
         String server = intent.getStringExtra(Nanny.SERVER);
