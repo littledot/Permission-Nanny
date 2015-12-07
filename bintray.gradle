@@ -86,11 +86,8 @@ publishing {
 }
 
 bintray {
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('bintray.properties').newDataInputStream())
-
-    user = properties.getProperty("BINTRAY_USER")
-    key = properties.getProperty("BINTRAY_KEY")
+    user = project.BINTRAY_USER
+    key = project.BINTRAY_KEY
 
     configurations = ['archives']
     publications = ['mavenJava']
