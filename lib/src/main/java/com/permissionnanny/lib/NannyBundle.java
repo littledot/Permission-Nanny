@@ -9,6 +9,7 @@ import com.permissionnanny.lib.request.RequestParams;
  *
  */
 public class NannyBundle {
+
     private Bundle mBundle;
 
     public NannyBundle(Bundle bundle) {
@@ -76,7 +77,8 @@ public class NannyBundle {
 
     public String getDeepLinkTarget() {
         Bundle entity = getEntityBody();
-        return entity != null ? entity.getString(Nanny.DEEP_LINK_TARGET) : null;
+        String deepLink;
+        return entity != null && (deepLink = entity.getString(Nanny.DEEP_LINK_TARGET)) != null ? deepLink : "";
     }
 
     public String getAckAddress() {
@@ -85,6 +87,7 @@ public class NannyBundle {
     }
 
     public static class Builder {
+
         public String mProtocolVersion = Nanny.PPP_0_1;
         public int mStatusCode;
         public String mClientAddress;

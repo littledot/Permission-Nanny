@@ -25,9 +25,12 @@ android {
 dependencies {
     compile project.asm
     compile project.hamcrestLibrary
+    compile project.mockitoCore
     compile project.powermockModuleJunit4
     compile project.powermockModuleJunit4Rule
-    compile project.powermockApiMockito
+    compile(project.powermockApiMockito) {
+        exclude group: 'org.mockito'
+    }
     compile project.powermockClassloadingXstream
     compile project.robolectric
     compile project.supportAnnotations

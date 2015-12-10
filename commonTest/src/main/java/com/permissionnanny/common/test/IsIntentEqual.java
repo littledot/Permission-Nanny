@@ -37,8 +37,8 @@ public class IsIntentEqual extends BaseMatcher<Intent> {
             return false;
         }
 
-        // Metadata must match
-        return mExpected.filterEquals(actualIntent);
+        // Metadata & extra data must match
+        return mExpected.filterEquals(actualIntent) && mExpected.equals(actualIntent);
     }
 
     @Override

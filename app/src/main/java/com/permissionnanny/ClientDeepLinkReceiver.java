@@ -36,13 +36,14 @@ public class ClientDeepLinkReceiver extends BaseReceiver {
             return;
         }
 
-        switch (bundle.getDeepLinkTarget()) {
+        String deepLinkTarget = bundle.getDeepLinkTarget();
+        switch (deepLinkTarget) {
             case Nanny.MANAGE_APPLICATIONS_SETTINGS:
                 context.startActivity(new Intent(context, AppControlActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             default:
-                badRequest(context, clientAddr, new NannyException(Err.UNSUPPORTED_DEEP_LINK_TARGET));
+                badRequest(context, clientAddr, new NannyException(Err.UNSUPPORTED_DEEP_LINK_TARGET, deepLinkTarget));
                 return;
         }
         okRequest(context, clientAddr);
