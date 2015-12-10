@@ -14,20 +14,15 @@ import timber.log.Timber;
  *
  */
 public class ProxyListener<Listener> {
+
     protected final ProxyService mService;
     private final String mClientAddr;
 
-    /**
-     * Time of last broadcast.
-     */
+    /** Time of last broadcast. */
     private long mLastBroadcast;
-    /**
-     * Time of last ACK received.
-     */
+    /** Time of last ACK received. */
     private long mLastAck;
-    /**
-     * Proxy service name.
-     */
+    /** Proxy service name. */
     protected final String mServer;
 
     public Listener mListener;

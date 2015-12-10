@@ -17,7 +17,7 @@ import timber.log.Timber;
 import javax.inject.Inject;
 
 /**
- * This receiver is part of PPP. It's class name must never change.
+ * This receiver is part of PPP. Its class name must never change.
  */
 @PPP
 public class ClientRequestReceiver extends BaseReceiver {

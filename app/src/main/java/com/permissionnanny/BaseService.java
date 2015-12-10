@@ -8,7 +8,7 @@ import com.permissionnanny.dagger.ContextComponent;
 import timber.log.Timber;
 
 /**
- *
+ * The root of all Services.
  */
 public class BaseService extends Service {
 

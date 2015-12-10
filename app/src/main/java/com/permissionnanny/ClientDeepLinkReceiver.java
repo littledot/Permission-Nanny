@@ -8,11 +8,15 @@ import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.PPP;
+import com.permissionnanny.lib.deeplink.DeepLinkRequest;
 import com.permissionnanny.missioncontrol.AppControlActivity;
 import timber.log.Timber;
 
 /**
- * This receiver is part of PPP. It's class name must never change.
+ * This receiver is part of PPP. Its class name must never change.
+ * <p/>
+ * Receiver that allows clients to navigate users directly into Permission Nanny. Please see {@link DeepLinkRequest} for
+ * documentation.
  */
 @PPP
 public class ClientDeepLinkReceiver extends BaseReceiver {

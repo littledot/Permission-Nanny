@@ -1,9 +1,10 @@
 package com.permissionnanny;
 
 /**
- *
+ * Collection of error messages.
  */
 public class Err {
+
     public static final String NO_ENTITY = "ENTITY_BODY is missing.";
     public static final String NO_SENDER_IDENTITY = "SENDER_IDENTITY is missing.";
     public static final String NO_REQUEST_PARAMS = "REQUEST_PARAMS is missing";

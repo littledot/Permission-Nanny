@@ -14,21 +14,74 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- *
+ * <h1>Deep Linking into Permission Nanny</h1>
+ * <p/>
+ * Permission Nanny exposes APIs that allow clients to navigate their users directly into the app, aka "deep linking".
+ * This can be useful when clients would like users to perform an action that can only be executed within Permission
+ * Nanny, such as re-enabling permissions.
+ * <p/>
+ * To deep link into Permission Nanny, clients need to complete the deep link handshake flow.
+ * <p/>
+ * <h1>Deep Link Handshake Flow</h1>
+ * <p/>
+ * Clients start the flow by broadcasting an Intent to this receiver. The Intent <b>must</b> contain the usual request
+ * metadata. In addition, the Intent <b>must</b> contain a {@link Nanny#DEEP_LINK_TARGET} String to indicate the target
+ * Activity which the client would like to deep link into.
+ * <pre>
+ *     Client ---> Server
+ *     {
+ *         {@link Nanny#PROTOCOL_VERSION}*
+ *         {@link Nanny#CLIENT_ADDRESS}
+ *         {@link Nanny#ENTITY_BODY}* = {
+ *             {@link Nanny#SENDER_IDENTITY}*
+ *             {@link Nanny#DEEP_LINK_TARGET}*
+ *         }
+ *     }
+ * </pre>
+ * If the request is valid, the server will return a success response.
+ * <pre>
+ *     Client <--- Server
+ *     {
+ *         {@link Nanny#PROTOCOL_VERSION}*
+ *         {@link Nanny#STATUS_CODE}* = {@link Nanny#SC_OK}
+ *         {@link Nanny#CONNECTION}* = {@link Nanny#CLOSE}
+ *         {@link Nanny#SERVER}* = {@link Nanny#AUTHORIZATION_SERVICE}
+ *     }
+ * </pre>
+ * Otherwise, the server will return a failure response containing the error.
+ * <pre>
+ *     Client <--- Server
+ *     {
+ *         {@link Nanny#PROTOCOL_VERSION}*
+ *         {@link Nanny#STATUS_CODE}*
+ *         {@link Nanny#CONNECTION}* = {@link Nanny#CLOSE}
+ *         {@link Nanny#SERVER}* = {@link Nanny#AUTHORIZATION_SERVICE}
+ *         {@link Nanny#ENTITY_ERROR}*
+ *     }
+ * </pre>
  */
 public class DeepLinkRequest extends NannyRequest {
+
+    /**
+     * Annotates ElementTypes that represent valid deep link targets.
+     */
     @Retention(RetentionPolicy.SOURCE)
     @StringDef(Nanny.MANAGE_APPLICATIONS_SETTINGS)
     public @interface Res {}
 
     private final String mDeepLinkTarget;
 
+    /**
+     * Create a new request.
+     *
+     * @param deepLinkTarget Target Activity to deep link into; must be a {@link Res}.
+     */
     public DeepLinkRequest(@Res String deepLinkTarget) {
         mDeepLinkTarget = deepLinkTarget;
     }
 
     /**
-     * Attach a listener.
+     * Attaches a listener.
      *
      * @param listener Response receiver
      * @return itself
@@ -38,7 +91,7 @@ public class DeepLinkRequest extends NannyRequest {
     }
 
     /**
-     * Start the request.
+     * Starts the request.
      *
      * @param context Activity, Service, etc.
      */
