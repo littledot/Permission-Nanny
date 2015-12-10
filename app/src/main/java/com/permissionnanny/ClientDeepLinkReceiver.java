@@ -33,12 +33,22 @@ public class ClientDeepLinkReceiver extends BaseReceiver {
         }
 
         switch (bundle.getDeepLinkTarget()) {
-        case Nanny.MANAGE_APPLICATIONS_SETTINGS:
-            context.startActivity(new Intent(context, AppControlActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            break;
-        default:
-            badRequest(context, clientAddr, new NannyException(Err.UNSUPPORTED_DEEP_LINK_TARGET));
+            case Nanny.MANAGE_APPLICATIONS_SETTINGS:
+                context.startActivity(new Intent(context, AppControlActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            default:
+                badRequest(context, clientAddr, new NannyException(Err.UNSUPPORTED_DEEP_LINK_TARGET));
+                return;
+        }
+        okRequest(context, clientAddr);
+    }
+
+    private void okRequest(Context context, String clientAddr) {
+        if (clientAddr != null && !clientAddr.isEmpty()) {
+            Bundle args = ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).connection(Nanny.CLOSE).build();
+            Intent response = new Intent(clientAddr).putExtras(args);
+            context.sendBroadcast(response);
         }
     }
 
