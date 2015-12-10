@@ -9,11 +9,10 @@ import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.lib.PPP;
-import timber.log.Timber;
-
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.inject.Inject;
+import timber.log.Timber;
 
 /**
  * This receiver is part of PPP. Its class name must never change.

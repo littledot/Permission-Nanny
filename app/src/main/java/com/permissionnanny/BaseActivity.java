@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.permissionnanny.dagger.ContextComponent;
 
 /**
- *
+ * The root of all Activities.
  */
 public class BaseActivity extends AppCompatActivity {
 

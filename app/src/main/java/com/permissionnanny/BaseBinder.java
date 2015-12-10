@@ -4,7 +4,7 @@ import android.content.Context;
 import com.permissionnanny.dagger.ContextComponent;
 
 /**
- *
+ * The root of all Binders.
  */
 public class BaseBinder {
 

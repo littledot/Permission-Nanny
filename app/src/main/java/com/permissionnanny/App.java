@@ -17,9 +17,11 @@ import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
- *
+ * Server application.
  */
 public class App extends Application {
+
+    /** Identity of the server; sent to clients as a proof of identity. */
     public static PendingIntent IDENTITY;
     private AppComponent mAppComponent;
 
@@ -32,7 +34,7 @@ public class App extends Application {
         PRNGFixes.apply();
         Timber.plant(new StackTraceDebugTree());
 
-        // https://github.com/dain/leveldb/issues/43
+        // LevelDB patch: https://github.com/dain/leveldb/issues/43
         System.setProperty("sun.arch.data.model", "32");
         System.setProperty("leveldb.mmap", "false");
 

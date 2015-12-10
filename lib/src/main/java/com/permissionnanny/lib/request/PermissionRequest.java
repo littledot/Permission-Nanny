@@ -109,11 +109,11 @@ import com.permissionnanny.lib.request.simple.WifiRequest;
  * <p>
  * Send the request to Permission Nanny via {@link #startRequest(Context, String)}.
  */
-public abstract class PermissionRequest extends NannyRequest {
+public class PermissionRequest extends NannyRequest {
 
     protected final RequestParams mParams;
 
-    public PermissionRequest(RequestParams params) {
+    protected PermissionRequest(RequestParams params) {
         mParams = params;
     }
 

@@ -16,12 +16,13 @@ import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.notNull;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(NannyLibTestRunner.class)
-//@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
 @PrepareForTest(Nanny.class)
 public class NannyRequestTest extends NannyTestCase {
 

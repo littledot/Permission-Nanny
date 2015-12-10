@@ -19,6 +19,7 @@ import butterknife.OnClick;
  *
  */
 public class ConfirmRequestView {
+
     private final Activity mActivity;
     private final TextDialogStubView mTextStub;
 

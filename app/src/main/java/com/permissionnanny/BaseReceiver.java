@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.permissionnanny.dagger.ContextComponent;
 
 /**
- *
+ * The root of all BroadcastReceivers.
  */
 public class BaseReceiver extends BroadcastReceiver {
 

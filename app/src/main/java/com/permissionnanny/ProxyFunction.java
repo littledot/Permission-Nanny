@@ -8,5 +8,6 @@ import com.permissionnanny.lib.request.RequestParams;
  *
  */
 public interface ProxyFunction {
+
     void execute(Context context, RequestParams request, Bundle response);
 }
