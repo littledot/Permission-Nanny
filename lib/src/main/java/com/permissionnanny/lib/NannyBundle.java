@@ -40,6 +40,11 @@ public class NannyBundle {
     }
 
     @Nullable
+    public Throwable getError() {
+        return (Throwable) mBundle.getSerializable(Nanny.ENTITY_ERROR);
+    }
+
+    @Nullable
     public Bundle getEntityBody() {
         return mBundle.getBundle(Nanny.ENTITY_BODY);
     }
