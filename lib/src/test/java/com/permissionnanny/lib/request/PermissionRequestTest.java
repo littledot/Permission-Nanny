@@ -88,19 +88,4 @@ public class PermissionRequestTest extends NannyTestCase {
         verify(ctx).sendBroadcast(intentCaptor.capture());
         assertThat(intentCaptor.getValue().hasExtra(Nanny.CLIENT_ADDRESS), is(false));
     }
-
-    @Test
-    public void startRequest_ShouldReturn404AndNotSendBroadcast_WhenServerIsNotInstalled() throws Exception {
-        when(ctx.getPackageManager()).thenReturn(pm);
-        target.listener(listener);
-
-        target.startRequest(ctx, null);
-
-        verify(listener).onResponse(bundleCaptor.capture());
-        Bundle response = bundleCaptor.getValue();
-        assertThat(response.getInt(Nanny.STATUS_CODE), is(Nanny.SC_NOT_FOUND));
-        assertThat(response.getBundle(Nanny.ENTITY_BODY).getSerializable(Nanny.ENTITY_ERROR), not(nullValue()));
-        verify(ctx, never()).registerReceiver((BroadcastReceiver) any(), (IntentFilter) any());
-        verify(ctx, never()).sendBroadcast((Intent) any());
-    }
 }

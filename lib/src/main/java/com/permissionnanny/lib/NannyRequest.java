@@ -3,7 +3,6 @@ package com.permissionnanny.lib;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.permissionnanny.lib.request.PermissionReceiver;
 import java.security.SecureRandom;
@@ -11,7 +10,8 @@ import java.security.SecureRandom;
 /**
  *
  */
-public abstract class NannyRequest {
+public class NannyRequest {
+
     protected final String mClientAddr;
     @Nullable private PermissionReceiver mReceiver;
     @Nullable private Intent mPaylaod;
@@ -46,6 +46,9 @@ public abstract class NannyRequest {
             }
             return;
         }
+        if (mPaylaod == null) {
+            throw new IllegalStateException("No payload.");
+        }
         if (mReceiver != null) {
             context.registerReceiver(mReceiver, new IntentFilter(mClientAddr));
         }
@@ -59,12 +62,10 @@ public abstract class NannyRequest {
     }
 
     private Intent newNotFoundIntent() {
-        Bundle entity = new Bundle();
-        entity.putSerializable(Nanny.ENTITY_ERROR, new NannyException("Permission Nanny is not installed."));
-        return new Intent()
-                .putExtra(Nanny.PROTOCOL_VERSION, Nanny.PPP_0_1)
-                .putExtra(Nanny.STATUS_CODE, Nanny.SC_NOT_FOUND)
-                .putExtra(Nanny.SERVER, Nanny.AUTHORIZATION_SERVICE)
-                .putExtra(Nanny.ENTITY_BODY, entity);
+        return new Intent().putExtras(new NannyBundle.Builder()
+                .statusCode(Nanny.SC_NOT_FOUND)
+                .server(Nanny.AUTHORIZATION_SERVICE)
+                .error(new NannyException("Permission Nanny is not installed."))
+                .build());
     }
 }
