@@ -5,6 +5,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.CompatibleFieldSerializer;
 import com.permissionnanny.App;
 import com.permissionnanny.data.AppPermissionDB;
+import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.data.Cryo;
 import com.permissionnanny.data.NannyDB;
 import com.permissionnanny.data.OngoingRequestDB;
@@ -84,5 +85,11 @@ public class AppModule {
             Timber.e(e, "ongoing");
         }
         return null;
+    }
+
+    @Provides
+    @Singleton
+    AppPermissionManager provideAppPermissionManager(Application app, AppPermissionDB db, Bus bus) {
+        return new AppPermissionManager(app, db, bus);
     }
 }

@@ -3,6 +3,7 @@ package com.permissionnanny;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.VisibleForTesting;
 import com.permissionnanny.dagger.ContextComponent;
 
 /**
@@ -14,6 +15,11 @@ public class BaseReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {}
+
+    @VisibleForTesting
+    void setComponent(ContextComponent component) {
+        mComponent = component;
+    }
 
     public ContextComponent getComponent(Context context) {
         if (mComponent == null) {

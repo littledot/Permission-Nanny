@@ -76,6 +76,8 @@ dependencies {
     compile project.mbassador
     compile project.timber
 
+    testApt project.daggerCompiler
+
     testCompile project(':commonTest')
 
     androidTestCompile project.junit

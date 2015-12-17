@@ -3,8 +3,8 @@ package com.permissionnanny;
 import android.content.Context;
 import android.content.Intent;
 import com.permissionnanny.data.AppPermissionManager;
-
 import javax.inject.Inject;
+import timber.log.Timber;
 
 /**
  *
@@ -22,6 +22,7 @@ public class UninstallReceiver extends BaseReceiver {
             return;
         }
 
+        Timber.wtf("removed package=" + intent.getData());
         String appPackage = intent.getData().getSchemeSpecificPart();
         mAppManager.removeApp(appPackage);
     }

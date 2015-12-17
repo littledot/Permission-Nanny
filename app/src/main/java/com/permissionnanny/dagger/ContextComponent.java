@@ -9,7 +9,6 @@ import com.permissionnanny.UninstallReceiver;
 import com.permissionnanny.dagger.ContextComponent.ContextScope;
 import com.permissionnanny.missioncontrol.AppControlBinder;
 import dagger.Component;
-
 import javax.inject.Scope;
 
 /**
