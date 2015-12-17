@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
 import com.permissionnanny.common.test.NannyTestCase;
+import com.permissionnanny.dagger.MockComponentFactory;
+import com.permissionnanny.dagger.MockContextComponent;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.WifiRequest;
@@ -20,9 +22,11 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(NannyAppTestRunner.class)
 public class ConfirmRequestBinderTest extends NannyTestCase {
@@ -30,33 +34,35 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
 
-    ConfirmRequestBinder target;
-    @Mock Activity activity;
-    @Mock NannyBundle bundle;
-    @Mock PackageManager pm;
-    @Mock ApplicationInfo appInfo;
-    @Mock Drawable icon;
-    RequestParams params;
+    ConfirmRequestBinder mBinder;
+    MockContextComponent mComponent;
+    RequestParams mRequestParams;
+    @Mock Activity mActivity;
+    @Mock NannyBundle mNannyBundle;
+    @Mock PackageManager mPackageManager;
+    @Mock ApplicationInfo mAppInfo;
+    @Mock Drawable mIcon;
 
     @Before
     public void setUp() throws Exception {
-        activity = RoboApp.newMockActivity();
-        when(activity.getPackageManager()).thenReturn(pm);
-        params = new RequestParams();
+        mComponent = MockComponentFactory.getContextComponent();
+        mComponent.inject(this);
+        when(mActivity.getPackageManager()).thenReturn(mPackageManager);
+        mRequestParams = new RequestParams();
     }
 
     @Test
     public void getDialogTitleShouldReturnAppLabel() throws Exception {
-        when(bundle.getSenderIdentity()).thenReturn("3rd.party.app");
-        when(pm.getApplicationInfo("3rd.party.app", 0)).thenReturn(appInfo);
-        when(pm.getApplicationLabel(appInfo)).thenReturn("3rd Party App");
-        params.opCode = WifiRequest.GET_CONNECTION_INFO;
-        when(bundle.getRequest()).thenReturn(params);
-        when(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        when(mNannyBundle.getSenderIdentity()).thenReturn("3rd.party.app");
+        when(mPackageManager.getApplicationInfo("3rd.party.app", 0)).thenReturn(mAppInfo);
+        when(mPackageManager.getApplicationLabel(mAppInfo)).thenReturn("3rd Party App");
+        mRequestParams.opCode = WifiRequest.GET_CONNECTION_INFO;
+        when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
+        when(mActivity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        target = new ConfirmRequestBinder(activity, bundle);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
 
-        Spanned ans = target.getDialogTitle();
+        Spanned ans = mBinder.getDialogTitle();
 
         assertThat(ans.toString(), is("3rd Party App wants your connection info."));
         Object[] spans = ans.getSpans(0, ans.length(), Object.class);
@@ -66,16 +72,16 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
     @Test
     public void getDialogTitleShouldReturnPackageNameWhenAppLabelCannotBeFound() throws Exception {
-        when(bundle.getSenderIdentity()).thenReturn("3rd.party.app");
-        when(pm.getApplicationInfo("3rd.party.app", 0)).thenReturn(appInfo);
-        when(pm.getApplicationLabel(appInfo)).thenReturn(null);
-        params.opCode = WifiRequest.GET_CONNECTION_INFO;
-        when(bundle.getRequest()).thenReturn(params);
-        when(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        when(mNannyBundle.getSenderIdentity()).thenReturn("3rd.party.app");
+        when(mPackageManager.getApplicationInfo("3rd.party.app", 0)).thenReturn(mAppInfo);
+        when(mPackageManager.getApplicationLabel(mAppInfo)).thenReturn(null);
+        mRequestParams.opCode = WifiRequest.GET_CONNECTION_INFO;
+        when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
+        when(mActivity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        target = new ConfirmRequestBinder(activity, bundle);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
 
-        Spanned ans = target.getDialogTitle();
+        Spanned ans = mBinder.getDialogTitle();
 
         assertThat(ans.toString(), is("3rd.party.app wants your connection info."));
         Object[] spans = ans.getSpans(0, ans.length(), Object.class);
@@ -85,16 +91,16 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
     @Test
     public void getDialogTitleShouldReturnPackageNameWhenAppInfoCannotBeFound() throws Exception {
-        when(bundle.getSenderIdentity()).thenReturn("3rd.party.app");
-        when(pm.getApplicationInfo("3rd.party.app", 0)).thenReturn(null);
-        when(pm.getApplicationLabel(appInfo)).thenReturn(null);
-        params.opCode = WifiRequest.GET_CONNECTION_INFO;
-        when(bundle.getRequest()).thenReturn(params);
-        when(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        when(mNannyBundle.getSenderIdentity()).thenReturn("3rd.party.app");
+        when(mPackageManager.getApplicationInfo("3rd.party.app", 0)).thenReturn(null);
+        when(mPackageManager.getApplicationLabel(mAppInfo)).thenReturn(null);
+        mRequestParams.opCode = WifiRequest.GET_CONNECTION_INFO;
+        when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
+        when(mActivity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        target = new ConfirmRequestBinder(activity, bundle);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
 
-        Spanned ans = target.getDialogTitle();
+        Spanned ans = mBinder.getDialogTitle();
 
         assertThat(ans.toString(), is("3rd.party.app wants your connection info."));
         Object[] spans = ans.getSpans(0, ans.length(), Object.class);
@@ -104,28 +110,28 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
     @Test
     public void getDialogIconShouldReturnAppIcon() throws Exception {
-        when(bundle.getSenderIdentity()).thenReturn("3rd.party.app");
-        when(pm.getApplicationInfo("3rd.party.app", 0)).thenReturn(appInfo);
-        when(pm.getApplicationIcon(appInfo)).thenReturn(icon);
-        params.opCode = WifiRequest.GET_CONNECTION_INFO;
-        when(bundle.getRequest()).thenReturn(params);
-        target = new ConfirmRequestBinder(activity, bundle);
+        when(mNannyBundle.getSenderIdentity()).thenReturn("3rd.party.app");
+        when(mPackageManager.getApplicationInfo("3rd.party.app", 0)).thenReturn(mAppInfo);
+        when(mPackageManager.getApplicationIcon(mAppInfo)).thenReturn(mIcon);
+        mRequestParams.opCode = WifiRequest.GET_CONNECTION_INFO;
+        when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
 
-        Drawable ans = target.getDialogIcon();
+        Drawable ans = mBinder.getDialogIcon();
 
-        assertThat(ans, sameInstance(icon));
+        assertThat(ans, sameInstance(mIcon));
     }
 
     @Test
     public void getDialogIconShouldReturnNullWhenAppIconCannotBeFound() throws Exception {
-        when(bundle.getSenderIdentity()).thenReturn("3rd.party.app");
-        when(pm.getApplicationInfo("3rd.party.app", 0)).thenReturn(appInfo);
-        when(pm.getApplicationIcon(appInfo)).thenReturn(null);
-        params.opCode = WifiRequest.GET_CONNECTION_INFO;
-        when(bundle.getRequest()).thenReturn(params);
-        target = new ConfirmRequestBinder(activity, bundle);
+        when(mNannyBundle.getSenderIdentity()).thenReturn("3rd.party.app");
+        when(mPackageManager.getApplicationInfo("3rd.party.app", 0)).thenReturn(mAppInfo);
+        when(mPackageManager.getApplicationIcon(mAppInfo)).thenReturn(null);
+        mRequestParams.opCode = WifiRequest.GET_CONNECTION_INFO;
+        when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
 
-        Drawable ans = target.getDialogIcon();
+        Drawable ans = mBinder.getDialogIcon();
 
         assertThat(ans, nullValue());
     }

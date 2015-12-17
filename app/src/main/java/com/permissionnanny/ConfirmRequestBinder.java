@@ -11,6 +11,7 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import com.permissionnanny.dagger.ContextComponent;
 import com.permissionnanny.data.AppPermission;
 import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.NannyBundle;
@@ -39,6 +40,12 @@ public class ConfirmRequestBinder extends BaseBinder {
     @Inject AppPermissionManager mAppManager;
 
     public ConfirmRequestBinder(Activity activity, NannyBundle bundle) {
+        this(activity, bundle, null);
+    }
+
+    @VisibleForTesting
+    ConfirmRequestBinder(Activity activity, NannyBundle bundle, ContextComponent component) {
+        super(component);
         getComponent(activity).inject(this);
         mView = new ConfirmRequestView(activity, this, new TextDialogStubView(this));
         mContext = activity;

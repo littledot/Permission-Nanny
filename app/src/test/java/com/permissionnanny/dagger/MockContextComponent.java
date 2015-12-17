@@ -1,5 +1,8 @@
 package com.permissionnanny.dagger;
 
+import com.permissionnanny.ClientPermissionManifestReceiverTest;
+import com.permissionnanny.ClientRequestReceiverTest;
+import com.permissionnanny.ConfirmRequestBinderTest;
 import com.permissionnanny.UninstallReceiverTest;
 
 /**
@@ -10,4 +13,10 @@ import com.permissionnanny.UninstallReceiverTest;
 public interface MockContextComponent extends ContextComponent {
 
     void inject(UninstallReceiverTest victim);
+
+    void inject(ClientPermissionManifestReceiverTest victim);
+
+    void inject(ClientRequestReceiverTest victim);
+
+    void inject(ConfirmRequestBinderTest victim);
 }

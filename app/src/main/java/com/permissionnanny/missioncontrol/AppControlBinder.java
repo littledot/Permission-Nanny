@@ -10,10 +10,9 @@ import com.permissionnanny.R;
 import com.permissionnanny.dagger.AppModule;
 import com.permissionnanny.data.AppPermission;
 import com.permissionnanny.data.AppPermissionManager;
-import net.engio.mbassy.listener.Handler;
-
-import javax.inject.Inject;
 import java.util.Map;
+import javax.inject.Inject;
+import net.engio.mbassy.listener.Handler;
 
 public class AppControlBinder extends BaseBinder {
 
@@ -25,6 +24,7 @@ public class AppControlBinder extends BaseBinder {
     AppControlAdapter mAdapter;
 
     public AppControlBinder(AppCompatActivity activity) {
+        super(null);
         getComponent(activity).inject(this);
         mView = new AppControlView(activity, this);
         mContext = activity;

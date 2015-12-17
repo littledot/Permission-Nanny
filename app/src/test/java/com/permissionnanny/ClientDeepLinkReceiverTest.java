@@ -24,26 +24,23 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 
-/**
- *
- */
 @RunWith(NannyAppTestRunner.class)
 public class ClientDeepLinkReceiverTest extends NannyTestCase {
 
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
 
-    private ClientDeepLinkReceiver mClientDeepLinkReceiver;
-    private Intent mIntent;
-    private Bundle mBundle;
-    @Mock private Context mContext;
-    @Mock private PendingIntent mPendingIntent;
-    @Captor private ArgumentCaptor<Intent> mIntentCaptor;
+    ClientDeepLinkReceiver mReceiver;
+    Intent mIntent;
+    Bundle mBundle;
+    @Mock Context mContext;
+    @Mock PendingIntent mPendingIntent;
+    @Captor ArgumentCaptor<Intent> mIntentCaptor;
 
     @Before
     public void setUp() throws Exception {
         mockPendingIntent(mPendingIntent, "senderPkg");
-        mClientDeepLinkReceiver = new ClientDeepLinkReceiver();
+        mReceiver = new ClientDeepLinkReceiver();
         mIntent = new Intent();
         mBundle = new Bundle();
     }
@@ -56,7 +53,7 @@ public class ClientDeepLinkReceiverTest extends NannyTestCase {
                 .putExtra(Nanny.CLIENT_ADDRESS, "clientAddr")
                 .putExtra(Nanny.ENTITY_BODY, mBundle);
 
-        mClientDeepLinkReceiver.onReceive(mContext, mIntent);
+        mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).startActivity(mIntentCaptor.capture());
         Intent capturedIntent = mIntentCaptor.getAllValues().get(0);
@@ -75,7 +72,7 @@ public class ClientDeepLinkReceiverTest extends NannyTestCase {
                 .putExtra(Nanny.CLIENT_ADDRESS, "clientAddr")
                 .putExtra(Nanny.ENTITY_BODY, mBundle);
 
-        mClientDeepLinkReceiver.onReceive(mContext, mIntent);
+        mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
         Intent capturedIntent = mIntentCaptor.getValue();
@@ -90,7 +87,7 @@ public class ClientDeepLinkReceiverTest extends NannyTestCase {
                 .putExtra(Nanny.CLIENT_ADDRESS, "clientAddr")
                 .putExtra(Nanny.ENTITY_BODY, mBundle);
 
-        mClientDeepLinkReceiver.onReceive(mContext, mIntent);
+        mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
         Intent capturedIntent = mIntentCaptor.getValue();

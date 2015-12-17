@@ -25,9 +25,9 @@ public class UtilTest extends NannyTestCase {
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
 
-    @Mock private Context mContext;
-    @Mock private PackageManager mPackageManager;
-    private ApplicationInfo mApplicationInfo;
+    ApplicationInfo mApplicationInfo;
+    @Mock Context mContext;
+    @Mock PackageManager mPackageManager;
 
     @Before
     public void setUp() throws Exception {

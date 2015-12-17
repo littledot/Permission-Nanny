@@ -1,6 +1,7 @@
 package com.permissionnanny;
 
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 import com.permissionnanny.dagger.ContextComponent;
 
 /**
@@ -9,6 +10,11 @@ import com.permissionnanny.dagger.ContextComponent;
 public class BaseBinder {
 
     private ContextComponent mComponent;
+
+    @VisibleForTesting
+    protected BaseBinder(ContextComponent component) {
+        mComponent = component;
+    }
 
     public ContextComponent getComponent(Context context) {
         if (mComponent == null) {

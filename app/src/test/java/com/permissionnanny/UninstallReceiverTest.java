@@ -27,9 +27,9 @@ public class UninstallReceiverTest extends NannyTestCase {
     @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
     @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
 
-    private UninstallReceiver mUninstallReceiver;
-    private Intent mIntent;
-    @Mock private Context mContext;
+    UninstallReceiver mReceiver;
+    Intent mIntent;
+    @Mock Context mContext;
     @Inject AppPermissionManager mAppPermissionManager;
 
     @Before
@@ -38,8 +38,8 @@ public class UninstallReceiverTest extends NannyTestCase {
                 .appComponent(MockComponentFactory.getAppComponent())
                 .contextModule(new MockContextModule()).build();
         component.inject(this);
-        mUninstallReceiver = new UninstallReceiver();
-        mUninstallReceiver.setComponent(component);
+        mReceiver = new UninstallReceiver();
+        mReceiver.setComponent(component);
         mIntent = new Intent();
     }
 
@@ -49,7 +49,7 @@ public class UninstallReceiverTest extends NannyTestCase {
                 .putExtra(Intent.EXTRA_REPLACING, false)
                 .setData(Uri.parse("package:3rd.party.app"));
 
-        mUninstallReceiver.onReceive(mContext, mIntent);
+        mReceiver.onReceive(mContext, mIntent);
 
         verify(mAppPermissionManager).removeApp("3rd.party.app");
     }
@@ -60,7 +60,7 @@ public class UninstallReceiverTest extends NannyTestCase {
                 .putExtra(Intent.EXTRA_REPLACING, true)
                 .setData(Uri.parse("package:3rd.party.app"));
 
-        mUninstallReceiver.onReceive(mContext, mIntent);
+        mReceiver.onReceive(mContext, mIntent);
 
         verify(mAppPermissionManager, never()).removeApp("3rd.party.app");
     }
