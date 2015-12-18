@@ -8,7 +8,7 @@ import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.request.simple.SimpleListener;
 
 /**
- *
+ * Event filter that handles {@link Nanny#AUTHORIZATION_SERVICE} responses.
  */
 public class PermissionEvent implements Event {
 
