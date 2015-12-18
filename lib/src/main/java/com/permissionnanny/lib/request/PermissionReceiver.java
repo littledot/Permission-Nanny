@@ -9,7 +9,12 @@ import com.permissionnanny.lib.Nanny;
 import java.util.Map;
 
 /**
- *
+ * This is the main BroadcastReceiver that will receive responses from the server.
+ * <p/>
+ * Based on the value of {@link Nanny#SERVER}, this receiver will route the response to the appropriate event filter
+ * for processing.
+ * <p/>
+ * Responses are dropped if the no event filters match {@link Nanny#SERVER}.
  */
 public class PermissionReceiver extends BroadcastReceiver {
 

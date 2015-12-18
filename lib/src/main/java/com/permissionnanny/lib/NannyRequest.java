@@ -8,7 +8,7 @@ import com.permissionnanny.lib.request.PermissionReceiver;
 import java.security.SecureRandom;
 
 /**
- *
+ * The root class of all requests.
  */
 public class NannyRequest {
 
