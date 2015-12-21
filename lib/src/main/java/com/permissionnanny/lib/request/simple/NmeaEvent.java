@@ -14,7 +14,7 @@ import com.permissionnanny.lib.request.Ack;
 import timber.log.Timber;
 
 /**
- *
+ * Event filter that handles {@link Nanny#NMEA_SERVICE} responses.
  */
 public class NmeaEvent implements Event {
 
