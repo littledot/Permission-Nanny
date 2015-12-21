@@ -1,6 +1,7 @@
 package com.permissionnanny.lib;
 
 import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import com.permissionnanny.lib.request.RequestParams;
@@ -10,7 +11,11 @@ import com.permissionnanny.lib.request.RequestParams;
  */
 public class NannyBundle {
 
-    private Bundle mBundle;
+    private final Bundle mBundle;
+
+    public NannyBundle(Intent intent) {
+        this(intent.getExtras());
+    }
 
     public NannyBundle(Bundle bundle) {
         mBundle = bundle;

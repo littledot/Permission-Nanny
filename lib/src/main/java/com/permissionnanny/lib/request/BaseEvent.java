@@ -7,7 +7,7 @@ import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
 
 /**
- *
+ * The root class of all event filters.
  */
 public abstract class BaseEvent implements Event {
 

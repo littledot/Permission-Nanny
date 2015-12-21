@@ -12,7 +12,7 @@ import com.permissionnanny.lib.request.simple.SimpleListener;
  */
 public class PermissionEvent implements Event {
 
-    private SimpleListener mListener;
+    private final SimpleListener mListener;
 
     public PermissionEvent(SimpleListener listener) {
         mListener = listener;
