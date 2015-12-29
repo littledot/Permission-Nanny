@@ -61,7 +61,7 @@ buildscript {
         rxandroid = "io.reactivex:rxandroid:0.24.0"
         snappydbLib = "com.snappydb:snappydb-lib:0.5.2"
         snapdb = "io.snapdb:snapdb:0.0.2"
-        timber = "com.jakewharton.timber:timber:3.1.0"
+        timber = 'com.jakewharton.timber:timber:4.1.0'
         volley = "com.mcxiaoke.volley:library:1.0.16"
 
         espressoCore = "com.android.support.test.espresso:espresso-core:2.2"
