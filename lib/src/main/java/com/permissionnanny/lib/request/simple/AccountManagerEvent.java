@@ -5,19 +5,23 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import com.permissionnanny.lib.Err;
+import com.permissionnanny.lib.Event;
+import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.PPP;
-import com.permissionnanny.lib.request.BaseEvent;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import timber.log.Timber;
 
 /**
  *
  */
-public class AccountManagerEvent<T> extends BaseEvent {
+public class AccountManagerEvent<T> implements Event {
 
     @PPP public static final String FILTER = "AccountManagerEvent";
 
@@ -39,7 +43,13 @@ public class AccountManagerEvent<T> extends BaseEvent {
     }
 
     @Override
-    public void processEntity(Context context, final Bundle entity) {
+    public void process(Context context, Intent intent) {
+        final Bundle entity = new NannyBundle(intent).getEntityBody();
+        if (entity == null) {
+            Timber.wtf(Err.NO_ENTITY);
+            return;
+        }
+
         mHandler.post(new Runnable() {
             @Override
             public void run() {
