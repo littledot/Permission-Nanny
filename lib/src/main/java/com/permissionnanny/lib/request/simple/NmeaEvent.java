@@ -48,6 +48,7 @@ public class NmeaEvent implements Event {
             Timber.wtf(Err.NO_ENTITY);
             return;
         }
+
         long timestamp = entity.getLong(TIMESTAMP, -1);
         String nmea = entity.getString(NMEA);
         mListener.onNmeaReceived(timestamp, nmea);

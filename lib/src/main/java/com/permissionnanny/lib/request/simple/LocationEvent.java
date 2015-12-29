@@ -1,18 +1,24 @@
 package com.permissionnanny.lib.request.simple;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.VisibleForTesting;
+import com.permissionnanny.lib.Err;
+import com.permissionnanny.lib.Event;
 import com.permissionnanny.lib.Nanny;
+import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.PPP;
-import com.permissionnanny.lib.request.BaseEvent;
+import com.permissionnanny.lib.request.Ack;
+import timber.log.Timber;
 
 /**
- *
+ * Event filter that handles {@link Nanny#LOCATION_SERVICE} responses.
  */
-public class LocationEvent extends BaseEvent {
+public class LocationEvent implements Event {
 
     @PPP public static final String LOCATION = "location";
     @PPP public static final String PROVIDER = "provider";
@@ -24,12 +30,19 @@ public class LocationEvent extends BaseEvent {
     @PPP public static final String ON_PROVIDER_ENABLED = "onProviderEnabled";
     @PPP public static final String ON_STATUS_CHANGED = "onStatusChanged";
 
-    private LocationListener mLocationListener;
-    private Handler mHandler;
+    private final LocationListener mLocationListener;
+    private final Handler mHandler;
+    private final Ack mAck;
 
     public LocationEvent(LocationListener location, Handler handler) {
-        mLocationListener = location;
+        this(location, handler, new Ack());
+    }
+
+    @VisibleForTesting
+    LocationEvent(LocationListener locationListener, Handler handler, Ack ack) {
+        mLocationListener = locationListener;
         mHandler = handler;
+        mAck = ack;
     }
 
     @Override
@@ -38,7 +51,15 @@ public class LocationEvent extends BaseEvent {
     }
 
     @Override
-    public void processEntity(Context context, final Bundle entity) {
+    public void process(Context context, Intent intent) {
+        mAck.sendAck(context, intent);
+
+        final Bundle entity = new NannyBundle(intent).getEntityBody();
+        if (entity == null) {
+            Timber.wtf(Err.NO_ENTITY);
+            return;
+        }
+
         mHandler.post(new Runnable() {
             @Override
             public void run() {
