@@ -12,7 +12,6 @@ import javax.inject.Inject;
 public class Cryo {
     public static final int BUF_SIZE = 8192;
     public static final int BUF_MAX_SIZE = -1;
-    private static final byte[] EMPTY_BUF = new byte[0];
 
     private final Kryo mKryo;
     private final Pools.Pool<Output> mOutputPool;
@@ -73,7 +72,7 @@ public class Cryo {
     }
 
     private void release(Input instance) {
-        instance.setBuffer(EMPTY_BUF);
+        instance.setBuffer(instance.getBuffer());
         mInputPool.release(instance);
     }
 
