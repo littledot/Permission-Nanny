@@ -1,6 +1,6 @@
 # [Permission Nanny][app]
 
-Permission Nanny is an application that can access resources which are protected by permissions on your behalf, 
+Permission Nanny is an application that can access resources which are protected by permissions on your behalf,
 so that your application does not need to declare permission usage in your AndroidManifest.xml. With Permission Nanny,
 it is possible for your application to not require ***any*** permissions at all, yet still be able to access
 permission-protected resources.
@@ -9,9 +9,9 @@ permission-protected resources.
 
 Android M introduces a new permission model - [Runtime Permissions][runtime-permissions] - where 3rd party applications
 are no longer granted permissions at install time.
-Instead, a dialog is displayed to the user, requesting authorization to access permission-protected resources when 3rd 
-party applications would like to use them during runtime. 
-However, the new Runtime Permissions model is built into the operating system and is only available in Android M and 
+Instead, a dialog is displayed to the user, requesting authorization to access permission-protected resources when 3rd
+party applications would like to use them during runtime.
+However, the new Runtime Permissions model is built into the operating system and is only available in Android M and
 onwards.
 Pre-M users will have to wait for system updates, which unfortunately could take quite a while.
 
@@ -28,15 +28,15 @@ return an error response.
 
 # Will my existing code work with Permission Nanny?
 
-Unfortunately, code changes are required to integrate your app with Permission Nanny. Fortunately, the Permission 
-Nanny SDK is designed to mimic the Android SDK, hence the amount of work required should be minimal. Since you are 
-going to make code changes to make your app work with M's Runtime Permissions anyways; why not try something that is 
+Unfortunately, code changes are required to integrate your app with Permission Nanny. Fortunately, the Permission
+Nanny SDK is designed to mimic the Android SDK, hence the amount of work required should be minimal. Since you are
+going to make code changes to make your app work with M's Runtime Permissions anyways; why not try something that is
 supported all the way back to Gingerbread 2.3?
 
 # How do 3rd party apps communicate with Permission Nanny?
 
 Clients communicate with Permission Nanny using broadcast Intents following the Permission Police Protocol (PPP). PPP
-is heavily inspired by HTTP with a few minor tweaks, borrowing attributes such as status codes, headers and entity. 
+is heavily inspired by HTTP with a few minor tweaks, borrowing attributes such as status codes, headers and entity.
 See [Nanny.java][nanny-java] for the full PPP specification.
 
 # How do I integrate my apps with Permission Nanny?
@@ -51,8 +51,8 @@ dependencies {
 
 ## How do I make a request?
 
-Use one of the static factory methods to create a request; attach a listener to receive results; finally send the 
-request to Permission Nanny with `.startRequest()`. See [PermissionRequest.java][permission-request-java] for more 
+Use one of the static factory methods to create a request; attach a listener to receive results; finally send the
+request to Permission Nanny with `.startRequest()`. See [PermissionRequest.java][permission-request-java] for more
 documentation. For example, to issue a `WifiManager.getConnectionInfo()` request:
 
 ```java
@@ -70,8 +70,8 @@ WifiRequest request = WifiRequest.getConnectionInfo().listener(new SimpleListene
 
 ## How do I know if the user grants or denies my request for resources?
 
-Permission Nanny will return a response in the form of a Bundle. The response will contain a status code which will 
-tell you the user's decision. If the user authorizes the request, the response will contain the requested resources; 
+Permission Nanny will return a response in the form of a Bundle. The response will contain a status code which will
+tell you the user's decision. If the user authorizes the request, the response will contain the requested resources;
 otherwise, it will contain an error message.
 
 # What resources are supported?
