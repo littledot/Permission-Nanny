@@ -13,6 +13,7 @@ import com.permissionnanny.dagger.ContextComponent;
 import com.permissionnanny.dagger.ContextModule;
 import com.permissionnanny.dagger.DaggerAppComponent;
 import com.permissionnanny.dagger.DaggerContextComponent;
+import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
@@ -33,6 +34,7 @@ public class App extends Application {
         Fabric.with(this, new Crashlytics.Builder().core(crashlytics).build());
         PRNGFixes.apply();
         Timber.plant(new StackTraceDebugTree());
+        LeakCanary.install(this);
 
         // LevelDB patch: https://github.com/dain/leveldb/issues/43
         System.setProperty("sun.arch.data.model", "32");

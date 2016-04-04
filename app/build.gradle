@@ -74,6 +74,8 @@ dependencies {
     compile project.leveldb
     compile project.mbassador
     compile project.timber
+    debugCompile project.leakcanaryAndroid
+    releaseCompile project.leakcanaryAndroidNoOp
 
     testApt project.daggerCompiler
 
