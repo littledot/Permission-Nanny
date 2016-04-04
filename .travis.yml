@@ -25,3 +25,9 @@ android:
 
 script:
   - ./gradlew build
+
+notifications:
+  slack:
+    secure: cTV+Y4DUqcEksYzJpaJHMOcY8neMRTjoLqg0wSYlHBmrGuXEAWczhm5l2Ku48GwCSLd1KsWElvl1avHAzHdPgmMO69VDbGJxOujmDLQL8RAUalfN/FvOqYq8WlshMv1ENhrUCXi3xfJAgqqEbwA3UBBYAuF7nm6HfgKYxIJQ9YhFEPyi/dPRNnPkqyLA9iTl+dzsKjLnrt8SgPdiYGeXbkGDwCb2mXgqTbHf8LG2C9ehIDmxNLeXZTk9GBEF8PY7mcmxqiULjqYrUGEMTwqnIPvZKNxdP+6x3xnN+7Ts+rsiLSc1IemkuoeHnCPmCVLKInVgwQjroAGNC0rFqVug13UD7z3Tkrvv/g5ML7DSHscK1m/Kiv89GABLURWpD4n0z2z+TTfN865rmP9+oNQ2sJcl+HTdawipZScySEhCbxnyt8qCvxeGjsEWnGhDbZCk324fvM5xDbHs1ftKtgMDygG+p+SeTU5WJsJf3v73SXkeQqqwemmjp0bz8ME98ZrsGNQfAuzMrZbwKhvHnRaEaFK7NiXYrA/DVnpv+CmCVO5kAm2Z2/C+vGG/q0+ZxNDB+sAX+k+k6BLL1elbrUiMtBx8ArBPWOnDkKcqrQOLhRkZDpG8OfY/GTOr9/wNV/tNWYEgkMo+c3owzNuDW/Tu1HX3DNLs7fMw90zMf0WhVt0=
+    rooms:
+      - permission-nanny:ZgNsHtoW3DcEvUmWtAFmIu1l#bot-travis
