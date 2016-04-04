@@ -47,4 +47,14 @@ dependencies {
     androidTestCompile project.objenesis
 }
 
+group = "com.permission-nanny"
+archivesBaseName = "permission-nanny-sdk"
+version = project.versionName
+ext {
+    name = "permission-nanny-sdk"
+    desc = "Permission Nanny SDK"
+    websiteUrl = "http://www.permission-nanny.com"
+    vcsUrl = "https://github.com/littledot/Permission-Nanny"
+    issueTrackerUrl = "https://github.com/littledot/Permission-Nanny/issues"
+}
 apply from: '../bintray.gradle'

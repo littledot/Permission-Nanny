@@ -1,13 +1,5 @@
-group = BINTRAY_GROUP
-version = project.versionName
-project.archivesBaseName = BINTRAY_ARTIFACTID
-
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'maven-publish'
-
-task jar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-}
+apply plugin: 'com.github.dcendents.android-maven'
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -19,6 +11,14 @@ task javadoc(type: Javadoc) {
     classpath += configurations.compile
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+        title project.desc
+    }
     // Turn off doclint because JDK 8 is too strict
     // http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
     options.addStringOption('Xdoclint:none', '-quiet')
@@ -34,55 +34,9 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
-javadoc {
-    options {
-        encoding "UTF-8"
-        charSet 'UTF-8'
-        author true
-        version true
-        links "http://docs.oracle.com/javase/7/docs/api"
-        title BINTRAY_ARTIFACTID
-    }
-}
-
 artifacts {
-    archives jar
     archives javadocJar
     archives sourcesJar
-}
-
-def pomConfig = {
-    licenses {
-        license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
-        }
-    }
-    developers {
-        developer {
-            id BINTRAY_DEVELOPER_ID
-            name BINTRAY_DEVELOPER_NAME
-            email BINTRAY_DEVELOPER_EMAIL
-        }
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId BINTRAY_ARTIFACTID
-
-            pom {
-                packaging 'aar'
-            }
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', BINTRAY_DESCRIPTION)
-                root.children().last() + pomConfig
-            }
-        }
-    }
 }
 
 bintray {
@@ -90,17 +44,26 @@ bintray {
     key = project.BINTRAY_KEY
 
     configurations = ['archives']
-    publications = ['mavenJava']
     publish = false
-
     pkg {
         repo = 'maven'
-        name = BINTRAY_NAME
-        desc = BINTRAY_DESCRIPTION
-        websiteUrl = BINTRAY_WEBSITEURL
-        issueTrackerUrl = BINTRAY_ISSUETRACKERURL
-        vcsUrl = BINTRAY_VCSURL
+        name = project.ext.name
+        desc = project.desc
+        websiteUrl = project.websiteUrl
+        issueTrackerUrl = project.issueTrackerUrl
+        vcsUrl = project.vcsUrl
         licenses = ['Apache-2.0']
         publicDownloadNumbers = false
+    }
+}
+
+install.repositories.mavenInstaller.pom.project {
+    packaging 'aar'
+    developers {
+        developer {
+            id "sdchang5566"
+            name "Sheng-Dean Chang"
+            email "sdchang5566@gmail.com"
+        }
     }
 }
