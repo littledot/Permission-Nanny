@@ -1,1 +1,5 @@
-<manifest package="com.sdchang.permissionpolice.common"/>
+<manifest package="com.sdchang.permissionpolice.common"
+          xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk tools:overrideLibrary="timber.log"/>
+</manifest>
