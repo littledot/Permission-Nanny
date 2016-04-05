@@ -47,7 +47,7 @@ A Permission Nanny SDK is provided to facilitate issuing requests to and handlin
 
 ```groovy
 dependencies {
-    compile 'com.permission-nanny:permission-nanny-sdk:0.1.1'
+    compile 'com.permission-nanny:permission-nanny-sdk:a.b.c'
 }
 ```
 
