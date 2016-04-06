@@ -18,7 +18,7 @@ buildscript {
         buildTools = "23.0.2"
         minSdk = 9
         targetSdk = 22
-        versionCode = 9
+        versionCode = 10
         versionName = "0.1.2-dev"
 
         v = "22.2.0"
