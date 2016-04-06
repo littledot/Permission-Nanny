@@ -83,7 +83,10 @@ public class NannyDB {
 
         ArrayList<T> list = new ArrayList<>();
         while (it.hasNext()) {
-            list.add(mCryo.deserialize(it.next().getValue(), type));
+            byte[] value = it.next().getValue();
+            if (value != null) {
+                list.add(mCryo.deserialize(value, type));
+            }
         }
         return list;
     }
