@@ -22,10 +22,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(NannyAppTestRunner.class)
@@ -64,10 +61,10 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
         Spanned ans = mBinder.getDialogTitle();
 
-        assertThat(ans.toString(), is("3rd Party App wants your connection info."));
+        assertThat(ans.toString()).isEqualTo("3rd Party App wants your connection info.");
         Object[] spans = ans.getSpans(0, ans.length(), Object.class);
-        assertThat(spans.length, is(1));
-        assertThat(((StyleSpan) spans[0]).getStyle(), is(Typeface.BOLD));
+        assertThat(spans).hasSize(1);
+        assertThat(((StyleSpan) spans[0]).getStyle()).isEqualTo(Typeface.BOLD);
     }
 
     @Test
@@ -83,10 +80,10 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
         Spanned ans = mBinder.getDialogTitle();
 
-        assertThat(ans.toString(), is("3rd.party.app wants your connection info."));
+        assertThat(ans.toString()).isEqualTo("3rd.party.app wants your connection info.");
         Object[] spans = ans.getSpans(0, ans.length(), Object.class);
-        assertThat(spans.length, is(1));
-        assertThat(((StyleSpan) spans[0]).getStyle(), is(Typeface.BOLD));
+        assertThat(spans).hasSize(1);
+        assertThat(((StyleSpan) spans[0]).getStyle()).isEqualTo(Typeface.BOLD);
     }
 
     @Test
@@ -102,10 +99,10 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
         Spanned ans = mBinder.getDialogTitle();
 
-        assertThat(ans.toString(), is("3rd.party.app wants your connection info."));
+        assertThat(ans.toString()).isEqualTo("3rd.party.app wants your connection info.");
         Object[] spans = ans.getSpans(0, ans.length(), Object.class);
-        assertThat(spans.length, is(1));
-        assertThat(((StyleSpan) spans[0]).getStyle(), is(Typeface.BOLD));
+        assertThat(spans).hasSize(1);
+        assertThat(((StyleSpan) spans[0]).getStyle()).isEqualTo(Typeface.BOLD);
     }
 
     @Test
@@ -119,7 +116,7 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
         Drawable ans = mBinder.getDialogIcon();
 
-        assertThat(ans, sameInstance(mIcon));
+        assertThat(ans).isSameAs(mIcon);
     }
 
     @Test
@@ -133,6 +130,6 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
 
         Drawable ans = mBinder.getDialogIcon();
 
-        assertThat(ans, nullValue());
+        assertThat(ans).isNull();
     }
 }

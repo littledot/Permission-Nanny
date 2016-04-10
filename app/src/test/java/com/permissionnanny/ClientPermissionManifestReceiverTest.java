@@ -22,9 +22,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
-import static com.permissionnanny.common.test.AndroidMatchers.equalToIntent;
 import static com.permissionnanny.common.test.Mockingbird.mockPendingIntent;
-import static org.junit.Assert.assertThat;
+import static com.permissionnanny.test.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
 @RunWith(NannyAppTestRunner.class)
@@ -65,7 +64,7 @@ public class ClientPermissionManifestReceiverTest extends NannyTestCase {
 
         verify(mReceiver.mAppManager).readPermissionManifest("com.3rd.party.app", mManifest);
         verify(mContext).sendBroadcast(mResponseCaptor.capture());
-        assertThat(mResponseCaptor.getValue(), equalToIntent(AppTestUtil.new200Response("123")));
+        assertThat(mResponseCaptor.getValue()).has200Response("123");
     }
 
     @Test
@@ -75,7 +74,7 @@ public class ClientPermissionManifestReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mResponseCaptor.capture());
-        assertThat(mResponseCaptor.getValue(), equalToIntent(new400Response("123", Err.NO_ENTITY)));
+        assert400Response(mResponseCaptor.getValue(), "123", Err.NO_ENTITY);
     }
 
     @Test
@@ -86,7 +85,7 @@ public class ClientPermissionManifestReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mResponseCaptor.capture());
-        assertThat(mResponseCaptor.getValue(), equalToIntent(new400Response("123", Err.NO_SENDER_IDENTITY)));
+        assert400Response(mResponseCaptor.getValue(), "123", Err.NO_SENDER_IDENTITY);
     }
 
     @Test
@@ -99,10 +98,10 @@ public class ClientPermissionManifestReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mResponseCaptor.capture());
-        assertThat(mResponseCaptor.getValue(), equalToIntent(new400Response("123", Err.NO_PERMISSION_MANIFEST)));
+        assert400Response(mResponseCaptor.getValue(), "123", Err.NO_PERMISSION_MANIFEST);
     }
 
-    private Intent new400Response(String clientAddr, String error) {
-        return AppTestUtil.new400Response(clientAddr, Nanny.PERMISSION_MANIFEST_SERVICE, new NannyException(error));
+    private static void assert400Response(Intent intent, String clientAddr, String error) {
+        assertThat(intent).has400Response(clientAddr, Nanny.PERMISSION_MANIFEST_SERVICE, new NannyException(error));
     }
 }

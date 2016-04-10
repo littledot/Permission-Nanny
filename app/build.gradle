@@ -91,6 +91,7 @@ dependencies {
     androidTestCompile project.espressoCore
     androidTestCompile project.asm
     androidTestCompile project.objenesis
+    androidTestCompile project.supportAnnotations
 }
 
 def initFabricProperties() {

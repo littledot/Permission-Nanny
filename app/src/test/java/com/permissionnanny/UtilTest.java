@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import com.permissionnanny.common.test.NannyTestCase;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -12,6 +13,7 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
@@ -41,7 +43,7 @@ public class UtilTest extends NannyTestCase {
 
         ApplicationInfo actual = Util.getApplicationInfo(mContext, "a");
 
-        assertThat(actual, sameInstance(mApplicationInfo));
+        assertThat(actual).isSameAs(mApplicationInfo);
     }
 
     @Test
@@ -51,6 +53,6 @@ public class UtilTest extends NannyTestCase {
 
         ApplicationInfo actual = Util.getApplicationInfo(mContext, "a");
 
-        assertThat(actual, nullValue());
+        assertThat(actual).isNull();
     }
 }

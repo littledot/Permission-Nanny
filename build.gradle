@@ -1,21 +1,4 @@
 buildscript {
-    repositories {
-        jcenter()
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://maven.fabric.io/public" }
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:2.0.0"
-        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.3.0"
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.11.3"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:1.3"
-        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.12.0"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6"
-        classpath "com.neenbedankt.gradle.plugins:android-apt:1.8"
-        classpath "io.fabric.tools:gradle:1.20.1"
-        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.8'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
-    }
     project.ext {
         compileSdk = 22
         buildTools = "23.0.2"
@@ -24,7 +7,7 @@ buildscript {
         versionCode = 10
         versionName = "0.1.2-dev"
 
-        v = "22.2.0"
+        v = "22.2.1"
         design = "com.android.support:design:${v}"
         supportV4 = "com.android.support:support-v4:${v}"
         appcompatV7 = "com.android.support:appcompat-v7:${v}"
@@ -73,6 +56,18 @@ buildscript {
         uiautomator = "com.android.support.test.uiautomator:uiautomator-v18:2.1.1"
 
         asm = "org.ow2.asm:asm:5.0.3" // Resolved versions for app (5.0.3) and test app (5.0.1) differ.
+        assertjCore = "org.assertj:assertj-core:1.7.0"
+        v = "1.1.1"
+        assertjAndroid = "com.squareup.assertj:assertj-android:${v}"
+        assertjAndroidSupportV4 = "com.squareup.assertj:assertj-android-support-v4:${v}"
+        assertjAndroidPlayServices = "com.squareup.assertj:assertj-android-play-services:${v}"
+        assertjAndroidAppcompatV7 = "com.squareup.assertj:assertj-android-appcompat-v7:${v}"
+        assertjAndroidDesign = "com.squareup.assertj:assertj-android-design:${v}"
+        assertjAndroidMediarouterV7 = "com.squareup.assertj:assertj-android-mediarouter-v7:${v}"
+        assertjAndroidGridlayoutV7 = "com.squareup.assertj:assertj-android-gridlayout-v7:${v}"
+        assertjAndroidCardviewV7 = "com.squareup.assertj:assertj-android-cardview-v7:${v}"
+        assertjAndroidRecyclerviewV7 = "com.squareup.assertj:assertj-android-recyclerview-v7:${v}"
+        assertjAndroidPaletteV7 = "com.squareup.assertj:assertj-android-palette-v7:${v}"
         dexmakerMockito = "com.google.dexmaker:dexmaker-mockito:1.2"
         hamcrestLibrary = "org.hamcrest:hamcrest-library:1.3"
         junit = "junit:junit:4.12"
@@ -92,6 +87,25 @@ buildscript {
             set(key, val ? val : System.env.get(key))
         }
     }
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://maven.fabric.io/public" }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:2.0.0"
+        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.3.0"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.11.3"
+        classpath "com.github.dcendents:android-maven-gradle-plugin:1.3"
+        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.12.0"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6"
+        classpath "com.neenbedankt.gradle.plugins:android-apt:1.8"
+        classpath "io.fabric.tools:gradle:1.20.1"
+        classpath "net.ltgt.gradle:gradle-errorprone-plugin:0.0.8"
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0"
+    }
+
 }
 
 allprojects {
