@@ -18,10 +18,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
+import static com.permissionnanny.common.test.AndroidMatchers.equalToIntent;
 import static com.permissionnanny.common.test.Mockingbird.mockPendingIntent;
-import static com.permissionnanny.test.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(NannyAppTestRunner.class)
 public class ClientDeepLinkReceiverTest extends NannyTestCase {
@@ -39,7 +40,6 @@ public class ClientDeepLinkReceiverTest extends NannyTestCase {
     @Before
     public void setUp() throws Exception {
         mockPendingIntent(mPendingIntent, "senderPkg");
-        when(mContext.getPackageName()).thenReturn("my.app");
         mReceiver = new ClientDeepLinkReceiver();
         mIntent = new Intent();
         mBundle = new Bundle();
@@ -56,11 +56,13 @@ public class ClientDeepLinkReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).startActivity(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getAllValues().get(0)).hasComponent("my.app", AppControlActivity.class)
-                .hasFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent capturedIntent = mIntentCaptor.getAllValues().get(0);
+        assertThat(capturedIntent.getComponent().getClassName(), is(AppControlActivity.class.getName()));
+        assertThat(capturedIntent.getFlags(), is(Intent.FLAG_ACTIVITY_NEW_TASK));
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getAllValues().get(1)).has200AuthServiceResponse("clientAddr");
+        capturedIntent = mIntentCaptor.getAllValues().get(1);
+        assertThat(capturedIntent, equalToIntent(AppTestUtil.new200AuthServiceResponse("clientAddr")));
     }
 
     @Test
@@ -73,7 +75,9 @@ public class ClientDeepLinkReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getValue()).has400AuthServiceResponse("clientAddr", Err.NO_SENDER_IDENTITY);
+        Intent capturedIntent = mIntentCaptor.getValue();
+        assertThat(capturedIntent, equalToIntent(AppTestUtil.new400AuthServiceResponse(
+                "clientAddr", Err.NO_SENDER_IDENTITY)));
     }
 
     @Test
@@ -86,7 +90,8 @@ public class ClientDeepLinkReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getValue())
-                .has400AuthServiceResponse("clientAddr", new NannyException(Err.UNSUPPORTED_DEEP_LINK_TARGET, ""));
+        Intent capturedIntent = mIntentCaptor.getValue();
+        assertThat(capturedIntent, equalToIntent(AppTestUtil.new400AuthServiceResponse(
+                "clientAddr", new NannyException(Err.UNSUPPORTED_DEEP_LINK_TARGET, ""))));
     }
 }

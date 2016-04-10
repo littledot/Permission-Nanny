@@ -27,7 +27,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
-import static com.permissionnanny.test.Assertions.assertThat;
+import static com.permissionnanny.common.test.AndroidMatchers.equalToBundle;
+import static com.permissionnanny.common.test.AndroidMatchers.equalToIntent;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.notNull;
 import static org.mockito.Mockito.same;
@@ -61,7 +64,6 @@ public class ClientRequestReceiverTest extends NannyTestCase {
         mEntity = new Bundle();
         mRequestParams = new RequestParams();
         Mockingbird.mockPendingIntent(mSender, "3rd.party.app");
-        when(mContext.getPackageName()).thenReturn("my.app");
     }
 
     @Test
@@ -90,8 +92,9 @@ public class ClientRequestReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).startActivity(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getValue()).hasComponent("my.app", ConfirmRequestActivity.class)
-                .hasExtras(mIntent);
+        Intent dialogIntent = mIntentCaptor.getValue();
+        assertThat(dialogIntent.getComponent().getClassName(), is(ConfirmRequestActivity.class.getName()));
+        assertThat(dialogIntent.getExtras(), equalToBundle(dialogIntent.getExtras()));
     }
 
     @Test
@@ -135,8 +138,8 @@ public class ClientRequestReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getValue()).has400Response("123", Nanny.AUTHORIZATION_SERVICE,
-                new NannyException(Err.UNSUPPORTED_OPCODE, mRequestParams.opCode));
+        assertThat(mIntentCaptor.getValue(), equalToIntent(AppTestUtil.new400Response("123",
+                Nanny.AUTHORIZATION_SERVICE, new NannyException(Err.UNSUPPORTED_OPCODE, mRequestParams.opCode))));
     }
 
     @Test
@@ -148,7 +151,8 @@ public class ClientRequestReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getValue()).has400Response("123", Nanny.AUTHORIZATION_SERVICE, Err.NO_REQUEST_PARAMS);
+        assertThat(mIntentCaptor.getValue(), equalToIntent(AppTestUtil.new400Response("123",
+                Nanny.AUTHORIZATION_SERVICE, new NannyException(Err.NO_REQUEST_PARAMS))));
     }
 
     @Test
@@ -159,6 +163,7 @@ public class ClientRequestReceiverTest extends NannyTestCase {
         mReceiver.onReceive(mContext, mIntent);
 
         verify(mContext).sendBroadcast(mIntentCaptor.capture());
-        assertThat(mIntentCaptor.getValue()).has400Response("123", Nanny.AUTHORIZATION_SERVICE, Err.NO_SENDER_IDENTITY);
+        assertThat(mIntentCaptor.getValue(), equalToIntent(AppTestUtil.new400Response("123",
+                Nanny.AUTHORIZATION_SERVICE, new NannyException(Err.NO_SENDER_IDENTITY))));
     }
 }

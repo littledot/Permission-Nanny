@@ -23,8 +23,6 @@ android {
 }
 
 dependencies {
-    compile project.assertjCore
-    compile project.assertjAndroid
     compile project.asm
     compile project.hamcrestLibrary
     compile project.mockitoCore
