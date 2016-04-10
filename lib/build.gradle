@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.getkeepsafe.dexcount'
 
+apply from: 'https://raw.githubusercontent.com/littledot/android-gradle-java-template/v1.0.0/common.gradle'
+
 android {
     compileSdkVersion project.compileSdk
     buildToolsVersion project.buildTools
