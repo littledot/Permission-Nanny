@@ -30,6 +30,9 @@ android:
 script:
   - ./gradlew build
 
+after_success:
+  - ./gradlew jacocoDebugReport coveralls
+
 notifications:
   slack:
     rooms:
