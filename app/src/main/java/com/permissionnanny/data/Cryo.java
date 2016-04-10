@@ -1,5 +1,6 @@
 package com.permissionnanny.data;
 
+import android.support.annotation.Nullable;
 import android.support.v4.util.Pools;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
@@ -35,7 +36,11 @@ public class Cryo {
         return bytes;
     }
 
+    @Nullable
     public <T> T deserialize(byte[] data, Class<T> type) {
+        if (!isDataValid(data)) {
+            return null;
+        }
         registerType(type);
         Input input = acquireInput();
         input.setBuffer(data);
@@ -44,7 +49,11 @@ public class Cryo {
         return val;
     }
 
+    @Nullable
     public <T> T deserialize(byte[] data) {
+        if (!isDataValid(data)) {
+            return null;
+        }
         Input input = acquireInput();
         input.setBuffer(data);
         Class type = mKryo.readClass(input).getType();
@@ -56,6 +65,10 @@ public class Cryo {
         }
         release(input);
         return val;
+    }
+
+    private boolean isDataValid(byte[] data) {
+        return data != null && data.length > 0;
     }
 
     private Output acquireOutput() {

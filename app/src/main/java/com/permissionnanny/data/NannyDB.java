@@ -45,15 +45,12 @@ public class NannyDB {
 
     public <T> T get(@NonNull String key, @NonNull Class<T> type) {
         byte[] data = mDB.get(key.getBytes());
-        return data == null ? null : mCryo.deserialize(data, type);
+        return mCryo.deserialize(data, type);
     }
 
     public <T> T get(@NonNull String key) {
         byte[] data = mDB.get(key.getBytes());
-        if (data != null) {
-            return mCryo.deserialize(data);
-        }
-        return null;
+        return mCryo.deserialize(data);
     }
 
     public void put(@NonNull String key, @NonNull Object val) {
@@ -84,8 +81,9 @@ public class NannyDB {
         ArrayList<T> list = new ArrayList<>();
         while (it.hasNext()) {
             byte[] value = it.next().getValue();
-            if (value != null) {
-                list.add(mCryo.deserialize(value, type));
+            T data = mCryo.deserialize(value, type);
+            if (data != null) {
+                list.add(data);
             }
         }
         return list;
