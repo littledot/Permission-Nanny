@@ -1,9 +1,12 @@
 package com.permissionnanny;
 
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import com.permissionnanny.dagger.AppComponent;
 import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.dagger.ContextModule;
+import com.permissionnanny.dagger.DaggerContextComponent;
 
 /**
  * The root of all Activities.
@@ -23,8 +26,16 @@ public class BaseActivity extends AppCompatActivity {
 
     public ContextComponent getComponent() {
         if (mComponent == null) {
-            mComponent = ((App) getApplicationContext()).getContextComponent(this);
+            mComponent = DaggerContextComponent.builder()
+                    .appComponent(getAppComponent())
+                    .contextModule(new ContextModule(this))
+                    .build();
         }
         return mComponent;
+    }
+
+    @VisibleForTesting
+    public void inject(ContextComponent component) {
+        mComponent = component;
     }
 }
