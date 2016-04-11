@@ -1,10 +1,12 @@
 package com.permissionnanny;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.annotation.VisibleForTesting;
 import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.dagger.ContextModule;
+import com.permissionnanny.dagger.DaggerContextComponent;
 import timber.log.Timber;
 
 /**
@@ -38,9 +40,17 @@ public class BaseService extends Service {
         super.onDestroy();
     }
 
-    public ContextComponent getComponent(Context context) {
+    @VisibleForTesting
+    public void setComponent(ContextComponent component) {
+        mComponent = component;
+    }
+
+    public ContextComponent getComponent() {
         if (mComponent == null) {
-            mComponent = ((App) context.getApplicationContext()).getContextComponent(context);
+            mComponent = DaggerContextComponent.builder()
+                    .appComponent(((App) getApplicationContext()).getAppComponent())
+                    .contextModule(new ContextModule(this))
+                    .build();
         }
         return mComponent;
     }

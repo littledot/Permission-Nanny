@@ -3,39 +3,36 @@ package com.permissionnanny;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
-import com.permissionnanny.dagger.AppComponent;
-import com.permissionnanny.dagger.ContextComponent;
+import com.permissionnanny.dagger.ActivityComponent;
+import com.permissionnanny.dagger.ActivityModule;
 import com.permissionnanny.dagger.ContextModule;
-import com.permissionnanny.dagger.DaggerContextComponent;
+import com.permissionnanny.dagger.DaggerActivityComponent;
 
 /**
  * The root of all Activities.
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private ContextComponent mComponent;
+    private ActivityComponent mComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    public AppComponent getAppComponent() {
-        return ((App) getApplicationContext()).getAppComponent();
-    }
-
-    public ContextComponent getComponent() {
+    public ActivityComponent getComponent() {
         if (mComponent == null) {
-            mComponent = DaggerContextComponent.builder()
-                    .appComponent(getAppComponent())
+            mComponent = DaggerActivityComponent.builder()
+                    .appComponent(((App) getApplicationContext()).getAppComponent())
                     .contextModule(new ContextModule(this))
+                    .activityModule(new ActivityModule(this))
                     .build();
         }
         return mComponent;
     }
 
     @VisibleForTesting
-    public void inject(ContextComponent component) {
+    public void inject(ActivityComponent component) {
         mComponent = component;
     }
 }

@@ -41,7 +41,7 @@ public class ProxyService extends BaseService {
     @Override
     public void onCreate() {
         super.onCreate();
-        getComponent(this).inject(this);
+        getComponent().inject(this);
         mAckServerAddr = Long.toString(new SecureRandom().nextLong());
         registerReceiver(mAckReceiver, new IntentFilter(mAckServerAddr));
         Timber.wtf("init service");
@@ -84,47 +84,47 @@ public class ProxyService extends BaseService {
         Timber.wtf("handling client=" + clientAddr + " req=" + requestParams);
         ProxyListener listener;
         switch (requestParams.opCode) {
-        case AccountRequest.ADD_ON_ACCOUNTS_UPDATED_LISTENER:
-            listener = new ProxyOnAccountsUpdateListener(this, clientAddr);
-            break;
-        case AccountRequest.GET_ACCOUNTS_BY_TYPE_AND_FEATURES:
-            listener = new ProxyAccountManagerListener.GetAccountsByTypeAndFeatures(this, clientAddr);
-            break;
-        case AccountRequest.GET_AUTH_TOKEN1:
-            listener = new ProxyAccountManagerListener.GetAuthToken1(this, clientAddr);
-            break;
-        case AccountRequest.GET_AUTH_TOKEN2:
-            listener = new ProxyAccountManagerListener.GetAuthToken2(this, clientAddr);
-            break;
-        case AccountRequest.HAS_FEATURES:
-            listener = new ProxyAccountManagerListener.HasFeatures(this, clientAddr);
-            break;
-        case AccountRequest.REMOVE_ACCOUNT:
-            listener = new ProxyAccountManagerListener.RemoveAccount(this, clientAddr);
-            break;
-        case AccountRequest.RENAME_ACCOUNT:
-            listener = new ProxyAccountManagerListener.RenameAccount(this, clientAddr);
-            break;
-        case LocationRequest.ADD_GPS_STATUS_LISTENER:
-            listener = new ProxyGpsStatusListener(this, clientAddr);
-            break;
-        case LocationRequest.ADD_NMEA_LISTENER:
-            listener = new ProxyNmeaListener(this, clientAddr);
-            break;
-        case LocationRequest.REQUEST_LOCATION_UPDATES1:
-            listener = new RequestLocationUpdatesListener.Api1(this, clientAddr);
-            break;
-        case LocationRequest.REQUEST_LOCATION_UPDATES2:
-            listener = new RequestLocationUpdatesListener.Api2(this, clientAddr);
-            break;
-        case LocationRequest.REQUEST_SINGLE_UPDATE:
-            listener = new RequestSingleUpdateListener.Api(this, clientAddr);
-            break;
-        case LocationRequest.REQUEST_SINGLE_UPDATE1:
-            listener = new RequestSingleUpdateListener.Api1(this, clientAddr);
-            break;
-        default:
-            throw new UnsupportedOperationException("Unsupported opcode " + requestParams.opCode);
+            case AccountRequest.ADD_ON_ACCOUNTS_UPDATED_LISTENER:
+                listener = new ProxyOnAccountsUpdateListener(this, clientAddr);
+                break;
+            case AccountRequest.GET_ACCOUNTS_BY_TYPE_AND_FEATURES:
+                listener = new ProxyAccountManagerListener.GetAccountsByTypeAndFeatures(this, clientAddr);
+                break;
+            case AccountRequest.GET_AUTH_TOKEN1:
+                listener = new ProxyAccountManagerListener.GetAuthToken1(this, clientAddr);
+                break;
+            case AccountRequest.GET_AUTH_TOKEN2:
+                listener = new ProxyAccountManagerListener.GetAuthToken2(this, clientAddr);
+                break;
+            case AccountRequest.HAS_FEATURES:
+                listener = new ProxyAccountManagerListener.HasFeatures(this, clientAddr);
+                break;
+            case AccountRequest.REMOVE_ACCOUNT:
+                listener = new ProxyAccountManagerListener.RemoveAccount(this, clientAddr);
+                break;
+            case AccountRequest.RENAME_ACCOUNT:
+                listener = new ProxyAccountManagerListener.RenameAccount(this, clientAddr);
+                break;
+            case LocationRequest.ADD_GPS_STATUS_LISTENER:
+                listener = new ProxyGpsStatusListener(this, clientAddr);
+                break;
+            case LocationRequest.ADD_NMEA_LISTENER:
+                listener = new ProxyNmeaListener(this, clientAddr);
+                break;
+            case LocationRequest.REQUEST_LOCATION_UPDATES1:
+                listener = new RequestLocationUpdatesListener.Api1(this, clientAddr);
+                break;
+            case LocationRequest.REQUEST_LOCATION_UPDATES2:
+                listener = new RequestLocationUpdatesListener.Api2(this, clientAddr);
+                break;
+            case LocationRequest.REQUEST_SINGLE_UPDATE:
+                listener = new RequestSingleUpdateListener.Api(this, clientAddr);
+                break;
+            case LocationRequest.REQUEST_SINGLE_UPDATE1:
+                listener = new RequestSingleUpdateListener.Api1(this, clientAddr);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unsupported opcode " + requestParams.opCode);
         }
 
         Bundle response = startRequest(clientAddr, requestParams, listener, cacheRequest);

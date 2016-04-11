@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.permissionnanny.common.test.NannyTestCase;
+import com.permissionnanny.dagger.MockActivityComponent;
 import com.permissionnanny.dagger.MockComponentFactory;
-import com.permissionnanny.dagger.MockContextComponent;
 import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -38,7 +38,7 @@ public class ConfirmRequestActivityTest extends NannyTestCase {
     public void setUp() throws Exception {
         mController = Robolectric.buildActivity(ConfirmRequestActivity.class).withIntent(new Intent());
         mConfirmRequestActivity = mController.get();
-        MockContextComponent contextComponent = MockComponentFactory.getContextComponent();
+        MockActivityComponent contextComponent = MockComponentFactory.getActivityComponent();
         mConfirmRequestActivity.inject(contextComponent);
         contextComponent.inject(this);
         mController.setup();

@@ -17,4 +17,12 @@ public class MockComponentFactory {
                 .contextModule(new MockContextModule())
                 .build();
     }
+
+    public static MockActivityComponent getActivityComponent() {
+        return DaggerMockActivityComponent.builder()
+                .appComponent(getAppComponent())
+                .contextModule(new MockContextModule())
+                .activityModule(new MockActivityModule())
+                .build();
+    }
 }
