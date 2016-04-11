@@ -7,7 +7,7 @@ import com.permissionnanny.ConfirmRequestBinder;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.UninstallReceiver;
 import com.permissionnanny.dagger.ContextComponent.ContextScope;
-import com.permissionnanny.missioncontrol.AppControlBinder;
+import com.permissionnanny.missioncontrol.AppControlActivity;
 import dagger.Component;
 import javax.inject.Scope;
 
@@ -33,5 +33,5 @@ public interface ContextComponent {
 
     void inject(ConfirmRequestBinder victim);
 
-    void inject(AppControlBinder victim);
+    void inject(AppControlActivity victim);
 }

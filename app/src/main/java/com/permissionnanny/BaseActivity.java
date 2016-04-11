@@ -2,6 +2,7 @@ package com.permissionnanny;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import com.permissionnanny.dagger.AppComponent;
 import com.permissionnanny.dagger.ContextComponent;
 
 /**
@@ -14,6 +15,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public AppComponent getAppComponent() {
+        return ((App) getApplicationContext()).getAppComponent();
     }
 
     public ContextComponent getComponent() {

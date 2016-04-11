@@ -36,6 +36,7 @@ android {
             applicationIdSuffix '.debug'
             // Disable fabric build ID generation for debug builds
             ext.enableCrashlytics = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             signingConfig signingConfigs.release

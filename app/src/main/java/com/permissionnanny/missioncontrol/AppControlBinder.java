@@ -11,23 +11,25 @@ import com.permissionnanny.dagger.AppModule;
 import com.permissionnanny.data.AppPermission;
 import com.permissionnanny.data.AppPermissionManager;
 import java.util.Map;
-import javax.inject.Inject;
 import net.engio.mbassy.listener.Handler;
 
 public class AppControlBinder extends BaseBinder {
 
     AppControlView mView;
 
-    private Context mContext;
-    @Inject AppPermissionManager mAppManager;
-    @Inject AppModule.Bus mBus;
+    private final Context mContext;
+    private final AppPermissionManager mAppManager;
+    private final AppModule.Bus mBus;
     AppControlAdapter mAdapter;
 
-    public AppControlBinder(AppCompatActivity activity) {
+    public AppControlBinder(AppCompatActivity activity,
+                            AppPermissionManager appPermissionManager,
+                            AppModule.Bus bus) {
         super(null);
-        getComponent(activity).inject(this);
-        mView = new AppControlView(activity, this);
         mContext = activity;
+        mAppManager = appPermissionManager;
+        mBus = bus;
+        mView = new AppControlView(activity, this);
     }
 
     public void onCreate(Bundle state) {
