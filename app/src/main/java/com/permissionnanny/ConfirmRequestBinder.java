@@ -39,14 +39,12 @@ public class ConfirmRequestBinder extends BaseBinder {
     @Inject ProxyExecutor mExecutor;
     @Inject AppPermissionManager mAppManager;
 
-    public ConfirmRequestBinder(Activity activity, NannyBundle bundle) {
-        this(activity, bundle, null);
-    }
-
-    @VisibleForTesting
-    ConfirmRequestBinder(Activity activity, NannyBundle bundle, ContextComponent component) {
-        super(component);
-        getComponent(activity).inject(this);
+    public ConfirmRequestBinder(Activity activity,
+                                NannyBundle bundle,
+                                ProxyExecutor proxyExecutor,
+                                AppPermissionManager appPermissionManager) {
+        mExecutor = proxyExecutor;
+        mAppManager = appPermissionManager;
         mView = new ConfirmRequestView(activity, this, new TextDialogStubView(this));
         mContext = activity;
         mPackageManager = mContext.getPackageManager();

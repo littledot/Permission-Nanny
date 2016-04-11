@@ -1,18 +1,18 @@
 package com.permissionnanny;
 
 import android.os.Bundle;
-import com.permissionnanny.lib.NannyBundle;
+import javax.inject.Inject;
 
 /**
  *
  */
 public class ConfirmRequestActivity extends BaseActivity {
 
-    private ConfirmRequestBinder mBinder;
+    @Inject ConfirmRequestBinder mBinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mBinder = new ConfirmRequestBinder(this, new NannyBundle(getIntent().getExtras()));
+        getComponent().inject(this);
         mBinder.preOnCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         mBinder.onCreate(savedInstanceState);

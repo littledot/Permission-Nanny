@@ -10,6 +10,7 @@ import android.text.style.StyleSpan;
 import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.dagger.MockComponentFactory;
 import com.permissionnanny.dagger.MockContextComponent;
+import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.NannyBundle;
 import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.WifiRequest;
@@ -42,6 +43,8 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
     @Mock PackageManager mPackageManager;
     @Mock ApplicationInfo mAppInfo;
     @Mock Drawable mIcon;
+    @Mock ProxyExecutor mProxyExecutor;
+    @Mock AppPermissionManager mAppPermissionManager;
 
     @Before
     public void setUp() throws Exception {
@@ -60,7 +63,7 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
         when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
         when(mActivity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mProxyExecutor, mAppPermissionManager);
 
         Spanned ans = mBinder.getDialogTitle();
 
@@ -79,7 +82,7 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
         when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
         when(mActivity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mProxyExecutor, mAppPermissionManager);
 
         Spanned ans = mBinder.getDialogTitle();
 
@@ -98,7 +101,7 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
         when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
         when(mActivity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
                 .thenReturn("wants your connection info.");
-        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mProxyExecutor, mAppPermissionManager);
 
         Spanned ans = mBinder.getDialogTitle();
 
@@ -115,7 +118,7 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
         when(mPackageManager.getApplicationIcon(mAppInfo)).thenReturn(mIcon);
         mRequestParams.opCode = WifiRequest.GET_CONNECTION_INFO;
         when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
-        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mProxyExecutor, mAppPermissionManager);
 
         Drawable ans = mBinder.getDialogIcon();
 
@@ -129,7 +132,7 @@ public class ConfirmRequestBinderTest extends NannyTestCase {
         when(mPackageManager.getApplicationIcon(mAppInfo)).thenReturn(null);
         mRequestParams.opCode = WifiRequest.GET_CONNECTION_INFO;
         when(mNannyBundle.getRequest()).thenReturn(mRequestParams);
-        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mComponent);
+        mBinder = new ConfirmRequestBinder(mActivity, mNannyBundle, mProxyExecutor, mAppPermissionManager);
 
         Drawable ans = mBinder.getDialogIcon();
 

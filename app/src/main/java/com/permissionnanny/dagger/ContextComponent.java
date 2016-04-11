@@ -3,6 +3,7 @@ package com.permissionnanny.dagger;
 import android.content.Context;
 import com.permissionnanny.ClientPermissionManifestReceiver;
 import com.permissionnanny.ClientRequestReceiver;
+import com.permissionnanny.ConfirmRequestActivity;
 import com.permissionnanny.ConfirmRequestBinder;
 import com.permissionnanny.ProxyService;
 import com.permissionnanny.UninstallReceiver;
@@ -34,4 +35,6 @@ public interface ContextComponent {
     void inject(ConfirmRequestBinder victim);
 
     void inject(AppControlActivity victim);
+
+    void inject(ConfirmRequestActivity victim);
 }

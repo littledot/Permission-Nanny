@@ -25,7 +25,6 @@ public class AppControlBinder extends BaseBinder {
     public AppControlBinder(AppCompatActivity activity,
                             AppPermissionManager appPermissionManager,
                             AppModule.Bus bus) {
-        super(null);
         mContext = activity;
         mAppManager = appPermissionManager;
         mBus = bus;
