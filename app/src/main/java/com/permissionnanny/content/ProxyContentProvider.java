@@ -13,6 +13,7 @@ import com.permissionnanny.lib.request.RequestParams;
  *
  */
 public class ProxyContentProvider extends ContentProvider {
+
     // TODO #1: Set a TTL for approved ContentRequests.
     public static LongSparseArray<RequestParams> approvedRequests = new LongSparseArray<>();
 
