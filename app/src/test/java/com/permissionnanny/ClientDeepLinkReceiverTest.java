@@ -4,16 +4,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.lib.Nanny;
 import com.permissionnanny.lib.NannyException;
 import com.permissionnanny.missioncontrol.AppControlActivity;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -24,11 +19,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyAppTestRunner.class)
-public class ClientDeepLinkReceiverTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class ClientDeepLinkReceiverTest extends NannyAppTestCase {
 
     ClientDeepLinkReceiver mReceiver;
     Intent mIntent;

@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
-import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.dagger.MockComponentFactory;
 import com.permissionnanny.dagger.MockContextComponent;
 import com.permissionnanny.data.AppPermissionManager;
@@ -16,11 +15,7 @@ import com.permissionnanny.lib.request.RequestParams;
 import com.permissionnanny.lib.request.simple.WifiRequest;
 import com.permissionnanny.simple.WifiOperation;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import static org.hamcrest.Matchers.is;
@@ -29,11 +24,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-@RunWith(NannyAppTestRunner.class)
-public class ConfirmRequestBinderTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class ConfirmRequestBinderTest extends NannyAppTestCase {
 
     ConfirmRequestBinder mBinder;
     MockContextComponent mComponent;

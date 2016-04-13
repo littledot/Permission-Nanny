@@ -3,16 +3,10 @@ package com.permissionnanny.lib.request;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.permissionnanny.common.test.NannyTestCase;
-import com.permissionnanny.common.test.NannyTestRunner;
-import com.permissionnanny.lib.NannyLibTestRunner;
+import com.permissionnanny.lib.NannyLibTestCase;
 import com.permissionnanny.lib.request.simple.SimpleListener;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -21,11 +15,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyLibTestRunner.class)
-public class PermissionEventTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
+public class PermissionEventTest extends NannyLibTestCase {
 
     PermissionEvent mEventFilter;
     Intent mIntent;

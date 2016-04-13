@@ -7,22 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.permissionnanny.common.test.NannyTestCase;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@RunWith(NannyAppTestRunner.class)
-public class ConfirmRequestViewTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class ConfirmRequestViewTest extends NannyAppTestCase {
 
     ConfirmRequestView target;
     @Mock Activity activity;

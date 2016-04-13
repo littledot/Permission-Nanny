@@ -8,17 +8,11 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import com.permissionnanny.common.test.NannyTestCase;
-import com.permissionnanny.common.test.NannyTestRunner;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.NannyLibTestRunner;
+import com.permissionnanny.lib.NannyLibTestCase;
 import java.util.concurrent.TimeUnit;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -29,11 +23,7 @@ import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyLibTestRunner.class)
-public class AccountManagerEventTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
+public class AccountManagerEventTest extends NannyLibTestCase {
 
     AccountManagerEvent<Account> mEventFilter;
     Intent mIntent;

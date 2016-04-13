@@ -6,28 +6,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.os.Handler;
-import com.permissionnanny.common.test.NannyTestCase;
-import com.permissionnanny.common.test.NannyTestRunner;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.NannyLibTestRunner;
+import com.permissionnanny.lib.NannyLibTestCase;
 import com.permissionnanny.lib.request.Ack;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyLibTestRunner.class)
-public class LocationEventTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
+public class LocationEventTest extends NannyLibTestCase {
 
     LocationEvent mEventFilter;
     Intent mIntent;

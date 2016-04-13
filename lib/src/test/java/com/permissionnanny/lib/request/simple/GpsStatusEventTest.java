@@ -4,26 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.GpsStatus;
 import android.os.Bundle;
-import com.permissionnanny.common.test.NannyTestCase;
-import com.permissionnanny.common.test.NannyTestRunner;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.NannyLibTestRunner;
+import com.permissionnanny.lib.NannyLibTestCase;
 import com.permissionnanny.lib.request.Ack;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyLibTestRunner.class)
-public class GpsStatusEventTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
+public class GpsStatusEventTest extends NannyLibTestCase {
 
     GpsStatusEvent mRoute;
     Intent mIntent;

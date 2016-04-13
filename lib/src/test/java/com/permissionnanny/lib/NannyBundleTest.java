@@ -4,17 +4,11 @@ import android.app.PendingIntent;
 import android.content.IntentSender;
 import android.os.Bundle;
 import android.os.Parcelable;
-import com.permissionnanny.common.test.NannyTestCase;
-import com.permissionnanny.common.test.NannyTestRunner;
 import com.permissionnanny.lib.request.RequestParams;
 import java.io.Serializable;
 import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import static org.hamcrest.Matchers.is;
@@ -24,11 +18,7 @@ import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-@RunWith(NannyLibTestRunner.class)
-public class NannyBundleTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
+public class NannyBundleTest extends NannyLibTestCase {
 
     private NannyBundle.Builder mBuilder;
     private Bundle mEntityBody;

@@ -7,25 +7,17 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import com.permissionnanny.common.test.NannyTestCase;
-import com.permissionnanny.common.test.NannyTestRunner;
 import com.permissionnanny.lib.Nanny;
-import com.permissionnanny.lib.NannyLibTestRunner;
+import com.permissionnanny.lib.NannyLibTestCase;
 import com.permissionnanny.lib.request.simple.SimpleListener;
 import com.permissionnanny.lib.request.simple.SimpleRequest;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
@@ -35,11 +27,7 @@ import static org.mockito.Mockito.notNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(NannyLibTestRunner.class)
-public class PermissionRequestTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
+public class PermissionRequestTest extends NannyLibTestCase {
 
     SimpleRequest target;
     RequestParams requestParams;

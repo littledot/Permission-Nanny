@@ -2,28 +2,19 @@ package com.permissionnanny.missioncontrol;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import com.permissionnanny.NannyAppTestRunner;
-import com.permissionnanny.common.test.NannyTestCase;
+import com.permissionnanny.NannyAppTestCase;
 import com.permissionnanny.dagger.MockActivityComponent;
 import com.permissionnanny.dagger.MockComponentFactory;
 import javax.inject.Inject;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.util.ActivityController;
 
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyAppTestRunner.class)
-public class AppControlActivityTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class AppControlActivityTest extends NannyAppTestCase {
 
     ActivityController<AppControlActivity> mController;
     AppControlActivity mAppControlActivity;

@@ -3,13 +3,8 @@ package com.permissionnanny;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import com.permissionnanny.common.test.NannyTestCase;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import static org.hamcrest.Matchers.nullValue;
@@ -19,11 +14,7 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(NannyAppTestRunner.class)
-public class UtilTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class UtilTest extends NannyAppTestCase {
 
     ApplicationInfo mApplicationInfo;
     @Mock Context mContext;

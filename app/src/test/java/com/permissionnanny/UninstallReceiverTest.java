@@ -3,7 +3,6 @@ package com.permissionnanny;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.dagger.DaggerMockContextComponent;
 import com.permissionnanny.dagger.MockComponentFactory;
 import com.permissionnanny.dagger.MockContextComponent;
@@ -11,21 +10,13 @@ import com.permissionnanny.dagger.MockContextModule;
 import com.permissionnanny.data.AppPermissionManager;
 import javax.inject.Inject;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyAppTestRunner.class)
-public class UninstallReceiverTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class UninstallReceiverTest extends NannyAppTestCase {
 
     UninstallReceiver mReceiver;
     Intent mIntent;

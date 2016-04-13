@@ -3,25 +3,15 @@ package com.permissionnanny.lib;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import com.permissionnanny.common.test.NannyTestCase;
-import com.permissionnanny.common.test.NannyTestRunner;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
-import static com.permissionnanny.common.test.Mockingbird.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static com.permissionnanny.common.test.Mockingbird.mockPendingIntent;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-@RunWith(NannyLibTestRunner.class)
-public class NannyTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyTestRunner.newTestRules(this);
+public class NannyTest extends NannyLibTestCase {
 
     Intent intent;
     Bundle entity;

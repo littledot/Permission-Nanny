@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.permissionnanny.common.test.Mockingbird;
-import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.dagger.ContextComponent;
 import com.permissionnanny.dagger.MockComponentFactory;
 import com.permissionnanny.dagger.MockContextComponent;
@@ -18,11 +17,7 @@ import com.permissionnanny.lib.request.simple.TelephonyRequest;
 import com.permissionnanny.lib.request.simple.WifiRequest;
 import javax.inject.Inject;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -37,11 +32,7 @@ import static org.mockito.Mockito.same;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(NannyAppTestRunner.class)
-public class ClientRequestReceiverTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class ClientRequestReceiverTest extends NannyAppTestCase {
 
     ClientRequestReceiver mReceiver;
     Intent mIntent;

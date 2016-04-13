@@ -3,12 +3,10 @@ package com.permissionnanny.content;
 import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.net.Uri;
-import com.permissionnanny.NannyAppTestRunner;
-import com.permissionnanny.common.test.NannyTestCase;
+import com.permissionnanny.NannyAppTestCase;
 import com.permissionnanny.lib.request.RequestParams;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.robolectric.RuntimeEnvironment;
 
@@ -17,8 +15,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-@RunWith(NannyAppTestRunner.class)
-public class ProxyContentProviderTest extends NannyTestCase {
+public class ProxyContentProviderTest extends NannyAppTestCase {
 
     ProxyContentProvider mProxyContentProvider;
     RequestParams mRequestParams;

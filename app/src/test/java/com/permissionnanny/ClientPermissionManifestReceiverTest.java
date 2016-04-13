@@ -4,7 +4,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.permissionnanny.common.test.NannyTestCase;
 import com.permissionnanny.dagger.MockComponentFactory;
 import com.permissionnanny.dagger.MockContextComponent;
 import com.permissionnanny.data.AppPermissionManager;
@@ -13,11 +12,7 @@ import com.permissionnanny.lib.NannyException;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -27,11 +22,7 @@ import static com.permissionnanny.common.test.Mockingbird.mockPendingIntent;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 
-@RunWith(NannyAppTestRunner.class)
-public class ClientPermissionManifestReceiverTest extends NannyTestCase {
-
-    @ClassRule public static final RuleChain CLASS_RULES = NannyAppTestRunner.newClassRules();
-    @Rule public final RuleChain TEST_RULES = NannyAppTestRunner.newTestRules(this);
+public class ClientPermissionManifestReceiverTest extends NannyAppTestCase {
 
     ClientPermissionManifestReceiver mReceiver;
     Intent mIntent;
