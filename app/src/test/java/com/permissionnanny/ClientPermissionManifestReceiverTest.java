@@ -38,7 +38,7 @@ public class ClientPermissionManifestReceiverTest extends NannyAppTestCase {
         MockContextComponent component = MockComponentFactory.getContextComponent();
         component.inject(this);
         mReceiver = new ClientPermissionManifestReceiver();
-        mReceiver.setComponent(component);
+        mReceiver.setTestComponent(component);
         mIntent = new Intent();
         mBundle = new Bundle();
         mManifest = new ArrayList<>();

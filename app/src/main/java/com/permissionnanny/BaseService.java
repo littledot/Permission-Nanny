@@ -41,7 +41,7 @@ public class BaseService extends Service {
     }
 
     @VisibleForTesting
-    public void setComponent(ContextComponent component) {
+    public void setTestComponent(ContextComponent component) {
         mComponent = component;
     }
 

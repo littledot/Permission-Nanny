@@ -32,7 +32,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @VisibleForTesting
-    public void inject(ActivityComponent component) {
+    public void setTestComponent(ActivityComponent component) {
         mComponent = component;
     }
 }

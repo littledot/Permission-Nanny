@@ -50,7 +50,7 @@ public class ClientRequestReceiverTest extends NannyAppTestCase {
         MockContextComponent component = MockComponentFactory.getContextComponent();
         component.inject(this);
         mReceiver = new ClientRequestReceiver();
-        mReceiver.setComponent(component);
+        mReceiver.setTestComponent(component);
         mIntent = new Intent();
         mEntity = new Bundle();
         mRequestParams = new RequestParams();

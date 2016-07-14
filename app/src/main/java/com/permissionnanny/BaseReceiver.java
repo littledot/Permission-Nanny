@@ -19,7 +19,7 @@ public class BaseReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {}
 
     @VisibleForTesting
-    public void setComponent(ContextComponent component) {
+    public void setTestComponent(ContextComponent component) {
         mComponent = component;
     }
 

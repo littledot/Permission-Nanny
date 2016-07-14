@@ -27,7 +27,7 @@ public class ConfirmRequestActivityTest extends NannyAppTestCase {
         mController = Robolectric.buildActivity(ConfirmRequestActivity.class).withIntent(new Intent());
         mConfirmRequestActivity = mController.get();
         MockActivityComponent contextComponent = MockComponentFactory.getActivityComponent();
-        mConfirmRequestActivity.inject(contextComponent);
+        mConfirmRequestActivity.setTestComponent(contextComponent);
         contextComponent.inject(this);
         mController.setup();
     }

@@ -27,7 +27,7 @@ public class AppControlActivityTest extends NannyAppTestCase {
         mController = Robolectric.buildActivity(AppControlActivity.class);
         mAppControlActivity = mController.get();
         MockActivityComponent contextComponent = MockComponentFactory.getActivityComponent();
-        mAppControlActivity.inject(contextComponent);
+        mAppControlActivity.setTestComponent(contextComponent);
         contextComponent.inject(this);
         mController.setup();
     }

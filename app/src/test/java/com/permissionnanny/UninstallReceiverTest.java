@@ -30,7 +30,7 @@ public class UninstallReceiverTest extends NannyAppTestCase {
                 .contextModule(new MockContextModule()).build();
         component.inject(this);
         mReceiver = new UninstallReceiver();
-        mReceiver.setComponent(component);
+        mReceiver.setTestComponent(component);
         mIntent = new Intent();
     }
 
