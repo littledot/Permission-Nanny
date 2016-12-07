@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class AppPermissionDB {
 
-    private static final String _ = "\u0378\u0379";
+    private static final String pipe = "\u0378\u0379";
 
     private final NannyDB mDB;
 
@@ -46,6 +46,6 @@ public class AppPermissionDB {
     }
 
     private String key(String appPackage, String permission) {
-        return appPackage + _ + permission;
+        return appPackage + pipe + permission;
     }
 }
