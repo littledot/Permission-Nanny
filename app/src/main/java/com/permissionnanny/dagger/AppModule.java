@@ -69,9 +69,8 @@ public class AppModule {
             return new AppPermissionDB(new NannyDB(path, cryo));
         } catch (IOException e) {
             // TODO #78: Handle db exceptions gracefully
-            Timber.e(e, "appPermission");
+            throw new RuntimeException("Dagger error");
         }
-        return null;
     }
 
     @Provides
@@ -82,9 +81,8 @@ public class AppModule {
             return new OngoingRequestDB(new NannyDB(path, cryo));
         } catch (IOException e) {
             // TODO #78: Handle db exceptions gracefully
-            Timber.e(e, "ongoing");
+            throw new RuntimeException("Dagger error");
         }
-        return null;
     }
 
     @Provides
