@@ -5,7 +5,7 @@ import android.support.v4.util.ArrayMap;
 
 import java.util.Map;
 
-import static android.Manifest.permission.*;
+import static com.permissionnanny.Manifest.permission.*;
 import static com.permissionnanny.R.string.*;
 
 /**

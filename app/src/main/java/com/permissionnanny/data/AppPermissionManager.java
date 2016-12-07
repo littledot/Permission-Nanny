@@ -1,11 +1,11 @@
 package com.permissionnanny.data;
 
-import android.Manifest;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
 import com.permissionnanny.App;
+import com.permissionnanny.Manifest;
 import com.permissionnanny.Operation;
 import com.permissionnanny.content.ContentOperation;
 import com.permissionnanny.dagger.AppModule;

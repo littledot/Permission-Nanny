@@ -1,6 +1,5 @@
 package com.permissionnanny.simple;
 
-import android.Manifest;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
@@ -8,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PermissionInfo;
 import android.os.Build;
 import android.os.Bundle;
+import com.permissionnanny.Manifest;
 import com.permissionnanny.ProxyFunction;
 import com.permissionnanny.ProxyListenerFactory;
 import com.permissionnanny.lib.request.RequestParams;
