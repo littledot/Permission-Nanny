@@ -1,7 +1,8 @@
 # [Permission Nanny][app]
-[![Build Status](https://travis-ci.org/littledot/Permission-Nanny.svg?branch=master)](https://travis-ci.org/littledot/Permission-Nanny)
 [![Download](https://api.bintray.com/packages/littledot/maven/permission-nanny-sdk/images/download.svg)](https://bintray.com/littledot/maven/permission-nanny-sdk/_latestVersion)
+[![Build Status](https://travis-ci.org/littledot/Permission-Nanny.svg?branch=master)](https://travis-ci.org/littledot/Permission-Nanny)
 [![Coverage Status](https://coveralls.io/repos/github/littledot/Permission-Nanny/badge.svg?branch=master)](https://coveralls.io/github/littledot/Permission-Nanny?branch=master)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Permission-Nanny/Lobby)
 
 Permission Nanny is an application that can access resources which are protected by permissions on your behalf,
 so that your application does not need to declare permission usage in your AndroidManifest.xml. With Permission Nanny,
