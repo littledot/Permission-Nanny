@@ -11,7 +11,6 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
-import com.permissionnanny.dagger.ContextComponent;
 import com.permissionnanny.data.AppPermission;
 import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.lib.NannyBundle;
@@ -51,7 +50,7 @@ public class ConfirmRequestBinder extends BaseBinder {
         mBundle = bundle;
         mClientAddr = mBundle.getClientAddress();
         mAppPackage = mBundle.getSenderIdentity();
-        mAppInfo = Util.getApplicationInfo(mContext, mAppPackage);
+        mAppInfo = Util.INSTANCE.getApplicationInfo(mContext, mAppPackage);
         mRequest = mBundle.getRequest();
         mOperation = Operation.getOperation(mRequest);
     }

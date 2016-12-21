@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'kotlin-android'
 
 apply from: 'https://raw.githubusercontent.com/littledot/android-gradle-java-template/v1.0.0/common.gradle'
 
@@ -48,8 +49,12 @@ android {
         lintConfig project.rootProject.file('lint.xml')
     }
     sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
+        }
         test {
             java.srcDirs += 'src/commonTest/java'
+            java.srcDirs += 'src/test/kotlin'
         }
     }
     packagingOptions {
@@ -73,6 +78,7 @@ dependencies {
     compile project.butterknife
     compile project.javaxAnnotation
     compile project.javaxInject
+    compile project.kotlinStdlib
     compile project.kryo
     compile project.leveldb
     compile project.mbassador
@@ -83,6 +89,8 @@ dependencies {
     testApt project.daggerCompiler
 
     testCompile project(':commonTest')
+    testCompile project.kotlinTest
+    testCompile project.kotlinTestJunit
 
     androidTestCompile project.junit
     androidTestCompile project.mockitoCore

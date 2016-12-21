@@ -13,11 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.permissionnanny.R;
 import com.permissionnanny.SimpleOnItemSelectedListener;
-import com.permissionnanny.Util;
-import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.data.AppPermission;
+import com.permissionnanny.data.AppPermissionManager;
 import com.permissionnanny.data.PermissionDetail;
-
+import com.permissionnanny.Util;
 import java.util.Map;
 
 /**
@@ -86,7 +85,7 @@ public class AppControlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         String appName = appPackage;
         Drawable appIcon = null;
 
-        ApplicationInfo info = Util.getApplicationInfo(mContext, appPackage);
+        ApplicationInfo info = Util.INSTANCE.getApplicationInfo(mContext, appPackage);
         if (info != null) {
             CharSequence appLabel = mPM.getApplicationLabel(info);
             if (appLabel != null) {
