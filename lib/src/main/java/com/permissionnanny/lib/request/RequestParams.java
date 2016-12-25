@@ -186,8 +186,8 @@ public class RequestParams implements Parcelable {
         this.arrayListOfPendingIntents0 = in.createTypedArrayList(PendingIntent.CREATOR);
         this.arrayListOfPendingIntents1 = in.createTypedArrayList(PendingIntent.CREATOR);
         this.arrayListOfStrings0 = in.createStringArrayList();
-        bundle0 = in.readBundle();
-        bundle1 = in.readBundle();
+        bundle0 = in.readBundle(getClass().getClassLoader());
+        bundle1 = in.readBundle(getClass().getClassLoader());
         this.contentValues0 = in.readParcelable(ContentValues.class.getClassLoader());
         this.criteria0 = in.readParcelable(Criteria.class.getClassLoader());
         this.inetAddress0 = (InetAddress) in.readSerializable();
