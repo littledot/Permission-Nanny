@@ -60,15 +60,21 @@
 
         <receiver
             android:name=".ClientPermissionManifestReceiver"
-            android:exported="true"/>
+            android:exported="true"
+            tools:ignore="ExportedReceiver"
+            />
 
         <receiver
             android:name=".ClientRequestReceiver"
-            android:exported="true"/>
+            android:exported="true"
+            tools:ignore="ExportedReceiver"
+            />
 
         <receiver
             android:name=".ClientDeepLinkReceiver"
-            android:exported="true"/>
+            android:exported="true"
+            tools:ignore="ExportedReceiver"
+            />
 
         <receiver
             android:name=".UninstallReceiver">
@@ -81,7 +87,9 @@
         <provider
             android:name=".content.ProxyContentProvider"
             android:authorities="${applicationId}.proxy_content_provider"
-            android:exported="true"/>
+            android:exported="true"
+            tools:ignore="ExportedContentProvider"
+            />
 
     </application>
 </manifest>
