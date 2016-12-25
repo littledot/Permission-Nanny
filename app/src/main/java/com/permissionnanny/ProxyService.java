@@ -143,7 +143,7 @@ public class ProxyService extends BaseService {
         try {
             listener.register(this, params);
         } catch (Throwable error) {
-            return ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
+            return ResponseFactory.INSTANCE.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
         }
 
         // Good request? Cache request to memory and disk
@@ -151,7 +151,7 @@ public class ProxyService extends BaseService {
         if (cacheRequest) {
             mDB.putOngoingRequest(clientAddr, params);
         }
-        return ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).build();
+        return ResponseFactory.INSTANCE.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).build();
     }
 
     public void removeProxyClient(String clientAddr) {

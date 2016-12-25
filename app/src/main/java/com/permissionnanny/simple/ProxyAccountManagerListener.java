@@ -31,13 +31,13 @@ public abstract class ProxyAccountManagerListener<T> extends ProxyListener imple
             T value = future.getResult();
             Bundle entity = new Bundle();
             parse(entity, value);
-            sendBroadcast(ResponseFactory.newAllowResponse(mServer)
+            sendBroadcast(ResponseFactory.INSTANCE.newAllowResponse(mServer)
                     .connection(Nanny.CLOSE)
                     .entity(entity)
                     .build());
         } catch (OperationCanceledException | IOException | AuthenticatorException e) {
             // TODO #75: Handle OCE & IOE as 500s?
-            sendBroadcast(ResponseFactory.newBadRequestResponse(e).build());
+            sendBroadcast(ResponseFactory.INSTANCE.newBadRequestResponse(e).build());
         }
     }
 

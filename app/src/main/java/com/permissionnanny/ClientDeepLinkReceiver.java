@@ -51,7 +51,7 @@ public class ClientDeepLinkReceiver extends BaseReceiver {
 
     private void okRequest(Context context, String clientAddr) {
         if (clientAddr != null && !clientAddr.isEmpty()) {
-            Bundle args = ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).connection(Nanny.CLOSE).build();
+            Bundle args = ResponseFactory.INSTANCE.newAllowResponse(Nanny.AUTHORIZATION_SERVICE).connection(Nanny.CLOSE).build();
             Intent response = new Intent(clientAddr).putExtras(args);
             context.sendBroadcast(response);
         }
@@ -60,7 +60,7 @@ public class ClientDeepLinkReceiver extends BaseReceiver {
     private void badRequest(Context context, String clientAddr, Throwable error) {
         Timber.wtf("err=" + error.getMessage());
         if (clientAddr != null && !clientAddr.isEmpty()) {
-            Bundle args = ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
+            Bundle args = ResponseFactory.INSTANCE.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
             Intent response = new Intent(clientAddr).putExtras(args);
             context.sendBroadcast(response);
         }

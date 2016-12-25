@@ -76,7 +76,7 @@ public class ProxyExecutor {
                 break;
         }
 
-        NannyBundle.Builder response = ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE);
+        NannyBundle.Builder response = ResponseFactory.INSTANCE.newAllowResponse(Nanny.AUTHORIZATION_SERVICE);
         response.mConnection = Nanny.CLOSE;
         response.mEntity = entity;
         return response;
@@ -100,9 +100,9 @@ public class ProxyExecutor {
             try {
                 operation.mFunction.execute(mContext, request, entity);
             } catch (Throwable error) {
-                return ResponseFactory.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
+                return ResponseFactory.INSTANCE.newBadRequestResponse(Nanny.AUTHORIZATION_SERVICE, error).build();
             }
-            return ResponseFactory.newAllowResponse(Nanny.AUTHORIZATION_SERVICE)
+            return ResponseFactory.INSTANCE.newAllowResponse(Nanny.AUTHORIZATION_SERVICE)
                     .connection(Nanny.CLOSE)
                     .entity(entity)
                     .build();
@@ -119,7 +119,7 @@ public class ProxyExecutor {
 
     public void executeDeny(Operation operation, RequestParams request, String clientId) {
         if (clientId != null) {
-            Bundle response = ResponseFactory.newDenyResponse(Nanny.AUTHORIZATION_SERVICE).build();
+            Bundle response = ResponseFactory.INSTANCE.newDenyResponse(Nanny.AUTHORIZATION_SERVICE).build();
             if (response != null) {
                 Timber.d("server broadcasting=" + BundleUtil.toString(response));
                 Intent intent = new Intent(clientId).putExtras(response);

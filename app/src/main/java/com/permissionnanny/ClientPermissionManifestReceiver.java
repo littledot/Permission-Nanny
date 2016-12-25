@@ -55,7 +55,7 @@ public class ClientPermissionManifestReceiver extends BaseReceiver {
     private void badRequest(Context context, String clientAddr, Throwable error) {
         Timber.wtf("err=" + error.getMessage());
         if (clientAddr != null && !clientAddr.isEmpty()) {
-            Bundle payload = ResponseFactory.newBadRequestResponse(Nanny.PERMISSION_MANIFEST_SERVICE, error).build();
+            Bundle payload = ResponseFactory.INSTANCE.newBadRequestResponse(Nanny.PERMISSION_MANIFEST_SERVICE, error).build();
             Intent response = new Intent(clientAddr).putExtras(payload);
             context.sendBroadcast(response);
         }
@@ -63,7 +63,7 @@ public class ClientPermissionManifestReceiver extends BaseReceiver {
 
     private void okRequest(Context context, String clientAddr) {
         if (clientAddr != null && !clientAddr.isEmpty()) {
-            NannyBundle.Builder payload = ResponseFactory.newAllowResponse(Nanny.PERMISSION_MANIFEST_SERVICE);
+            NannyBundle.Builder payload = ResponseFactory.INSTANCE.newAllowResponse(Nanny.PERMISSION_MANIFEST_SERVICE);
             payload.mConnection = Nanny.CLOSE;
             Intent response = new Intent(clientAddr).putExtras(payload.build());
             context.sendBroadcast(response);
