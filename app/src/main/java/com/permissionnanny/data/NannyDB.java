@@ -7,6 +7,7 @@ import android.support.v4.util.SimpleArrayMap;
 import android.text.TextUtils;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Map;
 import org.iq80.leveldb.DB;
@@ -19,6 +20,7 @@ import org.iq80.leveldb.impl.Iq80DBFactory;
  *
  */
 public class NannyDB {
+    private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private final File mFile;
     private final DB mDB;
@@ -44,27 +46,27 @@ public class NannyDB {
     }
 
     public <T> T get(@NonNull String key, @NonNull Class<T> type) {
-        byte[] data = mDB.get(key.getBytes());
+        byte[] data = mDB.get(key.getBytes(UTF_8));
         return mCryo.deserialize(data, type);
     }
 
     public <T> T get(@NonNull String key) {
-        byte[] data = mDB.get(key.getBytes());
+        byte[] data = mDB.get(key.getBytes(UTF_8));
         return mCryo.deserialize(data);
     }
 
     public void put(@NonNull String key, @NonNull Object val) {
         byte[] bytes = mCryo.serialize(val);
-        mDB.put(key.getBytes(), bytes);
+        mDB.put(key.getBytes(UTF_8), bytes);
     }
 
     public void del(@NonNull String key) {
-        mDB.delete(key.getBytes());
+        mDB.delete(key.getBytes(UTF_8));
     }
 
     public ArrayList<String> findKeys(@NonNull String startsWith) {
         DBIterator it = mDB.iterator();
-        it.seek(startsWith.getBytes());
+        it.seek(startsWith.getBytes(UTF_8));
         ArrayList<String> list = new ArrayList<>();
         while (it.hasNext()) {
             list.add(new String(it.next().getKey()));
@@ -75,7 +77,7 @@ public class NannyDB {
     public <T> ArrayList<T> findVals(@Nullable String startsWith, @NonNull Class<T> type) {
         DBIterator it = mDB.iterator();
         if (!TextUtils.isEmpty(startsWith)) {
-            it.seek(startsWith.getBytes());
+            it.seek(startsWith.getBytes(UTF_8));
         }
 
         ArrayList<T> list = new ArrayList<>();
