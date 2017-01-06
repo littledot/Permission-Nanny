@@ -28,7 +28,7 @@ android:
     - sys-img-x86-android-17
 
 script:
-  - ./gradlew build -i
+  - ./gradlew build -s -d
 
 after_success:
   - ./gradlew jacocoDebugReport coveralls
