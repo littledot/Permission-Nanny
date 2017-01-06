@@ -61,7 +61,7 @@ class ConfirmRequestViewTest : NannyAppTestCase() {
 
     @Test
     fun bindViewsShouldPrependButtonWithAlwaysWhenRememberPreferencesIsChecked() {
-        given(binder.rememberPreference).willReturn(true)
+        binder.rememberPreference = true
 
         target.bindViews()
 

@@ -1070,7 +1070,7 @@
     <string name="permlab_readSocialStream" product="default">read your social stream</string>
     <string name="permdesc_readSocialStream" product="default">Allows the app
       to access and sync social updates from you and your friends. Be careful
-      when sharing information -- this allows the app to read communications
+      when sharing information — this allows the app to read communications
       between you and your friends on social networks, regardless of
       confidentiality. Note: this permission may not be enforced on all social
       networks.</string>
@@ -1079,7 +1079,7 @@
     <string name="permlab_writeSocialStream" product="default">write to your social stream</string>
     <string name="permdesc_writeSocialStream" product="default">Allows the app to
      display social updates from your friends.  Be careful when sharing
-     information -- this allows the app to produce messages that may appear to
+     information — this allows the app to produce messages that may appear to
      come from a friend. Note: this permission may not be enforced on all social
      networks.</string>
 

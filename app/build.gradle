@@ -62,8 +62,12 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
-    apt project.daggerCompiler
+    kapt project.daggerCompiler
 
     compile project.design
     compile project.supportV4
@@ -74,6 +78,7 @@ dependencies {
     compile project(':common')
     compile project(':lib')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.3@aar') { transitive = true; }
+    compile project.ankoSdk15
     compile project.dagger
     compile project.butterknife
     compile project.javaxAnnotation
@@ -86,7 +91,7 @@ dependencies {
     debugCompile project.leakcanaryAndroid
     releaseCompile project.leakcanaryAndroidNoOp
 
-    testApt project.daggerCompiler
+    kaptTest project.daggerCompiler
 
     testCompile project(':commonTest')
     testCompile project.kotlinTest

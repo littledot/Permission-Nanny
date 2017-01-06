@@ -35,7 +35,7 @@ class ConfirmRequestBinderTest : NannyAppTestCase() {
 
     @Before
     fun setUp() {
-        component = MockComponentFactory.getContextComponent()
+        component = MockComponentFactory.contextComponent
         component.inject(this)
         given(activity.packageManager).willReturn(packageManager)
         requestParams = RequestParams()
@@ -48,7 +48,7 @@ class ConfirmRequestBinderTest : NannyAppTestCase() {
         given(packageManager.getApplicationLabel(appInfo)).willReturn("3rd Party App")
         requestParams.opCode = WifiRequest.GET_CONNECTION_INFO
         given<RequestParams>(nannyBundle.request).willReturn(requestParams)
-        given(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        given(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO)!!.dialogTitle))
                 .willReturn("wants your connection info.")
         binder = ConfirmRequestBinder(activity, nannyBundle, proxyExecutor, appPermissionManager)
 
@@ -57,7 +57,6 @@ class ConfirmRequestBinderTest : NannyAppTestCase() {
         assertThat(ans.toString(), equalTo("3rd Party App wants your connection info."))
         val spans = ans.getSpans(0, ans.length, Any::class.java)
         assertThat(spans.size, equalTo(1))
-        assertThat((spans[0] as StyleSpan).style, equalTo(Typeface.BOLD))
         assertThat((spans[0] as StyleSpan).style, equalTo(Typeface.BOLD))
     }
 
@@ -68,7 +67,7 @@ class ConfirmRequestBinderTest : NannyAppTestCase() {
         given(packageManager.getApplicationLabel(appInfo)).willReturn(null)
         requestParams.opCode = WifiRequest.GET_CONNECTION_INFO
         given<RequestParams>(nannyBundle.request).willReturn(requestParams)
-        given(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        given(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO)!!.dialogTitle))
                 .willReturn("wants your connection info.")
         binder = ConfirmRequestBinder(activity, nannyBundle, proxyExecutor, appPermissionManager)
 
@@ -87,7 +86,7 @@ class ConfirmRequestBinderTest : NannyAppTestCase() {
         given(packageManager.getApplicationLabel(appInfo)).willReturn(null)
         requestParams.opCode = WifiRequest.GET_CONNECTION_INFO
         given<RequestParams>(nannyBundle.request).willReturn(requestParams)
-        given(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO).mDialogTitle))
+        given(activity.getText(WifiOperation.getOperation(WifiRequest.GET_CONNECTION_INFO)!!.dialogTitle))
                 .willReturn("wants your connection info.")
         binder = ConfirmRequestBinder(activity, nannyBundle, proxyExecutor, appPermissionManager)
 
