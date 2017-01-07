@@ -1,5 +1,8 @@
 language: android
 
+sudo: required
+dist: trusty
+
 env:
   global:
     # Try reducing initial heap size. https://discuss.gradle.org/t/gradle-travis-ci/11928
@@ -31,6 +34,19 @@ android:
     # if you need to run emulator(s) during your tests
     #- sys-img-armeabi-v7a-android-19
     - sys-img-x86-android-17
+
+before_script:
+  - sudo service postgresql stop || true
+  - sudo service mysql stop || true
+  - sudo service memcached stop || true
+  - sudo service bootlogd stop || true
+  - sudo service elasticsearch stop || true
+  - sudo service mongodb stop || true
+  - sudo service neo4j stop || true
+  - sudo service cassandra stop || true
+  - sudo service riak stop || true
+  - sudo service rsync stop || true
+  - sudo service x11-common stop || true
 
 script:
   - ./gradlew build -s -i
