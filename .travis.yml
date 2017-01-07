@@ -1,5 +1,10 @@
 language: android
 
+env:
+  global:
+    # Try reducing initial heap size. https://discuss.gradle.org/t/gradle-travis-ci/11928
+    - GRADLE_OPTS="-Xms128m"
+
 jdk:
  - oraclejdk8
 
