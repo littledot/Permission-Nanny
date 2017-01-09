@@ -30,7 +30,7 @@ buildscript {
         ankoAppcompatV7 = "org.jetbrains.anko:anko-appcompat-v7:${v}"
         autoParcelProcessor = "com.github.frankiesardo:auto-parcel-processor:0.3.1"
         butterknife = "com.jakewharton:butterknife:7.0.1"
-        v = "2.5"
+        v = "2.8"
         dagger = "com.google.dagger:dagger:${v}"
         daggerCompiler = "com.google.dagger:dagger-compiler:${v}"
         v = "3.0.0-beta1"
