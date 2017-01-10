@@ -1,102 +1,24 @@
 buildscript {
+    apply from: 'deps.gradle'
+
     repositories {
         jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://maven.fabric.io/public" }
     }
-    project.ext {
-        compileSdk = 22
-        buildTools = "23.0.2"
-        minSdk = 9
-        targetSdk = 22
-        versionCode = 10
-        versionName = "0.1.2-dev"
-        kotlin_version = "1.0.5-3"
 
-        v = "22.2.0"
-        design = "com.android.support:design:${v}"
-        supportV4 = "com.android.support:support-v4:${v}"
-        appcompatV7 = "com.android.support:appcompat-v7:${v}"
-        cardviewV7 = "com.android.support:cardview-v7:${v}"
-        gridlayoutV7 = "com.android.support:gridlayout-v7:${v}"
-        paletteV7 = "com.android.support:palette-v7:${v}"
-        recyclerviewV7 = "com.android.support:recyclerview-v7:${v}"
-        supportAnnotations = "com.android.support:support-annotations:${v}"
-        playServices = "com.google.android.gms:play-services:7.5.0"
-
-        v = "0.8.3"
-        ankoSdk15 = "org.jetbrains.anko:anko-sdk15:${v}"
-        ankoSupportV4 = "org.jetbrains.anko:anko-support-v4:${v}"
-        ankoAppcompatV7 = "org.jetbrains.anko:anko-appcompat-v7:${v}"
-        autoParcelProcessor = "com.github.frankiesardo:auto-parcel-processor:0.3.1"
-        butterknife = "com.jakewharton:butterknife:7.0.1"
-        v = "2.8"
-        dagger = "com.google.dagger:dagger:${v}"
-        daggerCompiler = "com.google.dagger:dagger-compiler:${v}"
-        v = "3.0.0-beta1"
-        eventbus = "de.greenrobot:eventbus:${v}"
-        eventbusAnnotationProcessor = "de.greenrobot:eventbus-annotation-processor:${v}"
-        javaxAnnotation = "javax.annotation:javax.annotation-api:1.2"
-        javaxInject = "javax.inject:javax.inject:1"
-        kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-        kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        kotlinTest = "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-        kotlinTestJunit = "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-        kryo = "com.esotericsoftware:kryo:3.0.2"
-        kryoSerializers = "de.javakaffee:kryo-serializers:0.33"
-        v = "1.3"
-        leakcanaryAndroid = "com.squareup.leakcanary:leakcanary-android:${v}"
-        leakcanaryAndroidNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:${v}"
-        leveldb = "org.iq80.leveldb:leveldb:0.7"
-        v = "1.1.0"
-        logansquare = "com.bluelinelabs:logansquare:${v}"
-        logansquareCompiler = "com.bluelinelabs:logansquare-compiler:${v}"
-        lorem = "com.thedeanda:lorem:1.2"
-        mbassador = "net.engio:mbassador:1.2.4"
-        okhttp = "com.squareup.okhttp:okhttp:2.4.0"
-        rxandroid = "io.reactivex:rxandroid:0.24.0"
-        snappydbLib = "com.snappydb:snappydb-lib:0.5.2"
-        snapdb = "io.snapdb:snapdb:0.0.2"
-        timber = 'com.jakewharton.timber:timber:4.1.0'
-        volley = "com.mcxiaoke.volley:library:1.0.16"
-
-        espressoCore = "com.android.support.test.espresso:espresso-core:2.2"
-        rules = "com.android.support.test:rules:0.3"
-        runner = "com.android.support.test:runner:0.3"
-        uiautomator = "com.android.support.test.uiautomator:uiautomator-v18:2.1.1"
-
-        asm = "org.ow2.asm:asm:5.0.3" // Resolved versions for app (5.0.3) and test app (5.0.1) differ.
-        dexmakerMockito = "com.google.dexmaker:dexmaker-mockito:1.2"
-        hamcrestLibrary = "org.hamcrest:hamcrest-library:1.3"
-        junit = "junit:junit:4.12"
-        mockitoCore = "org.mockito:mockito-core:1.10.19"
-        objenesis = "org.objenesis:objenesis:2.1" // Resolved versions for app (2.1) and test app (1.0) differ.
-        v = "1.6.2"
-        powermockApiMockito = "org.powermock:powermock-api-mockito:${v}"
-        powermockClassloadingXstream = "org.powermock:powermock-classloading-xstream:${v}"
-        powermockModuleJunit4 = "org.powermock:powermock-module-junit4:${v}"
-        powermockModuleJunit4Rule = "org.powermock:powermock-module-junit4-rule:${v}"
-        robolectric = "org.robolectric:robolectric:3.0"
-        shadowsSupportV4 = "org.robolectric:shadows-support-v4"
-
-        Properties p = new Properties()
-        p.load(file("secret.properties").newDataInputStream())
-        p.each { key, val ->
-            set(key, val ? val : System.env.get(key))
-        }
-    }
     dependencies {
-        classpath "com.android.tools.build:gradle:2.0.0"
-        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.6.1"
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.13.0"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:1.4.1"
-        classpath "com.jakewharton.sdkmanager:gradle-plugin:0.12.0"
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6"
-        classpath "com.neenbedankt.gradle.plugins:android-apt:1.8"
-        classpath "io.fabric.tools:gradle:1.20.1"
-        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.8'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath project.gradlePlugin
+        classpath project.dexcountPlugin
+        classpath project.versionsPlugin
+        classpath project.androidMavenGradlePlugin
+        classpath project.bintrayPlugin
+        classpath project.aptPlugin
+        classpath project.fabricPlugin
+        classpath project.errorpronePlugin
+        classpath project.coverallsPlugin
+        classpath project.kotlinPlugin
+        classpath project.sdkmanagerPlugin
     }
 }
 
